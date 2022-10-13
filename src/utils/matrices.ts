@@ -1,5 +1,13 @@
 import { Array2D } from '../entities/interfaces/matrix.interface'
 
+/**
+ * Creates a factorized stiffness matrix for a single element.
+ * @param e - Young Modulus
+ * @param l - Length
+ * @param a - Area
+ * @param i - Inertia
+ * @returns An object containing the factorized matrix and its factor.
+ */
 export const factorizedStiffness = (
 	e: number,
 	l: number,
@@ -18,4 +26,23 @@ export const factorizedStiffness = (
 	]
 	let factor = (e * i) / l ** 3
 	return { factor, matrix }
+}
+
+/**
+ * Creates a Transformation Matrix for a single element.
+ * @param alpha - Inclination angle of the element from X Axis in Degrees.
+ * @returns An Array with the Transformation Matrix
+ */
+export const transformation = (alpha: number): Array2D => {
+	let sin = Math.sin((alpha * Math.PI) / 180)
+	let cos = Math.cos((alpha * Math.PI) / 180)
+	let matrix = [
+		[cos, -sin, 0, 0, 0, 0],
+		[sin, cos, 0, 0, 0, 0],
+		[0, 0, 1, 0, 0, 0],
+		[0, 0, 0, cos, -sin, 0],
+		[0, 0, 0, sin, cos, 0],
+		[0, 0, 0, 0, 0, 1],
+	]
+	return matrix
 }
