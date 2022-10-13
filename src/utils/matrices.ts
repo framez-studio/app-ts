@@ -1,7 +1,7 @@
 import { Array2D } from '../entities/interfaces/matrix.interface'
 
 /**
- * Creates a factorized stiffness matrix for a single element.
+ * Creates a factorized by (E*I/L^3) stiffness matrix for a single element.
  * @param e - Young Modulus
  * @param l - Length
  * @param a - Area
@@ -43,6 +43,65 @@ export const transformation = (alpha: number): Array2D => {
 		[0, 0, 0, cos, -sin, 0],
 		[0, 0, 0, sin, cos, 0],
 		[0, 0, 0, 0, 0, 1],
+	]
+	return matrix
+}
+
+/**
+ * Creates a Correction Matrix for an element.
+ * @param l - Length
+ * @param e - Young Modulus
+ * @param i - Inertia
+ * @param zi - Stiffiness factor of first node
+ * @param zf - Stiffiness factor of second node
+ * @returns An Array with the Correction Matrix
+ */
+export const correction = (
+	l: number,
+	e: number,
+	i: number,
+	zi: number,
+	zf: number,
+): Array2D => {
+	let yi = l / (l + 3 * e * i * zi)
+	let yf = l / (l + 3 * e * i * zf)
+	let denom = 4 - yi * yf
+	let common = ((6 / l) * (yi - yf)) / denom
+	let matrix = [
+		[1, 0, 0, 1, 0, 0],
+		[
+			0,
+			(4 * yf - 2 * yi + yi * yf) / denom,
+			(-2 * l * yi * (1 - yf)) / denom,
+			0,
+			(4 * yi - 2 * yf + yi * yf) / denom,
+			(2 * l * yf * (1 - yi)) / denom,
+		],
+		[
+			0,
+			common,
+			(3 * yi * (2 - yf)) / denom,
+			0,
+			common,
+			(3 * yf * (2 - yi)) / denom,
+		],
+		[1, 0, 0, 1, 0, 0],
+		[
+			0,
+			(4 * yf - 2 * yi + yi * yf) / denom,
+			(-2 * l * yi * (1 - yf)) / denom,
+			0,
+			(4 * yi - 2 * yf + yi * yf) / denom,
+			(2 * l * yf * (1 - yi)) / denom,
+		],
+		[
+			0,
+			common,
+			(3 * yi * (2 - yf)) / denom,
+			0,
+			common,
+			(3 * yf * (2 - yi)) / denom,
+		],
 	]
 	return matrix
 }
