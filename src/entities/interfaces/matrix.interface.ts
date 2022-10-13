@@ -1,6 +1,16 @@
-export interface IMatrix<MType> {
-    readonly content: MType
-    readonly inverse: MType
-    readonly transpose: MType
-    readonly size: any
+import { Matrix } from '../classes/matrix'
+
+export type Array1D = number[]
+export type Array2D = Array1D[]
+
+// type OneOrTwoD<T extends Array1D | Array2D | number> = T extends Array2D
+// 	? Array2D
+// 	: Array1D
+
+export interface IMatrix {
+	readonly inverse: Matrix
+	readonly transpose: Matrix
+	add(value: Array1D | Array2D): Matrix
+	subtract(value: Array1D | Array2D): Matrix
+	multiplyBy(multiplier: number | Array1D | Array2D): Matrix
 }
