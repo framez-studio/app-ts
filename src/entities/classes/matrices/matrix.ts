@@ -45,8 +45,13 @@ export class Matrix implements IMatrix {
 	 * Returns Value of the operation 'this - value' as a new instance.
 	 * @param value - Value to be subtracted.
 	 */
-	subtract(value: Array2D | Array1D): Matrix {
-		let result = this.algebra.subtract(this.matrix, value)
+	subtract(value: Array2D | Array1D | Matrix): Matrix {
+		let result: Array1D | Array2D
+		if(value instanceof Matrix){
+			result = this.algebra.subtract(this.matrix, value.data)
+		}else{
+			result = this.algebra.subtract(this.matrix, value)
+		}
 		return new Matrix(result)
 	}
 	/**
