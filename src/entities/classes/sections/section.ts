@@ -19,7 +19,7 @@ export class RectangularHSection extends Section{
 		return (this.b * this.h)-((this.b-this.tb)*(this.h-this.th));
 	}
 	get inertiaZ(): number {
-		return (this.b * this.h)-((this.b-this.tb)*(this.h-this.th))
+		return (this.b * this.h**3 *(1/12))-((this.b-this.tb)*(this.h-this.th)**3 *(1/12))
 	}
 	
 }
