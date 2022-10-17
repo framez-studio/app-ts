@@ -1,5 +1,5 @@
-import { ElementNode } from '../classes/ElementNode'
-import { Section } from '../classes/section'
+import { ElementNode } from '../classes/nodes/elementNode'
+import { Section } from '../classes/sections/section'
 
 export interface IElement {
 	readonly nodes: { initial: ElementNode; final: ElementNode }

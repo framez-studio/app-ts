@@ -1,4 +1,4 @@
-import { SMatrix } from './entities/classes/sMatrix'
+import { SMatrix } from './entities/classes/matrices/sMatrix'
 import './style.css'
 
 let e, a, l, i

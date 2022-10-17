@@ -1,5 +1,5 @@
-import { algebra } from '../../utils/algebra'
-import { Array1D, Array2D, IMatrix } from '../interfaces/matrix.interface'
+import { algebra } from '../../../utils/algebra'
+import { Array1D, Array2D, IMatrix } from '../../interfaces/matrix.interface'
 
 export class Matrix implements IMatrix {
 	private algebra = algebra

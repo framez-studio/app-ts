@@ -1,4 +1,4 @@
-import { ISection } from '../interfaces/section.interface'
+import { ISection } from '../../interfaces/section.interface'
 
 export abstract class Section implements ISection {
 	abstract get area(): number

@@ -1,4 +1,4 @@
-import { SMatrix } from '../entities/classes/sMatrix'
+import { SMatrix } from '../entities/classes/matrices/sMatrix'
 import { algebra as alg } from '../utils/algebra'
 import { correction, transformation } from '../utils/matrices'
 // data

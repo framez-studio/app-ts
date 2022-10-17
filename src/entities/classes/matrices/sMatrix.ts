@@ -1,6 +1,6 @@
-import { ISMatrix } from '../interfaces/sMatrix.interface'
+import { ISMatrix } from '../../interfaces/sMatrix.interface'
 import { Matrix } from './matrix'
-import { factorizedStiffness } from '../../utils/matrices'
+import { factorizedStiffness } from '../../../utils/matrices'
 
 export class SMatrix extends Matrix implements ISMatrix {
 	private factor: number

@@ -1,4 +1,4 @@
-import { Matrix } from '../classes/matrix'
+import { Matrix } from '../classes/matrices/matrix'
 
 export type Array1D = number[]
 export type Array2D = Array1D[]
