@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { HingedJoint } from '../entities/classes/nodes/hingedJoint'
-import { degsOfFreedomBoolean2D } from '../entities/interfaces/elementNode.interface'
+import { HingedJoint } from '../entities/classes/nodes/hinged-joint'
+import { degsOfFreedomBoolean2D } from '../entities/interfaces/element-node.interface'
 
 describe('NodeElement Class and children', () => {
 	const coordinates = { x: 4, y: 4 }

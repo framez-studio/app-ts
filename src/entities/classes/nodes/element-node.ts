@@ -3,7 +3,7 @@ import {
 	degsOfFreedomBoolean2D,
 	IElementNode,
 	nodeType,
-} from '../../interfaces/elementNode.interface'
+} from '../../interfaces/element-node.interface'
 import { Printable } from '../../interfaces/ui.interfaces'
 
 export class ElementNode implements IElementNode, Printable {

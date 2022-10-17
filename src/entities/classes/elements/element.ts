@@ -1,6 +1,6 @@
 import { degSlope, eucDistance } from '../../../utils/algebra'
 import { IElement } from '../../interfaces/element'
-import { ElementNode } from '../nodes/elementNode'
+import { ElementNode } from '../nodes/element-node'
 import { Section } from '../sections/section'
 
 export class Element implements IElement {

@@ -1,4 +1,4 @@
-import { coordinates2D } from '../../interfaces/elementNode.interface'
+import { coordinates2D } from '../../interfaces/element-node.interface'
 import { Joint } from './joint'
 
 export class HingedJoint extends Joint {

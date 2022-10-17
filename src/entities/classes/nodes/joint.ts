@@ -1,8 +1,8 @@
 import {
 	coordinates2D,
 	degsOfFreedomBoolean2D,
-} from '../../interfaces/elementNode.interface'
-import { ElementNode } from './elementNode'
+} from '../../interfaces/element-node.interface'
+import { ElementNode } from './element-node'
 
 export class Joint extends ElementNode {
 	constructor(coordinates: coordinates2D, releases: degsOfFreedomBoolean2D) {

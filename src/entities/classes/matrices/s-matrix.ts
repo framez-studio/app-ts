@@ -1,4 +1,4 @@
-import { ISMatrix } from '../../interfaces/sMatrix.interface'
+import { ISMatrix } from '../../interfaces/s-matrix.interface'
 import { Matrix } from './matrix'
 import { factorizedStiffness } from '../../../utils/matrices'
 

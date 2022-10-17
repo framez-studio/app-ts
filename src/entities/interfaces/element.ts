@@ -1,4 +1,4 @@
-import { ElementNode } from '../classes/nodes/elementNode'
+import { ElementNode } from '../classes/nodes/element-node'
 import { Section } from '../classes/sections/section'
 
 export interface IElement {

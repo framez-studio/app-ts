@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { FixedJoint } from '../entities/classes/nodes/fixedJoint'
-import { degsOfFreedomBoolean2D } from '../entities/interfaces/elementNode.interface'
+import { FixedJoint } from '../entities/classes/nodes/fixed-joint'
+import { degsOfFreedomBoolean2D } from '../entities/interfaces/element-node.interface'
 
 describe('NodeElement Class and children', () => {
 	const coordinates = { x: 4, y: 4 }
