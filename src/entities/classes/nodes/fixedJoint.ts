@@ -1,13 +1,8 @@
 import { coordinates2D } from '../../interfaces/elementNode.interface'
-import { ElementNode } from './elementNode'
+import { Joint } from './joint'
 
-export class FixedJoint extends ElementNode {
+export class FixedJoint extends Joint {
 	constructor(coordinates: coordinates2D) {
-		super(
-			'joint',
-			coordinates,
-			{ dx: false, dy: false, rz: false },
-			{ dx: false, dy: false, rz: false },
-		)
+		super(coordinates, { dx: false, dy: false, rz: false })
 	}
 }

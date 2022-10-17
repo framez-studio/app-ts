@@ -1,13 +1,8 @@
 import { coordinates2D } from '../../interfaces/elementNode.interface'
-import { ElementNode } from './elementNode'
+import { Support } from './support'
 
-export class FixedSupport extends ElementNode {
+export class FixedSupport extends Support {
 	constructor(coordinates: coordinates2D) {
-		super(
-			'support',
-			coordinates,
-			{ dx: true, dy: true, rz: true },
-			{ dx: false, dy: false, rz: false },
-		)
+		super(coordinates, { dx: true, dy: true, rz: true })
 	}
 }
