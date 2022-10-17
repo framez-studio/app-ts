@@ -50,21 +50,11 @@ export const transformation = (alpha: number): Array2D => {
 /**
  * Creates a Correction Matrix for an element.
  * @param l - Length
- * @param e - Young Modulus
- * @param i - Inertia
- * @param zi - Stiffiness factor of first node
- * @param zf - Stiffiness factor of second node
+ * @param yi - Stiffiness factor of first node
+ * @param yf - Stiffiness factor of second node
  * @returns An Array with the Correction Matrix
  */
-export const correction = (
-	l: number,
-	e: number,
-	i: number,
-	zi: number,
-	zf: number,
-): Array2D => {
-	let yi = l / (l + 3 * e * i * zi)
-	let yf = l / (l + 3 * e * i * zf)
+export const correction = (l: number, yi: number, yf: number): Array2D => {
 	let denom = 4 - yi * yf
 	let common = ((6 / l) * (yi - yf)) / denom
 	let matrix = [
