@@ -5,17 +5,21 @@ export abstract class Section implements ISection {
 	abstract get inertiaZ(): number
 }
 
-export class RectangularHSection implements ISection{
-	area: number;
-	inertiaZ: number;
+export class RectangularHSection extends Section{
 	constructor(
-		public b: number,
-		public h: number,
-		public tb: number,
-		public th: number,
-		public outer_radius?: number,
-		public inner_radius?: number){
-			this.area = 0
-			this.inertiaZ = 0
+		private b: number,
+		private h: number,
+		private tb: number,
+		private th: number,
+		){
+		super();
 	}
+
+	get area(): number {
+		return (this.b * this.h)-((this.b-this.tb)*(this.h-this.th));
+	}
+	get inertiaZ(): number {
+		return (this.b * this.h)-((this.b-this.tb)*(this.h-this.th))
+	}
+	
 }
