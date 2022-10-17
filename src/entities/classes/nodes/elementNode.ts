@@ -14,13 +14,12 @@ export class ElementNode implements IElementNode, Printable {
 
 	constructor(
 		type: nodeType,
-		x: number,
-		y: number,
+		coordinates: coordinates2D,
 		restrictions: degsOfFreedomBoolean2D,
 		releases: degsOfFreedomBoolean2D,
 	) {
 		this.type = type
-		this.coordinates = { x, y }
+		this.coordinates = coordinates
 		this.restrictions = restrictions
 		this.releases = releases
 	}
