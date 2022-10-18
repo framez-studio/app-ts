@@ -27,6 +27,34 @@ export const factorizedStiffness = (
 	let factor = (e * i) / l ** 3
 	return { factor, matrix }
 }
+/**
+ * Creates a factorized by (E*I/L^3) stiffness matrix for a single element.
+ * @param e - Young Modulus
+ * @param l - Length
+ * @param a - Area
+ * @param i - Inertia
+ * @returns An object containing the factorized matrix and its factor.
+ */
+export const stiffness = (
+	e: number,
+	l: number,
+	a: number,
+	i: number,
+): Array2D => {
+	let eal = (e * a) / l
+	let eil = (e * i) / l
+	let eil2 = (e * i) / l ** 2
+	let eil3 = (e * i) / l ** 3
+	let matrix = [
+		[eal, 0, 0, -eal, 0, 0],
+		[0, 12 * eil3, 6 * eil2, 0, -12 * eil3, 6 * eil2],
+		[0, 6 * eil2, 4 * eil, 0, -6 * eil2, 2 * eil],
+		[-eal, 0, 0, eal, 0, 0],
+		[0, -12 * eil3, -6 * eil2, 0, 12 * eil3, -6 * eil2],
+		[0, 6 * eil2, 2 * eil, 0, -6 * eil2, 4 * eil],
+	]
+	return matrix
+}
 
 /**
  * Creates a Transformation Matrix for a single element.

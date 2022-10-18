@@ -1,10 +1,9 @@
 import { ISMatrix } from '../../interfaces/s-matrix.interface'
 import { Matrix } from './matrix'
-import { factorizedStiffness } from '../../../utils/matrices'
+import { factorizedStiffness, stiffness } from '../../../utils/matrices'
 import { IMatrix } from '../../interfaces/matrix.interface'
 
 export class SMatrix extends Matrix implements ISMatrix {
-	private factor: number
 	/**
 	 * Creates an instance of a Stiffness Matrix.
 	 * @param {number} e - Young Modulus
@@ -12,24 +11,29 @@ export class SMatrix extends Matrix implements ISMatrix {
 	 * @param {number} a - Area
 	 * @param {number} i - Inertia
 	 */
-	constructor(e: number, l: number, a: number, i: number) {
-		let { factor, matrix } = factorizedStiffness(e, l, a, i)
+	constructor(
+		private e: number,
+		private l: number,
+		private a: number,
+		private i: number,
+	) {
+		let matrix = stiffness(e, l, a, i)
 		super(matrix)
-		this.factor = factor
 	}
 	/**
 	 * Returns both the factor and factorized version of the Stiffness Matrix.
 	 * @return {*}  {{ factor: number; matrix: Array2D }}
 	 */
 	public factorized(): { factor: number; matrix: IMatrix } {
-		return { factor: this.factor, matrix: new Matrix(this.data) }
+		let result = factorizedStiffness(this.e, this.l, this.a, this.i)
+		return { factor: result.factor, matrix: new Matrix(result.matrix) }
 	}
 	/**
 	 * Returns the full version of the Stiffness Matrix
 	 * @return {*}  {Array2D}
 	 */
 	public full(): IMatrix {
-		return this.multiplyBy(this.factor)
+		return new Matrix(this.data)
 	}
 	/**
 	 * Prints on console the full matrix

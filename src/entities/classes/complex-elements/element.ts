@@ -47,6 +47,7 @@ export class Element implements IElement {
 			this.section.area,
 			this.section.inertiaZ,
 		)
+		console.log(matrix)
 		return matrix.full()
 	}
 }

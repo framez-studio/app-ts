@@ -5,13 +5,13 @@ import { RectangularHSection } from '../entities/classes/sections/rectangular-h-
 import { Array2D } from '../entities/interfaces/matrix.interface'
 
 describe('Element Class', () => {
-	const section = new RectangularHSection(4, 4, 0, 0)
-	const points = { i: { x: 0, y: 0 }, f: { x: 2, y: 2 } }
+	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
+	const points = { i: { x: 0, y: 0 }, f: { x: 3, y: 0 } }
 	let nodes = {
 		i: new FixedSupport(points.i),
 		f: new FixedSupport(points.f),
 	}
-	let element = new Element(nodes.i, nodes.f, section, 200000)
+	let element = new Element(nodes.i, nodes.f, section, 200000000)
 
 	it(`should calculate its length`, () => {
 		let expected = Math.sqrt(
@@ -26,8 +26,11 @@ describe('Element Class', () => {
 			Math.PI
 		expect(element.inclination).toBe(expected)
 	})
-	it(`s stiffness method should return an IMatrix element`, () => {
-		expect('inverse' in element.stiffness('local')).toBeTruthy()
+	it(`should calculate its area correctly`, () => {
+		expect(element.section.area).toBeCloseTo(0.000784)
+	})
+	it(`should calculate its inertia correctly`, () => {
+		expect(element.section.inertiaZ).toBeCloseTo(0.000001255)
 	})
 	it(`should calculate its local stiffness matrix`, () => {
 		let expected = [
