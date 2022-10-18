@@ -58,10 +58,25 @@ export class Matrix implements IMatrix {
 	 * Returns Value of the operation 'this * multiplier' as a new instance.
 	 * @param multiplier - Value to multiply.
 	 */
-	multiplyBy(multiplier: number | Array2D | Array1D): Matrix {
-		let result = this.algebra.multiply(this.matrix, multiplier) as
+	multiplyBy(multiplier: number | Array2D | Array1D | Matrix): Matrix {
+		let result: Array1D | Array2D
+		if(multiplier instanceof Matrix){
+			result = this.algebra.multiply(this.matrix, multiplier.data)as
 			| Array2D
-			| Array1D
+			| Array1D	
+		}else{
+			result = this.algebra.multiply(this.matrix, multiplier) as
+				| Array2D
+				| Array1D	
+		}
 		return new Matrix(result)
+	}
+	/**
+	 * 
+	 * @param n Number of decimals default 0
+	 * @returns Rounded matrix with n decimals
+	 */
+	round(n: number=0):Matrix{
+		return new Matrix(this.algebra.round(this.matrix,n))
 	}
 }

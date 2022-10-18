@@ -24,6 +24,7 @@
 		"vitest": "0.24.3"
 	},
 	"dependencies": {
-		"mathjs": "11.3.0"
+		"mathjs": "11.3.0",
+		"ts-node": "^10.9.1"
 	}
 }
