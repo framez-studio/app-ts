@@ -1,4 +1,4 @@
-import { coordinates2D } from '../../interfaces/element-node.interface'
+import { coordinates2D } from '../../interfaces/nodes.interface'
 import { Support } from './support'
 
 export class FixedSupport extends Support {

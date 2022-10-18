@@ -1,5 +1,5 @@
 import { create, all } from 'mathjs'
-import { coordinates2D } from '../entities/interfaces/element-node.interface'
+import { coordinates2D } from '../entities/interfaces/nodes.interface'
 
 const config = {}
 /**

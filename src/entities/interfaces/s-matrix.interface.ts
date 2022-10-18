@@ -1,6 +1,8 @@
-import { Matrix } from '../classes/matrices/matrix'
+import { IMatrix } from './matrix.interface'
+
+export type coordinateSystem = 'local' | 'global'
 
 export interface ISMatrix {
-	factorized(): { factor: number; matrix: Matrix }
-	full(): Matrix
+	factorized(): { factor: number; matrix: IMatrix }
+	full(): IMatrix
 }

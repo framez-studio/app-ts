@@ -1,16 +1,15 @@
 import {
 	coordinates2D,
 	degsOfFreedomBoolean2D,
-} from '../../interfaces/element-node.interface'
+	IJoint,
+} from '../../interfaces/nodes.interface'
 import { ElementNode } from './element-node'
 
-export class Joint extends ElementNode {
+export class Joint extends ElementNode implements IJoint {
+	public releases: degsOfFreedomBoolean2D
+
 	constructor(coordinates: coordinates2D, releases: degsOfFreedomBoolean2D) {
-		super(
-			'joint',
-			coordinates,
-			{ dx: false, dy: false, rz: false },
-			releases,
-		)
+		super(coordinates)
+		this.releases = releases
 	}
 }

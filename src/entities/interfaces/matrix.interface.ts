@@ -8,6 +8,7 @@ export type Array2D = Array1D[]
 // 	: Array1D
 
 export interface IMatrix {
+	readonly data: Array1D | Array2D
 	readonly inverse: Matrix
 	readonly transpose: Matrix
 	add(value: Array1D | Array2D): Matrix

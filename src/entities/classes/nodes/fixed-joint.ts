@@ -1,4 +1,4 @@
-import { coordinates2D } from '../../interfaces/element-node.interface'
+import { coordinates2D } from '../../interfaces/nodes.interface'
 import { Joint } from './joint'
 
 export class FixedJoint extends Joint {

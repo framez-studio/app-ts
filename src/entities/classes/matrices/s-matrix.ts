@@ -1,6 +1,7 @@
 import { ISMatrix } from '../../interfaces/s-matrix.interface'
 import { Matrix } from './matrix'
 import { factorizedStiffness } from '../../../utils/matrices'
+import { IMatrix } from '../../interfaces/matrix.interface'
 
 export class SMatrix extends Matrix implements ISMatrix {
 	private factor: number
@@ -20,14 +21,14 @@ export class SMatrix extends Matrix implements ISMatrix {
 	 * Returns both the factor and factorized version of the Stiffness Matrix.
 	 * @return {*}  {{ factor: number; matrix: Array2D }}
 	 */
-	public factorized(): { factor: number; matrix: Matrix } {
+	public factorized(): { factor: number; matrix: IMatrix } {
 		return { factor: this.factor, matrix: new Matrix(this.data) }
 	}
 	/**
 	 * Returns the full version of the Stiffness Matrix
 	 * @return {*}  {Array2D}
 	 */
-	public full(): Matrix {
+	public full(): IMatrix {
 		return this.multiplyBy(this.factor)
 	}
 	/**

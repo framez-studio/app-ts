@@ -4,19 +4,19 @@ export class RectangularHSection extends Section {
 	constructor(
 		private b: number,
 		private h: number,
-		private tb: number,
-		private th: number,
+		private bt: number,
+		private ht: number,
 	) {
 		super()
 	}
 
 	get area(): number {
-		return this.b * this.h - (this.b - this.tb) * (this.h - this.th)
+		return this.b * this.h - (this.b - 2 * this.bt) * (this.h - 2 * this.ht)
 	}
 	get inertiaZ(): number {
 		return (
 			this.b * this.h ** 3 * (1 / 12) -
-			(this.b - this.tb) * (this.h - this.th) ** 3 * (1 / 12)
+			(this.b - 2 * this.bt) * (this.h - 2 * this.ht) ** 3 * (1 / 12)
 		)
 	}
 }

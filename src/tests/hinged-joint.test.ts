@@ -1,18 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import { HingedJoint } from '../entities/classes/nodes/hinged-joint'
-import { degsOfFreedomBoolean2D } from '../entities/interfaces/element-node.interface'
+import { degsOfFreedomBoolean2D } from '../entities/interfaces/nodes.interface'
 
-describe('NodeElement Class and children', () => {
+describe('Hinged Joint', () => {
 	const coordinates = { x: 4, y: 4 }
 	const hingedJoint = new HingedJoint(coordinates)
 
-	it('should allow movement in all joint instances', () => {
-		const unrestricted: degsOfFreedomBoolean2D = {
-			dx: false,
-			dy: false,
-			rz: false,
-		}
-		expect(hingedJoint.restrictions).toEqual(unrestricted)
+	it(`should store correctly its coordinates`, () => {
+		expect(hingedJoint.coordinates).toEqual(coordinates)
 	})
 	it('should have release in rotation around z axis', () => {
 		const released: degsOfFreedomBoolean2D = {
