@@ -65,11 +65,11 @@ export const transformation = (alpha: number): Array2D => {
 	let sin = Math.sin((alpha * Math.PI) / 180)
 	let cos = Math.cos((alpha * Math.PI) / 180)
 	let matrix = [
-		[cos, -sin, 0, 0, 0, 0],
-		[sin, cos, 0, 0, 0, 0],
+		[cos, sin, 0, 0, 0, 0],
+		[-sin, cos, 0, 0, 0, 0],
 		[0, 0, 1, 0, 0, 0],
-		[0, 0, 0, cos, -sin, 0],
-		[0, 0, 0, sin, cos, 0],
+		[0, 0, 0, cos, sin, 0],
+		[0, 0, 0, -sin, cos, 0],
 		[0, 0, 0, 0, 0, 1],
 	]
 	return matrix

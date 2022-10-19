@@ -1,9 +1,11 @@
 import { degSlope, eucDistance } from '../../../utils/algebra'
+import { transformation } from '../../../utils/matrices'
 import { IElement } from '../../interfaces/element.interface'
 import { IMatrix } from '../../interfaces/matrix.interface'
 import { IJoint, INode, ISupport } from '../../interfaces/nodes.interface'
 import { coordinateSystem } from '../../interfaces/s-matrix.interface'
 import { ISection } from '../../interfaces/section.interface'
+import { Matrix } from '../matrices/matrix'
 import { SMatrix } from '../matrices/s-matrix'
 
 export class Element implements IElement {
@@ -48,12 +50,14 @@ export class Element implements IElement {
 		)
 	}
 	public stiffness(system: coordinateSystem): IMatrix {
-		let matrix = new SMatrix(
+		const matrix = new SMatrix(
 			this.young,
 			this.length,
 			this.section.area,
 			this.section.inertiaZ,
 		)
-		return matrix.full()
+		let angle = this.inclination
+		if (system === 'local' || angle === 0) return matrix.full()
+		return matrix.toGlobal(angle)
 	}
 }

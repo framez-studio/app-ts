@@ -5,4 +5,5 @@ export type coordinateSystem = 'local' | 'global'
 export interface ISMatrix {
 	factorized(): { factor: number; matrix: IMatrix }
 	full(): IMatrix
+	toGlobal(angle: number): IMatrix
 }

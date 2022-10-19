@@ -1,6 +1,10 @@
 import { ISMatrix } from '../../interfaces/s-matrix.interface'
 import { Matrix } from './matrix'
-import { factorizedStiffness, stiffness } from '../../../utils/matrices'
+import {
+	factorizedStiffness,
+	stiffness,
+	transformation,
+} from '../../../utils/matrices'
 import { IMatrix } from '../../interfaces/matrix.interface'
 
 export class SMatrix extends Matrix implements ISMatrix {
@@ -25,7 +29,7 @@ export class SMatrix extends Matrix implements ISMatrix {
 	 * @return {*}  {{ factor: number; matrix: Array2D }}
 	 */
 	public factorized(): { factor: number; matrix: IMatrix } {
-		let result = factorizedStiffness(this.e, this.l, this.a, this.i)
+		const result = factorizedStiffness(this.e, this.l, this.a, this.i)
 		return { factor: result.factor, matrix: new Matrix(result.matrix) }
 	}
 	/**
@@ -40,5 +44,10 @@ export class SMatrix extends Matrix implements ISMatrix {
 	 */
 	public print(): void {
 		console.log(this.full().data)
+	}
+	public toGlobal(angle: number): IMatrix {
+		const transf = new Matrix(transformation(angle))
+		const result = transf.transpose.multiplyBy(this).multiplyBy(transf)
+		return result
 	}
 }

@@ -39,4 +39,20 @@ describe('Stiffness Matrix Class', () => {
 			})
 		})
 	})
+	it('should calculate correctly its transformed version to global coordinates', () => {
+		let expected = [
+			[111.5951, 0, -167.3927, -111.5951, 0, -167.3927],
+			[0, 52266.6667, 0, 0, -52266.6667, 0],
+			[-167.3927, 0, 334.7854, 167.3927, 0, 167.3927],
+			[-111.5951, 0, 167.3927, 111.5951, 0, 167.3927],
+			[0, -52266.6667, 0, 0, 52266.6667, 0],
+			[-167.3927, 0, 167.3927, 167.3927, 0, 334.7854],
+		]
+		let result = matrix.toGlobal(90).data as Array2D
+		expected.forEach((row, i) => {
+			row.forEach((value, j) => {
+				expect(result[i][j]).toBeCloseTo(value)
+			})
+		})
+	})
 })

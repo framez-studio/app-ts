@@ -7,7 +7,7 @@ import { Array2D } from '../entities/interfaces/matrix.interface'
 
 describe('Element Class', () => {
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
-	const points = { i: { x: 0, y: 0 }, f: { x: 3, y: 0 } }
+	const points = { i: { x: 0, y: 0 }, f: { x: 0, y: 3 } }
 	let nodes = {
 		i: new FixedSupport(new ElementNode(points.i)),
 		f: new FixedSupport(new ElementNode(points.f)),
@@ -43,6 +43,23 @@ describe('Element Class', () => {
 			[0, 167.3927, 167.3927, 0, -167.3927, 334.7854],
 		]
 		let result = element.stiffness('local').data as Array2D
+
+		expected.forEach((row, i) => {
+			row.forEach((value, j) => {
+				expect(result[i][j]).toBeCloseTo(value)
+			})
+		})
+	})
+	it(`should calculate its global stiffness matrix`, () => {
+		let expected = [
+			[111.5951, 0, -167.3927, -111.5951, 0, -167.3927],
+			[0, 52266.6667, 0, 0, -52266.6667, 0],
+			[-167.3927, 0, 334.7854, 167.3927, 0, 167.3927],
+			[-111.5951, 0, 167.3927, 111.5951, 0, 167.3927],
+			[0, -52266.6667, 0, 0, 52266.6667, 0],
+			[-167.3927, 0, 167.3927, 167.3927, 0, 334.7854],
+		]
+		let result = element.stiffness('global').data as Array2D
 
 		expected.forEach((row, i) => {
 			row.forEach((value, j) => {
