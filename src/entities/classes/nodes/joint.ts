@@ -1,8 +1,4 @@
-import {
-	degsOfFreedomBoolean2D,
-	IJoint,
-	INode,
-} from '../../interfaces/nodes.interface'
+import { degsOfFreedomBoolean2D, INode } from '../../interfaces/nodes.interface'
 
 export class Joint implements IJoint {
 	public releases: degsOfFreedomBoolean2D

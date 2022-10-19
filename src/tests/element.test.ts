@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { Element } from '../entities/classes/complex-elements/element'
 import { ElementNode } from '../entities/classes/nodes/element-node'
-import { FixedSupport } from '../entities/classes/nodes/fixed-support'
 import { RectangularHSection } from '../entities/classes/sections/rectangular-h-section'
 import { Array2D } from '../entities/interfaces/matrix.interface'
 
@@ -9,8 +8,8 @@ describe('Element Class', () => {
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
 	const points = { i: { x: 0, y: 0 }, f: { x: 0, y: 3 } }
 	let nodes = {
-		i: new FixedSupport(new ElementNode(points.i)),
-		f: new FixedSupport(new ElementNode(points.f)),
+		i: new ElementNode(points.i),
+		f: new ElementNode(points.f),
 	}
 	let element = new Element(nodes.i, nodes.f, section, 200000000)
 
@@ -32,6 +31,10 @@ describe('Element Class', () => {
 	})
 	it(`should calculate its inertia correctly`, () => {
 		expect(element.section.inertiaZ).toBeCloseTo(0.000001255)
+	})
+	it(`should return its releases`, () => {
+		let expected = [false, false, true, false, false, false]
+		expect(element.releases).toEqual(expected)
 	})
 	it(`should calculate its local stiffness matrix`, () => {
 		let expected = [

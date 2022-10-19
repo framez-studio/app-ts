@@ -1,41 +1,49 @@
 import { degSlope, eucDistance } from '../../../utils/algebra'
-import { transformation } from '../../../utils/matrices'
-import { IElement } from '../../interfaces/element.interface'
+import {
+	degsOfFreedomArray,
+	IElement,
+} from '../../interfaces/element.interface'
 import { IMatrix } from '../../interfaces/matrix.interface'
-import { IJoint, INode, ISupport } from '../../interfaces/nodes.interface'
+import { degsOfFreedomBoolean2D, INode } from '../../interfaces/nodes.interface'
 import { coordinateSystem } from '../../interfaces/s-matrix.interface'
 import { ISection } from '../../interfaces/section.interface'
-import { Matrix } from '../matrices/matrix'
 import { SMatrix } from '../matrices/s-matrix'
 
 export class Element implements IElement {
-	private _connections: {
-		initial: IJoint | ISupport
-		final: IJoint | ISupport
-	}
 	private _nodes: { initial: INode; final: INode }
+	private _releases: {
+		initial: degsOfFreedomBoolean2D
+		final: degsOfFreedomBoolean2D
+	}
 	public section: ISection
 	public young: number
 
-	constructor(
-		iNode: IJoint | ISupport,
-		fNode: IJoint | ISupport,
-		section: ISection,
-		young: number,
-	) {
+	constructor(iNode: INode, fNode: INode, section: ISection, young: number) {
 		this.section = section
 		this.young = young
-		this._connections = {
+		this._nodes = {
 			initial: iNode,
 			final: fNode,
 		}
-		this._nodes = {
-			initial: iNode.node,
-			final: fNode.node,
+		this._releases = {
+			initial: { dx: false, dy: false, rz: false },
+			final: { dx: false, dy: false, rz: false },
 		}
 	}
-	get nodes(): { initial: IJoint | ISupport; final: IJoint | ISupport } {
-		return this._connections
+	get constraints(): degsOfFreedomArray {
+		return [
+			...Object.values(this.nodes.initial.constraints),
+			...Object.values(this.nodes.final.constraints),
+		] as degsOfFreedomArray
+	}
+	get releases(): degsOfFreedomArray {
+		return [
+			...Object.values(this._releases.initial),
+			...Object.values(this._releases.final),
+		] as degsOfFreedomArray
+	}
+	get nodes(): { initial: INode; final: INode } {
+		return this._nodes
 	}
 	get length(): number {
 		return eucDistance(
