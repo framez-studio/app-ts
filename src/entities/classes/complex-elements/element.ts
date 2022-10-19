@@ -1,14 +1,17 @@
 import { degSlope, eucDistance } from '../../../utils/algebra'
 import { IElement } from '../../interfaces/element.interface'
 import { IMatrix } from '../../interfaces/matrix.interface'
-import { IJoint, ISupport } from '../../interfaces/nodes.interface'
+import { IJoint, INode, ISupport } from '../../interfaces/nodes.interface'
 import { coordinateSystem } from '../../interfaces/s-matrix.interface'
 import { ISection } from '../../interfaces/section.interface'
-import { Matrix } from '../matrices/matrix'
 import { SMatrix } from '../matrices/s-matrix'
 
 export class Element implements IElement {
-	private _nodes: { initial: IJoint | ISupport; final: IJoint | ISupport }
+	private _connections: {
+		initial: IJoint | ISupport
+		final: IJoint | ISupport
+	}
+	private _nodes: { initial: INode; final: INode }
 	public section: ISection
 	public young: number
 
@@ -20,13 +23,17 @@ export class Element implements IElement {
 	) {
 		this.section = section
 		this.young = young
-		this._nodes = {
+		this._connections = {
 			initial: iNode,
 			final: fNode,
 		}
+		this._nodes = {
+			initial: iNode.node,
+			final: fNode.node,
+		}
 	}
 	get nodes(): { initial: IJoint | ISupport; final: IJoint | ISupport } {
-		return this._nodes
+		return this._connections
 	}
 	get length(): number {
 		return eucDistance(
@@ -40,14 +47,13 @@ export class Element implements IElement {
 			this._nodes.final.coordinates,
 		)
 	}
-	stiffness(system: coordinateSystem): IMatrix {
+	public stiffness(system: coordinateSystem): IMatrix {
 		let matrix = new SMatrix(
 			this.young,
 			this.length,
 			this.section.area,
 			this.section.inertiaZ,
 		)
-		console.log(matrix)
 		return matrix.full()
 	}
 }

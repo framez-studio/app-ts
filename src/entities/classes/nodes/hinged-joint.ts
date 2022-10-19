@@ -1,8 +1,8 @@
-import { coordinates2D } from '../../interfaces/nodes.interface'
+import { IJoint, INode } from '../../interfaces/nodes.interface'
 import { Joint } from './joint'
 
-export class HingedJoint extends Joint {
-	constructor(coordinates: coordinates2D) {
-		super(coordinates, { dx: false, dy: false, rz: true })
+export class HingedJoint extends Joint implements IJoint {
+	constructor(node: INode) {
+		super(node, { dx: false, dy: false, rz: true })
 	}
 }

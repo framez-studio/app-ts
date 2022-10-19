@@ -7,10 +7,12 @@ export interface INode {
 	coordinates: coordinates2D
 }
 
-export interface IJoint extends INode {
+export interface IJoint {
+	readonly node: INode
 	releases: degsOfFreedomBoolean2D
 }
 
-export interface ISupport extends INode {
+export interface ISupport {
+	readonly node: INode
 	restrictions: degsOfFreedomBoolean2D
 }

@@ -1,15 +1,18 @@
 import {
-	coordinates2D,
 	degsOfFreedomBoolean2D,
 	IJoint,
+	INode,
 } from '../../interfaces/nodes.interface'
-import { ElementNode } from './element-node'
 
-export class Joint extends ElementNode implements IJoint {
+export class Joint implements IJoint {
 	public releases: degsOfFreedomBoolean2D
+	private _node: INode
 
-	constructor(coordinates: coordinates2D, releases: degsOfFreedomBoolean2D) {
-		super(coordinates)
+	constructor(node: INode, releases: degsOfFreedomBoolean2D) {
+		this._node = node
 		this.releases = releases
+	}
+	public get node(): INode {
+		return this._node
 	}
 }

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { Element } from '../entities/classes/complex-elements/element'
+import { ElementNode } from '../entities/classes/nodes/element-node'
 import { FixedSupport } from '../entities/classes/nodes/fixed-support'
 import { RectangularHSection } from '../entities/classes/sections/rectangular-h-section'
 import { Array2D } from '../entities/interfaces/matrix.interface'
@@ -8,8 +9,8 @@ describe('Element Class', () => {
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
 	const points = { i: { x: 0, y: 0 }, f: { x: 3, y: 0 } }
 	let nodes = {
-		i: new FixedSupport(points.i),
-		f: new FixedSupport(points.f),
+		i: new FixedSupport(new ElementNode(points.i)),
+		f: new FixedSupport(new ElementNode(points.f)),
 	}
 	let element = new Element(nodes.i, nodes.f, section, 200000000)
 

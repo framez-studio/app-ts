@@ -1,18 +1,18 @@
 import {
-	coordinates2D,
 	degsOfFreedomBoolean2D,
+	INode,
 	ISupport,
 } from '../../interfaces/nodes.interface'
-import { ElementNode } from './element-node'
 
-export class Support extends ElementNode implements ISupport {
+export class Support implements ISupport {
 	public restrictions: degsOfFreedomBoolean2D
+	private _node: INode
 
-	constructor(
-		coordinates: coordinates2D,
-		restrictions: degsOfFreedomBoolean2D,
-	) {
-		super(coordinates)
+	constructor(node: INode, restrictions: degsOfFreedomBoolean2D) {
+		this._node = node
 		this.restrictions = restrictions
+	}
+	public get node(): INode {
+		return this._node
 	}
 }
