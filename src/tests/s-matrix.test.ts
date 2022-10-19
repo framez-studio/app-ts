@@ -4,7 +4,7 @@ import { Array2D } from '../entities/interfaces/matrix.interface'
 
 describe('Stiffness Matrix Class', () => {
 	const e = 200000000
-	const i = 0.000001255
+	const i = (0.1 ** 4 - 0.096 ** 4) / 12
 	const a = 0.000784
 	const l = 3
 	const matrix = new SMatrix(e, l, a, i)
@@ -25,12 +25,12 @@ describe('Stiffness Matrix Class', () => {
 	})
 	it('should calculate correctly its full version', () => {
 		let expected = [
-			[52266.67, 0, 0, -52266.67, 0, 0],
-			[0, 111.56, 167.33, 0, -111.56, 167.33],
-			[0, 167.33, 334.67, 0, -167.33, 167.33],
-			[-52266.67, 0, 0, 52266.67, 0, 0],
-			[0, -111.56, -167.33, 0, 111.56, -167.33],
-			[0, 167.33, 167.33, 0, -167.33, 334.67],
+			[52266.6667, 0, 0, -52266.6667, 0, 0],
+			[0, 111.5951, 167.3927, 0, -111.5951, 167.3927],
+			[0, 167.3927, 334.7854, 0, -167.3927, 167.3927],
+			[-52266.6667, 0, 0, 52266.6667, 0, 0],
+			[0, -111.5951, -167.3927, 0, 111.5951, -167.3927],
+			[0, 167.3927, 167.3927, 0, -167.3927, 334.7854],
 		]
 		let result = matrix.full().data as Array2D
 		expected.forEach((row, i) => {
