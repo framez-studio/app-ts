@@ -32,7 +32,7 @@ describe('Element Class', () => {
 	it(`should calculate its inertia correctly`, () => {
 		expect(element.section.inertiaZ).toBeCloseTo(0.000001255)
 	})
-	it(`should return its releases`, () => {
+	it.todo(`should return its releases`, () => {
 		let expected = [false, false, true, false, false, false]
 		expect(element.releases).toEqual(expected)
 	})

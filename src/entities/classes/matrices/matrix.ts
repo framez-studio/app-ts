@@ -47,9 +47,9 @@ export class Matrix implements IMatrix {
 	 */
 	subtract(value: Array2D | Array1D | Matrix): Matrix {
 		let result: Array1D | Array2D
-		if(value instanceof Matrix){
+		if (value instanceof Matrix) {
 			result = this.algebra.subtract(this.matrix, value.data)
-		}else{
+		} else {
 			result = this.algebra.subtract(this.matrix, value)
 		}
 		return new Matrix(result)
@@ -60,23 +60,46 @@ export class Matrix implements IMatrix {
 	 */
 	multiplyBy(multiplier: number | Array2D | Array1D | Matrix): Matrix {
 		let result: Array1D | Array2D
-		if(multiplier instanceof Matrix){
-			result = this.algebra.multiply(this.matrix, multiplier.data)as
-			| Array2D
-			| Array1D	
-		}else{
+		if (multiplier instanceof Matrix) {
+			result = this.algebra.multiply(this.matrix, multiplier.data) as
+				| Array2D
+				| Array1D
+		} else {
 			result = this.algebra.multiply(this.matrix, multiplier) as
 				| Array2D
-				| Array1D	
+				| Array1D
 		}
 		return new Matrix(result)
 	}
 	/**
-	 * 
+	 *
 	 * @param n Number of decimals default 0
 	 * @returns Rounded matrix with n decimals
 	 */
-	round(n: number=0):Matrix{
-		return new Matrix(this.algebra.round(this.matrix,n))
+	round(n: number = 0): Matrix {
+		return new Matrix(this.algebra.round(this.matrix, n))
+	}
+	/**
+	 * Extract data from a given a range.
+	 * All indexes are zero based.
+	 * @param rows - The number of the row (or range of rows when an array is provided) to extract the data
+	 * @param columns - The number of the column (or range of columns when an array is provided) to extract the data
+	 * @returns - New Matrix instance with the data
+	 */
+	subset(
+		rows: number | [number, number],
+		columns: number | [number, number],
+	): IMatrix {
+		let rowsRange =
+			typeof rows == 'number'
+				? rows
+				: this.algebra.range(rows[0], rows[1], true)
+		let colRange =
+			typeof columns == 'number'
+				? columns
+				: this.algebra.range(columns[0], columns[1], true)
+		let indexes = this.algebra.index(rowsRange, colRange)
+		let data = this.algebra.subset(this.data, indexes)
+		return new Matrix(data)
 	}
 }

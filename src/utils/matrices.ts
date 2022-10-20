@@ -28,12 +28,12 @@ export const factorizedStiffness = (
 	return { factor, matrix }
 }
 /**
- * Creates a factorized by (E*I/L^3) stiffness matrix for a single element.
+ * Creates a full stiffness matrix for a single element.
  * @param e - Young Modulus
  * @param l - Length
  * @param a - Area
  * @param i - Inertia
- * @returns An object containing the factorized matrix and its factor.
+ * @returns An array containing the full local stiffness matrix.
  */
 export const stiffness = (
 	e: number,

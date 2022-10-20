@@ -1,6 +1,6 @@
 import { degSlope, eucDistance } from '../../../utils/algebra'
 import {
-	degsOfFreedomArray,
+	degsOfFreedom2DArray,
 	IElement,
 } from '../../interfaces/element.interface'
 import { IMatrix } from '../../interfaces/matrix.interface'
@@ -30,17 +30,17 @@ export class Element implements IElement {
 			final: { dx: false, dy: false, rz: false },
 		}
 	}
-	get constraints(): degsOfFreedomArray {
+	get constraints(): degsOfFreedom2DArray {
 		return [
 			...Object.values(this.nodes.initial.constraints),
 			...Object.values(this.nodes.final.constraints),
-		] as degsOfFreedomArray
+		] as degsOfFreedom2DArray
 	}
-	get releases(): degsOfFreedomArray {
+	get releases(): degsOfFreedom2DArray {
 		return [
 			...Object.values(this._releases.initial),
 			...Object.values(this._releases.final),
-		] as degsOfFreedomArray
+		] as degsOfFreedom2DArray
 	}
 	get nodes(): { initial: INode; final: INode } {
 		return this._nodes
