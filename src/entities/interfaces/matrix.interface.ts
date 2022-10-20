@@ -14,4 +14,8 @@ export interface IMatrix {
 	add(value: Array1D | Array2D): Matrix
 	subtract(value: Array1D | Array2D): Matrix
 	multiplyBy(multiplier: number | Array1D | Array2D): Matrix
+	subset(
+		rows: number | [number, number],
+		columns: number | [number, number],
+	): IMatrix | number
 }

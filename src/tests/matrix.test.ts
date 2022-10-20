@@ -42,4 +42,10 @@ describe('Matrix Class', () => {
 		]
 		expect(matrix.subset(i, j).data).toEqual(expected)
 	})
+	it('should subset correctly a column of the array', () => {
+		let i = [0, 1] as [number, number]
+		let j = 0
+		const expected = [[1], [4]]
+		expect(matrix.subset(i, j).data).toEqual(expected)
+	})
 })

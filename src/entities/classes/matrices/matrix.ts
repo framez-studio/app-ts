@@ -89,7 +89,7 @@ export class Matrix implements IMatrix {
 	subset(
 		rows: number | [number, number],
 		columns: number | [number, number],
-	): IMatrix {
+	): IMatrix | number {
 		let rowsRange =
 			typeof rows == 'number'
 				? rows

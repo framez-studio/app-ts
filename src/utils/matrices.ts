@@ -1,4 +1,5 @@
-import { Array2D } from '../entities/interfaces/matrix.interface'
+import { degsOfFreedom2DArray } from '../entities/interfaces/element.interface'
+import { Array2D, IMatrix } from '../entities/interfaces/matrix.interface'
 
 /**
  * Creates a factorized by (E*I/L^3) stiffness matrix for a single element.
@@ -122,4 +123,33 @@ export const correction = (l: number, yi: number, yf: number): Array2D => {
 		],
 	]
 	return matrix
+}
+
+export const reduceStiffness = (
+	matrix: IMatrix,
+	degs: degsOfFreedom2DArray,
+): Array2D => {
+	let factors: Array2D[] = [
+		[
+			[0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0],
+		],
+	]
+	degs.forEach((deg, index) => {
+		if (deg) {
+			let k1 = matrix.subset([0, 6], index) as IMatrix
+			let k2 = matrix.subset(index, [0, 6]) as IMatrix
+			let k3 = matrix.subset(index, index) as number
+			let factor = k1.multiplyBy(k2.multiplyBy(k3).data).data as Array2D
+			factors.push(factor)
+		}
+	})
+	factors.forEach((factor) => {
+		matrix = matrix.subtract(factor)
+	})
+	return matrix.data as Array2D
 }

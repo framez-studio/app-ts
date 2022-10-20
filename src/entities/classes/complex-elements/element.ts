@@ -58,14 +58,20 @@ export class Element implements IElement {
 		)
 	}
 	public stiffness(system: coordinateSystem): IMatrix {
+		let stiff: IMatrix
+		let angle = this.inclination
 		const matrix = new SMatrix(
 			this.young,
 			this.length,
 			this.section.area,
 			this.section.inertiaZ,
+			this.releases,
 		)
-		let angle = this.inclination
-		if (system === 'local' || angle === 0) return matrix.full()
-		return matrix.toGlobal(angle)
+		if (system === 'local' || angle === 0) {
+			stiff = matrix.full()
+		} else {
+			stiff = matrix.toGlobal(angle)
+		}
+		return stiff
 	}
 }

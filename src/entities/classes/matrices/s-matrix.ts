@@ -2,10 +2,12 @@ import { ISMatrix } from '../../interfaces/s-matrix.interface'
 import { Matrix } from './matrix'
 import {
 	factorizedStiffness,
+	reduceStiffness,
 	stiffness,
 	transformation,
 } from '../../../utils/matrices'
 import { IMatrix } from '../../interfaces/matrix.interface'
+import { degsOfFreedom2DArray } from '../../interfaces/element.interface'
 
 export class SMatrix extends Matrix implements ISMatrix {
 	/**
@@ -20,8 +22,10 @@ export class SMatrix extends Matrix implements ISMatrix {
 		private l: number,
 		private a: number,
 		private i: number,
+		degs: degsOfFreedom2DArray,
 	) {
-		let matrix = stiffness(e, l, a, i)
+		let full = new Matrix(stiffness(e, l, a, i))
+		let matrix = reduceStiffness(full, degs)
 		super(matrix)
 	}
 	/**
