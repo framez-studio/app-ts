@@ -69,4 +69,8 @@ describe('Element Class', () => {
 			})
 		})
 	})
+	it.fails(
+		'should allow to create new Connected Elements with copied properties',
+		() => {},
+	)
 })

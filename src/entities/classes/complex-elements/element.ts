@@ -1,18 +1,18 @@
-import { degSlope, eucDistance } from '../../../utils/algebra'
-import {
-	degsOfFreedom2DArray,
-	IElement,
-} from '../../interfaces/element.interface'
-import { IMatrixGenerator } from '../../interfaces/matrix-generator.interface'
-import { ISMatrixOperator } from '../../interfaces/matrix-operator.interface'
-import { INode } from '../../interfaces/nodes.interface'
-import { ISection } from '../../interfaces/section.interface'
 import {
 	coordinateSystem,
 	Array2D,
 	degsOfFreedom2DBoolean,
 	initialFinal,
+	initialOrFinal,
+	degsOfFreedom2DArray,
+	coordinates2D,
 } from '../../types'
+import { IElement } from '../../interfaces/element.interface'
+import { IMatrixGenerator } from '../../interfaces/matrix-generator.interface'
+import { ISMatrixOperator } from '../../interfaces/matrix-operator.interface'
+import { INode } from '../../interfaces/nodes.interface'
+import { ISection } from '../../interfaces/section.interface'
+import { degSlope, eucDistance } from '../../../utils/algebra'
 import { MatrixGenerator } from '../matrices/matrix-generator'
 import { SMatrixOperator } from '../matrices/s-matrix-operator'
 
@@ -76,5 +76,16 @@ export class Element implements IElement {
 			stiff = this.matOp.rotate(stiff, angle)
 		}
 		return stiff
+	}
+	public setNode(which: initialOrFinal, node: INode): void {
+		this._nodes[which] = node
+	}
+	public newConnectedElement(
+		from: initialOrFinal,
+		to: coordinates2D,
+		section?: ISection | undefined,
+		young?: number | undefined,
+	): IElement {
+		throw new Error('Method not implemented.')
 	}
 }

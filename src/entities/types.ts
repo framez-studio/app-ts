@@ -18,4 +18,5 @@ export type Array2D = number[][]
 export type nodeLoads2D = 'fx' | 'fy' | 'mz'
 export type nodeLoads2DObject = { [key in nodeLoads2D]: number }
 
-export type initialFinal<T> = { initial: T; final: T }
+export type initialOrFinal = 'initial' | 'final'
+export type initialFinal<T> = { [key in initialOrFinal]: T }
