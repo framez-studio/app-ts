@@ -3,18 +3,22 @@ import {
 	degsOfFreedom2DArray,
 	IElement,
 } from '../../interfaces/element.interface'
-import { IMatrix } from '../../interfaces/matrix.interface'
-import { degsOfFreedomBoolean2D, INode } from '../../interfaces/nodes.interface'
-import { coordinateSystem } from '../../interfaces/s-matrix.interface'
+import { IMatrixGenerator } from '../../interfaces/matrix-generator.interface'
+import { ISMatrixOperator } from '../../interfaces/matrix-operator.interface'
+import { INode } from '../../interfaces/nodes.interface'
 import { ISection } from '../../interfaces/section.interface'
-import { SMatrix } from '../matrices/s-matrix'
+import { coordinateSystem, Array2D, degsOfFreedom2DBoolean } from '../../types'
+import { MatrixGenerator } from '../matrices/matrix-generator'
+import { SMatrixOperator } from '../matrices/s-matrix-operator'
 
 export class Element implements IElement {
 	private _nodes: { initial: INode; final: INode }
 	private _releases: {
-		initial: degsOfFreedomBoolean2D
-		final: degsOfFreedomBoolean2D
+		initial: degsOfFreedom2DBoolean
+		final: degsOfFreedom2DBoolean
 	}
+	private matOp: ISMatrixOperator = new SMatrixOperator()
+	private matGen: IMatrixGenerator = new MatrixGenerator()
 	public section: ISection
 	public young: number
 
@@ -57,20 +61,17 @@ export class Element implements IElement {
 			this._nodes.final.coordinates,
 		)
 	}
-	public stiffness(system: coordinateSystem): IMatrix {
-		let stiff: IMatrix
+	public stiffness(system: coordinateSystem): Array2D {
 		let angle = this.inclination
-		const matrix = new SMatrix(
+		let stiff: Array2D = this.matGen.stiffness(
 			this.young,
 			this.length,
 			this.section.area,
 			this.section.inertiaZ,
 			this.releases,
 		)
-		if (system === 'local' || angle === 0) {
-			stiff = matrix.full()
-		} else {
-			stiff = matrix.toGlobal(angle)
+		if (system === 'global' && angle !== 0) {
+			stiff = this.matOp.rotate(stiff, angle)
 		}
 		return stiff
 	}

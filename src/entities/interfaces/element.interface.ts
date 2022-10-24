@@ -1,6 +1,5 @@
-import { IMatrix } from './matrix.interface'
+import { Array2D, coordinateSystem } from '../types'
 import { INode } from './nodes.interface'
-import { coordinateSystem } from './s-matrix.interface'
 import { ISection } from './section.interface'
 
 export type degsOfFreedom2DArray = [
@@ -20,5 +19,5 @@ export interface IElement {
 	readonly constraints: degsOfFreedom2DArray
 	young: number
 	section: ISection
-	stiffness(system: coordinateSystem): IMatrix
+	stiffness(system: coordinateSystem): Array2D
 }

@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest'
 import { Element } from '../entities/classes/complex-elements/element'
 import { ElementNode } from '../entities/classes/nodes/element-node'
 import { RectangularHSection } from '../entities/classes/sections/rectangular-h-section'
-import { Array2D } from '../entities/interfaces/matrix.interface'
 
 describe('Element Class', () => {
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
@@ -32,8 +31,8 @@ describe('Element Class', () => {
 	it(`should calculate its inertia correctly`, () => {
 		expect(element.section.inertiaZ).toBeCloseTo(0.000001255)
 	})
-	it.todo(`should return its releases`, () => {
-		let expected = [false, false, true, false, false, false]
+	it(`should return its releases`, () => {
+		let expected = [false, false, false, false, false, false]
 		expect(element.releases).toEqual(expected)
 	})
 	it(`should calculate its local stiffness matrix`, () => {
@@ -45,7 +44,7 @@ describe('Element Class', () => {
 			[0, -111.5951, -167.3927, 0, 111.5951, -167.3927],
 			[0, 167.3927, 167.3927, 0, -167.3927, 334.7854],
 		]
-		let result = element.stiffness('local').data as Array2D
+		let result = element.stiffness('local')
 
 		expected.forEach((row, i) => {
 			row.forEach((value, j) => {
@@ -62,7 +61,7 @@ describe('Element Class', () => {
 			[0, -52266.6667, 0, 0, 52266.6667, 0],
 			[-167.3927, 0, 167.3927, 167.3927, 0, 334.7854],
 		]
-		let result = element.stiffness('global').data as Array2D
+		let result = element.stiffness('global')
 
 		expected.forEach((row, i) => {
 			row.forEach((value, j) => {
