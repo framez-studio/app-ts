@@ -1,10 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { Matrix } from '../entities/classes/matrices/matrix'
-import { solverDisplacements } from '../utils/solver'
 
-describe('Solver utils', () => {
+describe.todo('Solver utils', () => {
 	// TODO:
-	it.todo('should calculate matrix displacements', () => {
+	it('should calculate matrix displacements', () => {
 		let kred = new Matrix([
 			[20517, -6652, 619],
 			[-6652, 9003, -610],
