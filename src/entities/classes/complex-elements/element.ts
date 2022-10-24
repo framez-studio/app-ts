@@ -7,16 +7,18 @@ import { IMatrixGenerator } from '../../interfaces/matrix-generator.interface'
 import { ISMatrixOperator } from '../../interfaces/matrix-operator.interface'
 import { INode } from '../../interfaces/nodes.interface'
 import { ISection } from '../../interfaces/section.interface'
-import { coordinateSystem, Array2D, degsOfFreedom2DBoolean } from '../../types'
+import {
+	coordinateSystem,
+	Array2D,
+	degsOfFreedom2DBoolean,
+	initialFinal,
+} from '../../types'
 import { MatrixGenerator } from '../matrices/matrix-generator'
 import { SMatrixOperator } from '../matrices/s-matrix-operator'
 
 export class Element implements IElement {
-	private _nodes: { initial: INode; final: INode }
-	private _releases: {
-		initial: degsOfFreedom2DBoolean
-		final: degsOfFreedom2DBoolean
-	}
+	private _nodes: initialFinal<INode>
+	private _releases: initialFinal<degsOfFreedom2DBoolean>
 	private matOp: ISMatrixOperator = new SMatrixOperator()
 	private matGen: IMatrixGenerator = new MatrixGenerator()
 	public section: ISection
@@ -34,6 +36,9 @@ export class Element implements IElement {
 			final: { dx: false, dy: false, rz: false },
 		}
 	}
+	get nodes(): initialFinal<INode> {
+		return this._nodes
+	}
 	get constraints(): degsOfFreedom2DArray {
 		return [
 			...Object.values(this.nodes.initial.constraints),
@@ -45,9 +50,6 @@ export class Element implements IElement {
 			...Object.values(this._releases.initial),
 			...Object.values(this._releases.final),
 		] as degsOfFreedom2DArray
-	}
-	get nodes(): { initial: INode; final: INode } {
-		return this._nodes
 	}
 	get length(): number {
 		return eucDistance(

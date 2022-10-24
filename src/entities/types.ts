@@ -13,4 +13,9 @@ export type degsOfFreedom2DArray = [
 ]
 
 export type Array1D = number[]
-export type Array2D = Array1D[]
+export type Array2D = number[][]
+
+export type nodeLoads2D = 'fx' | 'fy' | 'mz'
+export type nodeLoads2DObject = { [key in nodeLoads2D]: number }
+
+export type initialFinal<T> = { initial: T; final: T }
