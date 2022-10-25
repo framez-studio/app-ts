@@ -50,4 +50,7 @@ export class MatrixOperator implements IMatrixOperator {
 	size(matrix: Array2D): [number, number] {
 		return this.algebra.size(matrix) as [number, number]
 	}
+	zeros(size: [number, number]): Array2D {
+		return this.algebra.zeros(size) as Array2D
+	}
 }

@@ -88,6 +88,15 @@ describe('Matrix Operator', () => {
 	it('should extract correctly the size of a matrix', () => {
 		expect(MatOp.size(data)).toEqual([3, 3])
 	})
+	it('should create a nxm zeros matrix', () => {
+		let expected = [
+			[0, 0],
+			[0, 0],
+			[0, 0],
+		]
+		let result = MatOp.zeros([3, 2])
+		expect(result).toEqual(expected)
+	})
 	// TODO:
 	it.todo('should subset correctly a row of an Array1D', () => {
 		let data = [1, 2, 3, 4, 5]
