@@ -3,7 +3,7 @@ import { ElementNode } from '../entities/classes/nodes/element-node'
 
 describe('ElementNode Class', () => {
 	let coordinates = { x: 0, y: 2 }
-	const node = new ElementNode(coordinates)
+	const node = new ElementNode(coordinates.x, coordinates.y)
 
 	it('should store correctly its coordinates', () => {
 		expect(node.coordinates).toEqual(coordinates)

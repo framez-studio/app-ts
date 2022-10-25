@@ -1,6 +1,5 @@
 import {
 	Array2D,
-	coordinates2D,
 	coordinateSystem,
 	degsOfFreedom2DArray,
 	initialOrFinal,
@@ -20,7 +19,7 @@ export interface IElement {
 	setNode(which: initialOrFinal, node: INode): void
 	newConnectedElement(
 		from: initialOrFinal,
-		to: coordinates2D,
+		to: INode,
 		section?: ISection,
 		young?: number,
 	): IElement

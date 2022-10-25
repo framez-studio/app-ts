@@ -12,8 +12,8 @@ export class ElementNode implements INode, Printable {
 	public coordinates: coordinates2D
 	public constraints: degsOfFreedom2DBoolean
 
-	constructor(coordinates: coordinates2D) {
-		this.coordinates = coordinates
+	constructor(x: number, y: number) {
+		this.coordinates = { x, y }
 		this.constraints = { dx: false, dy: false, rz: false }
 		this._loads = { fx: 0, fy: 0, mz: 0 }
 	}

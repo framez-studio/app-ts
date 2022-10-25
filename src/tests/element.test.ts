@@ -7,8 +7,8 @@ describe('Element Class', () => {
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
 	const points = { i: { x: 0, y: 0 }, f: { x: 0, y: 3 } }
 	let nodes = {
-		i: new ElementNode(points.i),
-		f: new ElementNode(points.f),
+		i: new ElementNode(points.i.x, points.i.y),
+		f: new ElementNode(points.f.x, points.f.y),
 	}
 	let element = new Element(nodes.i, nodes.f, section, 200000000)
 
@@ -69,8 +69,14 @@ describe('Element Class', () => {
 			})
 		})
 	})
-	it.fails(
-		'should allow to create new Connected Elements with copied properties',
-		() => {},
-	)
+	it('should allow to create new connected IElement object with same properties', () => {
+		let fNode = new ElementNode(3, 3)
+		let newElement = element.newConnectedElement('final', fNode)
+		let sharedNode = newElement.nodes.initial === element.nodes.final
+		let sameYoung = newElement.young === element.young
+		let sameSection = newElement.section === element.section
+		expect(sharedNode).toBeTruthy()
+		expect(sameYoung).toBeTruthy()
+		expect(sameSection).toBeTruthy()
+	})
 })

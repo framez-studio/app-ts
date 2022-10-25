@@ -5,7 +5,6 @@ import {
 	initialFinal,
 	initialOrFinal,
 	degsOfFreedom2DArray,
-	coordinates2D,
 } from '../../types'
 import { IElement } from '../../interfaces/element.interface'
 import { IMatrixGenerator } from '../../interfaces/matrix-generator.interface'
@@ -82,10 +81,15 @@ export class Element implements IElement {
 	}
 	public newConnectedElement(
 		from: initialOrFinal,
-		to: coordinates2D,
+		to: INode,
 		section?: ISection | undefined,
 		young?: number | undefined,
 	): IElement {
-		throw new Error('Method not implemented.')
+		return new Element(
+			this.nodes[from],
+			to,
+			section ?? this.section,
+			young ?? this.young,
+		)
 	}
 }
