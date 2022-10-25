@@ -11,6 +11,7 @@ export interface IMatrixOperator {
 		rows: number | [number, number],
 		columns: number | [number, number],
 	): number | (Array2D | Array1D)
+	size(matrix: Array2D | Array2D): [number, number]
 }
 
 export interface ISMatrixOperator extends IMatrixOperator {

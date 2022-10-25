@@ -85,6 +85,9 @@ describe('Matrix Operator', () => {
 		const expected = [[1], [4]]
 		expect(MatOp.subset(data, i, j)).toEqual(expected)
 	})
+	it('should extract correctly the size of a matrix', () => {
+		expect(MatOp.size(data)).toEqual([3, 3])
+	})
 	// TODO:
 	it.todo('should subset correctly a row of an Array1D', () => {
 		let data = [1, 2, 3, 4, 5]

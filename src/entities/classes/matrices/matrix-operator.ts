@@ -47,4 +47,7 @@ export class MatrixOperator implements IMatrixOperator {
 		let data = this.algebra.subset(matrix, indexes)
 		return data
 	}
+	size(matrix: Array2D): [number, number] {
+		return this.algebra.size(matrix) as [number, number]
+	}
 }
