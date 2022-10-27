@@ -1,6 +1,6 @@
 import { supportsConstraints } from './types'
 
-export const supports: supportsConstraints = {
+export const constraints: supportsConstraints = {
 	'simple-x': {
 		dx: true,
 		dy: false,
