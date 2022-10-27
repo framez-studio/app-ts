@@ -1,5 +1,4 @@
-import { Array2D } from '../types'
-import { degsOfFreedom2DArray } from './element.interface'
+import { Array2D, degsOfFreedom2DArray } from '../types'
 
 export interface IMatrixGenerator {
 	transformation(alpha: number): Array2D
