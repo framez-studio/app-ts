@@ -11,6 +11,7 @@ import { IMatrixGenerator } from '../../interfaces/matrix-generator.interface'
 import { ISMatrixOperator } from '../../interfaces/matrix-operator.interface'
 import { INode } from '../../interfaces/nodes.interface'
 import { ISection } from '../../interfaces/section.interface'
+import { defaultElementReleases } from '../../globals'
 import { degSlope, eucDistance } from '../../../utils/algebra'
 import { MatrixGenerator } from '../matrices/matrix-generator'
 import { SMatrixOperator } from '../matrices/s-matrix-operator'
@@ -30,10 +31,7 @@ export class Element implements IElement {
 			initial: iNode,
 			final: fNode,
 		}
-		this._releases = {
-			initial: { dx: false, dy: false, rz: false },
-			final: { dx: false, dy: false, rz: false },
-		}
+		this._releases = defaultElementReleases
 	}
 	get nodes(): initialFinal<INode> {
 		return this._nodes
