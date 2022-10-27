@@ -20,3 +20,8 @@ export type nodeLoads2DObject = { [key in nodeLoads2D]: number }
 
 export type initialOrFinal = 'initial' | 'final'
 export type initialFinal<T> = { [key in initialOrFinal]: T }
+
+export type supportType = 'simple-x' | 'simple-y' | 'hinge' | 'fixed'
+export type supportsConstraints = {
+	[key in supportType]: { [key in degsOfFreedom2D]: boolean }
+}
