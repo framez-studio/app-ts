@@ -1,4 +1,9 @@
-import { supportsConstraints } from './types'
+import {
+	degsOfFreedom2DBoolean,
+	initialFinal,
+	nodeLoads2DObject,
+	supportsConstraints,
+} from './types'
 
 export const constraints: supportsConstraints = {
 	'simple-x': {
@@ -22,3 +27,14 @@ export const constraints: supportsConstraints = {
 		rz: true,
 	},
 }
+// Default Values
+export const defaultElementReleases: initialFinal<degsOfFreedom2DBoolean> = {
+	initial: { dx: false, dy: false, rz: false },
+	final: { dx: false, dy: false, rz: false },
+}
+export const defaultNodeConstraints: degsOfFreedom2DBoolean = {
+	dx: false,
+	dy: false,
+	rz: false,
+}
+export const defaultNodeLoads: nodeLoads2DObject = { fx: 0, fy: 0, mz: 0 }
