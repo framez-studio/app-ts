@@ -1,3 +1,4 @@
+import { defaultNodeConstraints, defaultNodeLoads } from '../../globals'
 import { INode } from '../../interfaces/nodes.interface'
 import { Printable } from '../../interfaces/ui.interfaces'
 import {
@@ -14,8 +15,8 @@ export class ElementNode implements INode, Printable {
 
 	constructor(x: number, y: number) {
 		this.coordinates = { x, y }
-		this.constraints = { dx: false, dy: false, rz: false }
-		this._loads = { fx: 0, fy: 0, mz: 0 }
+		this.constraints = defaultNodeConstraints
+		this._loads = defaultNodeLoads
 	}
 	get loads(): nodeLoads2DObject {
 		return this._loads
