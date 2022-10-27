@@ -22,4 +22,18 @@ describe('Structure Class', () => {
 	it('should return the nodes ordered by x first and then y coordinates', () => {
 		expect(structure.nodes).toEqual([a, b, c, d])
 	})
+	it('should allow to access one of its nodes by coordinates', () => {
+		expect(structure.node(0, 0)).toBe(a)
+	})
+	it('should throw an error if trying to get a node with unexistent coordinates', () => {
+		expect(() => structure.node(100, 100)).toThrowError()
+	})
+	it('should allow to access one of its elements by coordinates', () => {
+		expect(structure.element({ x: 0, y: 0 }, { x: 0, y: 3 })).toBe(lCol)
+	})
+	it('should throw an error if trying to get an element with unexistent coordinates', () => {
+		expect(() =>
+			structure.element({ x: 0, y: 100 }, { x: 0, y: 3 }),
+		).toThrowError()
+	})
 })
