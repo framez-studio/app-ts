@@ -26,13 +26,14 @@ export class RectangularSpanLoad implements ISpanLoad {
 		)
 	}
 	get fefArray(): Array2D {
+		let fef = this.fef
 		return [
-			[this.fef.initial.fx],
-			[this.fef.initial.fy],
-			[this.fef.initial.mz],
-			[this.fef.final.fx],
-			[this.fef.final.fy],
-			[this.fef.final.mz],
+			[fef.initial.fx],
+			[fef.initial.fy],
+			[fef.initial.mz],
+			[fef.final.fx],
+			[fef.final.fy],
+			[fef.final.mz],
 		]
 	}
 }
