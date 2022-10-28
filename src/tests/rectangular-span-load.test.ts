@@ -16,6 +16,17 @@ describe('Rectangular Span Load Class', () => {
 		expect(result.final.fy).toBe((w * l) / 2)
 		expect(result.final.mz).toBe(-(w * l ** 2) / 12)
 	})
+	it('should return its resultants as a matrix', () => {
+		let expected = [
+			[load.fef.initial.fx],
+			[load.fef.initial.fy],
+			[load.fef.initial.mz],
+			[load.fef.final.fx],
+			[load.fef.final.fy],
+			[load.fef.final.mz],
+		]
+		expect(load.fefArray).toEqual(expected)
+	})
 	it('should provide x-forces equilibrium', () => {
 		let result = load.fef
 		let sum = result.initial.fx + result.final.fx
