@@ -97,6 +97,20 @@ describe('Matrix Operator', () => {
 		let result = MatOp.zeros([3, 2])
 		expect(result).toEqual(expected)
 	})
+	it(`should replace correctly an array inside another array`, () => {
+		let i = [0, 1] as [number, number]
+		let j = [0, 1] as [number, number]
+		let newData = [
+			[0, 0],
+			[0, 0],
+		]
+		const expected = [
+			[0, 0, 3],
+			[0, 0, 6],
+			[7, 8, 9],
+		]
+		expect(MatOp.replace(data, i, j, newData)).toEqual(expected)
+	})
 	// TODO:
 	it.todo('should subset correctly a row of an Array1D', () => {
 		let data = [1, 2, 3, 4, 5]

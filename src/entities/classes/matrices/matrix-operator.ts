@@ -47,6 +47,24 @@ export class MatrixOperator implements IMatrixOperator {
 		let data = this.algebra.subset(matrix, indexes)
 		return data
 	}
+	replace(
+		matrix: Array2D | Array1D,
+		rows: number | [number, number],
+		columns: number | [number, number],
+		value: number | Array2D | Array1D,
+	): Array2D | Array1D {
+		let rowsRange =
+			typeof rows === 'number'
+				? rows
+				: this.algebra.range(rows[0], rows[1], true)
+		let colRange =
+			typeof columns === 'number'
+				? columns
+				: this.algebra.range(columns[0], columns[1], true)
+		let indexes = this.algebra.index(rowsRange, colRange)
+		let data = this.algebra.subset(matrix, indexes, value)
+		return data
+	}
 	size(matrix: Array2D): [number, number] {
 		return this.algebra.size(matrix) as [number, number]
 	}

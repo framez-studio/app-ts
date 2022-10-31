@@ -11,6 +11,12 @@ export interface IMatrixOperator {
 		rows: number | [number, number],
 		columns: number | [number, number],
 	): number | (Array2D | Array1D)
+	replace(
+		matrix: Array2D | Array1D,
+		rows: number | [number, number],
+		columns: number | [number, number],
+		value: number | Array2D | Array1D,
+	): Array2D | Array1D
 	size(matrix: Array2D | Array2D): [number, number]
 	zeros(size: [number, number]): Array2D
 }
