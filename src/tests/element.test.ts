@@ -82,7 +82,7 @@ describe('Element Class', () => {
 		expect(sameYoung).toBeTruthy()
 		expect(sameSection).toBeTruthy()
 	})
-	it('should allow to set the its spanload', () => {
+	it('should allow to set its spanload', () => {
 		let load = new PunctualSpanLoad(20, element.length, 1)
 		element.setSpanLoad(load)
 		expect(element.fef).toEqual(load.fefArray)
