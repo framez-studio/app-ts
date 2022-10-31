@@ -1,7 +1,7 @@
 import { punctualLoadFef } from '../../../utils/fefs'
 import { ISpanLoad } from '../../interfaces/span-load.interface'
 import { elementLoads2DArray, elementLoads2DObject } from '../../types'
-
+// TODO: throw error if distance is greater than elementLength
 export class PunctualSpanLoad implements ISpanLoad {
 	private load: number
 	private elementLength: number

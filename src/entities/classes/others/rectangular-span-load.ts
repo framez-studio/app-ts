@@ -5,7 +5,7 @@ import {
 	elementLoads2DObject,
 	initialFinal,
 } from '../../types'
-
+// TODO: throw error if distance is greater than elementLength
 export class RectangularSpanLoad implements ISpanLoad {
 	private load: number
 	private elementLength: number
