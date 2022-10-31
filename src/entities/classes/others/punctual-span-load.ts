@@ -1,6 +1,6 @@
 import { punctualLoadFef } from '../../../utils/fefs'
 import { ISpanLoad } from '../../interfaces/span-load.interface'
-import { Array2D, initialFinal, nodeLoads2DObject } from '../../types'
+import { elementLoads2DArray, elementLoads2DObject } from '../../types'
 
 export class PunctualSpanLoad implements ISpanLoad {
 	private load: number
@@ -12,10 +12,10 @@ export class PunctualSpanLoad implements ISpanLoad {
 		this.elementLength = elementLength
 		this.distance = distance
 	}
-	get fef(): initialFinal<nodeLoads2DObject> {
+	get fef(): elementLoads2DObject {
 		return punctualLoadFef(this.load, this.elementLength, this.distance)
 	}
-	get fefArray(): Array2D {
+	get fefArray(): elementLoads2DArray {
 		return [
 			[this.fef.initial.fx],
 			[this.fef.initial.fy],

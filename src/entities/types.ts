@@ -25,3 +25,13 @@ export type supportType = 'simple-x' | 'simple-y' | 'hinge' | 'fixed'
 export type supportsConstraints = {
 	[key in supportType]: { [key in degsOfFreedom2D]: boolean }
 }
+
+export type elementLoads2DObject = initialFinal<nodeLoads2DObject>
+export type elementLoads2DArray = [
+	[number],
+	[number],
+	[number],
+	[number],
+	[number],
+	[number],
+]

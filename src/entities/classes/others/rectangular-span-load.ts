@@ -1,6 +1,10 @@
 import { rectangularLoadFef } from '../../../utils/fefs'
 import { ISpanLoad } from '../../interfaces/span-load.interface'
-import { Array2D, initialFinal, nodeLoads2DObject } from '../../types'
+import {
+	elementLoads2DArray,
+	elementLoads2DObject,
+	initialFinal,
+} from '../../types'
 
 export class RectangularSpanLoad implements ISpanLoad {
 	private load: number
@@ -17,7 +21,7 @@ export class RectangularSpanLoad implements ISpanLoad {
 		this.elementLength = elementLength
 		this.distance = { initial, final }
 	}
-	get fef(): initialFinal<nodeLoads2DObject> {
+	get fef(): elementLoads2DObject {
 		return rectangularLoadFef(
 			this.load,
 			this.elementLength,
@@ -25,7 +29,7 @@ export class RectangularSpanLoad implements ISpanLoad {
 			this.distance.final,
 		)
 	}
-	get fefArray(): Array2D {
+	get fefArray(): elementLoads2DArray {
 		let fef = this.fef
 		return [
 			[fef.initial.fx],
