@@ -1,3 +1,4 @@
+import { ISpanLoad } from './interfaces/span-load.interface'
 import {
 	degsOfFreedom2DBoolean,
 	initialFinal,
@@ -27,11 +28,11 @@ export const constraints: supportsConstraints = {
 		rz: true,
 	},
 }
-// Default Values
 export const defaultElementReleases: initialFinal<degsOfFreedom2DBoolean> = {
 	initial: { dx: false, dy: false, rz: false },
 	final: { dx: false, dy: false, rz: false },
 }
+export const defaultElementLoads: ISpanLoad[] = []
 export const defaultNodeConstraints: degsOfFreedom2DBoolean = {
 	dx: false,
 	dy: false,
