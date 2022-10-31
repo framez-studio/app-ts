@@ -1,9 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import { Element } from '../entities/classes/complex-elements/element'
+import { MatrixOperator } from '../entities/classes/matrices/matrix-operator'
 import { ElementNode } from '../entities/classes/nodes/element-node'
+import { PunctualSpanLoad } from '../entities/classes/others/punctual-span-load'
 import { RectangularHSection } from '../entities/classes/sections/rectangular-h-section'
 
 describe('Element Class', () => {
+	const matOp = new MatrixOperator()
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
 	const points = { i: { x: 0, y: 0 }, f: { x: 0, y: 3 } }
 	let nodes = {
@@ -78,5 +81,17 @@ describe('Element Class', () => {
 		expect(sharedNode).toBeTruthy()
 		expect(sameYoung).toBeTruthy()
 		expect(sameSection).toBeTruthy()
+	})
+	it('should allow to set the its spanload', () => {
+		let load = new PunctualSpanLoad(20, element.length, 1)
+		element.setSpanLoad(load)
+		expect(element.fef).toEqual(load.fefArray)
+	})
+	it(`should allow to add multiple span loads`, () => {
+		let load1 = new PunctualSpanLoad(20, element.length, 1)
+		element.setSpanLoad(load1)
+		element.addSpanLoad(load1)
+		let expected = matOp.sum(load1.fefArray, load1.fefArray)
+		expect(element.fef).toEqual(expected)
 	})
 })

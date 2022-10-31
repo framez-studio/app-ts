@@ -5,20 +5,23 @@ import {
 	initialFinal,
 	initialOrFinal,
 	degsOfFreedom2DArray,
+	elementLoads2DArray,
 } from '../../types'
 import { IElement } from '../../interfaces/element.interface'
 import { IMatrixGenerator } from '../../interfaces/matrix-generator.interface'
 import { ISMatrixOperator } from '../../interfaces/matrix-operator.interface'
 import { INode } from '../../interfaces/nodes.interface'
 import { ISection } from '../../interfaces/section.interface'
-import { defaultElementReleases } from '../../globals'
+import { defaultElementLoads, defaultElementReleases } from '../../globals'
 import { degSlope, eucDistance } from '../../../utils/algebra'
 import { MatrixGenerator } from '../matrices/matrix-generator'
 import { SMatrixOperator } from '../matrices/s-matrix-operator'
+import { ISpanLoad } from '../../interfaces/span-load.interface'
 
 export class Element implements IElement {
 	private _nodes: initialFinal<INode>
 	private _releases: initialFinal<degsOfFreedom2DBoolean>
+	private _loads: ISpanLoad[] = defaultElementLoads
 	private matOp: ISMatrixOperator = new SMatrixOperator()
 	private matGen: IMatrixGenerator = new MatrixGenerator()
 	public section: ISection
@@ -60,6 +63,21 @@ export class Element implements IElement {
 			this._nodes.final.coordinates,
 		)
 	}
+	get fef(): elementLoads2DArray {
+		let loadsFef = this._loads.map((load) => {
+			return load.fefArray
+		})
+		return this.matOp.sum(...loadsFef) as elementLoads2DArray
+	}
+	public setNode(which: initialOrFinal, node: INode): void {
+		this._nodes[which] = node
+	}
+	public setSpanLoad(load: ISpanLoad): void {
+		this._loads = [load]
+	}
+	public addSpanLoad(load: ISpanLoad): void {
+		this._loads.push(load)
+	}
 	public stiffness(system: coordinateSystem): Array2D {
 		let angle = this.inclination
 		let stiff: Array2D = this.matGen.stiffness(
@@ -73,9 +91,6 @@ export class Element implements IElement {
 			stiff = this.matOp.rotate(stiff, angle)
 		}
 		return stiff
-	}
-	public setNode(which: initialOrFinal, node: INode): void {
-		this._nodes[which] = node
 	}
 	public newConnectedElement(
 		from: initialOrFinal,
