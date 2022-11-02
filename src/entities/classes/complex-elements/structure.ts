@@ -1,4 +1,5 @@
 import {
+	assemblyMatrix,
 	filterElementByCoords,
 	filterNodeByCoords,
 	uniques,
@@ -22,7 +23,8 @@ export class Structure implements IStructure {
 		let all = this.elements
 			.map((element) => [element.nodes.initial, element.nodes.final])
 			.flat()
-		return uniques(...all)
+		let filtered = uniques(...all)
+		return filtered
 	}
 	public node(x: number, y: number): INode {
 		return filterNodeByCoords(this.nodes, x, y)
@@ -34,6 +36,6 @@ export class Structure implements IStructure {
 		this.node(x, y).constraints = constraints[type]
 	}
 	public stiffness(): Array2D {
-		throw new Error('Method not implemented.')
+		return assemblyMatrix(this.nodes, this.elements)
 	}
 }
