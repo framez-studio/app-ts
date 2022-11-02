@@ -46,7 +46,10 @@ export const filterElementByCoords = (
 		)
 	return element[0]
 }
-export const assemblyMatrix = (nodes: INode[], elements: IElement[]) => {
+export const assemblyMatrix = (
+	nodes: INode[],
+	elements: IElement[],
+): Array2D => {
 	let degs = nodes.length * 3
 	let matrix = matOp.zeros([degs, degs])
 	elements.forEach((element) => {
