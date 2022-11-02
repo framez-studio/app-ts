@@ -21,6 +21,7 @@ export interface IMatrixOperator {
 	zeros(size: [number, number]): Array2D
 }
 
-export interface ISMatrixOperator extends IMatrixOperator {
+export interface IStiffnessMatrixOperator extends IMatrixOperator {
 	rotate(matrix: Array2D, angle: number): Array2D
+	submatrices(matrix: Array2D): [[Array2D, Array2D], [Array2D, Array2D]]
 }
