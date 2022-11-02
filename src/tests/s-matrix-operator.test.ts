@@ -58,4 +58,19 @@ describe('SMatrix Operator Class', () => {
 		expect(expected.ji).toEqual(result.ji)
 		expect(expected.jj).toEqual(result.jj)
 	})
+	it('should delete the degs of freedom of a given matrix', () => {
+		let degs = [0, 1, 5]
+		let expected = [
+			[334.7854, 0, -167.3927],
+			[0, 52266.6667, 0],
+			[-167.3927, 0, 111.5951],
+		]
+		expect(sMatOp.reduceDegs('matrix', data, ...degs)).toEqual(expected)
+	})
+	it('should delete the degs of freedom of a given vector', () => {
+		let vector = [[0], [1], [2], [3], [4], [5]]
+		let degs = [0, 1, 5]
+		let expected = [[2], [3], [4]]
+		expect(sMatOp.reduceDegs('vector', vector, ...degs)).toEqual(expected)
+	})
 })

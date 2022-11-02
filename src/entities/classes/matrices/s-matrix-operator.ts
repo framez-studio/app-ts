@@ -22,4 +22,13 @@ export class SMatrixOperator
 		let jj = this.subset(matrix, [3, 5], [3, 5]) as Array2D
 		return { ii, ij, ji, jj }
 	}
+	reduceDegs(
+		type: 'matrix' | 'vector',
+		matrix: Array2D,
+		...degs: number[]
+	): Array2D {
+		let initialFilter = this.deleteRows(matrix, ...degs)
+		if (type === 'vector') return initialFilter
+		return this.deleteCols(initialFilter, ...degs)
+	}
 }
