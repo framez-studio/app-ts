@@ -35,3 +35,10 @@ export type elementLoads2DArray = [
 	[number],
 	[number],
 ]
+
+export type stiffnessSubmatrices2DObject = {
+	ii: Array2D
+	ij: Array2D
+	ji: Array2D
+	jj: Array2D
+}
