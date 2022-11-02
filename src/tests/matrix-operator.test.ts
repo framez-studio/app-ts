@@ -111,6 +111,16 @@ describe('Matrix Operator', () => {
 		]
 		expect(MatOp.replace(data, i, j, newData)).toEqual(expected)
 	})
+	it(`should delete a series of specified rows from an Array2D`, () => {
+		let rows = [0, 2]
+		let expected = [[4, 5, 6]]
+		expect(MatOp.deleteRows(data, ...rows)).toEqual(expected)
+	})
+	it(`should delete a series of specified columns from an Array2D`, () => {
+		let cols = [0, 2]
+		let expected = [[2], [5], [8]]
+		expect(MatOp.deleteCols(data, ...cols)).toEqual(expected)
+	})
 	// TODO:
 	it.todo('should subset correctly a row of an Array1D', () => {
 		let data = [1, 2, 3, 4, 5]

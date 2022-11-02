@@ -17,7 +17,9 @@ export interface IMatrixOperator {
 		columns: number | [number, number],
 		value: number | Array2D | Array1D,
 	): Array2D | Array1D
-	size(matrix: Array2D | Array2D): [number, number]
+	size(matrix: Array2D | Array1D): [number, number]
+	deleteRows(matrix: Array2D, ...rows: number[]): Array2D
+	deleteCols(matrix: Array2D, ...cols: number[]): Array2D
 	zeros(size: [number, number]): Array2D
 }
 

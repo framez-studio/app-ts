@@ -65,7 +65,21 @@ export class MatrixOperator implements IMatrixOperator {
 		let data = this.algebra.subset(matrix, indexes, value)
 		return data
 	}
-	size(matrix: Array2D): [number, number] {
+	deleteRows(matrix: Array2D, ...rows: number[]): Array2D {
+		let filtered = matrix.filter((_, index) => {
+			return !rows.includes(index)
+		})
+		return filtered
+	}
+	deleteCols(matrix: Array2D, ...cols: number[]): Array2D {
+		let filtered = matrix.map((row) => {
+			return row.filter((_, index) => {
+				return !cols.includes(index)
+			})
+		})
+		return filtered
+	}
+	size(matrix: Array2D | Array1D): [number, number] {
 		return this.algebra.size(matrix) as [number, number]
 	}
 	zeros(size: [number, number]): Array2D {
