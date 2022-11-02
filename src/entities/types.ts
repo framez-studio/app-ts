@@ -36,9 +36,13 @@ export type elementLoads2DArray = [
 	[number],
 ]
 
+export type stiffnessSubmatrices2D = 'ii' | 'ij' | 'ji' | 'jj'
+export type stiffnessSubmatrices2DRanges = {
+	[key in stiffnessSubmatrices2D]: {
+		rows: [number, number]
+		columns: [number, number]
+	}
+}
 export type stiffnessSubmatrices2DObject = {
-	ii: Array2D
-	ij: Array2D
-	ji: Array2D
-	jj: Array2D
+	[key in stiffnessSubmatrices2D]: Array2D
 }
