@@ -1,10 +1,14 @@
-import { coordinates2D } from '../entities/types'
+import {
+	Array2D,
+	coordinates2D,
+	stiffnessSubmatrices2D,
+} from '../entities/types'
 import { IElement } from '../entities/interfaces/element.interface'
-import { IMatrixOperator } from '../entities/interfaces/matrix-operator.interface'
+import { IStiffnessMatrixOperator } from '../entities/interfaces/matrix-operator.interface'
 import { INode } from '../entities/interfaces/nodes.interface'
-import { MatrixOperator } from '../entities/classes/matrices/matrix-operator'
+import { SMatrixOperator } from '../entities/classes/matrices/s-matrix-operator'
 
-const MatOp: IMatrixOperator = new MatrixOperator()
+const matOp: IStiffnessMatrixOperator = new SMatrixOperator()
 
 export const uniques = <T>(...elements: T[]): T[] => {
 	let uniqueElements = new Set()
@@ -43,6 +47,64 @@ export const filterElementByCoords = (
 	return element[0]
 }
 export const assemblyMatrix = (nodes: INode[], elements: IElement[]) => {
-	let degs = nodes.length
-	return
+	let degs = nodes.length * 3
+	let matrix = matOp.zeros([degs, degs])
+	elements.forEach((element) => {
+		if (
+			nodes.includes(element.nodes.initial) &&
+			nodes.includes(element.nodes.final)
+		) {
+			let iDegIndex = nodes.indexOf(element.nodes.initial)
+			let fDegIndex = nodes.indexOf(element.nodes.final)
+			let iDegRange = [iDegIndex * 3, iDegIndex * 3 + 2] as [
+				number,
+				number,
+			]
+			let fDegRange = [fDegIndex * 3, fDegIndex * 3 + 2] as [
+				number,
+				number,
+			]
+			let ranges = {
+				ii: {
+					rows: iDegRange,
+					columns: iDegRange,
+				},
+				ij: {
+					rows: iDegRange,
+					columns: fDegRange,
+				},
+				ji: {
+					rows: fDegRange,
+					columns: iDegRange,
+				},
+				jj: {
+					rows: fDegRange,
+					columns: fDegRange,
+				},
+			}
+			let stiffness = matOp.submatrices(element.stiffness('global'))
+			let indexes = Object.keys(stiffness) as stiffnessSubmatrices2D[]
+
+			indexes.forEach((index) => {
+				let oldSubmatrix = matOp.subset(
+					matrix,
+					ranges[index].rows,
+					ranges[index].columns,
+				) as Array2D
+				let newSubmatrix = stiffness[index]
+				let updatedSubmatrix = matOp.sum(
+					oldSubmatrix,
+					newSubmatrix,
+				) as Array2D
+
+				matrix = matOp.replace(
+					matrix,
+					ranges[index].rows,
+					ranges[index].columns,
+					updatedSubmatrix,
+				) as Array2D
+			})
+		}
+	})
+	return matrix
 }
