@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { SMatrixOperator } from '../entities/classes/matrices/s-matrix-operator'
+import { stiffnessSubmatrices2DObject } from '../entities/types'
 
 describe('SMatrix Operator Class', () => {
 	const data = [
@@ -29,37 +30,32 @@ describe('SMatrix Operator Class', () => {
 		})
 	})
 	it('should extract the submatrices of a 2D element stiffness matrix', () => {
-		let expected = [
-			[
-				[
-					[52266.6667, 0, 0],
-					[0, 111.5951, 167.3927],
-					[0, 167.3927, 334.7854],
-				],
-				[
-					[-52266.6667, 0, 0],
-					[0, -111.5951, 167.3927],
-					[0, -167.3927, 167.3927],
-				],
+		let expected: stiffnessSubmatrices2DObject = {
+			ii: [
+				[52266.6667, 0, 0],
+				[0, 111.5951, 167.3927],
+				[0, 167.3927, 334.7854],
 			],
-			[
-				[
-					[-52266.6667, 0, 0],
-					[0, -111.5951, -167.3927],
-					[0, 167.3927, 167.3927],
-				],
-				[
-					[52266.6667, 0, 0],
-					[0, 111.5951, -167.3927],
-					[0, -167.3927, 334.7854],
-				],
+			ij: [
+				[-52266.6667, 0, 0],
+				[0, -111.5951, 167.3927],
+				[0, -167.3927, 167.3927],
 			],
-		]
+			ji: [
+				[-52266.6667, 0, 0],
+				[0, -111.5951, -167.3927],
+				[0, 167.3927, 167.3927],
+			],
+			jj: [
+				[52266.6667, 0, 0],
+				[0, 111.5951, -167.3927],
+				[0, -167.3927, 334.7854],
+			],
+		}
 		let result = sMatOp.submatrices(data)
-		expected.forEach((row, i) => {
-			row.forEach((value, j) => {
-				expect(result[i][j]).toEqual(value)
-			})
-		})
+		expect(expected.ii).toEqual(result.ii)
+		expect(expected.ij).toEqual(result.ij)
+		expect(expected.ji).toEqual(result.ji)
+		expect(expected.jj).toEqual(result.jj)
 	})
 })

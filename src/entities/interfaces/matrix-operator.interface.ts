@@ -1,4 +1,4 @@
-import { Array2D, Array1D } from '../types'
+import { Array2D, Array1D, stiffnessSubmatrices2DObject } from '../types'
 
 export interface IMatrixOperator {
 	sum(...matrices: (Array2D | Array1D)[]): Array2D | Array1D
@@ -23,5 +23,5 @@ export interface IMatrixOperator {
 
 export interface IStiffnessMatrixOperator extends IMatrixOperator {
 	rotate(matrix: Array2D, angle: number): Array2D
-	submatrices(matrix: Array2D): [[Array2D, Array2D], [Array2D, Array2D]]
+	submatrices(matrix: Array2D): stiffnessSubmatrices2DObject
 }
