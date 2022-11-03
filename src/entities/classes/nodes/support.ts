@@ -1,18 +1,10 @@
-import {
-	degsOfFreedomBoolean2D,
-	INode,
-	ISupport,
-} from '../../interfaces/nodes.interface'
+import { constraints } from '../../globals'
+import { supportType } from '../../types'
+import { ElementNode } from './element-node'
 
-export class Support implements ISupport {
-	public restrictions: degsOfFreedomBoolean2D
-	private _node: INode
-
-	constructor(node: INode, restrictions: degsOfFreedomBoolean2D) {
-		this._node = node
-		this.restrictions = restrictions
-	}
-	public get node(): INode {
-		return this._node
+export class Support extends ElementNode {
+	constructor(type: supportType, x: number, y: number) {
+		super(x, y)
+		this.constraints = constraints[type]
 	}
 }
