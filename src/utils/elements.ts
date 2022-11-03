@@ -10,11 +10,6 @@ import { SMatrixOperator } from '../entities/classes/matrices/s-matrix-operator'
 
 const matOp: IStiffnessMatrixOperator = new SMatrixOperator()
 
-export const uniques = <T>(...elements: T[]): T[] => {
-	let uniqueElements = new Set()
-	elements.forEach((element) => uniqueElements.add(element))
-	return Array.from(uniqueElements) as T[]
-}
 export const filterNodeByCoords = (
 	nodes: INode[],
 	x: number,

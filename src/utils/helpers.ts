@@ -2,7 +2,7 @@
  * Finds all the indexes of a value inside an array
  * @param arr - Array
  * @param val - Value to find
- * @returns - An array containing all the indexes of the value. If the item doesn't exist, an empty array is returned.
+ * @returns An array containing all the indexes of the value. If the item doesn't exist, an empty array is returned.
  */
 export const allIndexesOf = <T>(arr: T[], val: T): number[] => {
 	const indexes: number[] = []
@@ -12,4 +12,14 @@ export const allIndexesOf = <T>(arr: T[], val: T): number[] => {
 		}
 	})
 	return indexes
+}
+/**
+ * Gets all the unique elements of a collection of elements.
+ * @param elements - List of elements to filter
+ * @returns - An array containing the unique elements.
+ */
+export const uniques = <T>(...elements: T[]): T[] => {
+	let uniqueElements = new Set()
+	elements.forEach((element) => uniqueElements.add(element))
+	return Array.from(uniqueElements) as T[]
 }
