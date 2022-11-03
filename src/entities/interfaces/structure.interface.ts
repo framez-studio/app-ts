@@ -8,5 +8,5 @@ export interface IStructure {
 	node(x: number, y: number): INode
 	element(initial: coordinates2D, final: coordinates2D): IElement
 	setSupport(x: number, y: number, type: supportType): void
-	stiffness(): Array2D
+	stiffness(type: 'full' | 'reduced'): Array2D
 }

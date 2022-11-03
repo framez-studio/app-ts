@@ -2,15 +2,18 @@ import {
 	assemblyMatrix,
 	filterElementByCoords,
 	filterNodeByCoords,
-	uniques,
 } from '../../../utils/elements'
+import { allIndexesOf, uniques } from '../../../utils/helpers'
 import { constraints } from '../../globals'
 import { IElement } from '../../interfaces/element.interface'
+import { IStiffnessMatrixOperator } from '../../interfaces/matrix-operator.interface'
 import { INode } from '../../interfaces/nodes.interface'
 import { IStructure } from '../../interfaces/structure.interface'
 import { Array2D, coordinates2D, supportType } from '../../types'
+import { SMatrixOperator } from '../matrices/s-matrix-operator'
 
 export class Structure implements IStructure {
+	private matOp: IStiffnessMatrixOperator = new SMatrixOperator()
 	private _elements: IElement[]
 
 	constructor(...elements: IElement[]) {
@@ -35,7 +38,19 @@ export class Structure implements IStructure {
 	public setSupport(x: number, y: number, type: supportType): void {
 		this.node(x, y).constraints = constraints[type]
 	}
-	public stiffness(): Array2D {
-		return assemblyMatrix(this.nodes, this.elements)
+	public stiffness(type: 'full' | 'reduced'): Array2D {
+		let full = assemblyMatrix(this.nodes, this.elements)
+		let lockedDegs = allIndexesOf(this.constraints, true)
+		if (type === 'full') return full
+		return this.matOp.reduceDegs('matrix', full, ...lockedDegs)
+	}
+	private get constraints(): boolean[] {
+		return this.nodes
+			.map((node) => [
+				node.constraints.dx,
+				node.constraints.dy,
+				node.constraints.rz,
+			])
+			.flat()
 	}
 }
