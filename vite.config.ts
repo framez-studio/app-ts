@@ -25,7 +25,7 @@ export default defineConfig({
 				replacement: path.resolve(__dirname, 'src/utils'),
 			},
 			{
-				find: '@globals',
+				find: '@config',
 				replacement: path.resolve(__dirname, 'src/config'),
 			},
 		],
