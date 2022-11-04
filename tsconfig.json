@@ -24,7 +24,9 @@
 			"@interfaces/*": ["src/entities/interfaces/*"],
 			"@types": ["src/entities/types"],
 			"@utils": ["src/utils/index"],
-			"@utils/*": ["src/utils/*"]
+			"@utils/*": ["src/utils/*"],
+			"@config": ["src/config/index"],
+			"@config/*": ["src/config/*"]
 		}
 	},
 	"include": ["src"]
