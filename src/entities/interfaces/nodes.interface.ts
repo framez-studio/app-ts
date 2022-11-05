@@ -3,7 +3,7 @@ import {
 	degsOfFreedom2DBoolean,
 	nodeLoads2D,
 	nodeLoads2DObject,
-} from '../types'
+} from '@types'
 
 export interface INode {
 	readonly loads: nodeLoads2DObject

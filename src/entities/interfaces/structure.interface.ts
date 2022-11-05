@@ -1,6 +1,5 @@
-import { Array2D, coordinates2D, supportType } from '../types'
-import { IElement } from './element.interface'
-import { INode } from './nodes.interface'
+import { Array2D, coordinates2D, supportType } from '@types'
+import { IElement, INode } from '@interfaces'
 
 export interface IStructure {
 	readonly elements: IElement[]

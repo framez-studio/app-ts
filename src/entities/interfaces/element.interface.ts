@@ -4,10 +4,8 @@ import {
 	degsOfFreedom2DArray,
 	elementLoads2DArray,
 	initialOrFinal,
-} from '../types'
-import { INode } from './nodes.interface'
-import { ISection } from './section.interface'
-import { ISpanLoad } from './span-load.interface'
+} from '@types'
+import { INode, ISection, ISpanLoad } from '@interfaces'
 
 export interface IElement {
 	readonly nodes: { initial: INode; final: INode }

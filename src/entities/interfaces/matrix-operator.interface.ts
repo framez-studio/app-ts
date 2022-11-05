@@ -1,4 +1,4 @@
-import { Array2D, Array1D, stiffnessSubmatrices2DObject } from '../types'
+import { Array2D, Array1D, stiffnessSubmatrices2DObject } from '@types'
 
 export interface IMatrixOperator {
 	sum(...matrices: (Array2D | Array1D)[]): Array2D | Array1D
