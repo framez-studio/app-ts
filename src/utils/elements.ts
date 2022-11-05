@@ -37,8 +37,8 @@ export const assemblyMatrix = (
 	nodes: INode[],
 	elements: IElement[],
 ): Array2D => {
-	let degs = nodes.length * 3
-	let matrix = MatOp.zeros([degs, degs])
+	let nDegs = nodes.length * 3
+	let matrix = MatOp.zeros([nDegs, nDegs])
 	elements.forEach((element) => {
 		if (
 			nodes.includes(element.nodes.initial) &&
@@ -97,4 +97,41 @@ export const assemblyMatrix = (
 		}
 	})
 	return matrix
+}
+export const assemblyFef = (nodes: INode[], elements: IElement[]): Array2D => {
+	let nDegs = nodes.length * 3
+	let fef = MatOp.zeros([nDegs, 1])
+	elements.forEach((element) => {
+		if (
+			nodes.includes(element.nodes.initial) &&
+			nodes.includes(element.nodes.final)
+		) {
+			let iDegIndex = nodes.indexOf(element.nodes.initial)
+			let fDegIndex = nodes.indexOf(element.nodes.final)
+			let iDegRange = [iDegIndex * 3, iDegIndex * 3 + 2] as [
+				number,
+				number,
+			]
+			let fDegRange = [fDegIndex * 3, fDegIndex * 3 + 2] as [
+				number,
+				number,
+			]
+			let degs = {
+				i: {
+					range: iDegRange,
+					fef: [element.fef[0], element.fef[1], element.fef[2]],
+				},
+				f: {
+					range: fDegRange,
+					fef: [element.fef[3], element.fef[4], element.fef[5]],
+				},
+			}
+			Object.values(degs).forEach((deg) => {
+				let oldFef = MatOp.subset(fef, deg.range, 0) as Array2D
+				let newFef = MatOp.sum(deg.fef, oldFef) as Array2D
+				fef = MatOp.replace(fef, deg.range, 0, newFef) as Array2D
+			})
+		}
+	})
+	return fef
 }

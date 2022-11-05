@@ -9,6 +9,7 @@ import {
 	uniques,
 } from '@utils'
 import { SMatrixOperator as MatOp } from '@classes'
+import { assemblyFef } from '@/utils/elements'
 
 export class Structure implements IStructure {
 	private _elements: IElement[]
@@ -25,6 +26,16 @@ export class Structure implements IStructure {
 			.flat()
 		let filtered = uniques(...all)
 		return filtered
+	}
+	get fef(): Array2D {
+		return assemblyFef(this.nodes, this.elements)
+	}
+	get nodeLoads(): Array2D {
+		let arr: Array2D = []
+		this.nodes.forEach((node) => {
+			arr.push([node.loads.fx], [node.loads.fy], [node.loads.mz])
+		})
+		return arr
 	}
 	public node(x: number, y: number): INode {
 		return filterNodeByCoords(this.nodes, x, y)

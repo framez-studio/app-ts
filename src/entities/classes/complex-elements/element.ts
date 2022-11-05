@@ -15,7 +15,7 @@ import { MatrixGenerator as MatGen, SMatrixOperator as MatOp } from '@classes'
 export class Element implements IElement {
 	private _nodes: initialFinal<INode>
 	private _releases: initialFinal<degsOfFreedom2DBoolean>
-	private _loads: ISpanLoad[] = defaultElementLoads
+	private _loads: ISpanLoad[] = [...defaultElementLoads]
 	public section: ISection
 	public young: number
 
@@ -26,7 +26,7 @@ export class Element implements IElement {
 			initial: iNode,
 			final: fNode,
 		}
-		this._releases = defaultElementReleases
+		this._releases = { ...defaultElementReleases }
 	}
 	get nodes(): initialFinal<INode> {
 		return this._nodes

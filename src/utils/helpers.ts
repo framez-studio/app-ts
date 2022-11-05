@@ -19,7 +19,11 @@ export const allIndexesOf = <T>(arr: T[], val: T): number[] => {
  * @returns - An array containing the unique elements.
  */
 export const uniques = <T>(...elements: T[]): T[] => {
-	let uniqueElements = new Set()
-	elements.forEach((element) => uniqueElements.add(element))
+	let uniqueElements: T[] = []
+	elements.forEach((element) => {
+		if (!uniqueElements.includes(element)) {
+			uniqueElements.push(element)
+		}
+	})
 	return Array.from(uniqueElements) as T[]
 }

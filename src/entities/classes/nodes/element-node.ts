@@ -14,8 +14,8 @@ export class ElementNode implements INode, Printable {
 
 	constructor(x: number, y: number) {
 		this.coordinates = { x, y }
-		this.constraints = defaultNodeConstraints
-		this._loads = defaultNodeLoads
+		this.constraints = { ...defaultNodeConstraints }
+		this._loads = { ...defaultNodeLoads }
 	}
 	get loads(): nodeLoads2DObject {
 		return this._loads

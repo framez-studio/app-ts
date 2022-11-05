@@ -3,6 +3,7 @@ import {
 	Element,
 	ElementNode,
 	RectangularHSection,
+	RectangularSpanLoad,
 	Structure,
 	Support,
 } from '@classes'
@@ -106,5 +107,46 @@ describe('Structure Class', () => {
 				expect(result[i][j]).toBeCloseTo(value)
 			})
 		})
+	})
+	it(`should return its node loads, ordered by nodes`, () => {
+		b.addLoad('fx', 30)
+		b.addLoad('fy', -30)
+		c.addLoad('mz', -50)
+		let expected = [
+			[0],
+			[0],
+			[0],
+			[30],
+			[-30],
+			[0],
+			[0],
+			[0],
+			[-50],
+			[0],
+			[0],
+			[0],
+		]
+		expect(structure.nodeLoads).toEqual(expected)
+	})
+	it.todo(`should return its assembled fefs as an array`, () => {
+		let w = 20
+		let l = beam.length
+		let load = new RectangularSpanLoad(w, l)
+		beam.addSpanLoad(load)
+		let expected = [
+			[0],
+			[0],
+			[0],
+			[0],
+			[(w * l) / 2],
+			[(w * l ** 2) / 12],
+			[0],
+			[(w * l) / 2],
+			[-(w * l ** 2) / 12],
+			[0],
+			[0],
+			[0],
+		]
+		expect(structure.fef).toEqual(expected)
 	})
 })
