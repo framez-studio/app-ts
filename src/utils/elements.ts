@@ -1,8 +1,6 @@
 import { Array2D, coordinates2D, stiffnessSubmatrices2D } from '@types'
-import { IElement, INode, IStiffnessMatrixOperator } from '@interfaces'
-import { SMatrixOperator } from '@classes'
-
-const matOp: IStiffnessMatrixOperator = new SMatrixOperator()
+import { IElement, INode } from '@interfaces'
+import { SMatrixOperator as MatOp } from '@classes'
 
 export const filterNodeByCoords = (
 	nodes: INode[],
@@ -40,7 +38,7 @@ export const assemblyMatrix = (
 	elements: IElement[],
 ): Array2D => {
 	let degs = nodes.length * 3
-	let matrix = matOp.zeros([degs, degs])
+	let matrix = MatOp.zeros([degs, degs])
 	elements.forEach((element) => {
 		if (
 			nodes.includes(element.nodes.initial) &&
@@ -74,22 +72,22 @@ export const assemblyMatrix = (
 					columns: fDegRange,
 				},
 			}
-			let stiffness = matOp.submatrices(element.stiffness('global'))
+			let stiffness = MatOp.submatrices(element.stiffness('global'))
 			let indexes = Object.keys(stiffness) as stiffnessSubmatrices2D[]
 
 			indexes.forEach((index) => {
-				let oldSubmatrix = matOp.subset(
+				let oldSubmatrix = MatOp.subset(
 					matrix,
 					ranges[index].rows,
 					ranges[index].columns,
 				) as Array2D
 				let newSubmatrix = stiffness[index]
-				let updatedSubmatrix = matOp.sum(
+				let updatedSubmatrix = MatOp.sum(
 					oldSubmatrix,
 					newSubmatrix,
 				) as Array2D
 
-				matrix = matOp.replace(
+				matrix = MatOp.replace(
 					matrix,
 					ranges[index].rows,
 					ranges[index].columns,

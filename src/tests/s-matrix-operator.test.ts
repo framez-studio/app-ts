@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { SMatrixOperator } from '../entities/classes/matrices/s-matrix-operator'
+import { SMatrixOperator as MatOp } from '../entities/classes/matrices/s-matrix-operator'
 import { stiffnessSubmatrices2DObject } from '../entities/types'
 
 describe('SMatrix Operator Class', () => {
@@ -11,7 +11,6 @@ describe('SMatrix Operator Class', () => {
 		[0, -111.5951, -167.3927, 0, 111.5951, -167.3927],
 		[0, 167.3927, 167.3927, 0, -167.3927, 334.7854],
 	]
-	const sMatOp = new SMatrixOperator()
 	it('should transform the coordinates of a stiffness matrix', () => {
 		let expected = [
 			[111.5951, 0, -167.3927, -111.5951, 0, -167.3927],
@@ -22,7 +21,7 @@ describe('SMatrix Operator Class', () => {
 			[-167.3927, 0, 167.3927, 167.3927, 0, 334.7854],
 		]
 		let alpha = 90
-		let result = sMatOp.rotate(data, alpha)
+		let result = MatOp.rotate(data, alpha)
 		expected.forEach((row, i) => {
 			row.forEach((value, j) => {
 				expect(result[i][j]).toBeCloseTo(value)
@@ -52,7 +51,7 @@ describe('SMatrix Operator Class', () => {
 				[0, -167.3927, 334.7854],
 			],
 		}
-		let result = sMatOp.submatrices(data)
+		let result = MatOp.submatrices(data)
 		expect(expected.ii).toEqual(result.ii)
 		expect(expected.ij).toEqual(result.ij)
 		expect(expected.ji).toEqual(result.ji)
@@ -65,12 +64,12 @@ describe('SMatrix Operator Class', () => {
 			[0, 52266.6667, 0],
 			[-167.3927, 0, 111.5951],
 		]
-		expect(sMatOp.reduceDegs('matrix', data, ...degs)).toEqual(expected)
+		expect(MatOp.reduceDegs('matrix', data, ...degs)).toEqual(expected)
 	})
 	it('should delete the degs of freedom of a given vector', () => {
 		let vector = [[0], [1], [2], [3], [4], [5]]
 		let degs = [0, 1, 5]
 		let expected = [[2], [3], [4]]
-		expect(sMatOp.reduceDegs('vector', vector, ...degs)).toEqual(expected)
+		expect(MatOp.reduceDegs('vector', vector, ...degs)).toEqual(expected)
 	})
 })

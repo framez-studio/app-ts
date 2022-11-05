@@ -6,14 +6,12 @@ import {
 import { allIndexesOf, uniques } from '../../../utils/helpers'
 import { constraints } from '../../globals'
 import { IElement } from '../../interfaces/element.interface'
-import { IStiffnessMatrixOperator } from '../../interfaces/matrix-operator.interface'
 import { INode } from '../../interfaces/nodes.interface'
 import { IStructure } from '../../interfaces/structure.interface'
 import { Array2D, coordinates2D, supportType } from '../../types'
-import { SMatrixOperator } from '../matrices/s-matrix-operator'
+import { SMatrixOperator as MatOp } from '../matrices/s-matrix-operator'
 
 export class Structure implements IStructure {
-	private matOp: IStiffnessMatrixOperator = new SMatrixOperator()
 	private _elements: IElement[]
 
 	constructor(...elements: IElement[]) {
@@ -42,7 +40,7 @@ export class Structure implements IStructure {
 		let full = assemblyMatrix(this.nodes, this.elements)
 		let lockedDegs = allIndexesOf(this.constraints, true)
 		if (type === 'full') return full
-		return this.matOp.reduceDegs('matrix', full, ...lockedDegs)
+		return MatOp.reduceDegs('matrix', full, ...lockedDegs)
 	}
 	private get constraints(): boolean[] {
 		return this.nodes

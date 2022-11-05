@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { MatrixOperator } from '../entities/classes/matrices/matrix-operator'
+import { MatrixOperator as MatOp } from '@classes'
 
 describe('Matrix Operator', () => {
 	let data = [
@@ -7,7 +7,6 @@ describe('Matrix Operator', () => {
 		[4, 5, 6],
 		[7, 8, 9],
 	]
-	const MatOp = new MatrixOperator()
 	it('should sum n matrices', () => {
 		let n = 3
 		let expected = [

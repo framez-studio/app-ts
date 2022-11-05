@@ -1,12 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { Element } from '../entities/classes/complex-elements/element'
-import { MatrixOperator } from '../entities/classes/matrices/matrix-operator'
-import { ElementNode } from '../entities/classes/nodes/element-node'
-import { PunctualSpanLoad } from '../entities/classes/others/punctual-span-load'
-import { RectangularHSection } from '../entities/classes/sections/rectangular-h-section'
+import {
+	Element,
+	ElementNode,
+	MatrixOperator as matOp,
+	PunctualSpanLoad,
+	RectangularHSection,
+} from '@classes'
 
 describe('Element Class', () => {
-	const matOp = new MatrixOperator()
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
 	const points = { i: { x: 0, y: 0 }, f: { x: 0, y: 3 } }
 	let nodes = {

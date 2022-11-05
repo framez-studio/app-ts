@@ -1,16 +1,16 @@
-export { MatrixGenerator } from '@classes/matrices/matrix-generator'
-export { MatrixOperator } from '@classes/matrices/matrix-operator'
+export { MatrixGenerator } from './matrices/matrix-generator'
+export { MatrixOperator } from './matrices/matrix-operator'
 export { SMatrixOperator } from './matrices/s-matrix-operator'
 
-export { ElementNode } from '@classes/nodes/element-node'
-export { Support } from '@classes/nodes/support'
+export { ElementNode } from './nodes/element-node'
+export { Support } from './nodes/support'
 
-export { Element } from '@classes/complex-elements/element'
-export { Structure } from '@classes/complex-elements/structure'
+export { Element } from './complex-elements/element'
+export { Structure } from './complex-elements/structure'
 
-export { Section } from '@classes/sections/section'
-export { RectangularHSection } from '@classes/sections/rectangular-h-section'
+export { Section } from './sections/section'
+export { RectangularHSection } from './sections/rectangular-h-section'
 
-export { Material } from '@classes/others/material'
-export { PunctualSpanLoad } from '@classes/others/punctual-span-load'
-export { RectangularSpanLoad } from '@classes/others/rectangular-span-load'
+export { Material } from './others/material'
+export { PunctualSpanLoad } from './others/punctual-span-load'
+export { RectangularSpanLoad } from './others/rectangular-span-load'

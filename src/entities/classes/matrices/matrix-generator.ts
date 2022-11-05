@@ -1,11 +1,8 @@
-import { Array2D, Array1D, degsOfFreedom2DArray } from '../../types'
-import { IMatrixGenerator } from '../../interfaces/matrix-generator.interface'
-import { IMatrixOperator } from '../../interfaces/matrix-operator.interface'
-import { MatrixOperator } from './matrix-operator'
-import { stiffness, transformation } from '../../../utils/matrices'
+import { Array2D, Array1D, degsOfFreedom2DArray } from '@types'
+import { stiffness, transformation } from '@utils/matrices'
+import { MatrixOperator as MatOp } from './matrix-operator'
 
-export class MatrixGenerator implements IMatrixGenerator {
-	private MatOp: IMatrixOperator = new MatrixOperator()
+export class MatrixGenerator {
 	/**
 	 * Generates a full Stiffness Matrix for a 2D member
 	 * @param e - Young Modulus
@@ -15,7 +12,7 @@ export class MatrixGenerator implements IMatrixGenerator {
 	 * @param degs - Degs of Freedom releases Array [dx1, dy1, rz1, dx2, dy2, rz2] (by default, all values are false)
 	 * @returns - The Stiffness Matrix as an Array2D type object
 	 */
-	stiffness(
+	static stiffness(
 		e: number,
 		l: number,
 		a: number,
@@ -25,11 +22,11 @@ export class MatrixGenerator implements IMatrixGenerator {
 		let matrix = stiffness(e, l, a, i)
 		degs.forEach((deg, index) => {
 			if (deg) {
-				let k1 = this.MatOp.subset(matrix, [0, 5], index) as Array2D
-				let k2 = this.MatOp.subset(matrix, index, [0, 5]) as Array1D
-				let k3 = this.MatOp.subset(matrix, index, index) as number
-				let factor = this.MatOp.multiply(k1, 1 / k3, k2) as Array2D
-				matrix = this.MatOp.subtract(matrix, factor) as Array2D
+				let k1 = MatOp.subset(matrix, [0, 5], index) as Array2D
+				let k2 = MatOp.subset(matrix, index, [0, 5]) as Array1D
+				let k3 = MatOp.subset(matrix, index, index) as number
+				let factor = MatOp.multiply(k1, 1 / k3, k2) as Array2D
+				matrix = MatOp.subtract(matrix, factor) as Array2D
 			}
 		})
 		return matrix
@@ -39,7 +36,7 @@ export class MatrixGenerator implements IMatrixGenerator {
 	 * @param alpha - Inclination angle from X axis (counter-clockwise)
 	 * @returns - The transformation matrix as an Array2D object
 	 */
-	transformation(alpha: number): Array2D {
+	static transformation(alpha: number): Array2D {
 		return transformation(alpha)
 	}
 }

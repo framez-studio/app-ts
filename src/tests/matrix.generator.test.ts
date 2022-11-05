@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { MatrixGenerator } from '../entities/classes/matrices/matrix-generator'
+import { MatrixGenerator as MatGen } from '../entities/classes/matrices/matrix-generator'
 
 describe('Matrix Generator', () => {
 	const e = 200000000
@@ -7,7 +7,6 @@ describe('Matrix Generator', () => {
 	const a = 0.000784
 	const l = 3
 	const angle = 90
-	const MatGen = new MatrixGenerator()
 	it('should generate a full local Stiffness Matrix', () => {
 		let expected = [
 			[52266.6667, 0, 0, -52266.6667, 0, 0],
