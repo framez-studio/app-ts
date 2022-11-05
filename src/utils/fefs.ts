@@ -1,4 +1,4 @@
-import { initialFinal, nodeLoads2DObject } from '../entities/types'
+import { initialFinal, nodeLoads2DObject } from '@types'
 
 export const reactions2DObject = (
 	fxi: number,

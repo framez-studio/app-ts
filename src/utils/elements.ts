@@ -1,12 +1,6 @@
-import {
-	Array2D,
-	coordinates2D,
-	stiffnessSubmatrices2D,
-} from '../entities/types'
-import { IElement } from '../entities/interfaces/element.interface'
-import { IStiffnessMatrixOperator } from '../entities/interfaces/matrix-operator.interface'
-import { INode } from '../entities/interfaces/nodes.interface'
-import { SMatrixOperator } from '../entities/classes/matrices/s-matrix-operator'
+import { Array2D, coordinates2D, stiffnessSubmatrices2D } from '@types'
+import { IElement, INode, IStiffnessMatrixOperator } from '@interfaces'
+import { SMatrixOperator } from '@classes'
 
 const matOp: IStiffnessMatrixOperator = new SMatrixOperator()
 

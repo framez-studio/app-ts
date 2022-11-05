@@ -1,4 +1,4 @@
-import { Array2D } from '../entities/types'
+import { Array2D } from '@types'
 
 /**
  * Creates a factorized by (E*I/L^3) stiffness matrix for a single element.

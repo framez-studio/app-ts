@@ -1,5 +1,5 @@
+import { coordinates2D } from '@types'
 import { create, all } from 'mathjs'
-import { coordinates2D } from '../entities/types'
 
 const config = {}
 /**
