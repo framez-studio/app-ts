@@ -1,4 +1,7 @@
-import { defaultNodeConstraints, defaultNodeLoads } from '../../globals'
+import {
+	defaultNodeConstraints,
+	defaultNodeLoads,
+} from '../../../config/globals'
 import { INode } from '../../interfaces/nodes.interface'
 import { Printable } from '../../interfaces/ui.interfaces'
 import {

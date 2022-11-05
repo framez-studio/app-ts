@@ -4,7 +4,7 @@ import {
 	filterNodeByCoords,
 } from '../../../utils/elements'
 import { allIndexesOf, uniques } from '../../../utils/helpers'
-import { constraints } from '../../globals'
+import { constraints } from '../../../config/globals'
 import { IElement } from '../../interfaces/element.interface'
 import { INode } from '../../interfaces/nodes.interface'
 import { IStructure } from '../../interfaces/structure.interface'

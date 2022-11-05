@@ -1,4 +1,4 @@
-import { constraints } from '../../globals'
+import { constraints } from '../../../config/globals'
 import { supportType } from '../../types'
 import { ElementNode } from './element-node'
 

@@ -6,15 +6,15 @@ import {
 	initialOrFinal,
 	degsOfFreedom2DArray,
 	elementLoads2DArray,
-} from '../../types'
-import { IElement } from '../../interfaces/element.interface'
-import { INode } from '../../interfaces/nodes.interface'
-import { ISection } from '../../interfaces/section.interface'
-import { defaultElementLoads, defaultElementReleases } from '../../globals'
-import { degSlope, eucDistance } from '../../../utils/algebra'
+} from '@types'
+import { IElement, INode, ISection, ISpanLoad } from '@interfaces'
+import {
+	defaultElementLoads,
+	defaultElementReleases,
+} from '../../../config/globals'
+import { degSlope, eucDistance } from '@utils'
 import { MatrixGenerator as MatGen } from '../matrices/matrix-generator'
 import { SMatrixOperator as MatOp } from '../matrices/s-matrix-operator'
-import { ISpanLoad } from '../../interfaces/span-load.interface'
 
 export class Element implements IElement {
 	private _nodes: initialFinal<INode>
