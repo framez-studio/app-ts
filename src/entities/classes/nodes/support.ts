@@ -1,6 +1,6 @@
-import { constraints } from '../../../config/globals'
-import { supportType } from '../../types'
-import { ElementNode } from './element-node'
+import { supportType } from '@types'
+import { constraints } from '@config'
+import { ElementNode } from '@classes'
 
 export class Support extends ElementNode {
 	constructor(type: supportType, x: number, y: number) {

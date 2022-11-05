@@ -1,4 +1,4 @@
-import { IMaterial } from '../../interfaces/material.interface'
+import { IMaterial } from '@interfaces'
 
 export class Material implements IMaterial {
 	public name: string

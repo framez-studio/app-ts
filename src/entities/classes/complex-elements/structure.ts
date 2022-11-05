@@ -1,15 +1,14 @@
+import { Array2D, coordinates2D, supportType } from '@types'
+import { IElement, INode, IStructure } from '@interfaces'
+import { constraints } from '@config'
 import {
+	allIndexesOf,
 	assemblyMatrix,
 	filterElementByCoords,
 	filterNodeByCoords,
-} from '../../../utils/elements'
-import { allIndexesOf, uniques } from '../../../utils/helpers'
-import { constraints } from '../../../config/globals'
-import { IElement } from '../../interfaces/element.interface'
-import { INode } from '../../interfaces/nodes.interface'
-import { IStructure } from '../../interfaces/structure.interface'
-import { Array2D, coordinates2D, supportType } from '../../types'
-import { SMatrixOperator as MatOp } from '../matrices/s-matrix-operator'
+	uniques,
+} from '@utils'
+import { SMatrixOperator as MatOp } from '@classes'
 
 export class Structure implements IStructure {
 	private _elements: IElement[]

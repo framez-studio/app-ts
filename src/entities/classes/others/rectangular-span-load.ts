@@ -1,10 +1,7 @@
-import { rectangularLoadFef } from '../../../utils/fefs'
-import { ISpanLoad } from '../../interfaces/span-load.interface'
-import {
-	elementLoads2DArray,
-	elementLoads2DObject,
-	initialFinal,
-} from '../../types'
+import { elementLoads2DArray, elementLoads2DObject, initialFinal } from '@types'
+import { ISpanLoad } from '@interfaces'
+import { rectangularLoadFef } from '@utils'
+
 // TODO: throw error if distance is greater than elementLength
 export class RectangularSpanLoad implements ISpanLoad {
 	private load: number

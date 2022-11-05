@@ -8,13 +8,9 @@ import {
 	elementLoads2DArray,
 } from '@types'
 import { IElement, INode, ISection, ISpanLoad } from '@interfaces'
-import {
-	defaultElementLoads,
-	defaultElementReleases,
-} from '../../../config/globals'
+import { defaultElementLoads, defaultElementReleases } from '@config'
 import { degSlope, eucDistance } from '@utils'
-import { MatrixGenerator as MatGen } from '../matrices/matrix-generator'
-import { SMatrixOperator as MatOp } from '../matrices/s-matrix-operator'
+import { MatrixGenerator as MatGen, SMatrixOperator as MatOp } from '@classes'
 
 export class Element implements IElement {
 	private _nodes: initialFinal<INode>

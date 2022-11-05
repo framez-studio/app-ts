@@ -1,6 +1,6 @@
 import { Array2D, Array1D, degsOfFreedom2DArray } from '@types'
-import { stiffness, transformation } from '@utils/matrices'
-import { MatrixOperator as MatOp } from './matrix-operator'
+import { stiffness, transformation } from '@utils'
+import { MatrixOperator as MatOp } from '@classes'
 
 export class MatrixGenerator {
 	/**

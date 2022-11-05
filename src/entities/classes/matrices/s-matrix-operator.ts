@@ -1,6 +1,5 @@
 import { Array2D, stiffnessSubmatrices2DObject } from '@types'
-import { MatrixGenerator as MatGen } from './matrix-generator'
-import { MatrixOperator } from './matrix-operator'
+import { MatrixGenerator as MatGen, MatrixOperator } from '@classes'
 
 export class SMatrixOperator extends MatrixOperator {
 	static rotate(matrix: Array2D, angle: number): Array2D {

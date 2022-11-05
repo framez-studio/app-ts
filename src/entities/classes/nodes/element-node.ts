@@ -1,15 +1,11 @@
 import {
-	defaultNodeConstraints,
-	defaultNodeLoads,
-} from '../../../config/globals'
-import { INode } from '../../interfaces/nodes.interface'
-import { Printable } from '../../interfaces/ui.interfaces'
-import {
 	coordinates2D,
 	degsOfFreedom2DBoolean,
 	nodeLoads2D,
 	nodeLoads2DObject,
-} from '../../types'
+} from '@types'
+import { INode, Printable } from '@interfaces'
+import { defaultNodeConstraints, defaultNodeLoads } from '@config'
 
 export class ElementNode implements INode, Printable {
 	private _loads: nodeLoads2DObject
