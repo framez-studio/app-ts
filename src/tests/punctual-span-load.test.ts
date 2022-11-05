@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { PunctualSpanLoad } from '../entities/classes/others/punctual-span-load'
+import { PunctualSpanLoad } from '@classes'
 
 describe('Punctual Span Load Class', () => {
 	const l = 4

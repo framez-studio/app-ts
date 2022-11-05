@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { RectangularHSection } from '../entities/classes/sections/rectangular-h-section'
+import { RectangularHSection } from '@classes'
 
 describe('Rectangular Hollow Section', () => {
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)

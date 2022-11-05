@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { ElementNode } from '../entities/classes/nodes/element-node'
+import { ElementNode } from '@classes'
 
 describe('ElementNode Class', () => {
 	let coordinates = { x: 0, y: 2 }

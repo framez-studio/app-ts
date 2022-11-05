@@ -1,8 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { Element } from '../entities/classes/complex-elements/element'
-import { ElementNode } from '../entities/classes/nodes/element-node'
-import { RectangularHSection } from '../entities/classes/sections/rectangular-h-section'
-import { assemblyMatrix } from '../utils/elements'
+import { assemblyMatrix } from '@utils'
+import { Element, ElementNode, RectangularHSection } from '@classes'
 
 describe('Elements utils', () => {
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)

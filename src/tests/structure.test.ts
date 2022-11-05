@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { Element } from '../entities/classes/complex-elements/element'
-import { Structure } from '../entities/classes/complex-elements/structure'
-import { ElementNode } from '../entities/classes/nodes/element-node'
-import { Support } from '../entities/classes/nodes/support'
-import { RectangularHSection } from '../entities/classes/sections/rectangular-h-section'
+import {
+	Element,
+	ElementNode,
+	RectangularHSection,
+	Structure,
+	Support,
+} from '@classes'
 
 describe('Structure Class', () => {
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
