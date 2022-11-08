@@ -8,3 +8,6 @@ export interface IConcrete extends IMaterial {
 	fc: number
 }
 
+export interface ISteel extends IMaterial {
+	fy: number;
+}
