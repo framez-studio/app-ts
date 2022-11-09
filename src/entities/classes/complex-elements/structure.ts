@@ -27,9 +27,6 @@ export class Structure implements IStructure {
 		let filtered = uniques(...all)
 		return filtered
 	}
-	get fef(): Array2D {
-		return assemblyFef(this.nodes, this.elements)
-	}
 	get nodeLoads(): Array2D {
 		let arr: Array2D = []
 		this.nodes.forEach((node) => {
@@ -45,6 +42,12 @@ export class Structure implements IStructure {
 	}
 	public setSupport(x: number, y: number, type: supportType): void {
 		this.node(x, y).constraints = constraints[type]
+	}
+	public fef(type: 'full' | 'reduced'): Array2D {
+		let full = assemblyFef(this.nodes, this.elements)
+		let lockedDegs = allIndexesOf(this.constraints, true)
+		if (type === 'full') return full
+		return MatOp.reduceDegs('vector', full, ...lockedDegs)
 	}
 	public stiffness(type: 'full' | 'reduced'): Array2D {
 		let full = assemblyMatrix(this.nodes, this.elements)
