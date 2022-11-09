@@ -2,6 +2,7 @@ export {
 	assemblyMatrix,
 	filterElementByCoords,
 	filterNodeByCoords,
+	assemblyFef,
 } from '@utils/elements'
 export { eucDistance, degSlope, algebra } from '@utils/algebra'
 export {
