@@ -11,7 +11,7 @@ import {
 describe('Structure Class', () => {
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
 	let e = 200000000
-	let a = new Support('fixed', 0, 0)
+	let a = new Support('hinge', 0, 0)
 	let b = new ElementNode(0, 3)
 	let c = new ElementNode(4, 3)
 	let d = new Support('fixed', 4, 0)
@@ -43,11 +43,11 @@ describe('Structure Class', () => {
 			structure.element({ x: 0, y: 100 }, { x: 0, y: 3 }),
 		).toThrowError()
 	})
-	it.skip('should allow to add a support with the coordinates of an existing node in the structure', () => {
-		structure.setSupport(0, 0, 'hinge')
-		expect(a.constraints.dx).toBeTruthy()
-		expect(a.constraints.dy).toBeTruthy()
-		expect(a.constraints.rz).toBeFalsy()
+	it('should allow to add a support with the coordinates of an existing node in the structure', () => {
+		structure.setSupport(0, 0, 'fixed')
+		expect(a.constraints.dx).toBe(true)
+		expect(a.constraints.dy).toBe(true)
+		expect(a.constraints.rz).toBe(true)
 	})
 	it('should throw an error if trying to add a support with non-existent coordinates', () => {
 		expect(() => structure.setSupport(100, 0, 'hinge')).toThrow()
