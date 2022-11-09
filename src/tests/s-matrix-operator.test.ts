@@ -21,7 +21,7 @@ describe('SMatrix Operator Class', () => {
 			[-167.3927, 0, 167.3927, 167.3927, 0, 334.7854],
 		]
 		let alpha = 90
-		let result = MatOp.rotate(data, alpha)
+		let result = MatOp.rotateMatrix(data, alpha)
 		expected.forEach((row, i) => {
 			row.forEach((value, j) => {
 				expect(result[i][j]).toBeCloseTo(value)
