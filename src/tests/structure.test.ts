@@ -9,6 +9,7 @@ import {
 } from '@classes'
 
 describe('Structure Class', () => {
+	// structure definition
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
 	let e = 200000000
 	let a = new Support('hinge', 0, 0)
@@ -19,6 +20,9 @@ describe('Structure Class', () => {
 	let beam = new Element(b, c, section, e)
 	let rCol = new Element(c, d, section, e)
 	const structure = new Structure(lCol, rCol, beam)
+	// loads definition
+	const w = 20
+	beam.addSpanLoad(new RectangularSpanLoad(w, beam.length))
 
 	it('should return an array with the given elements in the constructor', () => {
 		expect(structure.elements).toEqual([lCol, rCol, beam])
@@ -128,11 +132,8 @@ describe('Structure Class', () => {
 		]
 		expect(structure.nodeLoads).toEqual(expected)
 	})
-	it.todo(`should return its assembled fefs as an array`, () => {
-		let w = 20
+	it(`should return its full assembled fefs as an array`, () => {
 		let l = beam.length
-		let load = new RectangularSpanLoad(w, l)
-		beam.addSpanLoad(load)
 		let expected = [
 			[0],
 			[0],
@@ -147,6 +148,18 @@ describe('Structure Class', () => {
 			[0],
 			[0],
 		]
-		expect(structure.fef).toEqual(expected)
+		expect(structure.fef('full')).toEqual(expected)
+	})
+	it(`should return its reduced assembled fefs as an array`, () => {
+		let l = beam.length
+		let expected = [
+			[0],
+			[(w * l) / 2],
+			[(w * l ** 2) / 12],
+			[0],
+			[(w * l) / 2],
+			[-(w * l ** 2) / 12],
+		]
+		expect(structure.fef('reduced')).toEqual(expected)
 	})
 })
