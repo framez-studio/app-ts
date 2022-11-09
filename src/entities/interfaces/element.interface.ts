@@ -9,7 +9,6 @@ import { INode, ISection, ISpanLoad } from '@interfaces'
 
 export interface IElement {
 	readonly nodes: { initial: INode; final: INode }
-	readonly fef: elementLoads2DArray
 	readonly length: number
 	readonly inclination: number
 	readonly releases: degsOfFreedom2DArray
@@ -18,6 +17,7 @@ export interface IElement {
 	section: ISection
 	setSpanLoad(load: ISpanLoad): void
 	addSpanLoad(load: ISpanLoad): void
+	fef(system: coordinateSystem): elementLoads2DArray
 	stiffness(system: coordinateSystem): Array2D
 	setNode(which: initialOrFinal, node: INode): void
 	newConnectedElement(

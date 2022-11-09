@@ -86,13 +86,13 @@ describe('Element Class', () => {
 	it('should allow to set its spanload', () => {
 		let load = new PunctualSpanLoad(20, element.length, 1)
 		element.setSpanLoad(load)
-		expect(element.fef).toEqual(load.fefArray)
+		expect(element.fef('local')).toEqual(load.fefArray)
 	})
 	it(`should allow to add multiple span loads`, () => {
 		let load1 = new PunctualSpanLoad(20, element.length, 1)
 		element.setSpanLoad(load1)
 		element.addSpanLoad(load1)
 		let expected = matOp.sum(load1.fefArray, load1.fefArray)
-		expect(element.fef).toEqual(expected)
+		expect(element.fef('local')).toEqual(expected)
 	})
 })

@@ -116,14 +116,15 @@ export const assemblyFef = (nodes: INode[], elements: IElement[]): Array2D => {
 				number,
 				number,
 			]
+			let fefs = element.fef('global')
 			let degs = {
 				i: {
 					range: iDegRange,
-					fef: [element.fef[0], element.fef[1], element.fef[2]],
+					fef: [fefs[0], fefs[1], fefs[2]],
 				},
 				f: {
 					range: fDegRange,
-					fef: [element.fef[3], element.fef[4], element.fef[5]],
+					fef: [fefs[3], fefs[4], fefs[5]],
 				},
 			}
 			Object.values(degs).forEach((deg) => {

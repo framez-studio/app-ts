@@ -55,11 +55,15 @@ export class Element implements IElement {
 			this._nodes.final.coordinates,
 		)
 	}
-	get fef(): elementLoads2DArray {
+	fef(type: coordinateSystem): elementLoads2DArray {
 		let loadsFef = this._loads.map((load) => {
 			return load.fefArray
 		})
-		return MatOp.sum(...loadsFef) as elementLoads2DArray
+		if (loadsFef.length == 0) return [[0], [0], [0], [0], [0], [0]]
+		let local = MatOp.sum(...loadsFef) as elementLoads2DArray
+		let angle = this.inclination
+		if (type == 'local') return local
+		return MatOp.rotateVector(local, angle) as elementLoads2DArray
 	}
 	public setNode(which: initialOrFinal, node: INode): void {
 		this._nodes[which] = node
@@ -80,7 +84,7 @@ export class Element implements IElement {
 			this.releases,
 		)
 		if (system === 'global' && angle !== 0) {
-			stiff = MatOp.rotate(stiff, angle)
+			stiff = MatOp.rotateMatrix(stiff, angle)
 		}
 		return stiff
 	}
