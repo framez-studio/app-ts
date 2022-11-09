@@ -24,7 +24,8 @@ export interface IMatrixOperator {
 }
 
 export interface IStiffnessMatrixOperator extends IMatrixOperator {
-	rotate(matrix: Array2D, angle: number): Array2D
+	rotateMatrix(matrix: Array2D, angle: number): Array2D
+	rotateVector(vector: Array2D, angle: number): Array2D
 	submatrices(matrix: Array2D): stiffnessSubmatrices2DObject
 	reduceDegs(
 		type: 'matrix' | 'vector',
