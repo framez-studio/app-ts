@@ -40,3 +40,5 @@ export const degSlope = (
 	let degs = (slope * 180) / Math.PI
 	return degs
 }
+
+export const pi: number = algebra.pi

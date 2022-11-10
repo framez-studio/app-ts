@@ -1,4 +1,4 @@
-import { IConcrete } from '@/entities/interfaces/material.interface'
+import { IConcrete, ISteel } from '@/entities/interfaces/material.interface'
 import { IMaterial } from '@interfaces'
 
 export class Material implements IMaterial {
@@ -33,4 +33,19 @@ export class Concrete implements IConcrete{
 		return this._weight
 	}
 
+}
+
+export class Steel implements ISteel{
+	
+	constructor(
+		public name: string,
+		public young: number,
+		public weight: number,
+		public fy: number){
+
+		this.young = young
+		this.fy = fy
+		this.name = name
+		this.weight = weight
+		}
 }

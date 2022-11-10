@@ -15,5 +15,5 @@ export interface IRectangularSectionCR extends IRectangularSection{
 }
 
 export interface CircularSection extends ISection{
-	
+	diameter: number
 }

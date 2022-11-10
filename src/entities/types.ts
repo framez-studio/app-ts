@@ -1,3 +1,5 @@
+import { BarCR } from "./classes";
+
 export type coordinateSystem = 'local' | 'global'
 export type coordinates2D = { x: number; y: number }
 
@@ -46,3 +48,5 @@ export type stiffnessSubmatrices2DRanges = {
 export type stiffnessSubmatrices2DObject = {
 	[key in stiffnessSubmatrices2D]: Array2D
 }
+
+export type RowReinforcement = [number,number,BarCR]
