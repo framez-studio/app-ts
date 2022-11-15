@@ -1,5 +1,4 @@
-import { IRectangularSectionCR } from "@/entities/interfaces/section.interface";
-import { RowReinforcement } from "@/entities/types";
+import { IRectangularSectionCR, RowReinforcement } from "@/entities/interfaces/section.interface";
 import { Concrete  } from "../others/material";
 import { BarCR } from "./bar-cr";
 
@@ -8,7 +7,7 @@ export class RectangularSectionCR implements IRectangularSectionCR {
         private b: number,
         private h: number,
         private _material: Concrete,
-        private _reinforcement: RowReinforcement[]
+        private _reinforcement: RowReinforcement[] =[]
     ){}
 
     get area(): number{
@@ -26,17 +25,61 @@ export class RectangularSectionCR implements IRectangularSectionCR {
     get young(): number{
         return this._material.young
     }
-
+    
     get reinforcement():RowReinforcement[]{
         return this._reinforcement
     }
 
-    public addrowreinforcement(d:number,cant: number,BarCR: BarCR){
-        this._reinforcement.push([d,cant,BarCR] as RowReinforcement)
+    public dmax():number{
+        this.sort_reinforcement()
+        return this.reinforcement[this.reinforcement.length - 1].distance
     }
 
-    public changerowreinforcement(d:number,cant: number,BarCR: BarCR){
+    public as(d:number = this.dmax(),sum:boolean = true){
+        if (sum == false) {
+            const irow = this.find_rr(d)
+            return this._reinforcement[irow].section.area
+        }else{
+            let a: number = 0
+            this._reinforcement.forEach(row => {
+                if (row.distance<=d) {
+                    a = a + row.section.area * row.quantity
+                }
+            });
+            return a
+        }
+    }
+
+    public add_rr(d:number,quantity: number,BarCR: BarCR):void{
+        if (this.find_rr(d) === -1) {
+            let row = {distance: d, quantity: quantity, section: BarCR}
+            this._reinforcement.push(row)
+        } else {
+            this.swap_rr(d,quantity,BarCR)
+        }
 
     }
 
+    public find_rr(d: number):number{
+        const f = (row: RowReinforcement) => row.distance==d
+        return this._reinforcement.findIndex(f)
+    }
+
+    public swap_rr(d:number,quantity: number,BarCR: BarCR):void{
+        const row: number=this.find_rr(d)
+        if (row !=-1) {
+            let rowi = {distance: d, quantity: quantity, section: BarCR}
+            this._reinforcement[row] = rowi
+        }
+    }
+
+    public delete_reinforcement():void{
+        this._reinforcement=[]
+    }
+
+    public sort_reinforcement():void{
+        this._reinforcement.sort((a:RowReinforcement,b:RowReinforcement) => 
+        (a.distance > b.distance) ? 1 : (a.distance < b.distance) ? -1 : 0)
+    }
+    
 }

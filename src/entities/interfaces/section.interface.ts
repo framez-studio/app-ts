@@ -1,4 +1,4 @@
-import { Material } from "../classes"
+import { BarCR, Material } from "../classes"
 
 export interface ISection {
 	readonly area: number
@@ -10,8 +10,14 @@ export interface IRectangularSection extends ISection{
 
 }
 
-export interface IRectangularSectionCR extends IRectangularSection{
+export interface RowReinforcement {
+	distance: number
+	quantity: number
+	section: BarCR 
+}
 
+export interface IRectangularSectionCR extends IRectangularSection{
+	reinforcement: RowReinforcement[]
 }
 
 export interface CircularSection extends ISection{
