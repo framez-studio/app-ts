@@ -106,3 +106,5 @@ const biseccion = (
     if (iter == itmax) {throw 'Not Found: Neutral Axis'} else {return xr}
     
 }
+
+1098824080
