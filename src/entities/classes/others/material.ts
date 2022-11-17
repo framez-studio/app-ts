@@ -32,6 +32,10 @@ export class Concrete implements IConcrete{
 	get weight(): number{
 		return this._weight
 	}
+	
+	get beta():number{
+		return (this.fc<=28) ? 0.85 : 0.85 - (0.05*(this.fc-28)/7)
+	}
 
 }
 

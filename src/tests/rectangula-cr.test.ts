@@ -1,7 +1,6 @@
 import { RectangularSectionCR } from "@/entities/classes";
 import { BarNo4 } from "@/utils/bar-cr";
 import { Concrete21 } from "@/utils/material";
-import { sec } from "mathjs";
 import { describe, it, expect } from "vitest";
 
 describe('description', () => {

@@ -2,7 +2,7 @@ import { Section, Material } from '@classes'
 
 export class RectangularHSection extends Section {
 	constructor(
-		private b: number,
+		public b: number,
 		private h: number,
 		private bt: number,
 		private ht: number,

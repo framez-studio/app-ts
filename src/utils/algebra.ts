@@ -41,4 +41,6 @@ export const degSlope = (
 	return degs
 }
 
+export const absolutevalue = (a:number) =>{return (a>0) ? a : a*-1}
+
 export const pi: number = algebra.pi

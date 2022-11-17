@@ -6,6 +6,7 @@ export interface IMaterial {
 
 export interface IConcrete extends IMaterial {
 	fc: number
+	beta: number
 }
 
 export interface ISteel extends IMaterial {

@@ -4,7 +4,7 @@ import { BarCR } from "./bar-cr";
 
 export class RectangularSectionCR implements IRectangularSectionCR {
     constructor(
-        private b: number,
+        public b: number,
         private h: number,
         private _material: Concrete,
         private _reinforcement: RowReinforcement[] =[]
@@ -30,12 +30,12 @@ export class RectangularSectionCR implements IRectangularSectionCR {
         return this._reinforcement
     }
 
-    public dmax():number{
+    get dmax():number{
         this.sort_reinforcement()
         return this.reinforcement[this.reinforcement.length - 1].distance
     }
 
-    public as(d:number = this.dmax(),sum:boolean = true){
+    public as(d:number = this.dmax,sum:boolean = true){
         if (sum == false) {
             const irow = this.find_rr(d)
             return this._reinforcement[irow].section.area
@@ -50,6 +50,10 @@ export class RectangularSectionCR implements IRectangularSectionCR {
         }
     }
 
+    public steel_ratio(d:number = this.dmax,sum: boolean = true){
+        return this.as(d,sum)/(this.b*this.dmax)
+    }
+    
     public add_rr(d:number,quantity: number,BarCR: BarCR):void{
         if (this.find_rr(d) === -1) {
             let row = {distance: d, quantity: quantity, section: BarCR}
