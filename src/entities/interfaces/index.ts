@@ -13,3 +13,5 @@ export type { IStructure } from '@interfaces/structure.interface'
 
 export type { ISpanLoad } from '@interfaces/span-load.interface'
 export type { Printable } from '@interfaces/ui.interfaces'
+
+export type { Resetable } from '@interfaces/globals.interfaces'
