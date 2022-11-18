@@ -1,4 +1,4 @@
-import { coordinates2D } from '@types'
+import { Array2D, coordinates2D } from '@types'
 import { create, all } from 'mathjs'
 
 const config = {}

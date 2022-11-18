@@ -12,7 +12,7 @@ describe('Structure Class', () => {
 	// structure definition
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
 	let e = 200000000
-	let a = new Support('hinge', 0, 0)
+	let a = new Support('fixed', 0, 0)
 	let b = new ElementNode(0, 3)
 	let c = new ElementNode(4, 3)
 	let d = new Support('fixed', 4, 0)
@@ -21,7 +21,7 @@ describe('Structure Class', () => {
 	let rCol = new Element(c, d, section, e)
 	const structure = new Structure(lCol, rCol, beam)
 	// loads definition
-	const w = 20
+	const w = 12
 	beam.addSpanLoad(new RectangularSpanLoad(w, beam.length))
 
 	it('should return an array with the given elements in the constructor', () => {
@@ -113,19 +113,17 @@ describe('Structure Class', () => {
 		})
 	})
 	it(`should return its node loads, ordered by nodes`, () => {
-		b.addLoad('fx', 30)
-		b.addLoad('fy', -30)
-		c.addLoad('mz', -50)
+		b.addLoad('fx', 5)
 		let expected = [
 			[0],
 			[0],
 			[0],
-			[30],
-			[-30],
+			[5],
 			[0],
 			[0],
 			[0],
-			[-50],
+			[0],
+			[0],
 			[0],
 			[0],
 			[0],
@@ -161,5 +159,31 @@ describe('Structure Class', () => {
 			[-(w * l ** 2) / 12],
 		]
 		expect(structure.fef('reduced')).toEqual(expected)
+	})
+	it.todo(
+		`should return its degs of freedom as an array of booleans`,
+		() => {},
+	)
+	it(`should calculate its displacements for the assigned loads`, () => {
+		let expected = [
+			[0],
+			[0],
+			[0],
+			[0.03475],
+			[-0.00043],
+			[-0.04295],
+			[0.03453],
+			[-0.00049],
+			[0.02664],
+			[0],
+			[0],
+			[0],
+		]
+		let result = structure.displacements('array')
+		result.forEach((row, i) => {
+			row.forEach((value, j) => {
+				expect(value).toBeCloseTo(expected[i][j])
+			})
+		})
 	})
 })

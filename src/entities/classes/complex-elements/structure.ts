@@ -7,9 +7,10 @@ import {
 	filterElementByCoords,
 	filterNodeByCoords,
 	uniques,
+	assemblyFef,
+	getStructureDisplacements,
 } from '@utils'
 import { SMatrixOperator as MatOp } from '@classes'
-import { assemblyFef } from '@/utils/elements'
 
 export class Structure implements IStructure {
 	private _elements: IElement[]
@@ -34,6 +35,9 @@ export class Structure implements IStructure {
 		})
 		return arr
 	}
+	get degsOfFreedom(): boolean[] {
+		return [true, true]
+	}
 	public node(x: number, y: number): INode {
 		return filterNodeByCoords(this.nodes, x, y)
 	}
@@ -54,6 +58,14 @@ export class Structure implements IStructure {
 		let lockedDegs = allIndexesOf(this.constraints, true)
 		if (type === 'full') return full
 		return MatOp.reduceDegs('matrix', full, ...lockedDegs)
+	}
+	public displacements(type: 'object' | 'array'): Array2D {
+		return getStructureDisplacements(
+			this.stiffness('full'),
+			this.fef('full'),
+			this.nodeLoads,
+			this.constraints,
+		)
 	}
 	private get constraints(): boolean[] {
 		return this.nodes

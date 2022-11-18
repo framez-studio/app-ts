@@ -1,6 +1,7 @@
 import { Array2D, coordinates2D, stiffnessSubmatrices2D } from '@types'
 import { IElement, INode } from '@interfaces'
 import { SMatrixOperator as MatOp } from '@classes'
+import { allIndexesOf, solveLinearSystem } from '@utils'
 
 export const filterNodeByCoords = (
 	nodes: INode[],
@@ -135,4 +136,25 @@ export const assemblyFef = (nodes: INode[], elements: IElement[]): Array2D => {
 		}
 	})
 	return fef
+}
+
+export const getStructureDisplacements = (
+	stiffness: Array2D,
+	fef: Array2D,
+	loads: Array2D,
+	constraints: boolean[],
+): Array2D => {
+	let lockedDegs = allIndexesOf(constraints, true)
+	let unlockedDegs = allIndexesOf(constraints, false)
+	let reducedStiffness = MatOp.reduceDegs('matrix', stiffness, ...lockedDegs)
+	let reducedExternalLoads = MatOp.reduceDegs('vector', loads, ...lockedDegs)
+	let reducedFefs = MatOp.reduceDegs('vector', fef, ...lockedDegs)
+	let nodeLoads = MatOp.subtract(reducedExternalLoads, reducedFefs) as Array2D
+	let unknownDisplacements = solveLinearSystem(reducedStiffness, nodeLoads)
+	let displacements = MatOp.zeros([constraints.length, 1])
+	let displacementIndex = 0
+	unlockedDegs.forEach((degIndex) => {
+		displacements[degIndex] = unknownDisplacements[displacementIndex++]
+	})
+	return displacements
 }
