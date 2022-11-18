@@ -17,6 +17,7 @@ export type Array2D = number[][]
 
 export type nodeLoads2D = 'fx' | 'fy' | 'mz'
 export type nodeLoads2DObject = { [key in nodeLoads2D]: number }
+export type nodeDisplacements2DObject = { [key in degsOfFreedom2D]: number }
 
 export type initialOrFinal = 'initial' | 'final'
 export type initialFinal<T> = { [key in initialOrFinal]: T }
