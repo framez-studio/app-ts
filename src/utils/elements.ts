@@ -1,5 +1,5 @@
 import { Array2D, coordinates2D, stiffnessSubmatrices2D } from '@types'
-import { IElement, INode } from '@interfaces'
+import { IElement, INode, IStructure } from '@interfaces'
 import { SMatrixOperator as MatOp } from '@classes'
 import { allIndexesOf, solveLinearSystem } from '@utils'
 
@@ -160,4 +160,22 @@ export const getStructureDisplacements = (
 		displacements[degIndex] = unknownDisplacements[displacementIndex++]
 	})
 	return displacements
+}
+
+export const displaceStructure = (structure: IStructure): Array2D => {
+	let displacementsArr = getStructureDisplacements(
+		structure.stiffness('full'),
+		structure.fef('full'),
+		structure.nodeLoads,
+		structure.constraints,
+	)
+	structure.nodes.forEach((node, i) => {
+		let displacements = {
+			dx: displacementsArr[i * 3][0],
+			dy: displacementsArr[i * 3 + 1][0],
+			rz: displacementsArr[i * 3 + 2][0],
+		}
+		node.setDisplacements(displacements)
+	})
+	return displacementsArr
 }

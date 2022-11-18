@@ -12,10 +12,10 @@ describe('Structure Class', () => {
 	// structure definition
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
 	let e = 200000000
-	let a = new Support('fixed', 0, 0)
-	let b = new ElementNode(0, 3)
-	let c = new ElementNode(4, 3)
-	let d = new Support('fixed', 4, 0)
+	let a = new Support('fixed', { x: 0, y: 0 })
+	let b = new ElementNode({ x: 0, y: 3 })
+	let c = new ElementNode({ x: 4, y: 3 })
+	let d = new Support('fixed', { x: 4, y: 0 })
 	let lCol = new Element(a, b, section, e)
 	let beam = new Element(b, c, section, e)
 	let rCol = new Element(c, d, section, e)
@@ -113,7 +113,7 @@ describe('Structure Class', () => {
 		})
 	})
 	it(`should return its node loads, ordered by nodes`, () => {
-		b.addLoad('fx', 5)
+		b.addLoads({ fx: 5 })
 		let expected = [
 			[0],
 			[0],
@@ -164,7 +164,7 @@ describe('Structure Class', () => {
 		`should return its degs of freedom as an array of booleans`,
 		() => {},
 	)
-	it(`should calculate its displacements for the assigned loads`, () => {
+	it(`should calculate its displacements for the assigned loads and return an array`, () => {
 		let expected = [
 			[0],
 			[0],
@@ -179,11 +179,25 @@ describe('Structure Class', () => {
 			[0],
 			[0],
 		]
-		let result = structure.displacements('array')
+		let result = structure.displacements
 		result.forEach((row, i) => {
 			row.forEach((value, j) => {
 				expect(value).toBeCloseTo(expected[i][j])
 			})
+		})
+	})
+	it(`should mutate the displacements of its nodes after getting the structure displacements`, () => {
+		let displacements = [
+			{ dx: 0, dy: 0, rz: 0 },
+			{ dx: 0.03475, dy: -0.00043, rz: -0.04295 },
+			{ dx: 0.03453, dy: -0.00049, rz: 0.02664 },
+			{ dx: 0, dy: 0, rz: 0 },
+		]
+		let nodes = structure.nodes
+		nodes.forEach((node, i) => {
+			expect(node.displacements.dx).toBeCloseTo(displacements[i].dx)
+			expect(node.displacements.dy).toBeCloseTo(displacements[i].dy)
+			expect(node.displacements.rz).toBeCloseTo(displacements[i].rz)
 		})
 	})
 })
