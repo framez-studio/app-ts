@@ -3,7 +3,7 @@ import { Support } from '@classes'
 
 describe('Support Class', () => {
 	it(`should generate a fixed type support correctly`, () => {
-		const support = new Support('fixed', 0, 0)
+		const support = new Support('fixed', { x: 0, y: 0 })
 		let expected = {
 			dx: true,
 			dy: true,
@@ -12,7 +12,7 @@ describe('Support Class', () => {
 		expect(support.constraints).toEqual(expected)
 	})
 	it(`should generate a hinge type support correctly`, () => {
-		const support = new Support('hinge', 0, 0)
+		const support = new Support('hinge', { x: 0, y: 0 })
 		let expected = {
 			dx: true,
 			dy: true,
@@ -21,7 +21,7 @@ describe('Support Class', () => {
 		expect(support.constraints).toEqual(expected)
 	})
 	it(`should generate an x-axis simple type support correctly`, () => {
-		const support = new Support('simple-x', 0, 0)
+		const support = new Support('simple-x', { x: 0, y: 0 })
 		let expected = {
 			dx: true,
 			dy: false,
@@ -30,7 +30,7 @@ describe('Support Class', () => {
 		expect(support.constraints).toEqual(expected)
 	})
 	it(`should generate a y-axis type support correctly`, () => {
-		const support = new Support('simple-y', 0, 0)
+		const support = new Support('simple-y', { x: 0, y: 0 })
 		let expected = {
 			dx: false,
 			dy: true,
