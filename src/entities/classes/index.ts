@@ -9,8 +9,11 @@ export { Element } from './complex-elements/element'
 export { Structure } from './complex-elements/structure'
 
 export { Section } from './sections/section'
+export { RectangularSectionCR } from './sections/rectangular-cr'
+export { BarCR } from './sections/bar-cr'
 export { RectangularHSection } from './sections/rectangular-h-section'
 
 export { Material } from './others/material'
 export { PunctualSpanLoad } from './others/punctual-span-load'
 export { RectangularSpanLoad } from './others/rectangular-span-load'
+

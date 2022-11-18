@@ -3,3 +3,12 @@ export interface IMaterial {
 	young: number
 	weight: number
 }
+
+export interface IConcrete extends IMaterial {
+	fc: number
+	beta: number
+}
+
+export interface ISteel extends IMaterial {
+	fy: number;
+}
