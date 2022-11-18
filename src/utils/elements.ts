@@ -9,7 +9,10 @@ export const filterNodeByCoords = (
 	y: number,
 ): INode => {
 	let node = nodes.filter((inode) => {
-		return inode.coordinates.x === x && inode.coordinates.y === y
+		return (
+			inode.coordinates('static').x === x &&
+			inode.coordinates('static').y === y
+		)
 	})
 	if (!node[0])
 		throw new Error(`Didn't find Node with coordinates [${x},${y}]`)
@@ -22,10 +25,10 @@ export const filterElementByCoords = (
 ) => {
 	let element = elements.filter((ielement) => {
 		return (
-			ielement.nodes.initial.coordinates.x === initial.x &&
-			ielement.nodes.initial.coordinates.y === initial.y &&
-			ielement.nodes.final.coordinates.x === final.x &&
-			ielement.nodes.final.coordinates.y === final.y
+			ielement.nodes.initial.coordinates('static').x === initial.x &&
+			ielement.nodes.initial.coordinates('static').y === initial.y &&
+			ielement.nodes.final.coordinates('static').x === final.x &&
+			ielement.nodes.final.coordinates('static').y === final.y
 		)
 	})
 	if (!element[0])
