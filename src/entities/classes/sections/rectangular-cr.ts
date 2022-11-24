@@ -27,6 +27,7 @@ export class RectangularSectionCR implements IRectangularSectionCR {
     }
     
     get reinforcement():RowReinforcement[]{
+        this.sort_reinforcement()
         return this._reinforcement
     }
 

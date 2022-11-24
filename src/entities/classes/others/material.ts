@@ -15,23 +15,13 @@ export class Material implements IMaterial {
 
 export class Concrete implements IConcrete{
 	constructor(
-		private _name: string,			
-		private _fc:number,	
-		private _weight:number,
-		private _young: number
+		public name: string,			
+		public fc:number,	
+		public weight:number,
+		public young: number,
+		public epsilon_max: number
 	){}
-	get fc(): number{
-		return this._fc
-	}
-	get name(): string{
-		return this._name
-	}
-	get young(): number{
-		return this._young
-	}
-	get weight(): number{
-		return this._weight
-	}
+	
 	
 	get beta():number{
 		return (this.fc<=28) ? 0.85 : 0.85 - (0.05*(this.fc-28)/7)
