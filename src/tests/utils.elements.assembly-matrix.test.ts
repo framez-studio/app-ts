@@ -5,10 +5,10 @@ import { Element, ElementNode, RectangularHSection } from '@classes'
 describe('Elements utils', () => {
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
 	let e = 200000000
-	let a = new ElementNode(0, 0)
-	let b = new ElementNode(0, 3)
-	let c = new ElementNode(4, 3)
-	let d = new ElementNode(4, 0)
+	let a = new ElementNode({ x: 0, y: 0 })
+	let b = new ElementNode({ x: 0, y: 3 })
+	let c = new ElementNode({ x: 4, y: 3 })
+	let d = new ElementNode({ x: 4, y: 0 })
 	const nodes = [a, b, c, d]
 	let lCol = new Element(a, b, section, e)
 	let beam = new Element(b, c, section, e)

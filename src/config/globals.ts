@@ -1,10 +1,11 @@
-import { ISpanLoad } from '../entities/interfaces/span-load.interface'
+import { ISpanLoad } from '@interfaces'
 import {
 	degsOfFreedom2DBoolean,
 	initialFinal,
+	nodeDisplacements2DObject,
 	nodeLoads2DObject,
 	supportsConstraints,
-} from '../entities/types'
+} from '@types'
 
 export const constraints: supportsConstraints = {
 	'simple-x': {
@@ -39,3 +40,8 @@ export const defaultNodeConstraints: degsOfFreedom2DBoolean = {
 	rz: false,
 }
 export const defaultNodeLoads: nodeLoads2DObject = { fx: 0, fy: 0, mz: 0 }
+export const defaultNodeDeformations: nodeDisplacements2DObject = {
+	dx: 0,
+	dy: 0,
+	rz: 0,
+}

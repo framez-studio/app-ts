@@ -1,14 +1,18 @@
 import {
 	coordinates2D,
 	degsOfFreedom2DBoolean,
-	nodeLoads2D,
+	nodeDisplacements2DObject,
 	nodeLoads2DObject,
 } from '@types'
+import { Resetable } from '@interfaces'
 
-export interface INode {
+export interface INode extends Resetable {
 	readonly loads: nodeLoads2DObject
-	coordinates: coordinates2D
+	readonly displacements: nodeDisplacements2DObject
 	constraints: degsOfFreedom2DBoolean
-	setLoad(load: nodeLoads2D, value: number): void
-	addLoad(load: nodeLoads2D, value: number): void
+	coordinates(state: 'static' | 'displaced'): coordinates2D
+	setLoads(loads: Partial<nodeLoads2DObject>): void
+	addLoads(loads: Partial<nodeLoads2DObject>): void
+	setDisplacements(displacements: Partial<nodeDisplacements2DObject>): void
+	addDisplacements(displacements: Partial<nodeDisplacements2DObject>): void
 }

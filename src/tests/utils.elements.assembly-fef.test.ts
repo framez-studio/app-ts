@@ -11,10 +11,10 @@ import { describe, expect, it } from 'vitest'
 describe(`FEF Assembly function`, () => {
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
 	let e = 200000000
-	let a = new Support('hinge', 0, 0)
-	let b = new ElementNode(0, 3)
-	let c = new ElementNode(4, 3)
-	let d = new Support('fixed', 4, 0)
+	let a = new Support('hinge', { x: 0, y: 0 })
+	let b = new ElementNode({ x: 0, y: 3 })
+	let c = new ElementNode({ x: 4, y: 3 })
+	let d = new Support('fixed', { x: 4, y: 0 })
 	let lCol = new Element(a, b, section, e)
 	let beam = new Element(b, c, section, e)
 	let rCol = new Element(c, d, section, e)

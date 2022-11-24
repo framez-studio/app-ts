@@ -1,4 +1,4 @@
-import { Array2D, coordinates2D } from '@types'
+import { coordinates2D } from '@types'
 import { create, all } from 'mathjs'
 
 const config = {}
@@ -41,6 +41,8 @@ export const degSlope = (
 	return degs
 }
 
-export const absolutevalue = (a:number) =>{return (a>0) ? a : a*-1}
+export const absolutevalue = (a: number) => {
+	return a > 0 ? a : a * -1
+}
 
 export const pi: number = algebra.pi

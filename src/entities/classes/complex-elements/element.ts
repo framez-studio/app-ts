@@ -45,14 +45,14 @@ export class Element implements IElement {
 	}
 	get length(): number {
 		return eucDistance(
-			this._nodes.initial.coordinates,
-			this._nodes.final.coordinates,
+			this._nodes.initial.coordinates('static'),
+			this._nodes.final.coordinates('static'),
 		)
 	}
 	get inclination(): number {
 		return degSlope(
-			this._nodes.initial.coordinates,
-			this._nodes.final.coordinates,
+			this._nodes.initial.coordinates('static'),
+			this._nodes.final.coordinates('static'),
 		)
 	}
 	fef(type: coordinateSystem): elementLoads2DArray {
