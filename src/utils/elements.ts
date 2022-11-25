@@ -1,6 +1,6 @@
 import { Array2D, coordinates2D, stiffnessSubmatrices2D } from '@types'
 import { IElement, INode, IStructure } from '@interfaces'
-import { SMatrixOperator as MatOp } from '@classes'
+import { SMatrixOperator as SMatOp } from '@classes'
 import { allIndexesOf, solveLinearSystem } from '@utils'
 
 export const filterNodeByCoords = (
@@ -42,7 +42,7 @@ export const assemblyMatrix = (
 	elements: IElement[],
 ): Array2D => {
 	let nDegs = nodes.length * 3
-	let matrix = MatOp.zeros([nDegs, nDegs])
+	let matrix = SMatOp.zeros([nDegs, nDegs])
 	elements.forEach((element) => {
 		if (
 			nodes.includes(element.nodes.initial) &&
@@ -76,22 +76,22 @@ export const assemblyMatrix = (
 					columns: fDegRange,
 				},
 			}
-			let stiffness = MatOp.submatrices(element.stiffness('global'))
+			let stiffness = SMatOp.submatrices(element.stiffness('global'))
 			let indexes = Object.keys(stiffness) as stiffnessSubmatrices2D[]
 
 			indexes.forEach((index) => {
-				let oldSubmatrix = MatOp.subset(
+				let oldSubmatrix = SMatOp.subset(
 					matrix,
 					ranges[index].rows,
 					ranges[index].columns,
 				) as Array2D
 				let newSubmatrix = stiffness[index]
-				let updatedSubmatrix = MatOp.sum(
+				let updatedSubmatrix = SMatOp.sum(
 					oldSubmatrix,
 					newSubmatrix,
 				) as Array2D
 
-				matrix = MatOp.replace(
+				matrix = SMatOp.replace(
 					matrix,
 					ranges[index].rows,
 					ranges[index].columns,
@@ -104,7 +104,7 @@ export const assemblyMatrix = (
 }
 export const assemblyFef = (nodes: INode[], elements: IElement[]): Array2D => {
 	let nDegs = nodes.length * 3
-	let fef = MatOp.zeros([nDegs, 1])
+	let fef = SMatOp.zeros([nDegs, 1])
 	elements.forEach((element) => {
 		if (
 			nodes.includes(element.nodes.initial) &&
@@ -132,9 +132,9 @@ export const assemblyFef = (nodes: INode[], elements: IElement[]): Array2D => {
 				},
 			}
 			Object.values(degs).forEach((deg) => {
-				let oldFef = MatOp.subset(fef, deg.range, 0) as Array2D
-				let newFef = MatOp.sum(deg.fef, oldFef) as Array2D
-				fef = MatOp.replace(fef, deg.range, 0, newFef) as Array2D
+				let oldFef = SMatOp.subset(fef, deg.range, 0) as Array2D
+				let newFef = SMatOp.sum(deg.fef, oldFef) as Array2D
+				fef = SMatOp.replace(fef, deg.range, 0, newFef) as Array2D
 			})
 		}
 	})
@@ -149,12 +149,15 @@ export const getStructureDisplacements = (
 ): Array2D => {
 	let lockedDegs = allIndexesOf(constraints, true)
 	let unlockedDegs = allIndexesOf(constraints, false)
-	let reducedStiffness = MatOp.reduceDegs('matrix', stiffness, ...lockedDegs)
-	let reducedExternalLoads = MatOp.reduceDegs('vector', loads, ...lockedDegs)
-	let reducedFefs = MatOp.reduceDegs('vector', fef, ...lockedDegs)
-	let nodeLoads = MatOp.subtract(reducedExternalLoads, reducedFefs) as Array2D
+	let reducedStiffness = SMatOp.reduceDegs('matrix', stiffness, ...lockedDegs)
+	let reducedExternalLoads = SMatOp.reduceDegs('vector', loads, ...lockedDegs)
+	let reducedFefs = SMatOp.reduceDegs('vector', fef, ...lockedDegs)
+	let nodeLoads = SMatOp.subtract(
+		reducedExternalLoads,
+		reducedFefs,
+	) as Array2D
 	let unknownDisplacements = solveLinearSystem(reducedStiffness, nodeLoads)
-	let displacements = MatOp.zeros([constraints.length, 1])
+	let displacements = SMatOp.zeros([constraints.length, 1])
 	let displacementIndex = 0
 	unlockedDegs.forEach((degIndex) => {
 		displacements[degIndex] = unknownDisplacements[displacementIndex++]
@@ -178,4 +181,17 @@ export const displaceStructure = (structure: IStructure): Array2D => {
 		node.setDisplacements(displacements)
 	})
 	return displacementsArr
+}
+
+export const elementLocalDisplacementsArray = (element: IElement): Array2D => {
+	let angle = -element.inclination
+	let globalDisplacements = [
+		[element.nodes.initial.displacements.dx],
+		[element.nodes.initial.displacements.dy],
+		[element.nodes.initial.displacements.rz],
+		[element.nodes.final.displacements.dx],
+		[element.nodes.final.displacements.dy],
+		[element.nodes.final.displacements.rz],
+	]
+	return SMatOp.rotateVector(globalDisplacements, angle)
 }

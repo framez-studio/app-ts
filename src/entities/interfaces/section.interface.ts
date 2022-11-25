@@ -1,46 +1,44 @@
-import { BarCR, Material } from "../classes"
-import { Concrete } from "../classes/others/material"
+import { IMaterial, IConcrete } from '@interfaces'
 
 export interface ISection {
 	readonly area: number
 	readonly inertiaZ: number
-	material: Material
+	material: IMaterial
 }
 
-export interface IRectangularSection extends ISection{
+export interface IRectangularSection extends ISection {}
 
-}
-
-export interface RowReinforcement {
+export interface IRowReinforcement {
 	distance: number
 	quantity: number
-	section: BarCR 
+	section: ISteelCircularSection
 }
 
-export interface RowReinforcementMechanics {
+export interface IRowReinforcementMechanics {
 	distance: number
 	quantity: number
-	section: BarCR 
+	section: ISteelCircularSection
 	epsilon: number
 	strength: number
 	force: number
 	moment: number
 }
 
-export interface IRectangularSectionCR extends IRectangularSection{
-	b:number
-	material: Concrete
-	reinforcement: RowReinforcement[]
+export interface IRectangularSectionCR extends IRectangularSection {
+	b: number
+	material: IConcrete
+	reinforcement: IRowReinforcement[]
 	readonly dmax: number
-	as(d:number,sum:boolean): number
-	steel_ratio(d:number,sum:boolean):number
-	add_rr(d:number,quantity:number,BarCR: BarCR):void
-	find_rr(d:number):number
-	swap_rr(d:number,quantity:number,BarCR: BarCR):void
-	delete_reinforcement():void
-	sort_reinforcement():void
+	as(d: number, sum: boolean): number
+	steel_ratio(d: number, sum: boolean): number
+	add_rr(d: number, quantity: number, BarCR: ISteelCircularSection): void
+	find_rr(d: number): number
+	swap_rr(d: number, quantity: number, BarCR: ISteelCircularSection): void
+	delete_reinforcement(): void
+	sort_reinforcement(): void
 }
 
-export interface CircularSection extends ISection{
+export interface ICircularSection extends ISection {
 	diameter: number
 }
+export interface ISteelCircularSection extends ICircularSection {}

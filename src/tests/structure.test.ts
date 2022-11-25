@@ -10,7 +10,9 @@ import {
 
 describe('Structure Class', () => {
 	// structure definition
+
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
+
 	let e = 200000000
 	let a = new Support('fixed', { x: 0, y: 0 })
 	let b = new ElementNode({ x: 0, y: 3 })
@@ -199,5 +201,8 @@ describe('Structure Class', () => {
 			expect(node.displacements.dy).toBeCloseTo(displacements[i].dy)
 			expect(node.displacements.rz).toBeCloseTo(displacements[i].rz)
 		})
+	})
+	it(`s elements should calculate correctly the corresponding internal forces`, () => {
+		let forces = []
 	})
 })

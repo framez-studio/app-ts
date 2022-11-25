@@ -8,9 +8,9 @@ import {
 	filterNodeByCoords,
 	uniques,
 	assemblyFef,
+	displaceStructure,
 } from '@utils'
 import { SMatrixOperator as MatOp } from '@classes'
-import { displaceStructure } from '@/utils/elements'
 
 export class Structure implements IStructure {
 	private _elements: IElement[]

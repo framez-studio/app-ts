@@ -1,5 +1,4 @@
-import { IConcrete, ISteel } from '@/entities/interfaces/material.interface'
-import { IMaterial } from '@interfaces'
+import { IConcrete, IMaterial, ISteel } from '@interfaces'
 
 export class Material implements IMaterial {
 	public name: string
@@ -13,43 +12,41 @@ export class Material implements IMaterial {
 	}
 }
 
-export class Concrete implements IConcrete{
+export class Concrete implements IConcrete {
 	constructor(
-		private _name: string,			
-		private _fc:number,	
-		private _weight:number,
-		private _young: number
-	){}
-	get fc(): number{
+		private _name: string,
+		private _fc: number,
+		private _weight: number,
+		private _young: number,
+	) {}
+	get fc(): number {
 		return this._fc
 	}
-	get name(): string{
+	get name(): string {
 		return this._name
 	}
-	get young(): number{
+	get young(): number {
 		return this._young
 	}
-	get weight(): number{
+	get weight(): number {
 		return this._weight
 	}
-	
-	get beta():number{
-		return (this.fc<=28) ? 0.85 : 0.85 - (0.05*(this.fc-28)/7)
-	}
 
+	get beta(): number {
+		return this.fc <= 28 ? 0.85 : 0.85 - (0.05 * (this.fc - 28)) / 7
+	}
 }
 
-export class Steel implements ISteel{
-	
+export class Steel implements ISteel {
 	constructor(
 		public name: string,
 		public young: number,
 		public weight: number,
-		public fy: number){
-
+		public fy: number,
+	) {
 		this.young = young
 		this.fy = fy
 		this.name = name
 		this.weight = weight
-		}
+	}
 }

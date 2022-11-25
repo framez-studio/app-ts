@@ -1,5 +1,17 @@
-export type { IMaterial } from '@interfaces/material.interface'
-export type { ISection } from '@interfaces/section.interface'
+export type {
+	IMaterial,
+	IConcrete,
+	ISteel,
+} from '@interfaces/material.interface'
+export type {
+	ISection,
+	IRectangularSection,
+	IRectangularSectionCR,
+	ICircularSection,
+	ISteelCircularSection,
+	IRowReinforcement,
+	IRowReinforcementMechanics,
+} from '@interfaces/section.interface'
 
 export type { IMatrixGenerator } from '@interfaces/matrix-generator.interface'
 export type {
