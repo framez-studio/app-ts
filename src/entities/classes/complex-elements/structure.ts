@@ -50,14 +50,14 @@ export class Structure implements IStructure {
 			])
 			.flat()
 	}
-	public node(x: number, y: number): INode {
-		return filterNodeByCoords(this.nodes, x, y)
+	public node(position: coordinates2D): INode {
+		return filterNodeByCoords(this.nodes, position.x, position.y)
 	}
 	public element(initial: coordinates2D, final: coordinates2D): IElement {
 		return filterElementByCoords(this.elements, initial, final)
 	}
-	public setSupport(x: number, y: number, type: supportType): void {
-		this.node(x, y).constraints = constraints[type]
+	public setSupport(position: coordinates2D, type: supportType): void {
+		this.node(position).constraints = constraints[type]
 	}
 	public fef(type: 'full' | 'reduced'): Array2D {
 		let full = assemblyFef(this.nodes, this.elements)
