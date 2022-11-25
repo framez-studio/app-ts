@@ -19,6 +19,7 @@ export interface IElement {
 	addSpanLoad(load: ISpanLoad): void
 	fef(system: coordinateSystem): elementLoads2DArray
 	stiffness(system: coordinateSystem): Array2D
+	forces(system: coordinateSystem): Array2D
 	setNode(which: initialOrFinal, node: INode): void
 	newConnectedElement(
 		from: initialOrFinal,

@@ -9,7 +9,7 @@ import {
 } from '@types'
 import { IElement, INode, ISection, ISpanLoad } from '@interfaces'
 import { defaultElementLoads, defaultElementReleases } from '@config'
-import { degSlope, eucDistance } from '@utils'
+import { degSlope, eucDistance, elementLocalDisplacementsArray } from '@utils'
 import { MatrixGenerator as MatGen, SMatrixOperator as MatOp } from '@classes'
 
 export class Element implements IElement {
@@ -55,14 +55,14 @@ export class Element implements IElement {
 			this._nodes.final.coordinates('static'),
 		)
 	}
-	fef(type: coordinateSystem): elementLoads2DArray {
+	public fef(type: coordinateSystem): elementLoads2DArray {
 		let loadsFef = this._loads.map((load) => {
 			return load.fefArray
 		})
 		if (loadsFef.length == 0) return [[0], [0], [0], [0], [0], [0]]
 		let local = MatOp.sum(...loadsFef) as elementLoads2DArray
-		let angle = this.inclination
 		if (type == 'local') return local
+		let angle = this.inclination
 		return MatOp.rotateVector(local, angle) as elementLoads2DArray
 	}
 	public setNode(which: initialOrFinal, node: INode): void {
@@ -87,6 +87,18 @@ export class Element implements IElement {
 			stiff = MatOp.rotateMatrix(stiff, angle)
 		}
 		return stiff
+	}
+	public forces(system: coordinateSystem): Array2D {
+		let displacements = elementLocalDisplacementsArray(this)
+		let angle = this.inclination
+		let internals = MatOp.multiply(
+			this.stiffness('local'),
+			displacements,
+		) as Array2D
+		if (system === 'global' && angle !== 0) {
+			internals = MatOp.rotateVector(internals, angle)
+		}
+		return internals
 	}
 	public newConnectedElement(
 		from: initialOrFinal,

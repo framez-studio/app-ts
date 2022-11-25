@@ -10,7 +10,9 @@ import {
 
 describe('Structure Class', () => {
 	// structure definition
+
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
+
 	let e = 200000000
 	let a = new Support('fixed', { x: 0, y: 0 })
 	let b = new ElementNode({ x: 0, y: 3 })
@@ -34,10 +36,10 @@ describe('Structure Class', () => {
 		},
 	)
 	it('should allow to access one of its nodes by coordinates', () => {
-		expect(structure.node(0, 0)).toBe(a)
+		expect(structure.node({ x: 0, y: 0 })).toBe(a)
 	})
 	it('should throw an error if trying to get a node with non-existent coordinates', () => {
-		expect(() => structure.node(100, 100)).toThrowError()
+		expect(() => structure.node({ x: 100, y: 100 })).toThrowError()
 	})
 	it('should allow to access one of its elements by coordinates', () => {
 		expect(structure.element({ x: 0, y: 0 }, { x: 0, y: 3 })).toBe(lCol)
@@ -48,13 +50,13 @@ describe('Structure Class', () => {
 		).toThrowError()
 	})
 	it('should allow to add a support with the coordinates of an existing node in the structure', () => {
-		structure.setSupport(0, 0, 'fixed')
+		structure.setSupport({ x: 0, y: 0 }, 'fixed')
 		expect(a.constraints.dx).toBe(true)
 		expect(a.constraints.dy).toBe(true)
 		expect(a.constraints.rz).toBe(true)
 	})
 	it('should throw an error if trying to add a support with non-existent coordinates', () => {
-		expect(() => structure.setSupport(100, 0, 'hinge')).toThrow()
+		expect(() => structure.setSupport({ x: 100, y: 0 }, 'hinge')).toThrow()
 	})
 	it('should generate its full stiffness matrix', () => {
 		let expected = [
@@ -199,5 +201,8 @@ describe('Structure Class', () => {
 			expect(node.displacements.dy).toBeCloseTo(displacements[i].dy)
 			expect(node.displacements.rz).toBeCloseTo(displacements[i].rz)
 		})
+	})
+	it(`s elements should calculate correctly the corresponding internal forces`, () => {
+		let forces = []
 	})
 })
