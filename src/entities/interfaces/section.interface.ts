@@ -33,14 +33,14 @@ export interface IRectangularSectionCR extends IRectangularSection{
 	reinforcement: RowReinforcement[]
 	readonly dmax: number
 	as(d:number,sum:boolean): number
-	steel_ratio(d:number,sum:boolean):number
-	add_rr(d:number,quantity:number,BarCR: BarCR):void
-	find_rr(d:number):number
-	swap_rr(d:number,quantity:number,BarCR: BarCR):void
-	delete_reinforcement():void
-	sort_reinforcement():void
+	steelRatio(d:number,sum:boolean):number
+	addRowReinforcement(d:number,quantity:number,BarCR: BarCR):void
+	findRowReinforcement(d:number):number
+	swapRowReinforcement(d:number,quantity:number,BarCR: BarCR):void
+	deleteReinforcement():void
+	sortReinforcement():void
 }
 
-export interface CircularSection extends ISection{
+export interface ICircularSection extends ISection{
 	diameter: number
 }

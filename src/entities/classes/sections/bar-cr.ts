@@ -1,8 +1,8 @@
-import { CircularSection } from "@/entities/interfaces/section.interface";
+import { ICircularSection } from "@/entities/interfaces/section.interface";
 import { pi } from "@/utils/algebra";
 import { Steel } from "../others/material";
 
-export class BarCR implements CircularSection{
+export class BarCR implements ICircularSection{
     constructor(public diameter: number, public area: number, public material: Steel){
         this.diameter = diameter
         this.material = material

@@ -5,11 +5,11 @@ import { describe, it, expect } from "vitest";
 
 describe('description', () => {
     const section = new RectangularSectionCR(300,400,Concrete21)
-    section.add_rr(240,4,BarNo4)
-    section.add_rr(40,4,BarNo4)
-    section.add_rr(100,4,BarNo4)
-    section.add_rr(60,4,BarNo4)
-    section.sort_reinforcement()
+    section.addRowReinforcement(240,4,BarNo4)
+    section.addRowReinforcement(40,4,BarNo4)
+    section.addRowReinforcement(100,4,BarNo4)
+    section.addRowReinforcement(60,4,BarNo4)
+    section.sortReinforcement()
     const i = section.reinforcement.length
     it('should sort correctly reinforcement',()=>{
         expect(section.reinforcement[0].distance).toBeCloseTo(40)
