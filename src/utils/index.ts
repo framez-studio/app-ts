@@ -4,6 +4,8 @@ export {
 	filterElementByCoords,
 	filterNodeByCoords,
 	getStructureDisplacements,
+	displaceStructure,
+	elementLocalDisplacementsArray,
 } from '@utils/elements'
 export { eucDistance, degSlope, algebra } from '@utils/algebra'
 export {

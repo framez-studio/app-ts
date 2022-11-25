@@ -1,4 +1,5 @@
-import { Section, Material } from '@classes'
+import { IMaterial } from '@interfaces'
+import { Section } from '@classes'
 
 export class RectangularHSection extends Section {
 	constructor(
@@ -6,7 +7,7 @@ export class RectangularHSection extends Section {
 		private h: number,
 		private bt: number,
 		private ht: number,
-		public material: Material
+		public material: IMaterial,
 	) {
 		super(material)
 	}
