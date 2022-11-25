@@ -13,13 +13,14 @@ export interface IElement {
 	readonly inclination: number
 	readonly releases: degsOfFreedom2DArray
 	readonly constraints: degsOfFreedom2DArray
+	readonly reactions: elementLoads2DArray
+	readonly forces: elementLoads2DArray
 	young: number
 	section: ISection
 	setSpanLoad(load: ISpanLoad): void
 	addSpanLoad(load: ISpanLoad): void
 	fef(system: coordinateSystem): elementLoads2DArray
 	stiffness(system: coordinateSystem): Array2D
-	forces(system: coordinateSystem): Array2D
 	setNode(which: initialOrFinal, node: INode): void
 	newConnectedElement(
 		from: initialOrFinal,
