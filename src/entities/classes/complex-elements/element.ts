@@ -55,10 +55,19 @@ export class Element implements IElement {
 			this._nodes.final.coordinates('static'),
 		)
 	}
+	get reactions(): elementLoads2DArray {
+		let displacements = elementLocalDisplacementsArray(this)
+		return MatOp.multiply(
+			this.stiffness('local'),
+			displacements,
+		) as elementLoads2DArray
+	}
+	get forces(): elementLoads2DArray {
+		let resultants = MatOp.sum(this.fef('local'), this.reactions) as Array2D
+		return MatOp.multiply(-1, resultants) as elementLoads2DArray
+	}
 	public fef(type: coordinateSystem): elementLoads2DArray {
-		let loadsFef = this._loads.map((load) => {
-			return load.fefArray
-		})
+		let loadsFef = this._loads.map((load) => load.fefArray)
 		if (loadsFef.length == 0) return [[0], [0], [0], [0], [0], [0]]
 		let local = MatOp.sum(...loadsFef) as elementLoads2DArray
 		if (type == 'local') return local
@@ -87,18 +96,6 @@ export class Element implements IElement {
 			stiff = MatOp.rotateMatrix(stiff, angle)
 		}
 		return stiff
-	}
-	public forces(system: coordinateSystem): Array2D {
-		let displacements = elementLocalDisplacementsArray(this)
-		let angle = this.inclination
-		let internals = MatOp.multiply(
-			this.stiffness('local'),
-			displacements,
-		) as Array2D
-		if (system === 'global' && angle !== 0) {
-			internals = MatOp.rotateVector(internals, angle)
-		}
-		return internals
 	}
 	public newConnectedElement(
 		from: initialOrFinal,
