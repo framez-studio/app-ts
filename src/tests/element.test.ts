@@ -3,8 +3,8 @@ import {
 	Element,
 	ElementNode,
 	MatrixOperator as matOp,
-	PunctualSpanLoad,
 	RectangularHSection,
+	RectangularSpanLoad,
 } from '@classes'
 import { Concrete21 } from '@utils'
 
@@ -96,15 +96,12 @@ describe('Element Class', () => {
 		expect(sameSection).toBeTruthy()
 	})
 	it('should allow to set its spanload', () => {
-		let load = new PunctualSpanLoad(20, element.length, 1)
-		element.setSpanLoad(load)
+		let load = new RectangularSpanLoad(element, 20)
 		expect(element.fef('local')).toEqual(load.fefArray)
 	})
 	it(`should allow to add multiple span loads`, () => {
-		let load1 = new PunctualSpanLoad(20, element.length, 1)
-		element.setSpanLoad(load1)
-		element.addSpanLoad(load1)
-		let expected = matOp.sum(load1.fefArray, load1.fefArray)
+		let load = new RectangularSpanLoad(element, 20)
+		let expected = matOp.sum(load.fefArray, load.fefArray)
 		expect(element.fef('local')).toEqual(expected)
 	})
 })
