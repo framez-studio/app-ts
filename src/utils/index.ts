@@ -1,4 +1,5 @@
 export {
+	releasesArray,
 	assemblyMatrix,
 	assemblyFef,
 	filterElementByCoords,
@@ -16,3 +17,4 @@ export {
 export { allIndexesOf, uniques } from '@utils/helpers'
 export { stiffness, transformation } from '@utils/matrices'
 export { solveLinearSystem } from '@utils/solver'
+export { Concrete21 } from '@utils/material'

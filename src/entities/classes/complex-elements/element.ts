@@ -6,10 +6,17 @@ import {
 	initialOrFinal,
 	degsOfFreedom2DArray,
 	elementLoads2DArray,
+	degsOfFreedom2D,
+	elementDegsOfFreedom2DObject,
 } from '@types'
 import { IElement, INode, ISection, ISpanLoad } from '@interfaces'
 import { defaultElementLoads, defaultElementReleases } from '@config'
-import { degSlope, eucDistance, elementLocalDisplacementsArray } from '@utils'
+import {
+	degSlope,
+	eucDistance,
+	elementLocalDisplacementsArray,
+	releasesArray,
+} from '@utils'
 import { MatrixGenerator as MatGen, SMatrixOperator as MatOp } from '@classes'
 
 export class Element implements IElement {
@@ -37,11 +44,8 @@ export class Element implements IElement {
 			...Object.values(this.nodes.final.constraints),
 		] as degsOfFreedom2DArray
 	}
-	get releases(): degsOfFreedom2DArray {
-		return [
-			...Object.values(this._releases.initial),
-			...Object.values(this._releases.final),
-		] as degsOfFreedom2DArray
+	get releases(): elementDegsOfFreedom2DObject {
+		return this._releases
 	}
 	get length(): number {
 		return eucDistance(
@@ -63,8 +67,24 @@ export class Element implements IElement {
 		) as elementLoads2DArray
 	}
 	get forces(): elementLoads2DArray {
-		let resultants = MatOp.sum(this.fef('local'), this.reactions) as Array2D
-		return MatOp.multiply(-1, resultants) as elementLoads2DArray
+		let resultants = MatOp.sum(
+			this.fef('local'),
+			this.reactions,
+		) as elementLoads2DArray
+		return [
+			[-resultants[0][0]],
+			[+resultants[1][0]],
+			[-resultants[2][0]],
+			[+resultants[3][0]],
+			[-resultants[4][0]],
+			[+resultants[5][0]],
+		]
+	}
+	public release(node: initialOrFinal, direction: degsOfFreedom2D): void {
+		this._releases[node][direction] = true
+	}
+	public unrelease(node: initialOrFinal, direction: degsOfFreedom2D): void {
+		this._releases[node][direction] = false
 	}
 	public fef(type: coordinateSystem): elementLoads2DArray {
 		let loadsFef = this._loads.map((load) => load.fefArray)
@@ -85,12 +105,13 @@ export class Element implements IElement {
 	}
 	public stiffness(system: coordinateSystem): Array2D {
 		let angle = this.inclination
+		let releases = releasesArray(this.releases)
 		let stiff: Array2D = MatGen.stiffness(
 			this.young,
 			this.length,
 			this.section.area,
 			this.section.inertiaZ,
-			this.releases,
+			releases,
 		)
 		if (system === 'global' && angle !== 0) {
 			stiff = MatOp.rotateMatrix(stiff, angle)

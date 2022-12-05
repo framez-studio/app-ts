@@ -5,11 +5,11 @@ import {
 	Element,
 	RectangularSpanLoad,
 } from '@classes'
-import { assemblyFef } from '@utils'
+import { assemblyFef, Concrete21 } from '@utils'
 import { describe, expect, it } from 'vitest'
 
 describe(`FEF Assembly function`, () => {
-	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
+	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002, Concrete21)
 	let e = 200000000
 	let a = new Support('hinge', { x: 0, y: 0 })
 	let b = new ElementNode({ x: 0, y: 3 })
@@ -21,7 +21,7 @@ describe(`FEF Assembly function`, () => {
 	it('should generate an assembled fef vector correctly for only a one force', () => {
 		let w = 20
 		let l = beam.length
-		beam.addSpanLoad(new RectangularSpanLoad(w, l))
+		new RectangularSpanLoad(beam, w)
 		let expected = [
 			[0],
 			[0],
@@ -43,7 +43,7 @@ describe(`FEF Assembly function`, () => {
 		let w = 20
 		let l = beam.length
 		let lc = lCol.length
-		lCol.addSpanLoad(new RectangularSpanLoad(w, lc))
+		new RectangularSpanLoad(lCol, w)
 		let expected = [
 			[-(w * lc) / 2],
 			[0],

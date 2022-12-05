@@ -1,7 +1,26 @@
-import { Array2D, coordinates2D, stiffnessSubmatrices2D } from '@types'
+import {
+	Array2D,
+	coordinates2D,
+	degsOfFreedom2DArray,
+	elementDegsOfFreedom2DObject,
+	stiffnessSubmatrices2D,
+} from '@types'
 import { IElement, INode, IStructure } from '@interfaces'
 import { SMatrixOperator as SMatOp } from '@classes'
 import { allIndexesOf, solveLinearSystem } from '@utils'
+
+export const releasesArray = (
+	releases: elementDegsOfFreedom2DObject,
+): degsOfFreedom2DArray => {
+	return [
+		releases.initial.dx,
+		releases.initial.dy,
+		releases.initial.rz,
+		releases.final.dx,
+		releases.final.dy,
+		releases.final.rz,
+	]
+}
 
 export const filterNodeByCoords = (
 	nodes: INode[],

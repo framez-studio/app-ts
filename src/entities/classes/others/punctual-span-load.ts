@@ -3,6 +3,8 @@ import { ISpanLoad } from '@interfaces'
 import { punctualLoadFef } from '@utils'
 
 // TODO: throw error if distance is greater than elementLength
+// This Class is experimental, its not ready yet to be used
+
 export class PunctualSpanLoad implements ISpanLoad {
 	private load: number
 	private elementLength: number

@@ -7,12 +7,11 @@ import {
 	Structure,
 	Support,
 } from '@classes'
+import { Concrete21 } from '@utils'
 
 describe('Structure Class', () => {
 	// structure definition
-
-	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
-
+	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002, Concrete21)
 	let e = 200000000
 	let a = new Support('fixed', { x: 0, y: 0 })
 	let b = new ElementNode({ x: 0, y: 3 })
@@ -24,7 +23,7 @@ describe('Structure Class', () => {
 	const structure = new Structure(lCol, rCol, beam)
 	// loads definition
 	const w = 12
-	beam.addSpanLoad(new RectangularSpanLoad(w, beam.length))
+	new RectangularSpanLoad(beam, w)
 
 	it('should return an array with the given elements in the constructor', () => {
 		expect(structure.elements).toEqual([lCol, rCol, beam])

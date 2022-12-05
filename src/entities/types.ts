@@ -28,6 +28,7 @@ export type supportsConstraints = {
 }
 
 export type elementLoads2DObject = initialFinal<nodeLoads2DObject>
+export type elementDegsOfFreedom2DObject = initialFinal<degsOfFreedom2DBoolean>
 export type elementLoads2DArray = [
 	[number],
 	[number],
