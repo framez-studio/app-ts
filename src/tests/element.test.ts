@@ -6,9 +6,10 @@ import {
 	PunctualSpanLoad,
 	RectangularHSection,
 } from '@classes'
+import { Concrete21 } from '@utils'
 
 describe('Element Class', () => {
-	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
+	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002, Concrete21)
 	const points = { i: { x: 0, y: 0 }, f: { x: 0, y: 3 } }
 	let nodes = {
 		i: new ElementNode(points.i),
@@ -36,7 +37,18 @@ describe('Element Class', () => {
 		expect(element.section.inertiaZ).toBeCloseTo(0.000001255)
 	})
 	it(`should return its releases`, () => {
-		let expected = [false, false, false, false, false, false]
+		let expected = {
+			initial: {
+				dx: false,
+				dy: false,
+				rz: false,
+			},
+			final: {
+				dx: false,
+				dy: false,
+				rz: false,
+			},
+		}
 		expect(element.releases).toEqual(expected)
 	})
 	it(`should calculate its local stiffness matrix`, () => {
@@ -74,7 +86,7 @@ describe('Element Class', () => {
 		})
 	})
 	it('should allow to create new connected IElement object with same properties', () => {
-		let fNode = new ElementNode(3, 3)
+		let fNode = new ElementNode({ x: 3, y: 3 })
 		let newElement = element.newConnectedElement('final', fNode)
 		let sharedNode = newElement.nodes.initial === element.nodes.final
 		let sameYoung = newElement.young === element.young

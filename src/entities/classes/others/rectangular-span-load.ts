@@ -1,29 +1,31 @@
 import { elementLoads2DArray, elementLoads2DObject, initialFinal } from '@types'
-import { ISpanLoad } from '@interfaces'
+import { IElement, ISpanLoad } from '@interfaces'
 import { rectangularLoadFef } from '@utils'
 
 // TODO: throw error if distance is greater than elementLength
 export class RectangularSpanLoad implements ISpanLoad {
 	private load: number
-	private elementLength: number
 	private distance: initialFinal<number>
+	private element: IElement
 
 	constructor(
+		element: IElement,
 		load: number,
-		elementLength: number,
 		initial: number = 0,
-		final: number = elementLength,
+		final: number = element.length,
 	) {
+		this.element = element
 		this.load = load
-		this.elementLength = elementLength
 		this.distance = { initial, final }
+		this.element.addSpanLoad(this)
 	}
 	get fef(): elementLoads2DObject {
 		return rectangularLoadFef(
 			this.load,
-			this.elementLength,
+			this.element.length,
 			this.distance.initial,
 			this.distance.final,
+			this.element.releases,
 		)
 	}
 	get fefArray(): elementLoads2DArray {
