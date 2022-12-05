@@ -169,7 +169,7 @@ export const displaceStructure = (structure: IStructure): Array2D => {
 	let displacementsArr = getStructureDisplacements(
 		structure.stiffness('full'),
 		structure.fef('full'),
-		structure.nodeLoads,
+		structure.nodeLoads, 
 		structure.constraints,
 	)
 	structure.nodes.forEach((node, i) => {
