@@ -67,8 +67,18 @@ export class Element implements IElement {
 		) as elementLoads2DArray
 	}
 	get forces(): elementLoads2DArray {
-		let resultants = MatOp.sum(this.fef('local'), this.reactions) as Array2D
-		return MatOp.multiply(-1, resultants) as elementLoads2DArray
+		let resultants = MatOp.sum(
+			this.fef('local'),
+			this.reactions,
+		) as elementLoads2DArray
+		return [
+			[-resultants[0][0]],
+			[+resultants[1][0]],
+			[-resultants[2][0]],
+			[+resultants[3][0]],
+			[-resultants[4][0]],
+			[+resultants[5][0]],
+		]
 	}
 	public release(node: initialOrFinal, direction: degsOfFreedom2D): void {
 		this._releases[node][direction] = true
