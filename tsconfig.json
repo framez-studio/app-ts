@@ -3,14 +3,17 @@
 		"target": "ESNext",
 		"useDefineForClassFields": true,
 		"module": "ESNext",
-		"lib": ["ESNext", "DOM", "WebWorker"],
+		"lib": ["ESNext", "DOM", "DOM.Iterable", "WebWorker"],
 		"moduleResolution": "Node",
 		"strict": true,
 		"sourceMap": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
-		"esModuleInterop": true,
+		"esModuleInterop": false,
 		"noEmit": true,
+		"allowSyntheticDefaultImports": true,
+		"jsx": "react-jsx",
+		"forceConsistentCasingInFileNames": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noImplicitReturns": true,
@@ -26,8 +29,11 @@
 			"@utils": ["src/utils/index"],
 			"@utils/*": ["src/utils/*"],
 			"@config": ["src/config/index"],
-			"@config/*": ["src/config/*"]
+			"@config/*": ["src/config/*"],
+			"@components/*": ["src/components/*"],
+			"@styles/*": ["src/styles/*"]
 		}
 	},
-	"include": ["src"]
+	"include": ["src"],
+	"references": [{ "path": "./tsconfig.node.json" }]
 }
