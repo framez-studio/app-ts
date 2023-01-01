@@ -11,9 +11,8 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 
 const InputSliderSlot: React.FC<Props> = ({ props }) => {
 	const [isOpen, setIsOpen] = useState(props.isOpen ?? false)
-	const clickHandler = () => {
-		setIsOpen(!isOpen)
-	}
+	const clickHandler = () => setIsOpen(!isOpen)
+
 	return (
 		<section className="slider-slot">
 			{isOpen ? (
