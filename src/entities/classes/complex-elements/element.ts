@@ -47,6 +47,7 @@ export class Element implements IElement {
 	get releases(): elementDegsOfFreedom2DObject {
 		return this._releases
 	}
+	
 	get length(): number {
 		return eucDistance(
 			this._nodes.initial.coordinates('static'),

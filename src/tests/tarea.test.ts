@@ -26,16 +26,23 @@ describe('Structure Class testing 2.0', () => {
 	let lCol = new Element(a, b, col350x350, e)
 	let beam = new Element(b, c, vga400x300, e)
 	let rCol = new Element(c, d, col350x350, e)
-
+	beam.release("final","rz")
+	
 	//structure definition
 	let structure = new Structure(lCol, beam, rCol)
 
 	//loads definition & assign
-	let load = new RectangularSpanLoad(-40,beam.length)
-	beam.addSpanLoad(load)
+	let load = new RectangularSpanLoad(beam,1)
+	
+
+
+	
 
 	it(`Should calculate correctly its displacements tarea`, () => {
-		let expected = [
+		let matrix = structure.stiffness("reduced")
+		let f = structure.fef("reduced")
+		let stcol = beam.fef("local")
+		let expected =  [
 			[0],
 			[0],
 			[0],
@@ -56,6 +63,9 @@ describe('Structure Class testing 2.0', () => {
 			})
 		})
 	})
+
+
+
 	it(`s first element should calculate correctly its internal forces`, () => {
 		let expected = [
 			[1.13],
@@ -65,7 +75,7 @@ describe('Structure Class testing 2.0', () => {
 			[-3],
 			[-2.2673],
 		]
-		let result = lCol.forces
+		let result = lCol.forces 
 		let result2 = beam.forces
 		let result3 = rCol.forces
 		result.forEach((row, i) => {
