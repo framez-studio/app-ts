@@ -1,0 +1,40 @@
+:root
+  /* font values */
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif
+  font-size: 62.5%
+  font-weight: 400
+  /* text config */
+  font-synthesis: none
+  text-rendering: optimizeLegibility
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  -webkit-text-size-adjust: 100%
+/* consistent box-model */
+*, *::after, *::before
+  box-sizing: border-box
+/* consistent margin/padding */
+*
+  margin: 0
+  padding: 0
+/* consistent line height */
+*
+  line-height: calc(1em + 0.5rem)
+/* consistent fonts */
+input, button, textarea, select
+  font: inherit
+/* allow percentage based heights */
+html, body, #root
+  height: 100%
+/* set default theme */
+html
+  color-scheme: dark light
+/* create stacking context */
+#root
+  isolation: isolate
+/* make media responsive */
+img, picture, svg, canvas, video
+  display: block
+  max-width: 100%
+/* avoid text overflows */
+p, h1, h2, h3, h4, h5, h6
+  overflow-wrap: break-word
