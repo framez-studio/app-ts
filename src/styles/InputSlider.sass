@@ -1,7 +1,21 @@
 @import './_vars'
 .input-slider
-    // sets slot offset
     position: absolute
     left: 0
     bottom: 0
-    transform: translate(0,calc(100% - $slider-slot-heigth))
+    height: 50%
+    border-radius: 20px 20px 0px 0px
+    overflow: hidden
+    &.opened
+        transform: translate(0, 0)
+    &.closed
+        transform: translate(0, calc(100% - $slider-slot-height))
+    &-slot
+        display: flex
+        height: $slider-slot-height
+        justify-content: center
+        align-items: center
+    &-body
+        height: calc( 100% - $slider-slot-height )
+        flex: 1
+        padding: 8px 24px 24px 24px

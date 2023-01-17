@@ -1,24 +1,22 @@
-import React, { useState } from 'react'
-import '@styles/InputSliderSlot.sass'
+import React from 'react'
+import '@styles/InputSlider.sass'
 import ArrowDownwardBtn from './ArrowDownwardBtn'
 import ArrowUpwardBtn from './ArrowUpwardBtn'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props: {
 		isOpen: boolean
+		onArrowClick(): void
 	}
 }
 
 const InputSliderSlot: React.FC<Props> = ({ props }) => {
-	const [isOpen, setIsOpen] = useState(props.isOpen)
-	const clickHandler = () => setIsOpen(!isOpen)
-
 	return (
-		<section className="slider-slot">
-			{isOpen ? (
-				<ArrowDownwardBtn props={{ onClick: clickHandler }} />
+		<section className="input-slider-slot">
+			{props.isOpen ? (
+				<ArrowDownwardBtn props={{ onClick: props.onArrowClick }} />
 			) : (
-				<ArrowUpwardBtn props={{ onClick: clickHandler }} />
+				<ArrowUpwardBtn props={{ onClick: props.onArrowClick }} />
 			)}
 		</section>
 	)

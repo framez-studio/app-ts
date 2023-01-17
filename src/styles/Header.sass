@@ -1,7 +1,27 @@
 @import './_vars'
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Baloo+2&display=swap')
+
 .header-slider
-    // sets slot offset
     position: absolute
     top: 0
     left: 0
-    transform: translate(0, calc($slider-slot-heigth - 100%))
+    border-radius: 0px 0px 20px 20px
+    &.closed
+        transform: translate(0, calc($header-slot-height - 100%))
+    &.opened
+        transform: translate(0, 0)
+.header-slot
+    display: flex
+    width: 100%
+    height: $header-slot-height
+    justify-content: center
+    align-items: center
+.header-title
+    font-family: 'Audiowide', cursive
+    font-size: 20px
+    color: #e9e7e7
+    &:hover
+        cursor: pointer
+        color: #fff
+    &:active
+        color: #fff
