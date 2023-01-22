@@ -1,0 +1,11 @@
+$x-spacing: 12px
+$y-spacing: 10px
+.form-dual-input
+    display: grid
+    grid-template-columns: 1fr 1fr
+    column-gap: $x-spacing
+    row-gap: $y-spacing
+    &-title
+        grid-column: span 2
+        display: flex
+        justify-content: center

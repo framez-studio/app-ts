@@ -4,10 +4,11 @@ $underline-thickness: 1px
 .form-section-label
     padding: 9px
     color: $slider-text-title-color
-    width: max-content
-    &:hover
-        border-bottom: $underline-thickness solid $app-secondary-color-hover
     &:active
         border-bottom: $underline-thickness solid $app-secondary-color-active
     &.active-section
         border-bottom: $underline-thickness solid $app-secondary-color-active
+
+@media (hover: hover) and (pointer: fine)
+  .form-section-label:hover
+    border-bottom: $underline-thickness solid $app-secondary-color-hover

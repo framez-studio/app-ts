@@ -1,0 +1,38 @@
+@import './_vars'
+$spacing: 12px
+
+.form-container
+    display: grid
+    grid-template-rows: 1fr auto 
+    gap: $spacing
+    overflow: hidden
+    .form-main
+        display: grid
+        grid-auto-rows: max-content
+        gap: $spacing
+        overflow-y: scroll
+    .form-footer
+        display: grid
+        grid-template-columns: 1fr 1fr
+        gap: $spacing
+        grid-auto-rows: max-content
+        .form-button
+            grid-column: 2 / span 1
+            
+.element-properties
+    grid-template-columns: 1fr 1fr
+    & > .form-input-container:nth-child(1)
+          grid-column: span 2
+.element-reinforcement
+    grid-template-columns: 2.5fr 3fr 3fr auto
+    align-items: center
+    .whitespace
+        min-width: 18px
+    .reinforcement-th
+        text-align: center
+        color: $slider-text-color
+    .add-container
+        grid-column: 1 / span 4
+        display: flex
+        justify-content: center
+    

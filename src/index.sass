@@ -22,6 +22,16 @@
 /* consistent fonts */
 input, button, textarea, select
   font: inherit
+/* remove default browser focus states */
+input:focus, textarea:focus, select:focus
+  outline: none
+/* remove adding arrows on input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button 
+  -webkit-appearance: none
+  margin: 0
+input[type=number] 
+  -moz-appearance: textfield
 /* allow percentage based heights */
 html, body, #root
   height: 100%

@@ -1,8 +1,8 @@
 import '@styles/App.sass'
 import '@styles/_globals.sass'
-import Header from './Header'
-import InputSlider from './InputSlider'
-import CanvasRenderer from './CanvasRenderer'
+import Header from '@components/Header'
+import InputSlider from '@components/InputSlider'
+import CanvasRenderer from '@components/CanvasRenderer'
 
 function App() {
 	return (

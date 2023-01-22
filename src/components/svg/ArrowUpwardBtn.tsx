@@ -16,7 +16,7 @@ const ArrowUpwardBtn: React.FC<Props> = ({ props }) => {
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
 			className="slider-arrow"
-			onClick={props?.onClick}>
+			onPointerUp={props?.onClick}>
 			<path
 				fillRule="evenodd"
 				clipRule="evenodd"

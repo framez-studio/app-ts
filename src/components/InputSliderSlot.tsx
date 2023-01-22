@@ -1,7 +1,7 @@
 import React from 'react'
 import '@styles/InputSlider.sass'
-import ArrowDownwardBtn from './ArrowDownwardBtn'
-import ArrowUpwardBtn from './ArrowUpwardBtn'
+import ArrowDownwardBtn from '@components/svg/ArrowDownwardBtn'
+import ArrowUpwardBtn from '@components/svg/ArrowUpwardBtn'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props: {

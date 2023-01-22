@@ -12,10 +12,13 @@
         transform: translate(0, calc(100% - $slider-slot-height))
     &-slot
         display: flex
-        height: $slider-slot-height
+        min-height: $slider-slot-height
         justify-content: center
         align-items: center
     &-body
-        height: calc( 100% - $slider-slot-height )
         flex: 1
+        display: grid
+        grid-template-rows: auto 1fr
+        gap: 12px
         padding: 8px 24px 24px 24px
+        overflow: hidden

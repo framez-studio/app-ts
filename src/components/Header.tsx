@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import '@styles/Header.sass'
 import '@styles/Slider.sass'
 import '@styles/_globals.sass'
-import HeaderSlot from './HeaderSlot'
+import HeaderSlot from '@components/HeaderSlot'
 
 const Header = () => {
 	const [isOpen, setIsOpen] = useState(false)

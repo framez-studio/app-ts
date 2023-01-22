@@ -1,28 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '@styles/FormSwitcher.sass'
-import FormSectionLabel from './FormSectionLabel'
+import { IFormSections } from '@/entities/ui.types'
+import FormSectionLabel from '@components/FormSectionLabel'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props: {
-		hasProperties: boolean
-		hasLoads: boolean
-		hasResponse: boolean
+		activeSection: IFormSections
+		setActiveSection(section: IFormSections): void
 	}
 }
 
-const FormSwitcherHeader = () => {
-	const sections = [
-		{ text: 'Properties', shouldRender: true },
-		{ text: 'Loads', shouldRender: true },
-		{ text: 'Structural Response', shouldRender: true },
-	]
-	const sectionElements = sections.map((section, index) => (
-		<FormSectionLabel
-			key={`section-${index}`}
-			props={{ label: section.text, isActive: false }}
-		/>
-	))
-	return <section className="form-switcher-header">{sectionElements}</section>
+const FormSwitcherHeader: React.FC<Props> = ({ props }) => {
+	return (
+		<section className="form-switcher-header">
+			<FormSectionLabel
+				props={{
+					label: 'Properties',
+					isActive: props.activeSection == 'properties',
+					onClick: () => props.setActiveSection('properties'),
+				}}
+			/>
+			<FormSectionLabel
+				props={{
+					label: 'Loads',
+					isActive: props.activeSection == 'loads',
+					onClick: () => props.setActiveSection('loads'),
+				}}
+			/>
+			<FormSectionLabel
+				props={{
+					label: 'Response',
+					isActive: props.activeSection == 'response',
+					onClick: () => props.setActiveSection('response'),
+				}}
+			/>
+		</section>
+	)
 }
 
 export default FormSwitcherHeader

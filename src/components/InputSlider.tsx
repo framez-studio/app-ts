@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import '@styles/Slider.sass'
 import '@styles/InputSlider.sass'
-import InputSliderSlot from './InputSliderSlot'
-import InputSliderBody from './InputSliderBody'
+import InputSliderSlot from '@components/InputSliderSlot'
+import InputSliderBody from '@components/InputSliderBody'
 
 const InputSlider = () => {
 	const [isOpen, setIsOpen] = useState(false)
