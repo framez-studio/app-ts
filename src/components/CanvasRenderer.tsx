@@ -1,7 +1,7 @@
 import React from 'react'
 
 const CanvasRenderer = () => {
-	return <canvas />
+	return <canvas className="" />
 }
 
 export default CanvasRenderer

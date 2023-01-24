@@ -22,6 +22,10 @@ export default defineConfig({
 				replacement: path.resolve(__dirname, 'src/entities/types'),
 			},
 			{
+				find: '@types-ui',
+				replacement: path.resolve(__dirname, 'src/entities/ui.types'),
+			},
+			{
 				find: '@utils',
 				replacement: path.resolve(__dirname, 'src/utils'),
 			},
@@ -36,6 +40,10 @@ export default defineConfig({
 			{
 				find: '@styles',
 				replacement: path.resolve(__dirname, 'src/styles'),
+			},
+			{
+				find: '@hooks',
+				replacement: path.resolve(__dirname, 'src/hooks'),
 			},
 		],
 	},

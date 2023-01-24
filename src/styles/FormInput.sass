@@ -1,0 +1,37 @@
+@import './_vars'
+$padding: 12px
+.form-input-container
+    display: grid
+    gap: 2px
+.form-input
+    display: flex
+    justify-content: space-between
+    gap: 12px
+    height: 36px
+    padding: 0 $padding
+    border-radius: 10px
+    overflow: hidden
+    background-color: $slider-input-bg-color
+    &:hover
+        // background-color: $slider-input-bg-color-hover
+    &.active
+        border: 1px solid $app-secondary-color-active
+    input
+        width: 0
+        flex: 1
+        border: none
+        background-color: inherit
+        color: $slider-input-text-color
+    .input-suffix
+        display: flex
+        align-items: center
+.input-label
+    padding: 0 $padding
+.secondary-text
+    font: inherit
+    color: $slider-input-text-color-secondary
+.suffix-less
+    justify-content: center
+    input
+        text-align: center
+

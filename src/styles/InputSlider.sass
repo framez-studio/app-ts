@@ -1,7 +1,24 @@
 @import './_vars'
 .input-slider
-    // sets slot offset
     position: absolute
     left: 0
     bottom: 0
-    transform: translate(0,calc(100% - $slider-slot-heigth))
+    height: 50%
+    border-radius: 20px 20px 0px 0px
+    overflow: hidden
+    &.opened
+        transform: translate(0, 0)
+    &.closed
+        transform: translate(0, calc(100% - $slider-slot-height))
+    &-slot
+        display: flex
+        min-height: $slider-slot-height
+        justify-content: center
+        align-items: center
+    &-body
+        flex: 1
+        display: grid
+        grid-template-rows: auto 1fr
+        gap: 12px
+        padding: 8px 24px 24px 24px
+        overflow: hidden

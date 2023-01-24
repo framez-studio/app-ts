@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '@styles/Slider.sass'
 import '@styles/InputSlider.sass'
+import InputSliderSlot from '@components/InputSliderSlot'
+import InputSliderBody from '@components/InputSliderBody'
 
 const InputSlider = () => {
-	return <section className="slider input-slider">InputSlider</section>
+	const [isOpen, setIsOpen] = useState(false)
+	const sliderOpener = () => setIsOpen(!isOpen)
+	return (
+		<section
+			className={`slider input-slider ${isOpen ? 'opened' : 'closed'}`}>
+			<InputSliderSlot props={{ isOpen, onArrowClick: sliderOpener }} />
+			<InputSliderBody />
+		</section>
+	)
 }
 
 export default InputSlider
