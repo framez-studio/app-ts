@@ -8,6 +8,7 @@ import {
 	initialOrFinal,
 } from '@types'
 import { INode, ISection, ISpanLoad } from '@interfaces'
+import { Hinge } from '../classes/others/moment-curvature';
 
 export interface IElement {
 	readonly nodes: { initial: INode; final: INode }
@@ -19,6 +20,8 @@ export interface IElement {
 	readonly forces: elementLoads2DArray
 	young: number
 	section: ISection
+	initialHinge: Hinge | undefined
+	finalHinge: Hinge | undefined
 	release(node: initialOrFinal, direction: degsOfFreedom2D): void
 	unrelease(node: initialOrFinal, direction: degsOfFreedom2D): void
 	setSpanLoad(load: ISpanLoad): void
@@ -32,4 +35,5 @@ export interface IElement {
 		section?: ISection,
 		young?: number,
 	): IElement
+	getHinge(node:initialOrFinal): Hinge | undefined
 }
