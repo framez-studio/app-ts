@@ -20,5 +20,13 @@
         display: grid
         grid-template-rows: auto 1fr
         gap: 12px
-        padding: 8px 24px 24px 24px
+        padding: 8px 0px 24px 0px
         overflow: hidden
+        .form-switcher-header,
+        .form-main,
+        .form-footer
+            padding: 0 $slider-padding-x
+@media screen and (min-width: 768px)
+    .input-slider-body
+        width: 768px
+        align-self: center
