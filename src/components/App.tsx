@@ -3,10 +3,10 @@ import '@styles/_globals.sass'
 import Header from '@components/Header'
 import InputSlider from '@components/InputSlider'
 import CanvasRenderer from '@components/CanvasRenderer'
-import { useWindowsSize } from '@hooks/useWindowSize'
+import { useWindowSize } from '@hooks/useWindowSize'
 
 function App() {
-	const { height: windowHeight, width: windowWidth } = useWindowsSize()
+	const { height: windowHeight, width: windowWidth } = useWindowSize()
 	return (
 		<div id="framez" className="app text-selection-disabled">
 			<Header />
