@@ -44,5 +44,5 @@ export const degSlope = (
 export const absolutevalue = (a: number) => {
 	return a > 0 ? a : a * -1
 }
-
+export const degsToRads = (degs: number) => (Math.PI * degs) / 180
 export const pi: number = algebra.pi

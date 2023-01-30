@@ -24,6 +24,6 @@ export type { IElement } from '@interfaces/element.interface'
 export type { IStructure } from '@interfaces/structure.interface'
 
 export type { ISpanLoad } from '@interfaces/span-load.interface'
-export type { Printable } from '@interfaces/ui.interfaces'
+export type { IAppState } from '@interfaces/app-state.interface'
 
 export type { Resetable } from '@interfaces/globals.interfaces'
