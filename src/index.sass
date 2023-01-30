@@ -38,6 +38,9 @@ html, body, #root
 /* set default theme */
 html
   color-scheme: dark light
+/* avoids browser default touch handlers */
+body
+  touch-action: none
 /* create stacking context */
 #root
   isolation: isolate
