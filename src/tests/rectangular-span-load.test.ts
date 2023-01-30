@@ -54,7 +54,7 @@ describe('Rectangular Span Load Class', () => {
 		let sum = result.initial.fy + result.final.fy - w * (b - a)
 		expect(sum).toBe(0)
 	})
-	it('should provide momentum equilibrium', () => {
+	it('should provide momentum equilibrium', () => { 
 		let result = load.fef
 		let sum =
 			result.initial.mz +

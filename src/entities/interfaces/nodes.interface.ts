@@ -15,4 +15,5 @@ export interface INode extends Resetable {
 	addLoads(loads: Partial<nodeLoads2DObject>): void
 	setDisplacements(displacements: Partial<nodeDisplacements2DObject>): void
 	addDisplacements(displacements: Partial<nodeDisplacements2DObject>): void
+	
 }

@@ -18,6 +18,7 @@ import {
 	releasesArray,
 } from '@utils'
 import { MatrixGenerator as MatGen, SMatrixOperator as MatOp } from '@classes'
+import { Hinge } from '../others/moment-curvature'
 
 export class Element implements IElement {
 	private _nodes: initialFinal<INode>
@@ -25,6 +26,8 @@ export class Element implements IElement {
 	private _loads: ISpanLoad[] = [...defaultElementLoads]
 	public section: ISection
 	public young: number
+	public initialHinge!: Hinge | undefined
+	public finalHinge!: Hinge | undefined
 
 	constructor(iNode: INode, fNode: INode, section: ISection, young: number) {
 		this.section = section
@@ -47,6 +50,7 @@ export class Element implements IElement {
 	get releases(): elementDegsOfFreedom2DObject {
 		return this._releases
 	}
+	
 	get length(): number {
 		return eucDistance(
 			this._nodes.initial.coordinates('static'),
@@ -136,5 +140,24 @@ export class Element implements IElement {
 			section ?? this.section,
 			young ?? this.young,
 		)
+	}
+
+	public assignHinge(
+		node: initialOrFinal,
+		hinge: Hinge,
+		){
+		if (node=='initial') {
+			this.initialHinge = hinge
+		} else {
+			this.finalHinge = hinge
+		}
+	}
+
+	public getHinge(node:initialOrFinal){
+		if (node=='initial') {
+			return this.initialHinge
+		} else {
+			return this.finalHinge
+		}
 	}
 }

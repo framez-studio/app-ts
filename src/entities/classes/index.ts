@@ -15,3 +15,4 @@ export { RectangularHSection } from './sections/rectangular-h-section'
 
 export { Material, Concrete, Steel } from './others/material'
 export { RectangularSpanLoad } from './others/rectangular-span-load'
+export {PunctualSpanLoad} from './others/punctual-span-load'
