@@ -45,3 +45,5 @@ export const defaultNodeDeformations: nodeDisplacements2DObject = {
 	dy: 0,
 	rz: 0,
 }
+
+export const gravity: number = 9.807

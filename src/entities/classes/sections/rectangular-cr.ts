@@ -1,3 +1,4 @@
+import { gravity } from '@/config'
 import {
 	IRectangularSectionCR,
 	IRowReinforcement,
@@ -12,7 +13,7 @@ export class RectangularSectionCR implements IRectangularSectionCR {
 		public material: IConcrete,
 		private _reinforcement: IRowReinforcement[] = [],
 	) {}
-
+	
 	get area(): number {
 		return this.b * this.h
 	}
@@ -33,6 +34,14 @@ export class RectangularSectionCR implements IRectangularSectionCR {
 	get dmax(): number {
 		this.sortReinforcement()
 		return this.reinforcement[this.reinforcement.length - 1].distance
+	}
+
+	get weight(){
+		return this.material.weight * this.area
+	}
+
+	get mass(){
+		return this.weight/gravity
 	}
 
 	public as(d: number = this.dmax, sum: boolean = true) {

@@ -3,6 +3,8 @@ import { IMaterial, IConcrete } from '@interfaces'
 export interface ISection {
 	readonly area: number
 	readonly inertiaZ: number
+	readonly mass: number
+	readonly weight: number
 	material: IMaterial
 }
 

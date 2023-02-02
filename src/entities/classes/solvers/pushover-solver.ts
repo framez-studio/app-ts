@@ -6,24 +6,18 @@ import { Hinge } from "../others/moment-curvature";
 
 
 export class PushoverSolver{
-    private _statusAnalysis: boolean = false
+    private static _statusAnalysis: boolean = false
     constructor(
-        public structure: Structure,
+
     ){
-        this.structure = structure
+
     }
 
-    get statusAnalysis(){
+    public static statusAnalysis(){
         return this._statusAnalysis
     }
 
-    public runAnalysis(node: INode){
-
-        this._statusAnalysis = true
-    }
-
-    private stepPushover(){
-        let structure = this.structure
+    private static stepPushover(structure: Structure){
         structure.displacements
         let cfactors = collapseFactorStructure(structure)
         if(cfactors != undefined){
@@ -32,6 +26,10 @@ export class PushoverSolver{
             let i = cfValues.indexOf(maxCf)
             cfactors[i][0].release(cfactors[i][1],"rz")
         }
+    }
+
+    public static runAnalysis(): void{
+        this._statusAnalysis = true
     }
 
 }
