@@ -61,10 +61,6 @@ export class FHE{
         }
         throw 'Error in FHE: Cvx Coeficcent'
     }
-
-    public Cvx(fundamentalPeriod: number, nodes: INode[],){
-
-    }
     
     public static vs(sa:number,g:number,t:number){
         return sa*g*t
@@ -79,6 +75,7 @@ export class FHE{
         nodes.forEach(n => {
             
         });
+    }
 
 
 

@@ -26,6 +26,7 @@ export class ElementNode implements INode {
 		this._loads = { ...defaultNodeLoads }
 		this._displacements = { ...defaultNodeDeformations }
 	}
+	
 	get nodeMass(){
 		let m: number = 0
 		if (this._elements!= undefined) {
@@ -94,13 +95,9 @@ export class ElementNode implements INode {
 	}
 
 	isSupport(): boolean {
-		if (this.constraints.dx == false &&
-			this.constraints.dy == false &&
-			this.constraints.rz == false) {
-			return false
-		} else {
-			return true
-		}
+		return this.constraints.dx || 
+		this.constraints.dy || 
+		this.constraints.rz
 	}
 
 	reset(): void {
