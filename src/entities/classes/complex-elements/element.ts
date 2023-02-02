@@ -58,6 +58,12 @@ export class Element implements IElement {
 			this._nodes.final.coordinates('static'),
 		)
 	}
+	/**
+	 * Returns the inclination of the current element in degrees
+	 * @readonly
+	 * @type {number}
+	 * @memberof Element
+	 */
 	get inclination(): number {
 		return degSlope(
 			this._nodes.initial.coordinates('static'),

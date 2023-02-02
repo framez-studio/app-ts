@@ -4,7 +4,9 @@ import {
 	degsOfFreedom2DArray,
 	elementDegsOfFreedom2DObject,
 	stiffnessSubmatrices2D,
+	supportType,
 } from '@types'
+import { constraints } from '@config'
 import { IElement, INode, IStructure } from '@interfaces'
 import { SMatrixOperator as SMatOp } from '@classes'
 import { allIndexesOf, solveLinearSystem } from '@utils'
@@ -213,4 +215,21 @@ export const elementLocalDisplacementsArray = (element: IElement): Array2D => {
 		[element.nodes.final.displacements.rz],
 	]
 	return SMatOp.rotateVector(globalDisplacements, angle)
+}
+
+export const nodeType = (node: INode): supportType | 'node' => {
+	let type: supportType | 'node' = 'node'
+	const ref = { ...constraints }
+	const values = node.constraints
+	const keys = Object.keys(ref) as supportType[]
+	keys.forEach((key) => {
+		if (
+			ref[key].dx == values.dx &&
+			ref[key].dy == values.dx &&
+			ref[key].rz == values.rz
+		) {
+			type = key
+		}
+	})
+	return type
 }
