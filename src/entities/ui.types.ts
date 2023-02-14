@@ -1,4 +1,5 @@
 import { IElement, INode } from '@interfaces'
+import { coordinates2D } from '@types'
 
 export type IFormSections = 'properties' | 'loads' | 'response'
 export type IPathObject<T> = { object: T; path: Path2D }
@@ -15,4 +16,19 @@ export type ICanvasObjectMap<T extends ICanvasObjectType> = T extends 'node'
 export type ICanvasObject<T extends ICanvasObjectType> = {
 	type: T
 	object: ICanvasObjectMap<T>
+}
+
+export type IAppCanvasPointer = {
+	id: number
+	coords: coordinates2D
+}
+export type IAppCanvasInteraction = {
+	isActive: boolean
+	pointer: IAppCanvasPointer | null
+	focus: coordinates2D
+}
+export type IAppCanvasCamera = {
+	dx: number
+	dy: number
+	scale: number
 }

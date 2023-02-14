@@ -12,7 +12,7 @@ export const useWindowSize = () => {
 		})
 	useEffect(() => {
 		window.addEventListener('resize', updateSize)
-		return window.removeEventListener('resize', updateSize)
-	}, [])
+		return () => window.removeEventListener('resize', updateSize)
+	}, [updateSize])
 	return size
 }

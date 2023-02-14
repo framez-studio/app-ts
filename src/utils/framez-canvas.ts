@@ -2,7 +2,7 @@ import { IElement, INode, IStructure } from '@interfaces'
 import { scale, origin, graphics } from '@config'
 import { coordinates2D } from '@/entities/types'
 import { degsToRads, nodeType } from '@utils'
-import { IPathElement, IPathNode } from '@types-ui'
+import { IAppCanvasCamera, IPathElement, IPathNode } from '@types-ui'
 
 export function metersToPixels(meters: number) {
 	return (meters * scale.pixels) / scale.meters
@@ -101,8 +101,8 @@ export function nodePath(
 }
 
 export function printStructure(
-	structure: IStructure,
 	ctx: CanvasRenderingContext2D,
+	structure: IStructure,
 	status: 'static' | 'displaced',
 ) {
 	const elements: IPathElement[] = structure.elements.map((element) => ({
@@ -122,7 +122,6 @@ export function printStructure(
 		ctx.fill(node.path)
 	})
 }
-
 function roundedRect(
 	path: Path2D,
 	center: coordinates2D,
@@ -141,8 +140,23 @@ function roundedRect(
 function circle(path: Path2D, center: coordinates2D) {
 	path.arc(center.x, center.y, graphics.node.radius, 0, 2 * Math.PI)
 }
-
-function clearContext(ctx: CanvasRenderingContext2D) {
+export function getContextFromRef(
+	canvasRef: React.MutableRefObject<null | HTMLCanvasElement>,
+) {
+	let canvas = canvasRef.current
+	if (!canvas) throw new Error('Canvas not defined. Check canvasRef.')
+	let ctx = canvas.getContext('2d')
+	if (!ctx) throw new Error('Context not defined. Check canvasRef.')
+	return ctx
+}
+export function clearContext(ctx: CanvasRenderingContext2D) {
 	const { width, height } = extractContextDims(ctx)
 	ctx.clearRect(0, 0, width, height)
+}
+export function transformContext(
+	ctx: CanvasRenderingContext2D,
+	transformation: { dx: number; dy: number; scale: number },
+) {
+	const { dx, dy, scale } = transformation
+	ctx.setTransform(scale, 0, 0, scale, dx, dy)
 }

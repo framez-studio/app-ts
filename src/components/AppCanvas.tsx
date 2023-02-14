@@ -1,23 +1,25 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { useWindowSize } from '@hooks/useWindowSize'
 import { useAppContext } from '@context/AppContext'
-import { printStructure } from '@utils'
+import { useAppCanvas } from '@hooks/useAppCanvas'
 
 const AppCanvas = () => {
 	const { height, width } = useWindowSize()
 	const { state } = useAppContext()
-	const canvasRef = useRef<null | HTMLCanvasElement>(null)
+	const canvas = useAppCanvas(state)
 
-	useEffect(() => onLoad(), [width, height])
-	return <canvas width={width} height={height} ref={canvasRef} />
-
-	function onLoad() {
-		const canvas = canvasRef.current
-		if (!canvas) return
-		const ctx = canvas.getContext('2d')
-		if (!ctx) return
-		printStructure(state.structure, ctx, 'static')
-	}
+	useEffect(() => canvas.updateScreen(), [width, height])
+	return (
+		<canvas
+			width={width}
+			height={height}
+			ref={canvas.canvasRef}
+			onPointerDown={canvas.handlePointerDown}
+			onPointerUp={canvas.handlePointerUp}
+			onPointerMove={canvas.handlePointerMove}
+			onWheel={canvas.handleWheel}
+		/>
+	)
 }
 
 export default AppCanvas
