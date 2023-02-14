@@ -21,12 +21,12 @@ let nodes = {
 let section = new RectangularHSection(0.2, 0.2, 0, 0, Concrete21)
 
 // elements
-let leftColumn = new Element(nodes.a, nodes.b, section, 200000000)
-let beam = new Element(nodes.b, nodes.c, section, 200000000)
-let rightColumn = new Element(nodes.c, nodes.d, section, 200000000)
-let otherCol = new Element(nodes.b, nodes.e, section, 200000000)
-let otherOtherCol = new Element(nodes.c, nodes.f, section, 200000000)
-let otherBeam = new Element(nodes.e, nodes.f, section, 200000000)
+let leftColumn = new Element(nodes.a, nodes.b, section)
+let beam = new Element(nodes.b, nodes.c, section)
+let rightColumn = new Element(nodes.c, nodes.d, section)
+let otherCol = new Element(nodes.b, nodes.e, section)
+let otherOtherCol = new Element(nodes.c, nodes.f, section)
+let otherBeam = new Element(nodes.e, nodes.f, section)
 
 // structure instantiation
 export const structure = new Structure(

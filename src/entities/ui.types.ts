@@ -18,13 +18,13 @@ export type ICanvasObject<T extends ICanvasObjectType> = {
 	object: ICanvasObjectMap<T>
 }
 
-export type IAppCanvasPointer = {
+export type ICanvasPointer = {
 	id: number
 	coords: coordinates2D
 }
 export type IAppCanvasInteraction = {
 	isActive: boolean
-	pointer: IAppCanvasPointer | null
+	pointer: ICanvasPointer | null
 	focus: coordinates2D
 }
 export type IAppCanvasCamera = {

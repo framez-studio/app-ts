@@ -34,7 +34,6 @@ export function useCanvas() {
 
 	function renderFrame() {
 		if (!context || !canvas) throw new Error('No context or canvas')
-		console.log('rendering frame with id: ', animationFrameId.current)
 		animationFrameId.current = requestAnimationFrame(renderFrame)
 		tracer(context, canvas)
 	}
@@ -43,7 +42,6 @@ export function useCanvas() {
 		updateContext()
 		return () => {
 			if (!animationFrameId.current) return
-			console.log('canceling animation frame')
 			cancelAnimationFrame(animationFrameId.current)
 		}
 	}, [])
