@@ -7,19 +7,19 @@ import {
 	Structure,
 	Support,
 } from '@classes'
-import { Concrete21 } from '@utils'
+import { Concrete21Pascal } from '@/utils/material'
 
 describe('Structure Class', () => {
 	// structure definition
-	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002, Concrete21)
+	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002, Concrete21Pascal)
 	let e = 200000000
 	let a = new Support('fixed', { x: 0, y: 0 })
 	let b = new ElementNode({ x: 0, y: 3 })
 	let c = new ElementNode({ x: 4, y: 3 })
 	let d = new Support('fixed', { x: 4, y: 0 })
-	let lCol = new Element(a, b, section, e)
-	let beam = new Element(b, c, section, e)
-	let rCol = new Element(c, d, section, e)
+	let lCol = new Element(a, b, section)
+	let beam = new Element(b, c, section)
+	let rCol = new Element(c, d, section)
 	const structure = new Structure(lCol, rCol, beam)
 	// loads definition
 	const w = 12

@@ -71,4 +71,16 @@ export class Structure implements IStructure {
 		if (type === 'full') return full
 		return MatOp.reduceDegs('matrix', full, ...lockedDegs)
 	}
+
+	public filterNodes(y?: number, x?: number){
+        let r = this.nodes
+        if (y!=undefined) {
+            r = r.filter(node => node.coordinates('static').y == y)
+        }
+        if (x!=undefined) {
+            r = r.filter(node => node.coordinates('static').x == x) 
+        }
+        return r
+    }
+	
 }

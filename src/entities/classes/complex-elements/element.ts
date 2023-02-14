@@ -19,6 +19,7 @@ import {
 } from '@utils'
 import { MatrixGenerator as MatGen, SMatrixOperator as MatOp } from '@classes'
 import { Hinge } from '../others/moment-curvature'
+import { re, sec } from 'mathjs'
 
 export class Element implements IElement {
 	private _nodes: initialFinal<INode>
@@ -29,9 +30,9 @@ export class Element implements IElement {
 	public initialHinge!: Hinge | undefined
 	public finalHinge!: Hinge | undefined
 
-	constructor(iNode: INode, fNode: INode, section: ISection, young: number) {
+	constructor(iNode: INode, fNode: INode, section: ISection) {
 		this.section = section
-		this.young = young
+		this.young = section.material.young
 		this._nodes = {
 			initial: iNode,
 			final: fNode,
@@ -90,6 +91,15 @@ export class Element implements IElement {
 			[+resultants[5][0]],
 		]
 	}
+
+	get weigth(): number {
+		return this.section.weight * this.length
+	}
+
+	get mass(): number {
+		return this.section.mass * this.length
+	}
+
 	public release(node: initialOrFinal, direction: degsOfFreedom2D): void {
 		this._releases[node][direction] = true
 	}
@@ -132,13 +142,11 @@ export class Element implements IElement {
 		from: initialOrFinal,
 		to: INode,
 		section?: ISection | undefined,
-		young?: number | undefined,
 	): IElement {
 		return new Element(
 			this.nodes[from],
 			to,
 			section ?? this.section,
-			young ?? this.young,
 		)
 	}
 
@@ -160,4 +168,6 @@ export class Element implements IElement {
 			return this.finalHinge
 		}
 	}
+
+	
 }

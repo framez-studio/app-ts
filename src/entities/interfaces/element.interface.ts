@@ -22,6 +22,8 @@ export interface IElement {
 	section: ISection
 	initialHinge: Hinge | undefined
 	finalHinge: Hinge | undefined
+	weigth: number
+	mass: number
 	release(node: initialOrFinal, direction: degsOfFreedom2D): void
 	unrelease(node: initialOrFinal, direction: degsOfFreedom2D): void
 	setSpanLoad(load: ISpanLoad): void

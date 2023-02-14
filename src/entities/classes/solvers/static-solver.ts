@@ -14,6 +14,6 @@ export class StaticSolver{
     get forces(){
         return null
     }
-
+    
     
 }

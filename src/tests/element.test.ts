@@ -6,16 +6,16 @@ import {
 	RectangularHSection,
 	RectangularSpanLoad,
 } from '@classes'
-import { Concrete21 } from '@utils'
+import { Concrete21Pascal } from '@/utils/material'
 
 describe('Element Class', () => {
-	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002, Concrete21)
+	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002, Concrete21Pascal)
 	const points = { i: { x: 0, y: 0 }, f: { x: 0, y: 3 } }
 	let nodes = {
 		i: new ElementNode(points.i),
 		f: new ElementNode(points.f),
 	}
-	let element = new Element(nodes.i, nodes.f, section, 200000000)
+	let element = new Element(nodes.i, nodes.f, section)
 
 	it(`should calculate its length`, () => {
 		let expected = Math.sqrt(

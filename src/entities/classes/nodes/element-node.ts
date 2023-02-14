@@ -6,7 +6,7 @@ import {
 	nodeLoads2D,
 	nodeLoads2DObject,
 } from '@types'
-import { INode } from '@interfaces'
+import { IElement, INode } from '@interfaces'
 import {
 	defaultNodeConstraints,
 	defaultNodeDeformations,
@@ -18,6 +18,7 @@ export class ElementNode implements INode {
 	private _displacements: nodeDisplacements2DObject
 	private _coordinates: coordinates2D
 	public constraints: degsOfFreedom2DBoolean
+	public _elements: IElement[] | undefined
 
 	constructor(coordinates: coordinates2D) {
 		this.constraints = { ...defaultNodeConstraints }
@@ -25,18 +26,52 @@ export class ElementNode implements INode {
 		this._loads = { ...defaultNodeLoads }
 		this._displacements = { ...defaultNodeDeformations }
 	}
+	
+	get nodeMass(){
+		let m: number = 0
+		if (this._elements!= undefined) {
+			this._elements.forEach(e => {
+				m = m +  e.mass * 0.5
+			});
+		}
+		return m
+	}
+
 	get loads(): nodeLoads2DObject {
 		return this._loads
 	}
+
 	get displacements(): nodeDisplacements2DObject {
 		return this._displacements
 	}
+	
+	get elements(){
+		return this._elements
+	}
+
 	private get displacedCoordinates(): coordinates2D {
 		return {
 			x: this._coordinates.x + this._displacements.dx,
 			y: this._coordinates.y + this._displacements.dy,
 		}
 	}
+
+	connectElement(element: IElement): void {
+		if(this._elements == undefined){
+			this._elements = [element]
+		}else{
+			this._elements.push(element)
+		}
+	}
+
+	removeElement(element: IElement): void {
+		try {
+			this._elements = this._elements?.filter(e => e != element)
+		} catch (error) {
+			
+		}
+	}
+
 	coordinates(state: 'static' | 'displaced'): coordinates2D {
 		return state == 'static' ? this._coordinates : this.displacedCoordinates
 	}
@@ -58,6 +93,13 @@ export class ElementNode implements INode {
 			this._displacements[key] += displacements[key]!
 		})
 	}
+
+	isSupport(): boolean {
+		return this.constraints.dx || 
+		this.constraints.dy || 
+		this.constraints.rz
+	}
+
 	reset(): void {
 		this._displacements = { ...defaultNodeDeformations }
 	}
