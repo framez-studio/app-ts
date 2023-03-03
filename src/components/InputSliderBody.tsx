@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import '@styles/InputSlider.sass'
-import { IFormSections } from '@types-ui'
-import FormSwitcherHeader from '@components/FormSwitcherHeader'
-import ElementFormSwitcher from '@components/elementForm/ElementFormSwitcher'
+import InputSliderBodySwitcher from './InputSliderBodySwitcher'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props?: {
@@ -11,12 +9,9 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 }
 
 const InputSliderBody: React.FC<Props> = ({ props }) => {
-	const [activeSection, setActiveSection] =
-		useState<IFormSections>('properties')
 	return (
 		<section className="input-slider-body">
-			<FormSwitcherHeader props={{ activeSection, setActiveSection }} />
-			<ElementFormSwitcher props={{ activeSection }} />
+			<InputSliderBodySwitcher />
 		</section>
 	)
 }

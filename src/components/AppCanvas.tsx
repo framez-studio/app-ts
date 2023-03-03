@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
 import { useWindowSize } from '@hooks/useWindowSize'
-import { useAppContext } from '@context/AppContext'
 import { useAppCanvas } from '@hooks/useAppCanvas'
 
 const AppCanvas = () => {
 	const { height, width } = useWindowSize()
-	const { state } = useAppContext()
-	const canvas = useAppCanvas(state)
+	const canvas = useAppCanvas()
 
 	useEffect(() => canvas.updateScreen(), [width, height])
 	return (

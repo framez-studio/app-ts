@@ -27,3 +27,4 @@ export type { ISpanLoad } from '@interfaces/span-load.interface'
 export type { IAppState } from '@interfaces/app-state.interface'
 
 export type { Resetable } from '@interfaces/globals.interfaces'
+export * from '@interfaces/ui.interfaces'

@@ -14,6 +14,9 @@ export function useDoubleClick(
 		if (isDoubleClick(e)) doubleClickHandler(e)
 		lastClick.current = e.timeStamp
 	}
+	function pointerDownHandler(e: React.PointerEvent) {
+		registerClick(e)
+	}
 	function registerClick(e: React.PointerEvent) {
 		pointersCache.registerPointer(e)
 		if (pointersCache.pointersCount() == 1)
@@ -28,5 +31,5 @@ export function useDoubleClick(
 		let diff = e.timeStamp - lastClick.current
 		return !hadMultiplePointers.current && lastClick && diff < MIN_DIFF
 	}
-	return { pointerDownHandler: registerClick, pointerUpHandler }
+	return { pointerDownHandler, pointerUpHandler }
 }

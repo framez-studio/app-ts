@@ -12,12 +12,20 @@ export const graphics = {
 	element: {
 		width: 6,
 		fill: '#BBBBBB',
-		hover: '#8D4BF6',
+		outline: {
+			width: 1.5,
+			hovered: '#653AAA',
+			selected: '#8D4BF6',
+		},
 	},
 	node: {
 		radius: 12,
 		fill: '#D9D9D9',
-		hover: '#8D4BF6',
+		outline: {
+			width: 2,
+			hovered: '#653AAA',
+			selected: '#8D4BF6',
+		},
 	},
 	supports: {
 		fixed: {
@@ -26,6 +34,10 @@ export const graphics = {
 			radius: 4,
 		},
 		fill: '#D9D9D9',
-		hover: '#8D4BF6',
+		outline: {
+			width: 2,
+			hovered: '#653AAA',
+			selected: '#8D4BF6',
+		},
 	},
 }

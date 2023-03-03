@@ -6,7 +6,11 @@ export {
 	reactions2DObject,
 } from '@utils/fefs'
 export { allIndexesOf, uniques } from '@utils/helpers'
-export * from '@utils/framez-canvas'
 export { stiffness, transformation } from '@utils/matrices'
 export { solveLinearSystem } from '@utils/solver'
 export { Concrete21 } from '@utils/material'
+export * from '@utils/app-canvas'
+export * from '@utils/app-canvas-paths'
+export * from '@utils/canvas'
+export * from '@utils/canvas-paths'
+export * from '@utils/ui-structure'
