@@ -1,6 +1,6 @@
-import { FrameSystem } from "../complex-elements/frame-system"
+import { IFrameSystem } from "@/entities/interfaces/frame-system.interface"
 
-export class FHE{
+export class FHE {
     /*
     TODO: Calculate fundamental period by first method especified NSR10 A.4.2-1
     */
@@ -10,7 +10,7 @@ export class FHE{
 
     }
 
-    private static _fundPeriod(method: 1|2|3,n?: number,h?: number){
+    public static _fundPeriod(method: 1|2|3,n?: number,h?: number){
 
         if (method==3 && n!=undefined) {
             return 0.1 * n
@@ -27,29 +27,31 @@ export class FHE{
         throw 'Error in FHE: Fundamental Period'
     }
 
-    private static _Cu(av:number,fv:number){
+    public static _Cu(av:number,fv:number){
         return (1.75-1.2*av*fv)
     }
 
     public static fundamentalPeriod(method: 1|2|3,av:number,fv:number,n: number,h: number){
         if (n>12&&method==3) {method=2}
         const cu = this._Cu(av,fv)
-        const ta = this._fundPeriod(2,h=h)
+        const ta = this._fundPeriod(2,n,h)
         const tmax = ta*cu
         let t = this._fundPeriod(method,n,h)
         if(t>=tmax){return t}else{return tmax}
     }
 
-    private static _Cvxi(mi: number, hi: number, k: number, mihik: number) {
+    public static _CvxKoeficent(fundamentalPeriod: number){
+        let t = fundamentalPeriod
+        if (t<=0.5) {return 0.5}else{
+        if (t>0.5 && t<=2.5){return 0.75+0.5*t}else{
+        return 2}}
+    }
+
+    public static _Cvxi(mi: number, hi: number, k: number, mihik: number) {
         return (((mi*hi)**k)/mihik)
     }
 
-    private static _CvxMihik(fundamentalPeriod: number, masses: number[], h: number[]){
-        let t = fundamentalPeriod
-        let k: number | null = null
-        if (t<=0.5) {k=0.5}
-        if (t>0.5 && t<=2.5) {k=0.75+0.5*t}
-        if (t>2.5) {k=2}
+    public static _CvxMihik(k: number, masses: number[], h: number[]){
         let mihik = 0 
         if (masses.length == h.length && k!=null) {
             for (let i = 0; i < masses.length; i++) {
@@ -61,7 +63,7 @@ export class FHE{
         }
         throw 'Error in FHE: Cvx Coeficcent'
     }
-    
+
     public static vs(sa:number,g:number,t:number){
         return sa*g*t
     }
@@ -70,11 +72,39 @@ export class FHE{
         return cvx*vs
     }
 
-    public static setFHEinNodes(frame: FrameSystem){
+    public static setFHEinNodes(frame: IFrameSystem, directionX: 1 | -1, methodPeriod: 1|2|3 = 2,av:number,fv:number){
+        let direction = directionX ? 1 : -1
         let nodes = frame.nodes
+        let hmax = Math.max(...nodes.map((node) => node.coordinates('static').y).flat())
+        let t = this.fundamentalPeriod(methodPeriod,av,fv,frame.numberLevels,hmax)
+        let masses = [] as number[]
+        let heights = [] as number[]
+
+        //Se obtienen masas y alturas de los diferentes modos para obtener MiHiK
         nodes.forEach(n => {
-            
+            if (n.isSupport()) {
+                
+            } else {
+                masses.push(n.nodeMass)
+                heights.push(n.coordinates('static').y)
+            }
         });
+
+        if (masses.length == 0) {
+            throw 'ERROR: setFHEinNodes: it doesnt exist nodes with mass'
+        }
+        if (heights.length == 0) {
+            throw 'ERROR: setFHEinNodes: node heights with mass'
+        }
+
+        let k = this._CvxKoeficent(t)
+        let mihik = this._CvxMihik(k,masses,heights)
+
+        nodes.forEach(n => {
+            let cvxn = this._Cvxi(n.nodeMass,n.coordinates('static').y,k,mihik)
+            n.addLoads({fx: cvxn * direction})
+        });
+
     }
 
 

@@ -1,3 +1,4 @@
+/*
 export class MomentCurvature{
     constructor(
         public mp: number,
@@ -11,9 +12,10 @@ export class MomentCurvature{
         this.curvn = curvn 
     }
 }
+*/
 
 export class Hinge{
-    collapsed: boolean = false
+    isCollapsed: boolean = false
     typeCollapsed: string | undefined = undefined
     moment: number = 0
     constructor(
@@ -35,13 +37,19 @@ export class Hinge{
      */
     public setMoment(moment: number) {
         if (moment > this.maxMoment) {
-            this.collapsed = true
+            this.isCollapsed = true
             this.typeCollapsed = 'positive'
         }
         if (moment<this.minMoment) {
-            this.collapsed = true
+            this.isCollapsed = true
             this.typeCollapsed = 'negative'
         }
         this.moment = moment
+    }
+
+    public resetHinge(){
+        this.moment = 0
+        this.isCollapsed = false
+        this.typeCollapsed = undefined
     }
 }

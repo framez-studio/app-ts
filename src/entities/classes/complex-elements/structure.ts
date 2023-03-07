@@ -83,4 +83,19 @@ export class Structure implements IStructure {
         return r
     }
 	
+	public resetLoadstoZero(){
+		this._elements.forEach(element => {
+			element.loads = []
+		});
+		this.nodes.forEach(node => {
+			node.setLoads({fx:0,fy:0,mz:0})
+		});
+	}
+
+	public resetHingesStatus(){
+		this._elements.forEach(element => {
+			element.initialHinge?.resetHinge
+			element.finalHinge?.resetHinge
+		});
+	}
 }
