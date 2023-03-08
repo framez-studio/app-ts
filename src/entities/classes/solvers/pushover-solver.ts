@@ -19,17 +19,78 @@ export class PushoverSolver{
     public analysisInitialState(){
         
     }
+    
+    private static pushByService(structure: IStructure, nodeObjCoordinates: coordinates2D, serviceLoad: number,actualForce:number,stepNumber: number){
+        let nodeObj: INode
+        let cfactors = collapseFactorStructure(structure)
+        let cfValues = cfactors!.map(row => row[2])
+        let cfStep = min(...cfValues)
+        let i = cfValues.indexOf(cfStep)
+        let plasticizedNode: coordinates2D | null
+        if (cfStep+actualForce > serviceLoad) {
+            cfStep = serviceLoad - actualForce
+            plasticizedNode = null
+        }else{
+            plasticizedNode = cfactors![i][1] == 'initial'?
+            cfactors![i][0].nodes.initial.coordinates('static') : 
+            cfactors![i][0].nodes.final.coordinates('static')
+            //se collapsa el elemento en el nodo releseado
+            cfactors![i][0].release(cfactors![i][1],'rz')
+        }
+        updateHingesStructure(structure,cfStep)
+        try {
+            nodeObj = structure.node(nodeObjCoordinates)
+            //se registran los valores de interes en el paso j
+        } catch (error) {
+            throw 'ERROR: Pushover Solver cant find node obj'
+        }
+        let delta = nodeObj.displacements.dx
+        let stepj ={
+            step: 0,
+            plasticizedNode: plasticizedNode == undefined ? plasticizedNode : null,
+            collapseFactor: cfStep,
+            dxAtControlNode: delta
+        }
 
-    public pushover(stopCriteria: 'stability' | 'load' | 'service'
-    ){
-
+        if (this._serviceSteps == undefined || this._serviceSteps.length == 0) {
+            this._serviceSteps = [stepj]
+        } else {
+            this._serviceSteps.push(stepj)
+        }
     }
+    
+    private static pushByStability(structure: IStructure,nodeObjCoordinates:coordinates2D,stepNumber: number){
+        let nodeObj: INode
+        let cfactors = collapseFactorStructure(structure)
+        let cfValues = cfactors!.map(row => row[2])
+        let cfStep = min(...cfValues)
+        let i = cfValues.indexOf(cfStep)
+        let plasticizedNode: coordinates2D | null
+        plasticizedNode = cfactors![i][1] == 'initial'?
+        cfactors![i][0].nodes.initial.coordinates('static') : 
+        cfactors![i][0].nodes.final.coordinates('static')
+        //se collapsa el elemento en el nodo releseado
+        cfactors![i][0].release(cfactors![i][1],'rz')
+        updateHingesStructure(structure,cfStep)
+        try {
+            nodeObj = structure.node(nodeObjCoordinates)
+            //se registran los valores de interes en el paso j
+        } catch (error) {
+            throw 'ERROR: Pushover Solver cant find node obj'
+        }
+        let delta = nodeObj.displacements.dx
+        let stepj ={
+            step: stepNumber,
+            plasticizedNode: plasticizedNode == undefined ? plasticizedNode : null,
+            collapseFactor: cfStep,
+            dxAtControlNode: delta
+        }
 
-    private static pushByStability(structure: IStructure, serviceLoad: number){
-        
-    }
-
-    private static pushByService(){
+        if (this._steps == undefined || this._steps.length == 0) {
+            this._steps = [stepj]
+        } else {
+            this._steps.push(stepj)
+        }
 
     }
 
@@ -40,63 +101,15 @@ export class PushoverSolver{
         if(stopCriteria=="service"&&serviceLoad==undefined){
             throw 'ERROR: cant run pushover analysis by service without a service load'
         }
-
         while (!stopAnalysis(structure,stopCriteria,serviceLoad)) {
-
             structure.displacements
-            //se obtienen factores de collapso
-            let cfactors = collapseFactorStructure(structure)
-            let cfValues = cfactors!.map(row => row[2])
-            let cfStep = min(...cfValues)
-            let i = cfValues.indexOf(cfStep)
-
-
-            let plasticizedNode: coordinates2D | null  
-            if (stopCriteria=='service') {
+            if (stopCriteria=='service' && serviceLoad!=undefined) {
                 let actualForce = this._serviceSteps == undefined ? 0 :this.actualForce()
-                this.pushByService(structure,serviceLoad)
+                this.pushByService(structure,nodeObjCoordinates,serviceLoad,actualForce,j)
             } else {
-                this.pushByStability()
+                this.pushByStability(structure,nodeObjCoordinates,j)
             }
-
-
-            if (serviceLoad != undefined && cfStep+actualForce > serviceLoad && stopCriteria=='service') {
-                cfStep = serviceLoad - actualForce
-                plasticizedNode = null
-            }else{
-                plasticizedNode = cfactors![i][1] == 'initial'?
-                cfactors![i][0].nodes.initial.coordinates('static') : 
-                cfactors![i][0].nodes.final.coordinates('static')
-            }
-            updateHingesStructure(structure,cfStep)
-            try {
-                nodeObj = structure.node(nodeObjCoordinates)
-            } catch (error) {
-                throw 'ERROR: Pushover Solver cant find node obj'
-            }
-            let delta = nodeObj.displacements.dx
-            //se registran los valores de interes en el paso j
-            if (this._steps == undefined || this._steps.length == 0) {
-                this._steps=[{
-                    step: j,
-                    plasticizedNode: plasticizedNode == undefined ? plasticizedNode : null,
-                    collapseFactor: cfStep,
-                    dxAtControlNode: delta}]
-            } else {
-                this._steps.push({
-                    step: j,
-                    plasticizedNode: plasticizedNode == undefined ? plasticizedNode : null,
-                    collapseFactor: cfStep,
-                    dxAtControlNode: delta})
-            }
-            //se collapsa el elemento en el nodo releseado
-            cfactors![i][0].release(cfactors![i][1],'rz')
             j=j+1
-            //se actualizan los momentos de las articulaciones
-        }
-        if (stopCriteria == 'service') {
-            this._serviceSteps = this._steps
-            this._steps = []
         }
     }
 

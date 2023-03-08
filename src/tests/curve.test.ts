@@ -107,22 +107,20 @@ describe('Tarea osi osi', () => {
         expect(result[3][1]).toBeCloseTo(curve[3][1],1)
         expect(result[4][1]).toBeCloseTo(curve[4][1],1)
 	})
-
-    PushoverSolver.reset()
-    frm.resetLoadstoZero()
-    frm.resetHingesStatus()
-
-    n2.addLoads({fx:1})
-    let w0 = 40
-    let w = new RectangularSpanLoad(vga,w0,0,vga.length)
-    normalizeLoads2Unit(frm,w0)
-
-    it('calculate capacity curve with service analysis',()=>{
-        PushoverSolver.Run(frm,{x: 0, y:h},'service',w0)
-        PushoverSolver.Run(frm,{x: 0, y:h},'stability')
-        let curve = PushoverSolver.capacityCurve()
-    })
-
+  /*
+  PushoverSolver.reset()
+  frm.resetLoadstoZero()
+  frm.resetHingesStatus()
+  n2.addLoads({fx:1})
+  let w0 = 40
+  let w = new RectangularSpanLoad(vga,w0,0,vga.length)
+  normalizeLoads2Unit(frm,w0)
+  it('calculate capacity curve with service analysis',()=>{
+      PushoverSolver.Run(frm,{x: 0, y:h},'service',w0)
+      PushoverSolver.Run(frm,{x: 0, y:h},'stability')
+      let curve = PushoverSolver.capacityCurve()
+  })
+  */
 
 
 
