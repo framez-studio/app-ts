@@ -4,7 +4,7 @@ import { rectangularLoadFef } from '@utils'
 
 // TODO: throw error if distance is greater than elementLength
 export class RectangularSpanLoad implements ISpanLoad {
-	private load: number
+	public load: number
 	private distance: initialFinal<number>
 	private element: IElement
 

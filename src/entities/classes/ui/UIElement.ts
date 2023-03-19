@@ -1,6 +1,6 @@
 import { IElement, IUIElement } from '@interfaces'
 import { graphics } from '@config'
-import { elementPath } from '@utils'
+import { elementPath, elementLoadPath } from '@utils'
 
 export class UIElement implements IUIElement {
 	// Posibility: Add a set status method to change from static to displaced and viceversa
@@ -45,6 +45,9 @@ export class UIElement implements IUIElement {
 		ctx.fillStyle = graphics.element.fill
 		ctx.fill(this.path)
 
+		const { load } = this.object.loads[0]
+		if (load) this.printLoadOnContext()
+
 		if (isSelected) {
 			ctx.strokeStyle = graphics.element.outline.selected
 			ctx.lineWidth = graphics.element.outline.width
@@ -54,5 +57,11 @@ export class UIElement implements IUIElement {
 			ctx.lineWidth = graphics.element.outline.width
 			ctx.stroke(this.path)
 		}
+	}
+	private printLoadOnContext(): void {
+		let { _ctx: ctx } = this
+		let loadPath = elementLoadPath(this.object, ctx, 'static')
+		ctx.fillStyle = graphics.loads.fill
+		ctx.fill(loadPath)
 	}
 }

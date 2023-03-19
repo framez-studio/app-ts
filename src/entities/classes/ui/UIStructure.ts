@@ -61,7 +61,21 @@ export class UIStructure implements IUIStructure {
 		if (isTheSameAsSelected) this.releaseCurrentSelection()
 		else this.select(layer, index)
 	}
-	pointerMoveHandler(e: React.PointerEvent): void {}
+	pointerMoveHandler(e: React.PointerEvent): void {
+		const { clientX: x, clientY: y } = e
+		const { _hovered: hovered } = this
+		const { layer, index } = this.findCoordsMatch({ x, y })
+
+		if (layer === null || index === null) {
+			this.releaseCurrentHover()
+			return
+		}
+		const isTheSameAsHovered =
+			hovered.layer == layer && hovered.index == index
+
+		if (isTheSameAsHovered) return
+		else this.hover(layer, index)
+	}
 	private generatePaths(status: 'static' | 'displaced' = 'static'): void {
 		const { structure, _hasChanged: hasChanged } = this
 		if (!hasChanged) return
@@ -94,10 +108,21 @@ export class UIStructure implements IUIStructure {
 		this.getGraphicElement(layer, index).select()
 		this._selected = { layer, index }
 	}
+	private hover(layer: IUILayerType, index: number) {
+		this.releaseCurrentHover()
+		this.getGraphicElement(layer, index).hover()
+		this._hovered = { layer, index }
+	}
 	private releaseCurrentSelection() {
 		const { layer, index } = this._selected
 		if (layer == null || index == null) return
 		this.getGraphicElement(layer, index).unselect()
 		this._selected = { layer: null, index: null }
+	}
+	private releaseCurrentHover() {
+		const { layer, index } = this._hovered
+		if (layer == null || index == null) return
+		this.getGraphicElement(layer, index).unhover()
+		this._hovered = { layer: null, index: null }
 	}
 }

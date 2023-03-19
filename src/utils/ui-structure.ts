@@ -31,7 +31,6 @@ export function checkCoordsMatchTroughLayers(
 	}
 	return match
 }
-
 export const layerToTypeMap: { [key in IUILayerType]: ICanvasObjectType } = {
 	nodes: 'node',
 	elements: 'element',

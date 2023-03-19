@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import '@styles/FormInput.sass'
 
-interface Props extends React.HTMLProps<HTMLDivElement> {
+export interface FormInputProps extends React.HTMLProps<HTMLDivElement> {
 	props?: {
 		label?: string
 		suffix?: string
@@ -11,7 +11,7 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 	}
 }
 
-const FormInput: React.FC<Props> = ({ props }) => {
+const FormInput: React.FC<FormInputProps> = ({ props }) => {
 	const [isActive, setIsActive] = useState(false)
 	const classState = `form-input ${props?.suffix ? '' : 'suffix-less'} ${
 		isActive ? 'active' : ''

@@ -5,7 +5,7 @@ import NodeForm from './nodeForm/NodeForm'
 
 const InputSliderBodySwitcher = () => {
 	const { state } = useAppContext()
-	switch (state.selection.type) {
+	switch (state.canvas.selection.type) {
 		case 'node':
 			return <NodeForm />
 		case 'element':

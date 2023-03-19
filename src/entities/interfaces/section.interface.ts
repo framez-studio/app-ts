@@ -1,14 +1,18 @@
-import { IMaterial, IConcrete } from '@interfaces'
+import { MaterialType, IConcrete, ISteel } from '@interfaces'
 
-export interface ISection {
+export interface ISection<MT extends MaterialType> {
 	readonly area: number
 	readonly inertiaZ: number
 	readonly mass: number
 	readonly weight: number
-	material: IMaterial
+	material: MT
 }
 
-export interface IRectangularSection extends ISection {}
+export interface IRectangularSection<MT extends MaterialType>
+	extends ISection<MT> {
+	b: number
+	h: number
+}
 
 export interface IRowReinforcement {
 	distance: number
@@ -26,26 +30,26 @@ export interface IRowReinforcementMechanics {
 	moment: number
 }
 
-export interface IRectangularSectionCR extends IRectangularSection {
+export interface IRectangularRCSection extends IRectangularSection<IConcrete> {
 	b: number
-	material: IConcrete
 	reinforcement: IRowReinforcement[]
 	readonly young: number
 	readonly dmax: number
-	as(d:number,sum:boolean): number
-	steelRatio(d:number,sum:boolean):number
-	addRowReinforcement(d:number,quantity:number,BarCR: IBarCR):void
-	findRowReinforcement(d:number):number
-	swapRowReinforcement(d:number,quantity:number,BarCR: IBarCR):void
-	deleteReinforcement():void
-	sortReinforcement():void
+	as(d: number, sum: boolean): number
+	steelRatio(d: number, sum: boolean): number
+	addRowReinforcement(d: number, quantity: number, BarCR: IBarCR): void
+	findRowReinforcement(d: number): number
+	swapRowReinforcement(d: number, quantity: number, BarCR: IBarCR): void
+	deleteReinforcement(): void
+	sortReinforcement(): void
 }
 
-export interface ICircularSection extends ISection{
+export interface ICircularSection<MT extends MaterialType>
+	extends ISection<MT> {
 	diameter: number
 }
 
-export interface IBarCR extends ICircularSection {
+export interface IBarCR extends ICircularSection<ISteel> {
 	readonly fy: number
 	readonly young: number
 }

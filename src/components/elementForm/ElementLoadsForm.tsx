@@ -1,13 +1,10 @@
 import React from 'react'
 import '@styles/Form.sass'
 import FormInput from '@components/FormInput'
-import { useAppContext } from '@/context/AppContext'
-import { IElement } from '@/entities/interfaces'
+import { useElementSelection } from '@/hooks/useElementSelection'
 
 const ElementLoadsForm = () => {
-	const { state } = useAppContext()
-	const element = state.selection.object as IElement
-	console.log(element)
+	const { load, setLoad } = useElementSelection()
 	return (
 		<section className="form-container">
 			<section className="form-main element-loads">
@@ -15,6 +12,8 @@ const ElementLoadsForm = () => {
 					props={{
 						label: 'Distributed Load:',
 						suffix: 'kN/m',
+						value: String(load),
+						onChange: ($e) => setLoad(Number($e.target.value)),
 					}}
 				/>
 			</section>

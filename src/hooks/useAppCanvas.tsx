@@ -1,19 +1,21 @@
-import { clearContext, getContextFromRef, layerToTypeMap } from '@utils'
+import { clearContext, getContextFromRef } from '@utils'
 import { useCanvasGestures } from './useCanvasGestures'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useAppContext } from '@context/AppContext'
+import { useGraphicStructure } from './useGraphicStructure'
 
 export function useAppCanvas() {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null)
-	const { graphicStructure, setSelection } = useAppContext()
+	const context = useAppContext()
+	const graphicStructure = useGraphicStructure()
 	const gestures = useCanvasGestures()
 
 	function updateScreen() {
 		const ctx = getContextFromRef(canvasRef)
 		clearContext(ctx)
 		gestures.applyGestures(ctx)
-		graphicStructure.current.setContext(ctx)
-		graphicStructure.current.printOnContext()
+		graphicStructure.printOnContext(ctx)
+		context.resetCanvasRedraw()
 	}
 	function handlePointerDown(e: React.PointerEvent) {
 		gestures.pointerDownHandler(e)
@@ -21,28 +23,23 @@ export function useAppCanvas() {
 	}
 	function handlePointerUp(e: React.PointerEvent) {
 		gestures.pointerUpHandler(e)
-		graphicStructure.current.pointerUpHandler(e)
+		graphicStructure.pointerUpHandler(e)
 		updateScreen()
-		syncContextWithStructure()
 	}
 	function handlePointerMove(e: React.PointerEvent) {
 		gestures.pointerMoveHandler(e)
-		graphicStructure.current.pointerMoveHandler(e)
+		graphicStructure.pointerMoveHandler(e)
 		updateScreen()
 	}
 	function handleWheel(e: React.WheelEvent) {
 		gestures.wheelHandler(e)
 		updateScreen()
 	}
-	function syncContextWithStructure(): void {
-		const { layer, index } = graphicStructure.current.selected
-		const existsSelection = layer != null && index != null
-		const type = existsSelection ? layerToTypeMap[layer] : null
-		const object = existsSelection
-			? graphicStructure.current.getGraphicElement(layer, index).object
-			: null
-		setSelection({ type, object })
-	}
+	useEffect(() => {
+		const { needsRedraw } = context.state.canvas
+		if (!needsRedraw) return
+		updateScreen()
+	}, [context.state.canvas.needsRedraw])
 	return {
 		canvasRef,
 		updateScreen,

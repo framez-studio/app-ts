@@ -6,6 +6,9 @@ import {
 	degsToRads,
 	roundedRectPath,
 	circlePath,
+	downwardTrianglePath,
+	arrowPath,
+	linePath,
 } from '@utils'
 
 export function elementPath(
@@ -70,5 +73,53 @@ export function nodePath(
 			path = circlePath(point, graphics.node.radius)
 			break
 	}
+	return path
+}
+
+export function elementLoadPath(
+	element: IElement,
+	ctx: CanvasRenderingContext2D,
+	status: 'static' | 'displaced',
+): Path2D {
+	const path = new Path2D()
+	const globalMeterPoints = {
+		initial: element.nodes.initial.coordinates(status),
+		final: element.nodes.final.coordinates(status),
+	}
+	const points = {
+		initial: globalMeterToCanvasCoords(globalMeterPoints.initial, ctx),
+		final: globalMeterToCanvasCoords(globalMeterPoints.final, ctx),
+	}
+	const { radius } = graphics.node
+	const { height, lineWidth } = graphics.loads
+	const { width } = graphics.element
+	const { minSeparation } = graphics.loads
+
+	const availableSpace =
+		Math.abs(points.initial.x - points.final.x) - 2 * radius
+	const nArrows = Math.floor(availableSpace / minSeparation)
+	const separation = availableSpace / nArrows
+
+	for (let i = 0; i <= nArrows; i++) {
+		const x = points.initial.x + radius + i * separation
+		const y = points.initial.y - width / 2
+		path.addPath(arrowPath({ x, y }, height, lineWidth))
+	}
+	const topLinePoints = {
+		initial: {
+			x: points.initial.x + radius,
+			y: points.initial.y - width / 2 - height,
+		},
+		final: {
+			x: points.final.x - radius,
+			y: points.final.y - width / 2 - height,
+		},
+	}
+	const topLine = linePath(
+		topLinePoints.initial,
+		topLinePoints.final,
+		lineWidth,
+	)
+	path.addPath(topLine)
 	return path
 }

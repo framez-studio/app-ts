@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import '@styles/FormSwitcher.sass'
 import { IFormSections } from '@/entities/ui.types'
 import FormSectionLabel from '@components/FormSectionLabel'

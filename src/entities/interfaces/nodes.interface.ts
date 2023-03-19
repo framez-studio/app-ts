@@ -10,6 +10,7 @@ import { Element } from '../classes'
 export interface INode extends Resetable {
 	readonly loads: nodeLoads2DObject
 	readonly displacements: nodeDisplacements2DObject
+	readonly reactions: nodeLoads2DObject
 	constraints: degsOfFreedom2DBoolean
 	elements: IElement[] | undefined
 	nodeMass: number
@@ -19,6 +20,6 @@ export interface INode extends Resetable {
 	addLoads(loads: Partial<nodeLoads2DObject>): void
 	setDisplacements(displacements: Partial<nodeDisplacements2DObject>): void
 	addDisplacements(displacements: Partial<nodeDisplacements2DObject>): void
+	setReactions(reactions: Partial<nodeLoads2DObject>): void
 	isSupport(): boolean
-	
 }

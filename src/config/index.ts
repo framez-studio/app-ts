@@ -1,3 +1,4 @@
-export * from '@config/globals'
-export * from '@config/ui'
-export * from '@config/structure'
+export * from './globals'
+export * from './app-canvas'
+export * from './structure'
+export * from './ui'

@@ -43,6 +43,7 @@ export function useCanvasCamera() {
 		return { x: (x + dx) / scale, y: (y + dy) / scale }
 	}
 	return {
+		camera,
 		placeCamera,
 		resetCamera,
 		moveCamera,

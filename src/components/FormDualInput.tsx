@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import '@styles/FormDualInput.sass'
 import FormSectionLabel from '@components/FormSectionLabel'
-import FormInput from '@components/FormInput'
+import FormInput, { FormInputProps } from '@components/FormInput'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props: {
 		title: string
-		first: { label: string; suffix: string }
-		second: { label: string; suffix: string }
+		first: FormInputProps
+		second: FormInputProps
 	}
 }
 
@@ -25,15 +25,8 @@ const FormDualInput: React.FC<Props> = ({ props }) => {
 					props={{ label: props.title, isActive: isActive }}
 				/>
 			</div>
-			<FormInput
-				props={{ label: props.first.label, suffix: props.first.suffix }}
-			/>
-			<FormInput
-				props={{
-					label: props.second.label,
-					suffix: props.second.suffix,
-				}}
-			/>
+			<FormInput props={props.first.props} />
+			<FormInput props={props.second.props} />
 		</section>
 	)
 }

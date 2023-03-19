@@ -1,31 +1,60 @@
-import { useRef, useState } from 'react'
 import { IAppState, IElement, INode } from '@interfaces'
 import { IAppContext } from '@context/AppContext'
 import { structure } from '@config'
-import { UIStructure } from '@classes/ui/UIStructure'
+import { useImmer } from 'use-immer'
 
 const initialState: IAppState = {
 	structure: structure,
-	selection: {
-		type: null,
-		object: null,
+	canvas: {
+		selection: {
+			type: null,
+			object: null,
+		},
+		needsRedraw: true,
+	},
+	interactions: {
+		isDragging: false,
+		isZooming: false,
+	},
+	slider: {
+		isOpen: false,
 	},
 }
 
 export function useInitialState(): IAppContext {
-	const [state, setState] = useState(initialState)
-	const graphicStructure = useRef(new UIStructure(structure))
+	const [state, updateState] = useImmer(initialState)
 
 	function setSelection(payload: {
 		type: 'node' | 'element' | null
 		object: INode | IElement | null
 	}) {
 		const { type, object } = payload
-		const { type: prevType, object: prevObject } = state.selection
+		const { type: prevType, object: prevObject } = state.canvas.selection
 		if (type == prevType && object == prevObject) return
-		setState((prev) => ({ ...prev, selection: { type, object } }))
-		// console.log('updated selection to: ', object)
+		updateState((draft) => {
+			draft.canvas.selection = { type, object }
+		})
 	}
-
-	return { state, graphicStructure, setSelection }
+	function toggleSlider() {
+		updateState((draft) => {
+			draft.slider.isOpen = !draft.slider.isOpen
+		})
+	}
+	function requestCanvasRedraw() {
+		updateState((draft) => {
+			draft.canvas.needsRedraw = true
+		})
+	}
+	function resetCanvasRedraw() {
+		updateState((draft) => {
+			draft.canvas.needsRedraw = false
+		})
+	}
+	return {
+		state,
+		setSelection,
+		toggleSlider,
+		requestCanvasRedraw,
+		resetCanvasRedraw,
+	}
 }

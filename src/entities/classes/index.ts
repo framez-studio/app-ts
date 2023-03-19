@@ -9,7 +9,7 @@ export { Element } from './complex-elements/element'
 export { Structure } from './complex-elements/structure'
 
 export { Section } from './sections/section'
-export { RectangularSectionCR } from './sections/rectangular-cr'
+export { RectangularRCSection as RectangularSectionCR } from './sections/rectangular-cr'
 export { BarCR } from './sections/bar-cr'
 export { RectangularHSection } from './sections/rectangular-h-section'
 

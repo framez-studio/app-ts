@@ -1,3 +1,5 @@
+import { IAppCanvasCamera } from '@types-ui'
+
 /**
  * Handle the extraction process of a canvas context from a react ref.
  * @param {(React.MutableRefObject<null | HTMLCanvasElement>)} canvasRef
@@ -26,8 +28,11 @@ export function extractContextDims(ctx: CanvasRenderingContext2D) {
  * @param ctx - The context to clear.
  */
 export function clearContext(ctx: CanvasRenderingContext2D) {
+	ctx.save()
+	ctx.setTransform(1, 0, 0, 1, 0, 0)
 	const { width, height } = extractContextDims(ctx)
 	ctx.clearRect(0, 0, width, height)
+	ctx.restore()
 }
 /**
  * Transform the context to a new coordinate system.
