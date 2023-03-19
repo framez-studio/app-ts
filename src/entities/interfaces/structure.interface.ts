@@ -13,4 +13,5 @@ export interface IStructure {
 	setSupport(position: coordinates2D, type: supportType): void
 	stiffness(type: 'full' | 'reduced'): Array2D
 	fef(type: 'full' | 'reduced'): Array2D
+	resetLoadstoZero(): void
 }

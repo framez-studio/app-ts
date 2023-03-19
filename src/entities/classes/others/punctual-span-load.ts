@@ -6,7 +6,7 @@ import { punctualLoadFef } from '@utils'
 // This Class is experimental, its not ready yet to be used
 
 export class PunctualSpanLoad implements ISpanLoad {
-	private load: number
+	public load: number
 	private elementLength: number
 	private distance: number
 

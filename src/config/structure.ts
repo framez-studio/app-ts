@@ -68,3 +68,4 @@ for (let j = 0; j <= spans.quantity; j++) {
 // structure instantiation
 elements.push(...beams, ...columns)
 export const structure = new Structure(...elements)
+export const variableshuffle = 0

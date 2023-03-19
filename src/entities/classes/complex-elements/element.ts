@@ -19,6 +19,7 @@ import {
 } from '@utils'
 import { MatrixGenerator as MatGen, SMatrixOperator as MatOp } from '@classes'
 import { Hinge } from '../others/moment-curvature'
+import clone from 'just-clone'
 
 export class Element implements IElement {
 	private _nodes: initialFinal<INode>
@@ -34,7 +35,9 @@ export class Element implements IElement {
 			initial: iNode,
 			final: fNode,
 		}
-		this._releases = { ...defaultElementReleases }
+		this._releases = clone(defaultElementReleases)
+		iNode.connectElement(this)
+		fNode.connectElement(this)
 	}
 	get nodes(): initialFinal<INode> {
 		return this._nodes
@@ -112,7 +115,7 @@ export class Element implements IElement {
 		this._releases[node][direction] = false
 	}
 	public fef(type: coordinateSystem): elementLoads2DArray {
-		let loadsFef = this._loads.map((load) => load.fefArray)
+		let loadsFef = this.loads.map((load) => load.fefArray)
 		if (loadsFef.length == 0) return [[0], [0], [0], [0], [0], [0]]
 		let local = MatOp.sum(...loadsFef) as elementLoads2DArray
 		if (type == 'local') return local
@@ -123,10 +126,10 @@ export class Element implements IElement {
 		this._nodes[which] = node
 	}
 	public setSpanLoad(load: ISpanLoad): void {
-		this._loads = [load]
+		this.loads = [load]
 	}
 	public addSpanLoad(load: ISpanLoad): void {
-		this._loads.push(load)
+		this.loads.push(load)
 	}
 	public stiffness(system: coordinateSystem): Array2D {
 		let angle = this.inclination

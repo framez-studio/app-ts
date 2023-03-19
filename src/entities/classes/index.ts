@@ -11,7 +11,6 @@ export { Structure } from './complex-elements/structure'
 export { Section } from './sections/section'
 export { RectangularRCSection as RectangularSectionCR } from './sections/rectangular-cr'
 export { BarCR } from './sections/bar-cr'
-export { RectangularHSection } from './sections/rectangular-h-section'
 
 export { Material, Concrete, Steel } from './others/material'
 export { RectangularSpanLoad } from './others/rectangular-span-load'

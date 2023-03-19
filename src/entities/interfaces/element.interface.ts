@@ -7,7 +7,13 @@ import {
 	elementLoads2DArray,
 	initialOrFinal,
 } from '@types'
-import { INode, IRectangularRCSection, ISpanLoad } from '@interfaces'
+import {
+	INode,
+	IRectangularRCSection,
+	IRectangularRCSection,
+	IRectangularRCSection,
+	ISpanLoad,
+} from '@interfaces'
 import { Hinge } from '../classes/others/moment-curvature'
 
 export interface IElement {
@@ -38,5 +44,6 @@ export interface IElement {
 		section?: IRectangularRCSection,
 		young?: number,
 	): IElement
+	assignHinge(node: initialOrFinal, hinge: Hinge): void
 	getHinge(node: initialOrFinal): Hinge | undefined
 }

@@ -24,7 +24,20 @@ export const Concrete21PascalProps: IConcreteProps = {
 }
 
 export const Concrete21 = new Concrete('Concrete21MPA', 21, 24, 21538, 0.004)
-export const Concrete21D3 = new Concrete('Concrete21MPA', 21, 24, 21538, 0.003)
+export const Concrete21Tarea = new Concrete(
+	'Concrete21MPA',
+	21,
+	24,
+	21538,
+	0.003,
+)
+export const Concrete21Curve = new Concrete(
+	'Concrete21MPA',
+	21,
+	24,
+	21538105.7662924,
+	0.003,
+)
 export const Concrete21Pascal = new Concrete(
 	'Concrete21MPA',
 	21,

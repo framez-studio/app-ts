@@ -1,4 +1,5 @@
 import { IElement, INode, IStructure } from "@/entities/interfaces";
+import { IFrameSystem } from "@/entities/interfaces/frame-system.interface";
 import { coordinates2D, supportType } from "@/entities/types";
 import { uniques } from "@/utils";
 import { constraints } from '@config'
@@ -7,13 +8,13 @@ import { Section } from "../sections/section";
 import { Element } from "./element";
 import { Structure } from "./structure";
 
-export class FrameSystem extends Structure implements IStructure {
+export class FrameSystem extends Structure implements IFrameSystem {
 
     //TODO: all
-    constructor(
-        numberLevels: number,
+    /*constructor(
+        _numberLevels: number,
         heightLevels: number,
-        numberSpans: number,
+        _numberSpans: number,
         distanceSpans: number,
         columnSection: Section,
         beamSection: Section,
@@ -28,21 +29,33 @@ export class FrameSystem extends Structure implements IStructure {
         c.constraints = {...constraints[defaultSupport]}
 
         let coll = new Element(a,b,columnSection)
-        let colr = new Element(b,c,columnSection)
-        let vga = new Element(c,d,beamSection)
+        let colr = new Element(c,d,columnSection)
+        let vga = new Element(b,d,beamSection)
         super(coll,vga,colr)
+    }*/
+
+    constructor(...elements: IElement[]){
+        super(...elements)
     }
-    
+
     get levels(){
         let all = this.nodes
-            .map((node) => node.coordinates('static').y)
+        .map((node) => node.coordinates('static').y)
         return uniques(...all)
+    }
+    
+    get numberLevels(){
+        return this.levels.length
     }
 
     get spans(){
         let all = this.nodes
             .map((node) => node.coordinates('static').x)
         return uniques(...all)
+    }
+
+    get numberSpans(){
+        return this.spans.length
     }
 
     public levelNodeMass(level: number){
@@ -53,6 +66,8 @@ export class FrameSystem extends Structure implements IStructure {
         });
         return mass
     }
+
+    
     
     
 }

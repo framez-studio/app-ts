@@ -1,3 +1,5 @@
+import { INode, IStructure } from "./interfaces";
+
 export type coordinateSystem = 'local' | 'global'
 export type coordinates2D = { x: number; y: number }
 
@@ -47,6 +49,14 @@ export type stiffnessSubmatrices2DRanges = {
 		columns: [number, number]
 	}
 }
+
 export type stiffnessSubmatrices2DObject = {
 	[key in stiffnessSubmatrices2D]: Array2D
+}
+
+export type stepPushover = {
+	step: number
+    plasticizedNode: coordinates2D | null
+    collapseFactor: number
+    dxAtControlNode: number
 }
