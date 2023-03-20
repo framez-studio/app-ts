@@ -40,4 +40,5 @@ export interface IElement {
 	): IElement
 	assignHinge(node: initialOrFinal, hinge: Hinge): void
 	getHinge(node: initialOrFinal): Hinge | undefined
+	resetLoads(): void
 }

@@ -166,4 +166,7 @@ export class Element implements IElement {
 			return this.finalHinge
 		}
 	}
+	public resetLoads(): void {
+		this._loads = [...defaultElementLoads]
+	}
 }

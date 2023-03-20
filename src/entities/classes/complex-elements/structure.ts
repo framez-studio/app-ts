@@ -83,9 +83,7 @@ export class Structure implements IStructure {
 	}
 
 	public resetLoadstoZero() {
-		this._elements.forEach((element) => {
-			element.loads = []
-		})
+		this._elements.forEach((element) => element.resetLoads())
 		this.nodes.forEach((node) => {
 			node.setLoads({ fx: 0, fy: 0, mz: 0 })
 		})
