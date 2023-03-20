@@ -1,4 +1,4 @@
-import { PorticSystemGenerator } from '@utils'
+import { PorticSystemGenerator } from '@utils/structure'
 
 const levels = {
 	quantity: 2,

@@ -1,4 +1,4 @@
-import { gravity } from '@config'
+import { gravity } from '@config/globals'
 import {
 	IRectangularRCSection,
 	IRowReinforcement,

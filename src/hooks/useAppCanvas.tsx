@@ -1,7 +1,7 @@
-import { clearContext, getContextFromRef } from '@utils'
-import { useCanvasGestures } from './useCanvasGestures'
 import { useEffect, useRef } from 'react'
 import { useAppContext } from '@context/AppContext'
+import { getContextFromRef, clearContext } from '@utils/canvas'
+import { useCanvasGestures } from './useCanvasGestures'
 import { useGraphicStructure } from './useGraphicStructure'
 
 export function useAppCanvas() {

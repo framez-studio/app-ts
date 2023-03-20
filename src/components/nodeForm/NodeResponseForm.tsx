@@ -1,7 +1,6 @@
-import React from 'react'
 import FormInput from '../FormInput'
 import { useNodeSelection } from '@hooks/useNodeSelection'
-import { responseFormatter } from '@utils'
+import { responseFormatter } from '@utils/ui'
 
 const NodeResponseForm = () => {
 	const { displacements, reactions } = useNodeSelection()

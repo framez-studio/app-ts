@@ -1,13 +1,11 @@
-import {
-	Element,
-	ElementNode,
-	FHE,
-	RectangularSectionCR,
-	PushoverSolver,
-	FrameSystem,
-	Hinge,
-} from '@classes'
-import { Concrete21Curve } from '@utils'
+import { Element } from '@classes/complex-elements/element'
+import { FrameSystem } from '@classes/complex-elements/frame-system'
+import { ElementNode } from '@classes/nodes/element-node'
+import { Hinge } from '@classes/others/moment-curvature'
+import { RectangularRCSection } from '@classes/sections/rectangular-cr'
+import { FHE } from '@classes/seismic-analysis/fhe'
+import { PushoverSolver } from '@classes/solvers/pushover-solver'
+import { Concrete21Curve } from '@utils/material'
 import clone from 'just-clone'
 import { describe, expect, it } from 'vitest'
 
@@ -36,8 +34,8 @@ describe('Tarea osi osi', () => {
 	let hvga = 0.4
 
 	//SECCIONES TRANSVERSALES ELEMENTOS
-	let XScol = new RectangularSectionCR(bcol, hcol, mat)
-	let XSvga = new RectangularSectionCR(bvga, hvga, mat)
+	let XScol = new RectangularRCSection(bcol, hcol, mat)
+	let XSvga = new RectangularRCSection(bvga, hvga, mat)
 
 	//ELEMENTOS
 	let col1 = new Element(n1, n2, XScol)

@@ -1,5 +1,5 @@
+import { eucDistance, degSlope } from '@utils/algebra'
 import { describe, expect, it } from 'vitest'
-import { degSlope, eucDistance } from '@utils'
 
 describe('Algebra utils', () => {
 	it('should calculate the euclidean distance between two points', () => {

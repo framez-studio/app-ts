@@ -1,6 +1,6 @@
+import { graphics } from '@config/app-canvas'
 import { INode, IUINode } from '@interfaces'
-import { graphics } from '@config'
-import { nodePath } from '@utils'
+import { nodePath } from '@utils/app-canvas-paths'
 
 export class UINode implements IUINode {
 	// Posibility: Add a set status method to change from static to displaced and viceversa

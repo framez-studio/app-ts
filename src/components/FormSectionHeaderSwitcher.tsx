@@ -1,6 +1,6 @@
 import React from 'react'
 import '@styles/FormSwitcher.sass'
-import { IFormSections } from '@/entities/ui.types'
+import { IFormSections } from '@types-ui'
 import FormSectionLabel from '@components/FormSectionLabel'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {

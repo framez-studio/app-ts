@@ -1,8 +1,7 @@
-import React from 'react'
 import '@styles/Form.sass'
 import FormDualInput from '@components/FormDualInput'
 import { useElementSelection } from '@hooks/useElementSelection'
-import { responseFormatter } from '@utils'
+import { responseFormatter } from '@utils/ui'
 
 const ElementResponseForm = () => {
 	const { response } = useElementSelection()

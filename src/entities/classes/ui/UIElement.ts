@@ -1,6 +1,6 @@
 import { IElement, IUIElement } from '@interfaces'
-import { graphics } from '@config'
-import { elementPath, elementLoadPath } from '@utils'
+import { graphics } from '@config/app-canvas'
+import { elementPath, elementLoadPath } from '@utils/app-canvas-paths'
 
 export class UIElement implements IUIElement {
 	// Posibility: Add a set status method to change from static to displaced and viceversa

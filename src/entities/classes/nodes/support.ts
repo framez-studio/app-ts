@@ -1,6 +1,6 @@
 import { coordinates2D, supportType } from '@types'
-import { constraints } from '@config'
-import { ElementNode } from '@classes'
+import { ElementNode } from '@classes/nodes/element-node'
+import { constraints } from '@config/globals'
 
 export class Support extends ElementNode {
 	constructor(type: supportType, coordinates: coordinates2D) {

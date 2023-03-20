@@ -1,17 +1,15 @@
 import { describe, expect, it } from 'vitest'
-import {
-	Element,
-	ElementNode,
-	RectangularSectionCR,
-	Structure,
-	Support,
-} from '@classes'
-import { Concrete21 } from '@utils'
+import { Element } from '@classes/complex-elements/element'
+import { Structure } from '@classes/complex-elements/structure'
+import { ElementNode } from '@classes/nodes/element-node'
+import { Support } from '@classes/nodes/support'
+import { Concrete21 } from '@utils/material'
+import { RectangularRCSection } from '@classes/sections/rectangular-cr'
 
 describe('Structure Class testing 2.0', () => {
 	// structure definition
-	const col350x350 = new RectangularSectionCR(0.35, 0.35, Concrete21)
-	const vga400x300 = new RectangularSectionCR(0.3, 0.4, Concrete21)
+	const col350x350 = new RectangularRCSection(0.35, 0.35, Concrete21)
+	const vga400x300 = new RectangularRCSection(0.3, 0.4, Concrete21)
 	let a = new Support('fixed', { x: 0, y: 0 })
 	let b = new ElementNode({ x: 0, y: 3 })
 	let c = new ElementNode({ x: 6, y: 3 })

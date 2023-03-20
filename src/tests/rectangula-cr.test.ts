@@ -1,9 +1,10 @@
-import { RectangularSectionCR } from '@classes'
-import { Concrete21, BarNo4 } from '@utils'
+import { RectangularRCSection } from '@classes/sections/rectangular-cr'
+import { BarNo4 } from '@utils/bar-cr'
+import { Concrete21 } from '@utils/material'
 import { describe, it, expect } from 'vitest'
 
 describe('description', () => {
-	const section = new RectangularSectionCR(300, 400, Concrete21)
+	const section = new RectangularRCSection(300, 400, Concrete21)
 	section.addRowReinforcement(240, 4, BarNo4)
 	section.addRowReinforcement(40, 4, BarNo4)
 	section.addRowReinforcement(100, 4, BarNo4)

@@ -1,5 +1,4 @@
-import React from 'react'
-import { useAppContext } from '@/context/AppContext'
+import { useAppContext } from '@context/AppContext'
 import ElementForm from './elementForm/ElementForm'
 import NodeForm from './nodeForm/NodeForm'
 

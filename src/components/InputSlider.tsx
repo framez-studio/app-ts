@@ -1,4 +1,3 @@
-import React from 'react'
 import '@styles/Slider.sass'
 import '@styles/InputSlider.sass'
 import InputSliderSlot from '@components/InputSliderSlot'

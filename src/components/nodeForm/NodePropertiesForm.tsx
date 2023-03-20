@@ -1,7 +1,6 @@
-import React from 'react'
 import '@styles/Form.sass'
 import FormInput from '../FormInput'
-import { useNodeSelection } from '@/hooks/useNodeSelection'
+import { useNodeSelection } from '@hooks/useNodeSelection'
 
 const NodePropertiesForm = () => {
 	const { coordinates } = useNodeSelection()

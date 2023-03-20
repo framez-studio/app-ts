@@ -1,5 +1,5 @@
 import { Array2D } from '@types'
-import { MatrixOperator as MatOp } from '@classes'
+import { MatrixOperator as MatOp } from '@classes/matrices/matrix-operator'
 
 /**
  * Calculates the linear expression a*x = b.

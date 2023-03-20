@@ -1,9 +1,10 @@
+import { UIElement } from '@classes/ui/UIElement'
+import { UINode } from '@classes/ui/UINode'
+import { scale, origin } from '@config/app-canvas'
 import { IStructure } from '@interfaces'
 import { coordinates2D } from '@types'
 import { IGraphicStructure } from '@types-ui'
-import { scale, origin } from '@config'
-import { UIElement, UINode } from '@classes'
-import { extractContextDims } from '@utils'
+import { extractContextDims } from './canvas'
 
 export function metersToPixels(meters: number) {
 	return (meters * scale.pixels) / scale.meters

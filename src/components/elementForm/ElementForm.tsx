@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import FormSectionHeaderSwitcher from '../FormSectionHeaderSwitcher'
 import ElementFormSwitcher from './ElementFormSwitcher'
 import { IFormSections } from '@types-ui'

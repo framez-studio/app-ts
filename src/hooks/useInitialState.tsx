@@ -1,6 +1,6 @@
 import { IAppState, IElement, INode } from '@interfaces'
 import { IAppContext } from '@context/AppContext'
-import { initialStructure } from '@config'
+import { initialStructure } from '@config/structure'
 import { useImmer } from 'use-immer'
 
 const initialState: IAppState = {

@@ -1,16 +1,16 @@
-import {
-	Concrete,
-	Element,
-	ElementNode,
-	RectangularSectionCR,
-	RectangularSpanLoad,
-	FrameSystem,
-	Hinge,
-	normalizeLoads2Unit,
-	PushoverSolver,
-} from '@classes'
 import clone from 'just-clone'
 import { describe, expect, it } from 'vitest'
+import { FrameSystem } from '@classes/complex-elements/frame-system'
+import { ElementNode } from '@classes/nodes/element-node'
+import { Element } from '@classes/complex-elements/element'
+import { Concrete } from '@classes/others/material'
+import { Hinge } from '@classes/others/moment-curvature'
+import { RectangularSpanLoad } from '@classes/others/rectangular-span-load'
+import {
+	PushoverSolver,
+	normalizeLoads2Unit,
+} from '@classes/solvers/pushover-solver'
+import { RectangularRCSection } from '@classes/sections/rectangular-cr'
 
 describe('Tarea osi osi', () => {
 	//DIMENSIONES GENERALES ESTRUCTURA
@@ -54,8 +54,8 @@ describe('Tarea osi osi', () => {
 	let hvga = 0.4
 
 	//SECCIONES TRANSVERSALES ELEMENTOS
-	let XScol = new RectangularSectionCR(bcol, hcol, mat)
-	let XSvga = new RectangularSectionCR(bvga, hvga, mat)
+	let XScol = new RectangularRCSection(bcol, hcol, mat)
+	let XSvga = new RectangularRCSection(bvga, hvga, mat)
 
 	//SE CREAN COLUMNAS
 	let c1 = new Element(n1, n2, XScol)
@@ -177,8 +177,8 @@ describe('Pushover service + stability', () => {
 	let hvga = 0.4
 
 	//SECCIONES TRANSVERSALES ELEMENTOS
-	let XScol = new RectangularSectionCR(bcol, hcol, mat)
-	let XSvga = new RectangularSectionCR(bvga, hvga, mat)
+	let XScol = new RectangularRCSection(bcol, hcol, mat)
+	let XSvga = new RectangularRCSection(bvga, hvga, mat)
 
 	//SE CREAN COLUMNAS
 	let c1 = new Element(n1, n2, XScol)

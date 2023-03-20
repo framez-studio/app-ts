@@ -7,10 +7,11 @@ import {
 	stiffnessSubmatrices2D,
 	supportType,
 } from '@types'
-import { constraints } from '@config'
+import { constraints } from '@config/globals'
 import { IElement, INode, IStructure } from '@interfaces'
-import { SMatrixOperator as SMatOp } from '@classes'
-import { allIndexesOf, solveLinearSystem } from '@utils'
+import { SMatrixOperator as SMatOp } from '@classes/matrices/s-matrix-operator'
+import { solveLinearSystem } from '@utils/solver'
+import { allIndexesOf } from './helpers'
 
 export const releasesArray = (
 	releases: elementDegsOfFreedom2DObject,

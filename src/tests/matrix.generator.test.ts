@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { MatrixGenerator as MatGen } from '@classes'
+import { MatrixGenerator as MatGen } from '@classes/matrices/matrix-generator'
 
 describe('Matrix Generator', () => {
 	const e = 200000000

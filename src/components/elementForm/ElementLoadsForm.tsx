@@ -1,7 +1,6 @@
-import React from 'react'
 import '@styles/Form.sass'
 import FormInput from '@components/FormInput'
-import { useElementSelection } from '@/hooks/useElementSelection'
+import { useElementSelection } from '@hooks/useElementSelection'
 
 const ElementLoadsForm = () => {
 	const { load, setLoad } = useElementSelection()

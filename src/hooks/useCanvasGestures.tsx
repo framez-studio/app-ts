@@ -1,8 +1,8 @@
 import { useRef } from 'react'
 import { useCanvasCamera } from '@hooks/useCanvasCamera'
 import { useDoubleClick } from '@hooks/useDoubleClick'
-import { eucDistance } from '@utils'
 import { usePointersCache } from './usePointersCache'
+import { eucDistance } from '@utils/algebra'
 /**
  * Provides a hook to add pinch and wheel zoom, double tap reset and drag gestures to a canvas
  *

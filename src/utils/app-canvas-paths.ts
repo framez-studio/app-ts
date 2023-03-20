@@ -1,15 +1,14 @@
-import { graphics } from '@config'
+import { graphics } from '@config/app-canvas'
 import { IElement, INode } from '@interfaces'
+import { degsToRads } from './algebra'
+import { globalMeterToCanvasCoords } from './app-canvas'
 import {
-	nodeType,
-	globalMeterToCanvasCoords,
-	degsToRads,
 	roundedRectPath,
 	circlePath,
-	downwardTrianglePath,
 	arrowPath,
 	linePath,
-} from '@utils'
+} from './canvas-paths'
+import { nodeType } from './elements'
 
 export function elementPath(
 	element: IElement,

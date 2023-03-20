@@ -1,5 +1,5 @@
 import { IAppCanvasCamera } from '@types-ui'
-import { transformContext } from '@utils'
+import { transformContext } from '@utils/canvas'
 import { useRef } from 'react'
 
 export function useCanvasCamera() {

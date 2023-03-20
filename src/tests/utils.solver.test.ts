@@ -1,4 +1,4 @@
-import { solveLinearSystem } from '@utils'
+import { solveLinearSystem } from '@utils/solver'
 import { describe, expect, it } from 'vitest'
 
 describe('Solver utils', () => {

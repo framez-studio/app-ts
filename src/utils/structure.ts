@@ -1,14 +1,12 @@
 import { INode, IElement } from '@interfaces'
-import {
-	Support,
-	ElementNode,
-	Element,
-	Concrete,
-	RectangularSectionCR,
-	RectangularSpanLoad,
-	Structure,
-} from '@classes'
-import { Concre21Props } from '@utils'
+import { Element } from '@classes/complex-elements/element'
+import { Structure } from '@classes/complex-elements/structure'
+import { ElementNode } from '@classes/nodes/element-node'
+import { Support } from '@classes/nodes/support'
+import { Concrete } from '@classes/others/material'
+import { RectangularSpanLoad } from '@classes/others/rectangular-span-load'
+import { Concre21Props } from './material'
+import { RectangularRCSection } from '@classes/sections/rectangular-cr'
 
 export function PorticSystemGenerator(config: {
 	levels: { quantity: number; separation: number }
@@ -43,7 +41,7 @@ export function PorticSystemGenerator(config: {
 				young,
 				epsilon_max,
 			)
-			let section = new RectangularSectionCR(200, 200, material)
+			let section = new RectangularRCSection(200, 200, material)
 
 			let iNode = nodes[i][j]
 			let fNode = nodes[i][j + 1]
@@ -66,7 +64,7 @@ export function PorticSystemGenerator(config: {
 				young,
 				epsilon_max,
 			)
-			let section = new RectangularSectionCR(200, 200, material)
+			let section = new RectangularRCSection(200, 200, material)
 
 			let iNode = nodes[i][j]
 			let fNode = nodes[i + 1][j]

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { stiffnessSubmatrices2DObject } from '@types'
-import { SMatrixOperator as MatOp } from '@classes'
+import { SMatrixOperator as MatOp } from '@classes/matrices/s-matrix-operator'
 
 describe('SMatrix Operator Class', () => {
 	const data = [

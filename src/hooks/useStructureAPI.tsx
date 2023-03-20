@@ -1,5 +1,5 @@
-import { displaceStructure, setStructureReactions } from '@utils'
 import { useAppContext } from '@context/AppContext'
+import { displaceStructure, setStructureReactions } from '@utils/elements'
 
 export function useStructureAPI() {
 	const { state } = useAppContext()

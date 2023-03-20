@@ -1,6 +1,6 @@
 import { IElement, INode, IStructure } from '@interfaces'
 import { coordinates2D, initialOrFinal, stepPushover } from '@types'
-import { min } from 'mathjs'
+import { algebra } from '@utils/algebra'
 import { Hinge } from '../others/moment-curvature'
 import { StaticSolver } from './static-solver'
 
@@ -27,7 +27,7 @@ export class PushoverSolver {
 		let nodeObj: INode
 		let cfactors = collapseFactorStructure(structure)
 		let cfValues = cfactors!.map((row) => row[2])
-		let cfStep = min(...cfValues)
+		let cfStep = algebra.min(...cfValues)
 		let i = cfValues.indexOf(cfStep)
 		let plasticizedNode: coordinates2D | null
 		if (cfStep + actualForce > serviceLoad) {
@@ -72,7 +72,7 @@ export class PushoverSolver {
 		let nodeObj: INode
 		let cfactors = collapseFactorStructure(structure)
 		let cfValues = cfactors!.map((row) => row[2])
-		let cfStep = min(...cfValues)
+		let cfStep = algebra.min(...cfValues)
 		let i = cfValues.indexOf(cfStep)
 		let plasticizedNode: coordinates2D | null
 		plasticizedNode =

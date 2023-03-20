@@ -1,4 +1,4 @@
-import { FHE } from '@classes'
+import { FHE } from '@classes/seismic-analysis/fhe'
 import { describe, expect, it } from 'vitest'
 
 describe('Fundamental Period FHE Method', () => {

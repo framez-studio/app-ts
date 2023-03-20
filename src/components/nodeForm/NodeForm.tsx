@@ -1,5 +1,5 @@
-import { IFormSections } from '@/entities/ui.types'
-import React, { useState } from 'react'
+import { IFormSections } from '@types-ui'
+import { useState } from 'react'
 import FormSectionHeaderSwitcher from '../FormSectionHeaderSwitcher'
 import NodeFormSwitcher from './NodeFormSwitcher'
 

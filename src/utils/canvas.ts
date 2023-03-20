@@ -1,5 +1,3 @@
-import { IAppCanvasCamera } from '@types-ui'
-
 /**
  * Handle the extraction process of a canvas context from a react ref.
  * @param {(React.MutableRefObject<null | HTMLCanvasElement>)} canvasRef

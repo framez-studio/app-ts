@@ -10,15 +10,12 @@ import {
 	elementDegsOfFreedom2DObject,
 } from '@types'
 import { IElement, INode, IRectangularRCSection, ISpanLoad } from '@interfaces'
-import { defaultElementLoads, defaultElementReleases } from '@config'
-import {
-	degSlope,
-	eucDistance,
-	elementLocalDisplacementsArray,
-	releasesArray,
-} from '@utils'
-import { MatrixGenerator as MatGen, SMatrixOperator as MatOp } from '@classes'
+import { MatrixGenerator as MatGen } from '@classes/matrices/matrix-generator'
+import { SMatrixOperator as MatOp } from '@classes/matrices/s-matrix-operator'
 import { Hinge } from '../others/moment-curvature'
+import { defaultElementLoads, defaultElementReleases } from '@config/globals'
+import { eucDistance, degSlope } from '@utils/algebra'
+import { elementLocalDisplacementsArray, releasesArray } from '@utils/elements'
 import clone from 'just-clone'
 
 export class Element implements IElement {

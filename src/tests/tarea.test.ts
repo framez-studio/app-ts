@@ -1,20 +1,16 @@
 import { describe, expect, it } from 'vitest'
-import {
-	Element,
-	ElementNode,
-	RectangularSectionCR,
-	RectangularSpanLoad,
-	Structure,
-	Support,
-} from '@classes'
-import { Concrete21 } from '@utils'
+import { Element } from '@classes/complex-elements/element'
+import { Structure } from '@classes/complex-elements/structure'
+import { ElementNode } from '@classes/nodes/element-node'
+import { Support } from '@classes/nodes/support'
+import { RectangularSpanLoad } from '@classes/others/rectangular-span-load'
+import { Concrete21 } from '@utils/material'
+import { RectangularRCSection } from '@classes/sections/rectangular-cr'
 
 describe('Structure Class testing 2.0', () => {
 	//sections geometry & material definition
-	const col350x350 = new RectangularSectionCR(0.35, 0.35, Concrete21)
-	const vga400x300 = new RectangularSectionCR(0.3, 0.4, Concrete21)
-
-	let e = 21538105.7662924
+	const col350x350 = new RectangularRCSection(0.35, 0.35, Concrete21)
+	const vga400x300 = new RectangularRCSection(0.3, 0.4, Concrete21)
 
 	//nodes definition
 	let a = new Support('fixed', { x: 0, y: 0 })
@@ -23,9 +19,9 @@ describe('Structure Class testing 2.0', () => {
 	let d = new Support('fixed', { x: 6, y: 0 })
 
 	//elements definition
-	let lCol = new Element(a, b, col350x350, e)
-	let beam = new Element(b, c, vga400x300, e)
-	let rCol = new Element(c, d, col350x350, e)
+	let lCol = new Element(a, b, col350x350)
+	let beam = new Element(b, c, vga400x300)
+	let rCol = new Element(c, d, col350x350)
 	beam.release('final', 'rz')
 
 	//structure definition

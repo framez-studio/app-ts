@@ -1,8 +1,8 @@
 import { IElement } from '@interfaces'
-import { forcesArrayToObject } from '@utils'
 import { useAppContext } from '@context/AppContext'
 import { useEffect, useState } from 'react'
 import { useStructureAPI } from '@hooks/useStructureAPI'
+import { forcesArrayToObject } from '@utils/elements'
 
 export function useElementSelection() {
 	const context = useAppContext()

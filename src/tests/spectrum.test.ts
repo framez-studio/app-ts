@@ -1,4 +1,4 @@
-import { spectrumDesign } from '@classes'
+import { spectrumDesign } from '@classes/seismic-analysis/spectrum-design'
 import { describe, expect, it } from 'vitest'
 
 describe('Spectrum design Class', () => {

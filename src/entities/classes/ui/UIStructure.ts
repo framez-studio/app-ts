@@ -1,12 +1,11 @@
 import { IUIElement, IUINode, IUIStructure, IStructure } from '@interfaces'
 import { coordinates2D } from '@types'
 import { IUILayer, IUILayerType, IUISelection } from '@types-ui'
+import { generateGraphicStructure, printStructure } from '@utils/app-canvas'
 import {
-	generateGraphicStructure,
-	printStructure,
 	IUICoordMatch,
 	checkCoordsMatchTroughLayers,
-} from '@utils'
+} from '@utils/ui-structure'
 
 export class UIStructure implements IUIStructure {
 	private _structure: IStructure

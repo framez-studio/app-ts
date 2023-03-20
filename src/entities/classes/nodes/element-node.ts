@@ -9,9 +9,9 @@ import {
 import { IElement, INode } from '@interfaces'
 import {
 	defaultNodeConstraints,
-	defaultNodeDeformations,
 	defaultNodeLoads,
-} from '@config'
+	defaultNodeDeformations,
+} from '@config/globals'
 
 export class ElementNode implements INode {
 	private _loads: nodeLoads2DObject

@@ -1,6 +1,6 @@
 import { elementLoads2DArray, elementLoads2DObject } from '@types'
 import { ISpanLoad } from '@interfaces'
-import { punctualLoadFef } from '@utils'
+import { punctualLoadFef } from '@utils/fefs'
 
 // TODO: throw error if distance is greater than elementLength
 // This Class is experimental, its not ready yet to be used

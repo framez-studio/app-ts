@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useWindowSize } from '@hooks/useWindowSize'
 import { useAppCanvas } from '@hooks/useAppCanvas'
 

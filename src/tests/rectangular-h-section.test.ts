@@ -1,5 +1,5 @@
+import { Steel } from '@classes/others/material'
 import { describe, expect, it } from 'vitest'
-import { RectangularHSection, Steel } from '@classes'
 
 describe('Rectangular Hollow Section', () => {
 	let mat = new Steel('SteelG60', 200, 70, 420)

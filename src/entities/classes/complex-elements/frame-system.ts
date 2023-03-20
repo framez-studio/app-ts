@@ -1,9 +1,9 @@
 import { IElement, INode, IFrameSystem } from '@interfaces'
 import { supportType } from '@types'
-import { uniques } from '@utils'
-import { constraints } from '@config'
 import { ElementNode } from '../nodes/element-node'
 import { Structure } from './structure'
+import { constraints } from '@config/globals'
+import { uniques } from '@utils/helpers'
 
 export class FrameSystem extends Structure implements IFrameSystem {
 	//TODO: all

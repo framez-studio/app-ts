@@ -1,4 +1,4 @@
-import { BarCR } from '@classes'
+import { BarCR } from '@classes/sections/bar-cr'
 import { SteelG60 } from './material'
 
 export const BarNo2 = new BarCR(6.4, 32, SteelG60)

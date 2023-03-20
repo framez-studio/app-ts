@@ -1,13 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import {
-	Element,
-	ElementNode,
-	RectangularHSection,
-	RectangularSpanLoad,
-	Structure,
-	Support,
-} from '@classes'
-import { Concrete21Pascal } from '@utils'
+import { Element } from '@classes/complex-elements/element'
+import { Structure } from '@classes/complex-elements/structure'
+import { ElementNode } from '@classes/nodes/element-node'
+import { Support } from '@classes/nodes/support'
+import { RectangularSpanLoad } from '@classes/others/rectangular-span-load'
+import { Concrete21Pascal } from '@utils/material'
 
 describe('Structure Class', () => {
 	// structure definition
