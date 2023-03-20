@@ -75,43 +75,32 @@ export function nodePath(
 	return path
 }
 
-export function elementLoadPath(
-	element: IElement,
-	ctx: CanvasRenderingContext2D,
-	status: 'static' | 'displaced',
-): Path2D {
+/**
+ * Creates a path for a rectangular load. It assumes an origin at (0,0) and an x-axis pointing to the right. The load is drawn in horizontal direction.
+ * @param lenghtInPixels - length of the load path in pixels
+ * @returns - a Path object for the rectangular load
+ */
+export function rectangularLoadPath(lenghtInPixels: number): Path2D {
 	const path = new Path2D()
-	const globalMeterPoints = {
-		initial: element.nodes.initial.coordinates(status),
-		final: element.nodes.final.coordinates(status),
-	}
-	const points = {
-		initial: globalMeterToCanvasCoords(globalMeterPoints.initial, ctx),
-		final: globalMeterToCanvasCoords(globalMeterPoints.final, ctx),
-	}
-	const { radius } = graphics.node
-	const { height, lineWidth } = graphics.loads
-	const { width } = graphics.element
-	const { minSeparation } = graphics.loads
+	const { height, lineWidth, minSeparation } = graphics.loads
 
-	const availableSpace =
-		Math.abs(points.initial.x - points.final.x) - 2 * radius
+	const availableSpace = lenghtInPixels
 	const nArrows = Math.floor(availableSpace / minSeparation)
 	const separation = availableSpace / nArrows
 
 	for (let i = 0; i <= nArrows; i++) {
-		const x = points.initial.x + radius + i * separation
-		const y = points.initial.y - width / 2
+		const x = i * separation
+		const y = 0
 		path.addPath(arrowPath({ x, y }, height, lineWidth))
 	}
 	const topLinePoints = {
 		initial: {
-			x: points.initial.x + radius,
-			y: points.initial.y - width / 2 - height,
+			x: 0,
+			y: -height,
 		},
 		final: {
-			x: points.final.x - radius,
-			y: points.final.y - width / 2 - height,
+			x: availableSpace,
+			y: -height,
 		},
 	}
 	const topLine = linePath(

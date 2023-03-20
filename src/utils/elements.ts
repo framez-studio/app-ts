@@ -254,3 +254,18 @@ export function forcesArrayToObject(arr: elementLoads2DArray) {
 		final: { fx: arr[3][0], fy: arr[4][0], mz: arr[5][0] },
 	}
 }
+
+/**
+ * Checks if an element has a single load object with a non-zero load inside its loads array. If the element has more than one load object, an error is thrown. If the element has no load object, an error is thrown.
+ * @param element - Element to check
+ * @returns
+ */
+export function hasNonZeroLoad(element: IElement): boolean {
+	let hasLoad = false
+	if (element.loads.length == 0)
+		throw new Error('Element has no load objects')
+	if (element.loads.length > 1)
+		throw new Error('Element has more than one load object')
+	if (element.loads[0].load) hasLoad = true
+	return hasLoad
+}
