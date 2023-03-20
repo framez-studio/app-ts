@@ -1,12 +1,12 @@
-import { IStructure } from '@/entities/interfaces'
-import { IUIElement, IUINode, IUIStructure } from '@interfaces'
+import { IUIElement, IUINode, IUIStructure, IStructure } from '@interfaces'
 import { coordinates2D } from '@types'
 import { IUILayer, IUILayerType, IUISelection } from '@types-ui'
-import { generateGraphicStructure, printStructure } from '@/utils'
 import {
+	generateGraphicStructure,
+	printStructure,
 	IUICoordMatch,
 	checkCoordsMatchTroughLayers,
-} from '@/utils/ui-structure'
+} from '@utils'
 
 export class UIStructure implements IUIStructure {
 	private _structure: IStructure

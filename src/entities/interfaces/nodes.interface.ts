@@ -5,7 +5,6 @@ import {
 	nodeLoads2DObject,
 } from '@types'
 import { IElement, Resetable } from '@interfaces'
-import { Element } from '../classes'
 
 export interface INode extends Resetable {
 	readonly loads: nodeLoads2DObject
@@ -14,7 +13,7 @@ export interface INode extends Resetable {
 	constraints: degsOfFreedom2DBoolean
 	elements: IElement[] | undefined
 	nodeMass: number
-	connectElement(element: Element): void
+	connectElement(element: IElement): void
 	coordinates(state: 'static' | 'displaced'): coordinates2D
 	setLoads(loads: Partial<nodeLoads2DObject>): void
 	addLoads(loads: Partial<nodeLoads2DObject>): void

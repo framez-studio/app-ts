@@ -1,5 +1,5 @@
-import { Concrete, Steel } from '@/entities/classes/others/material'
-import { IConcreteProps } from '@/entities/interfaces'
+import { Concrete, Steel } from '@classes'
+import { IConcreteProps } from '@interfaces'
 
 export const Concre21Props: IConcreteProps = {
 	name: 'Concrete21MPA',

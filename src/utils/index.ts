@@ -15,3 +15,12 @@ export * from '@utils/canvas'
 export * from '@utils/canvas-paths'
 export * from '@utils/ui-structure'
 export * from '@utils/ui'
+export * from '@utils/structure'
+export { Concrete21Curve, Concrete21Pascal } from '@utils/material'
+export {
+	cy,
+	c_whitney,
+	mn_whitney,
+	my_sectionCR,
+} from '@utils/moment-curvature'
+export { BarNo4, BarNo5, BarNo6 } from '@utils/bar-cr'

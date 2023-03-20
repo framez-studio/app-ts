@@ -6,7 +6,7 @@ import {
 	Structure,
 	Support,
 } from '@classes'
-import { Concrete21 } from '@/utils/material'
+import { Concrete21 } from '@utils/material'
 
 describe('Structure Class testing 2.0', () => {
 	// structure definition

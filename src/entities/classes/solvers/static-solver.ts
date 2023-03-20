@@ -1,5 +1,5 @@
 import { displaceStructure } from '@utils'
-import { IStructure } from '@/entities/interfaces'
+import { IStructure } from '@interfaces'
 export class StaticSolver {
 	constructor() {}
 

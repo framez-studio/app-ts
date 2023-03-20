@@ -7,14 +7,8 @@ import {
 	elementLoads2DArray,
 	initialOrFinal,
 } from '@types'
-import {
-	INode,
-	IRectangularRCSection,
-	IRectangularRCSection,
-	IRectangularRCSection,
-	ISpanLoad,
-} from '@interfaces'
-import { Hinge } from '../classes/others/moment-curvature'
+import { INode, IRectangularRCSection, ISpanLoad } from '@interfaces'
+import { Hinge } from '@classes'
 
 export interface IElement {
 	readonly nodes: { initial: INode; final: INode }

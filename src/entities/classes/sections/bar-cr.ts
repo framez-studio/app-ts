@@ -1,4 +1,4 @@
-import { gravity } from '@/config'
+import { gravity } from '@config'
 import { IBarCR, ISteel } from '@interfaces'
 
 export class BarCR implements IBarCR {
@@ -12,11 +12,11 @@ export class BarCR implements IBarCR {
 		this.area = area
 	}
 
-	get weight(){
+	get weight() {
 		return this.material.weight * this.area
 	}
 
-	get mass(){
+	get mass() {
 		return this.weight / gravity
 	}
 

@@ -1,5 +1,5 @@
 import { Array2D, Array1D } from '@types'
-import { algebra } from '@/utils'
+import { algebra } from '@utils'
 
 export class MatrixOperator {
 	static sum(...matrices: (Array2D | Array1D)[]): Array2D | Array1D {

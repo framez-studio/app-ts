@@ -72,30 +72,30 @@ export class Structure implements IStructure {
 		return MatOp.reduceDegs('matrix', full, ...lockedDegs)
 	}
 
-	public filterNodes(y?: number, x?: number){
-        let r = this.nodes
-        if (y!=undefined) {
-            r = r.filter(node => node.coordinates('static').y == y)
-        }
-        if (x!=undefined) {
-            r = r.filter(node => node.coordinates('static').x == x) 
-        }
-        return r
-    }
-	
-	public resetLoadstoZero(){
-		this._elements.forEach(element => {
-			element.loads = []
-		});
-		this.nodes.forEach(node => {
-			node.setLoads({fx:0,fy:0,mz:0})
-		});
+	public filterNodes(y?: number, x?: number) {
+		let r = this.nodes
+		if (y != undefined) {
+			r = r.filter((node) => node.coordinates('static').y == y)
+		}
+		if (x != undefined) {
+			r = r.filter((node) => node.coordinates('static').x == x)
+		}
+		return r
 	}
 
-	public resetHingesStatus(){
-		this._elements.forEach(element => {
+	public resetLoadstoZero() {
+		this._elements.forEach((element) => {
+			element.loads = []
+		})
+		this.nodes.forEach((node) => {
+			node.setLoads({ fx: 0, fy: 0, mz: 0 })
+		})
+	}
+
+	public resetHingesStatus() {
+		this._elements.forEach((element) => {
 			element.initialHinge?.resetHinge
 			element.finalHinge?.resetHinge
-		});
+		})
 	}
 }

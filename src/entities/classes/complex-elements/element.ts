@@ -126,7 +126,7 @@ export class Element implements IElement {
 		this._nodes[which] = node
 	}
 	public setSpanLoad(load: ISpanLoad): void {
-		this.loads = [load]
+		this._loads = [load]
 	}
 	public addSpanLoad(load: ISpanLoad): void {
 		this.loads.push(load)
