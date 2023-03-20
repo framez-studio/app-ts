@@ -1,4 +1,4 @@
-import { structure } from '@config'
+import { initialStructure } from '@config'
 import { UIStructure } from '@classes'
 import { IGraphicStructure } from '@interfaces'
 import { useRef } from 'react'
@@ -7,7 +7,7 @@ import { layerToTypeMap } from '@utils'
 
 export function useGraphicStructure(): IGraphicStructure {
 	const { setSelection } = useAppContext()
-	const graphicStructure = useRef(new UIStructure(structure))
+	const graphicStructure = useRef(new UIStructure(initialStructure))
 
 	function printOnContext(ctx: CanvasRenderingContext2D) {
 		graphicStructure.current.setContext(ctx)

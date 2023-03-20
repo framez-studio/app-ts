@@ -9,4 +9,7 @@ const spans = {
 	separation: 2,
 }
 
-export const { structure } = PorticSystemGenerator({ levels, spans })
+export const { structure: initialStructure } = PorticSystemGenerator({
+	levels,
+	spans,
+})

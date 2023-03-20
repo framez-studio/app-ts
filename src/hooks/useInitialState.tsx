@@ -1,10 +1,10 @@
 import { IAppState, IElement, INode } from '@interfaces'
 import { IAppContext } from '@context/AppContext'
-import { structure } from '@config'
+import { initialStructure } from '@config'
 import { useImmer } from 'use-immer'
 
 const initialState: IAppState = {
-	structure: structure,
+	structure: initialStructure,
 	canvas: {
 		selection: {
 			type: null,
