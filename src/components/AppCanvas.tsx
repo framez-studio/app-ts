@@ -11,7 +11,7 @@ const AppCanvas = () => {
 		<canvas
 			width={width}
 			height={height}
-			ref={canvas.canvasRef}
+			ref={canvas.ref}
 			onPointerDown={canvas.handlePointerDown}
 			onPointerUp={canvas.handlePointerUp}
 			onPointerMove={canvas.handlePointerMove}

@@ -1,7 +1,7 @@
 import { UIElement } from '@classes/ui/UIElement'
 import { UINode } from '@classes/ui/UINode'
 import { scale, origin, graphics } from '@config/app-canvas'
-import { IElement, IStructure } from '@interfaces'
+import { IElement, IStructure, IUIOutline } from '@interfaces'
 import { coordinates2D } from '@types'
 import { IGraphicStructure } from '@types-ui'
 import { extractContextDims } from './canvas'
@@ -88,7 +88,25 @@ export function printElementLoad(
 	ctx.translate(points.initial.x, points.initial.y)
 	ctx.rotate(-degsToRads(element.inclination))
 	ctx.translate(radius, -width / 2)
-	ctx.fillStyle = graphics.loads.fill
-	ctx.fill(path)
+	fillPath(path, ctx, graphics.loads.fill)
 	ctx.restore()
+}
+
+export function fillPath(
+	path: Path2D,
+	ctx: CanvasRenderingContext2D,
+	fill: string,
+) {
+	ctx.fillStyle = fill
+	ctx.fill(path)
+}
+
+export function outlinePath(
+	path: Path2D,
+	ctx: CanvasRenderingContext2D,
+	config: IUIOutline,
+) {
+	ctx.strokeStyle = config.color
+	ctx.lineWidth = config.width
+	ctx.stroke(path)
 }

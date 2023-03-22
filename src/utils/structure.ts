@@ -46,7 +46,7 @@ export function PorticSystemGenerator(config: {
 			let iNode = nodes[i][j]
 			let fNode = nodes[i][j + 1]
 			let element = new Element(iNode, fNode, section)
-			element.setSpanLoad(new RectangularSpanLoad(element, 0))
+			element.setSpanLoad(new RectangularSpanLoad(element, 20))
 			beams.push(element)
 		}
 	}

@@ -33,3 +33,7 @@ export interface IUIElement
 		IUISelectable,
 		IUIHoverable,
 		IUIPrintable {}
+export interface IUIOutline {
+	readonly width: number
+	readonly color: string
+}

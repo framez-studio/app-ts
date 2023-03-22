@@ -1,17 +1,18 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useAppContext } from '@context/AppContext'
-import { getContextFromRef, clearContext } from '@utils/canvas'
+import { clearContext } from '@utils/canvas'
 import { useCanvasGestures } from './useCanvasGestures'
 import { useGraphicStructure } from './useGraphicStructure'
+import { useCanvasRef } from './useCanvasRef'
 
 export function useAppCanvas() {
-	const canvasRef = useRef<HTMLCanvasElement | null>(null)
+	const canvas = useCanvasRef()
 	const context = useAppContext()
 	const graphicStructure = useGraphicStructure()
 	const gestures = useCanvasGestures()
 
 	function updateScreen() {
-		const ctx = getContextFromRef(canvasRef)
+		const ctx = canvas.getContext()
 		clearContext(ctx)
 		gestures.applyGestures(ctx)
 		graphicStructure.printOnContext(ctx)
@@ -41,7 +42,7 @@ export function useAppCanvas() {
 		updateScreen()
 	}, [context.state.canvas.needsRedraw])
 	return {
-		canvasRef,
+		ref: canvas.ref,
 		updateScreen,
 		handlePointerUp,
 		handlePointerDown,

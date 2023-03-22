@@ -44,3 +44,19 @@ export function transformContext(
 	const { dx, dy, scale } = transformation
 	ctx.setTransform(scale, 0, 0, scale, dx, dy)
 }
+/**
+ * Get the coordinates of a pointer event in the canvas coordinate system.
+ * @param ctx - The context to extract the coordinates from.
+ * @param e - The pointer event.
+ * @returns - The coordinates of the pointer event in the canvas coordinate system.
+ */
+export function getPointerCoords(
+	ctx: CanvasRenderingContext2D,
+	e: React.PointerEvent,
+) {
+	var rect = ctx.canvas.getBoundingClientRect()
+	return {
+		x: e.clientX - rect.left,
+		y: e.clientY - rect.top,
+	}
+}

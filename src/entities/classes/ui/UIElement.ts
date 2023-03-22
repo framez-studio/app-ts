@@ -1,12 +1,11 @@
 import { IElement, IUIElement } from '@interfaces'
 import { graphics } from '@config/app-canvas'
 import { elementPath } from '@utils/app-canvas-paths'
-import { printElementLoad } from '@utils/app-canvas'
+import { fillPath, outlinePath, printElementLoad } from '@utils/app-canvas'
 import { hasNonZeroLoad } from '@utils/elements'
 
 export class UIElement implements IUIElement {
 	// Posibility: Add a set status method to change from static to displaced and viceversa
-	private _path = new Path2D()
 	private _selected: boolean = false
 	private _hovered: boolean = false
 	private _object: IElement
@@ -15,7 +14,6 @@ export class UIElement implements IUIElement {
 	constructor(element: IElement, ctx: CanvasRenderingContext2D) {
 		this._object = element
 		this._ctx = ctx
-		this._path = elementPath(element, ctx, 'static')
 	}
 	get isSelected() {
 		return this._selected
@@ -27,7 +25,7 @@ export class UIElement implements IUIElement {
 		return this._object
 	}
 	get path(): Path2D {
-		return this._path
+		return elementPath(this.object, this._ctx, 'static')
 	}
 	select(): void {
 		this._selected = true
@@ -42,22 +40,21 @@ export class UIElement implements IUIElement {
 		this._hovered = false
 	}
 	printOnContext(): void {
-		let { isHovered, isSelected, _ctx: ctx } = this
+		const { isHovered, isSelected, _ctx: ctx, path, object } = this
+		const { fill, outline } = graphics.element
 
-		ctx.fillStyle = graphics.element.fill
-		ctx.fill(this.path)
+		fillPath(path, ctx, fill)
+		if (hasNonZeroLoad(object)) printElementLoad(object, ctx, 'static')
 
-		if (hasNonZeroLoad(this.object))
-			printElementLoad(this.object, ctx, 'static')
-
-		if (isSelected) {
-			ctx.strokeStyle = graphics.element.outline.selected
-			ctx.lineWidth = graphics.element.outline.width
-			ctx.stroke(this.path)
-		} else if (isHovered) {
-			ctx.strokeStyle = graphics.element.outline.hovered
-			ctx.lineWidth = graphics.element.outline.width
-			ctx.stroke(this.path)
-		}
+		if (isSelected)
+			outlinePath(path, ctx, {
+				width: outline.width,
+				color: outline.selected,
+			})
+		else if (isHovered)
+			outlinePath(path, ctx, {
+				width: outline.width,
+				color: outline.hovered,
+			})
 	}
 }
