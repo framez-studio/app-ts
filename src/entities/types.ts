@@ -1,5 +1,3 @@
-import { INode, IStructure } from "./interfaces";
-
 export type coordinateSystem = 'local' | 'global'
 export type coordinates2D = { x: number; y: number }
 

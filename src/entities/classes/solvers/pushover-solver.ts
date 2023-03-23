@@ -1,5 +1,6 @@
 import { IElement, INode, IStructure } from "@/entities/interfaces";
 import { coordinates2D, initialOrFinal, stepPushover } from "@/entities/types";
+import clone from "just-clone";
 import { e, max, min, unitDependencies } from "mathjs";
 import { Hinge } from "../others/moment-curvature";
 import { StaticSolver } from "./static-solver";
@@ -49,7 +50,7 @@ export class PushoverSolver{
             step: 0,
             plasticizedNode: plasticizedNode == undefined ? plasticizedNode : null,
             collapseFactor: cfStep,
-            dxAtControlNode: delta
+            dxAtControlNode: delta,
         }
 
         if (this._serviceSteps == undefined || this._serviceSteps.length == 0) {
@@ -83,7 +84,7 @@ export class PushoverSolver{
             step: stepNumber,
             plasticizedNode: plasticizedNode == undefined ? plasticizedNode : null,
             collapseFactor: cfStep,
-            dxAtControlNode: delta
+            dxAtControlNode: delta,
         }
 
         if (this._steps == undefined || this._steps.length == 0) {
@@ -209,10 +210,12 @@ const collapseFactorStructure = (structure: IStructure)=>{
 const updateHingesStructure = (structure: IStructure, collapseFactor: number) =>{
     structure.elements.forEach(element => {
         if (element.finalHinge != undefined) {
-            element.finalHinge.moment = element.finalHinge.moment + element.forces[5][0] * collapseFactor
+            let mf = element.finalHinge.moment + element.forces[5][0] * collapseFactor
+            element.finalHinge.setMoment(mf)
         }
         if (element.initialHinge != undefined) {
-            element.initialHinge.moment = element.initialHinge.moment + element.forces[2][0] * collapseFactor
+            let mi = element.initialHinge.moment + element.forces[2][0] * collapseFactor
+            element.initialHinge.setMoment(mi)
         }
     })
 }

@@ -14,7 +14,9 @@ export class MomentCurvature{
 }
 */
 
-export class Hinge{
+import { IHinge } from "@/entities/interfaces/hinge.interface"
+
+export class Hinge implements IHinge{
     isCollapsed: boolean = false
     typeCollapsed: string | undefined = undefined
     moment: number = 0
@@ -36,11 +38,11 @@ export class Hinge{
      * setMoment
      */
     public setMoment(moment: number) {
-        if (moment > this.maxMoment) {
+        if (moment >= this.maxMoment) {
             this.isCollapsed = true
             this.typeCollapsed = 'positive'
         }
-        if (moment<this.minMoment) {
+        if (moment<=this.minMoment) {
             this.isCollapsed = true
             this.typeCollapsed = 'negative'
         }
