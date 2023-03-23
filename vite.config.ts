@@ -6,10 +6,6 @@ export default defineConfig({
 	resolve: {
 		alias: [
 			{
-				find: '@',
-				replacement: path.resolve(__dirname, 'src'),
-			},
-			{
 				find: '@interfaces',
 				replacement: path.resolve(__dirname, 'src/entities/interfaces'),
 			},

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { MatrixOperator as MatOp } from '@classes'
+import { MatrixOperator as MatOp } from '@classes/matrices/matrix-operator'
 
 describe('Matrix Operator', () => {
 	let data = [

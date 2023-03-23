@@ -1,15 +1,18 @@
 import { describe, expect, it } from 'vitest'
-import {
-	Element,
-	ElementNode,
-	MatrixOperator as matOp,
-	RectangularHSection,
-	RectangularSpanLoad,
-} from '@classes'
-import { Concrete21Pascal } from '@/utils/material'
+import { Element } from '@classes/complex-elements/element'
+import { MatrixOperator as MatOp } from '@classes/matrices/matrix-operator'
+import { ElementNode } from '@classes/nodes/element-node'
+import { RectangularSpanLoad } from '@classes/others/rectangular-span-load'
+import { Concrete21Pascal } from '@utils/material'
 
 describe('Element Class', () => {
-	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002, Concrete21Pascal)
+	const section = new RectangularHSection(
+		0.1,
+		0.1,
+		0.002,
+		0.002,
+		Concrete21Pascal,
+	)
 	const points = { i: { x: 0, y: 0 }, f: { x: 0, y: 3 } }
 	let nodes = {
 		i: new ElementNode(points.i),
@@ -101,7 +104,7 @@ describe('Element Class', () => {
 	})
 	it(`should allow to add multiple span loads`, () => {
 		let load = new RectangularSpanLoad(element, 20)
-		let expected = matOp.sum(load.fefArray, load.fefArray)
+		let expected = MatOp.sum(load.fefArray, load.fefArray)
 		expect(element.fef('local')).toEqual(expected)
 	})
 })

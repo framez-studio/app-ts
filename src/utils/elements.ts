@@ -3,13 +3,15 @@ import {
 	coordinates2D,
 	degsOfFreedom2DArray,
 	elementDegsOfFreedom2DObject,
+	elementLoads2DArray,
 	stiffnessSubmatrices2D,
 	supportType,
 } from '@types'
-import { constraints } from '@config'
+import { constraints } from '@config/globals'
 import { IElement, INode, IStructure } from '@interfaces'
-import { SMatrixOperator as SMatOp } from '@classes'
-import { allIndexesOf, solveLinearSystem } from '@utils'
+import { SMatrixOperator as SMatOp } from '@classes/matrices/s-matrix-operator'
+import { solveLinearSystem } from '@utils/solver'
+import { allIndexesOf } from './helpers'
 
 export const releasesArray = (
 	releases: elementDegsOfFreedom2DObject,
@@ -190,7 +192,7 @@ export const displaceStructure = (structure: IStructure): Array2D => {
 	let displacementsArr = getStructureDisplacements(
 		structure.stiffness('full'),
 		structure.fef('full'),
-		structure.nodeLoads, 
+		structure.nodeLoads,
 		structure.constraints,
 	)
 	structure.nodes.forEach((node, i) => {
@@ -203,7 +205,20 @@ export const displaceStructure = (structure: IStructure): Array2D => {
 	})
 	return displacementsArr
 }
-
+export const setStructureReactions = (structure: IStructure): void => {
+	const reactions = SMatOp.multiply(
+		structure.stiffness('full'),
+		structure.displacements,
+	) as Array2D
+	structure.nodes.forEach((node, i) => {
+		let reaction = {
+			fx: reactions[i * 3][0],
+			fy: reactions[i * 3 + 1][0],
+			mz: reactions[i * 3 + 2][0],
+		}
+		node.setReactions(reaction)
+	})
+}
 export const elementLocalDisplacementsArray = (element: IElement): Array2D => {
 	let angle = -element.inclination
 	let globalDisplacements = [
@@ -232,4 +247,10 @@ export const nodeType = (node: INode): supportType | 'node' => {
 		}
 	})
 	return type
+}
+export function forcesArrayToObject(arr: elementLoads2DArray) {
+	return {
+		initial: { fx: arr[0][0], fy: arr[1][0], mz: arr[2][0] },
+		final: { fx: arr[3][0], fy: arr[4][0], mz: arr[5][0] },
+	}
 }

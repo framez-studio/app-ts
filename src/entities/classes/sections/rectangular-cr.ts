@@ -1,19 +1,19 @@
-import { gravity } from '@/config'
+import { gravity } from '@config/globals'
 import {
-	IRectangularSectionCR,
+	IRectangularRCSection,
 	IRowReinforcement,
 	IConcrete,
 	IBarCR,
 } from '@interfaces'
 
-export class RectangularSectionCR implements IRectangularSectionCR {
+export class RectangularRCSection implements IRectangularRCSection {
 	constructor(
 		public b: number,
 		public h: number,
 		public material: IConcrete,
 		private _reinforcement: IRowReinforcement[] = [],
 	) {}
-	
+
 	get area(): number {
 		return this.b * this.h
 	}
@@ -36,12 +36,12 @@ export class RectangularSectionCR implements IRectangularSectionCR {
 		return this.reinforcement[this.reinforcement.length - 1].distance
 	}
 
-	get weight(){
+	get weight() {
 		return this.material.weight * this.area
 	}
 
-	get mass(){
-		return this.weight/gravity
+	get mass() {
+		return this.weight / gravity
 	}
 
 	public as(d: number = this.dmax, sum: boolean = true) {
@@ -63,7 +63,11 @@ export class RectangularSectionCR implements IRectangularSectionCR {
 		return this.as(d, sum) / (this.b * this.dmax)
 	}
 
-	public addRowReinforcement(d: number,quantity: number,BarCR: IBarCR): void {
+	public addRowReinforcement(
+		d: number,
+		quantity: number,
+		BarCR: IBarCR,
+	): void {
 		if (this.findRowReinforcement(d) === -1) {
 			let row = { distance: d, quantity: quantity, section: BarCR }
 			this._reinforcement.push(row)
@@ -72,37 +76,40 @@ export class RectangularSectionCR implements IRectangularSectionCR {
 		}
 	}
 
-    public findRowReinforcement(d: number):number{
-        const f = (row: IRowReinforcement) => row.distance==d
-        return this._reinforcement.findIndex(f)
-    }
+	public findRowReinforcement(d: number): number {
+		const f = (row: IRowReinforcement) => row.distance == d
+		return this._reinforcement.findIndex(f)
+	}
 
+	public swapRowReinforcement(
+		d: number,
+		quantity: number,
+		BarCR: IBarCR,
+	): void {
+		const row: number = this.findRowReinforcement(d)
+		if (row != -1) {
+			let rowi = { distance: d, quantity: quantity, section: BarCR }
+			this._reinforcement[row] = rowi
+		}
+	}
 
+	public deleteReinforcement(): void {
+		this._reinforcement = []
+	}
 
-    public swapRowReinforcement(d:number,quantity: number,BarCR: IBarCR):void{
-        const row: number=this.findRowReinforcement(d)
-        if (row !=-1) {
-            let rowi = {distance: d, quantity: quantity, section: BarCR}
-            this._reinforcement[row] = rowi
-        }
-    }
+	public sortReinforcement(): void {
+		this._reinforcement.sort((a: IRowReinforcement, b: IRowReinforcement) =>
+			a.distance > b.distance ? 1 : a.distance < b.distance ? -1 : 0,
+		)
+	}
 
-    public deleteReinforcement():void{
-        this._reinforcement=[]
-    }
-
-    public sortReinforcement():void{
-        this._reinforcement.sort((a:IRowReinforcement,b:IRowReinforcement) => 
-        (a.distance > b.distance) ? 1 : (a.distance < b.distance) ? -1 : 0)
-    }
-
-    public rotate180():RectangularSectionCR{
-        let rnew: IRowReinforcement[] = []
-        this._reinforcement.forEach(element => {
-            let ei = element
-            ei.distance = this.h - ei.distance
-            rnew.push(ei)
-        });
-        return new RectangularSectionCR(this.b,this.h,this.material,rnew)
-    }
+	public rotate180(): RectangularRCSection {
+		let rnew: IRowReinforcement[] = []
+		this._reinforcement.forEach((element) => {
+			let ei = element
+			ei.distance = this.h - ei.distance
+			rnew.push(ei)
+		})
+		return new RectangularRCSection(this.b, this.h, this.material, rnew)
+	}
 }

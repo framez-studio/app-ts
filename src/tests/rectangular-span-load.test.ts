@@ -1,11 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import {
-	Element,
-	ElementNode,
-	RectangularHSection,
-	RectangularSpanLoad,
-} from '@classes'
-import { Concrete21 } from '@utils'
+import { Element } from '@classes/complex-elements/element'
+import { ElementNode } from '@classes/nodes/element-node'
+import { RectangularSpanLoad } from '@classes/others/rectangular-span-load'
+import { Concrete21 } from '@utils/material'
 
 describe('Rectangular Span Load Class', () => {
 	const iNode = new ElementNode({ x: 0, y: 0 })
@@ -54,7 +51,7 @@ describe('Rectangular Span Load Class', () => {
 		let sum = result.initial.fy + result.final.fy - w * (b - a)
 		expect(sum).toBe(0)
 	})
-	it('should provide momentum equilibrium', () => { 
+	it('should provide momentum equilibrium', () => {
 		let result = load.fef
 		let sum =
 			result.initial.mz +

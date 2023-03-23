@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { assemblyMatrix } from '@utils'
-import { Element, ElementNode, RectangularHSection } from '@classes'
+import { Element } from '@classes/complex-elements/element'
+import { ElementNode } from '@classes/nodes/element-node'
+import { assemblyMatrix } from '@utils/elements'
 
 describe('Elements utils', () => {
 	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002)
@@ -10,9 +11,9 @@ describe('Elements utils', () => {
 	let c = new ElementNode({ x: 4, y: 3 })
 	let d = new ElementNode({ x: 4, y: 0 })
 	const nodes = [a, b, c, d]
-	let lCol = new Element(a, b, section, e)
-	let beam = new Element(b, c, section, e)
-	let rCol = new Element(c, d, section, e)
+	let lCol = new Element(a, b, section)
+	let beam = new Element(b, c, section)
+	let rCol = new Element(c, d, section)
 	const elements = [lCol, rCol, beam]
 	it('should return a matrix with size according to the number of degs of freedom', () => {
 		let result = assemblyMatrix(nodes, elements)

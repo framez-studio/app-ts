@@ -9,30 +9,25 @@ import {
 	degsOfFreedom2D,
 	elementDegsOfFreedom2DObject,
 } from '@types'
-import { IElement, INode, ISection, ISpanLoad } from '@interfaces'
-import { defaultElementLoads, defaultElementReleases } from '@config'
-import {
-	degSlope,
-	eucDistance,
-	elementLocalDisplacementsArray,
-	releasesArray,
-} from '@utils'
-import { MatrixGenerator as MatGen, SMatrixOperator as MatOp } from '@classes'
+import { IElement, INode, IRectangularRCSection, ISpanLoad } from '@interfaces'
+import { MatrixGenerator as MatGen } from '@classes/matrices/matrix-generator'
+import { SMatrixOperator as MatOp } from '@classes/matrices/s-matrix-operator'
 import { Hinge } from '../others/moment-curvature'
+import { defaultElementLoads, defaultElementReleases } from '@config/globals'
+import { eucDistance, degSlope } from '@utils/algebra'
+import { elementLocalDisplacementsArray, releasesArray } from '@utils/elements'
 import clone from 'just-clone'
 
 export class Element implements IElement {
 	private _nodes: initialFinal<INode>
 	private _releases: initialFinal<degsOfFreedom2DBoolean>
-	public loads: ISpanLoad[] = [...defaultElementLoads]
-	public section: ISection
-	public young: number
+	private _loads: ISpanLoad[] = [...defaultElementLoads]
+	public section: IRectangularRCSection
 	public initialHinge!: Hinge | undefined
 	public finalHinge!: Hinge | undefined
 
-	constructor(iNode: INode, fNode: INode, section: ISection) {
+	constructor(iNode: INode, fNode: INode, section: IRectangularRCSection) {
 		this.section = section
-		this.young = section.material.young
 		this._nodes = {
 			initial: iNode,
 			final: fNode,
@@ -53,12 +48,18 @@ export class Element implements IElement {
 	get releases(): elementDegsOfFreedom2DObject {
 		return this._releases
 	}
-	
+
 	get length(): number {
 		return eucDistance(
 			this._nodes.initial.coordinates('static'),
 			this._nodes.final.coordinates('static'),
 		)
+	}
+	get young(): number {
+		return this.section.material.young
+	}
+	set young(value: number) {
+		this.section.material.young = value
 	}
 	/**
 	 * Returns the inclination of the current element in degrees
@@ -101,7 +102,9 @@ export class Element implements IElement {
 	get mass(): number {
 		return this.section.mass * this.length
 	}
-
+	get loads(): ISpanLoad[] {
+		return this._loads
+	}
 	public release(node: initialOrFinal, direction: degsOfFreedom2D): void {
 		this._releases[node][direction] = true
 	}
@@ -120,7 +123,7 @@ export class Element implements IElement {
 		this._nodes[which] = node
 	}
 	public setSpanLoad(load: ISpanLoad): void {
-		this.loads = [load]
+		this._loads = [load]
 	}
 	public addSpanLoad(load: ISpanLoad): void {
 		this.loads.push(load)
@@ -143,33 +146,27 @@ export class Element implements IElement {
 	public newConnectedElement(
 		from: initialOrFinal,
 		to: INode,
-		section?: ISection | undefined,
+		section?: IRectangularRCSection,
 	): IElement {
-		return new Element(
-			this.nodes[from],
-			to,
-			section ?? this.section,
-		)
+		return new Element(this.nodes[from], to, section ?? this.section)
 	}
 
-	public assignHinge(
-		node: initialOrFinal,
-		hinge: Hinge
-		){
-		if (node=='initial') {
+	public assignHinge(node: initialOrFinal, hinge: Hinge) {
+		if (node == 'initial') {
 			this.initialHinge = hinge
 		} else {
 			this.finalHinge = hinge
 		}
 	}
 
-	public getHinge(node:initialOrFinal){
-		if (node=='initial') {
+	public getHinge(node: initialOrFinal) {
+		if (node == 'initial') {
 			return this.initialHinge
 		} else {
 			return this.finalHinge
 		}
 	}
-
-	
+	public resetLoads(): void {
+		this._loads = [...defaultElementLoads]
+	}
 }

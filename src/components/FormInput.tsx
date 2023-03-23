@@ -1,25 +1,22 @@
 import React, { useState } from 'react'
 import '@styles/FormInput.sass'
 
-interface Props extends React.HTMLProps<HTMLDivElement> {
+export interface FormInputProps extends React.HTMLProps<HTMLDivElement> {
 	props?: {
 		label?: string
 		suffix?: string
 		value?: string
-		onChange?($e: React.ChangeEvent): void
+		readonly?: boolean
+		onChange?($e: React.ChangeEvent<HTMLInputElement>): void
 	}
 }
 
-const FormInput: React.FC<Props> = ({ props }) => {
+const FormInput: React.FC<FormInputProps> = ({ props }) => {
 	const [isActive, setIsActive] = useState(false)
-	const onFocus = (e: React.FocusEvent) => {
-		e.preventDefault()
-		setIsActive(true)
-	}
-	const onBlur = () => setIsActive(false)
 	const classState = `form-input ${props?.suffix ? '' : 'suffix-less'} ${
 		isActive ? 'active' : ''
 	}`
+
 	return (
 		<label className="form-input-container">
 			{props?.label && (
@@ -29,20 +26,37 @@ const FormInput: React.FC<Props> = ({ props }) => {
 			)}
 			<div className={classState}>
 				<input
-					type="tel"
+					type="number"
+					inputMode="decimal"
 					value={props?.value}
+					readOnly={props?.readonly}
 					onFocus={onFocus}
 					onBlur={onBlur}
-					onChange={props?.onChange}
+					onChange={onChange}
 				/>
 				{props?.suffix && (
 					<span className="input-suffix secondary-text">
-						{props?.suffix}
+						{props.suffix}
 					</span>
 				)}
 			</div>
 		</label>
 	)
+	function onWheel(e: WheelEvent) {
+		e.preventDefault()
+	}
+	function onFocus(e: React.FocusEvent<HTMLInputElement>) {
+		e.preventDefault()
+		setIsActive(true)
+		e.target.addEventListener('wheel', onWheel)
+	}
+	function onBlur(e: React.FocusEvent<HTMLInputElement>) {
+		setIsActive(false)
+		e.target.removeEventListener('wheel', onWheel)
+	}
+	function onChange(e: React.ChangeEvent<HTMLInputElement>) {
+		props?.onChange?.(e)
+	}
 }
 
 export default FormInput

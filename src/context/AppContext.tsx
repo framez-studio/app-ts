@@ -1,9 +1,16 @@
 import React, { createContext, useContext } from 'react'
-import { useInitialState } from '@/hooks/useInitialState'
-import { IAppState } from '@interfaces'
+import { useInitialState } from '@hooks/useInitialState'
+import { IAppState, IElement, INode } from '@interfaces'
 
 export interface IAppContext {
 	state: IAppState
+	setSelection(payload: {
+		type: 'node' | 'element' | null
+		object: INode | IElement | null
+	}): void
+	toggleSlider(): void
+	requestCanvasRedraw(): void
+	resetCanvasRedraw(): void
 }
 
 const AppContext = createContext<IAppContext | undefined>(undefined)

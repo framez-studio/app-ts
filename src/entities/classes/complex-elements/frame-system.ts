@@ -1,17 +1,13 @@
-import { IElement, INode, IStructure } from "@/entities/interfaces";
-import { IFrameSystem } from "@/entities/interfaces/frame-system.interface";
-import { coordinates2D, supportType } from "@/entities/types";
-import { uniques } from "@/utils";
-import { constraints } from '@config'
-import { ElementNode } from "../nodes/element-node";
-import { Section } from "../sections/section";
-import { Element } from "./element";
-import { Structure } from "./structure";
+import { IElement, INode, IFrameSystem } from '@interfaces'
+import { supportType } from '@types'
+import { ElementNode } from '../nodes/element-node'
+import { Structure } from './structure'
+import { constraints } from '@config/globals'
+import { uniques } from '@utils/helpers'
 
 export class FrameSystem extends Structure implements IFrameSystem {
-
-    //TODO: all
-    /*constructor(
+	//TODO: all
+	/*constructor(
         _numberLevels: number,
         heightLevels: number,
         _numberSpans: number,
@@ -34,87 +30,79 @@ export class FrameSystem extends Structure implements IFrameSystem {
         super(coll,vga,colr)
     }*/
 
-    constructor(...elements: IElement[]){
-        super(...elements)
-    }
+	constructor(...elements: IElement[]) {
+		super(...elements)
+	}
 
-    get levels(){
-        let all = this.nodes
-        .map((node) => node.coordinates('static').y)
-        return uniques(...all)
-    }
-    
-    get numberLevels(){
-        return this.levels.length
-    }
+	get levels() {
+		let all = this.nodes.map((node) => node.coordinates('static').y)
+		return uniques(...all)
+	}
 
-    get spans(){
-        let all = this.nodes
-            .map((node) => node.coordinates('static').x)
-        return uniques(...all)
-    }
+	get numberLevels() {
+		return this.levels.length
+	}
 
-    get numberSpans(){
-        return this.spans.length
-    }
+	get spans() {
+		let all = this.nodes.map((node) => node.coordinates('static').x)
+		return uniques(...all)
+	}
 
-    public levelNodeMass(level: number){
-        let nodes = this.filterNodes(level=level)
-        let mass = 0
-        nodes.forEach(n => {
-            mass = n.nodeMass != undefined ? mass + n.nodeMass : mass
-        });
-        return mass
-    }
+	get numberSpans() {
+		return this.spans.length
+	}
 
-    
-    
-    
+	public levelNodeMass(level: number) {
+		let nodes = this.filterNodes((level = level))
+		let mass = 0
+		nodes.forEach((n) => {
+			mass = n.nodeMass != undefined ? mass + n.nodeMass : mass
+		})
+		return mass
+	}
 }
 
-const createNodes = (numberLevels: number,
-    heightLevels: number,
-    numberSpans: number,
-    distanceSpans: number,
-)=>{
-    let i = 0
-    let j = 0
-    let xi = 0
-    let yi = 0
-    let n = new ElementNode({x: xi, y: yi})
-    let nodes: INode[] = [n]
-    xi = xi +distanceSpans
-    while (i<=numberLevels) {
-        while (j<=numberSpans) {
-            n = new ElementNode({x: xi, y: yi})
-            nodes.push(n)
-            xi = xi+distanceSpans
-            j++
-        }
-        xi = 0
-        yi = yi+heightLevels
-        i++
-    }
-    return nodes
+const createNodes = (
+	numberLevels: number,
+	heightLevels: number,
+	numberSpans: number,
+	distanceSpans: number,
+) => {
+	let i = 0
+	let j = 0
+	let xi = 0
+	let yi = 0
+	let n = new ElementNode({ x: xi, y: yi })
+	let nodes: INode[] = [n]
+	xi = xi + distanceSpans
+	while (i <= numberLevels) {
+		while (j <= numberSpans) {
+			n = new ElementNode({ x: xi, y: yi })
+			nodes.push(n)
+			xi = xi + distanceSpans
+			j++
+		}
+		xi = 0
+		yi = yi + heightLevels
+		i++
+	}
+	return nodes
 }
 
 const constraintLevelNodes = (
-    nodes: INode[],
-    level: number,
-    type: supportType = 'fixed'
-)=>{
-    nodes.forEach(n => {
-        if (n.coordinates('static').y == level) {
-            n.constraints = {...constraints[type]}
-        } else {
-            
-        }
-    });
-    return nodes
+	nodes: INode[],
+	level: number,
+	type: supportType = 'fixed',
+) => {
+	nodes.forEach((n) => {
+		if (n.coordinates('static').y == level) {
+			n.constraints = { ...constraints[type] }
+		} else {
+		}
+	})
+	return nodes
 }
 
-const createElements = (
-    n: null
-)=>{
-    return null
+const createElements = (n: null) => {
+	return null
 }

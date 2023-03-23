@@ -1,12 +1,14 @@
 export type {
 	IMaterial,
 	IConcrete,
+	IConcreteProps,
 	ISteel,
+	MaterialType,
 } from '@interfaces/material.interface'
 export type {
 	ISection,
 	IRectangularSection,
-	IRectangularSectionCR,
+	IRectangularRCSection,
 	ICircularSection,
 	IBarCR,
 	IRowReinforcement,
@@ -25,5 +27,8 @@ export type { IStructure } from '@interfaces/structure.interface'
 
 export type { ISpanLoad } from '@interfaces/span-load.interface'
 export type { IAppState } from '@interfaces/app-state.interface'
+export type { IGraphicStructure } from '@interfaces/graphic-structure.interface'
 
 export type { Resetable } from '@interfaces/globals.interfaces'
+export * from '@interfaces/ui.interfaces'
+export type { IFrameSystem } from '@interfaces/frame-system.interface'

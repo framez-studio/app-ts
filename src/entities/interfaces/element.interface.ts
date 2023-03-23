@@ -7,9 +7,8 @@ import {
 	elementLoads2DArray,
 	initialOrFinal,
 } from '@types'
-import { INode, ISection, ISpanLoad } from '@interfaces'
-import { Hinge } from '../classes/others/moment-curvature';
-import { defaultElementLoads } from '@/config';
+import { INode, IRectangularRCSection, ISpanLoad } from '@interfaces'
+import { Hinge } from '@classes/others/moment-curvature'
 
 export interface IElement {
 	readonly nodes: { initial: INode; final: INode }
@@ -19,13 +18,13 @@ export interface IElement {
 	readonly constraints: degsOfFreedom2DArray
 	readonly reactions: elementLoads2DArray
 	readonly forces: elementLoads2DArray
+	readonly loads: ISpanLoad[]
 	young: number
-	section: ISection
+	section: IRectangularRCSection
 	initialHinge: Hinge | undefined
 	finalHinge: Hinge | undefined
 	weigth: number
 	mass: number
-	loads: ISpanLoad[]
 	release(node: initialOrFinal, direction: degsOfFreedom2D): void
 	unrelease(node: initialOrFinal, direction: degsOfFreedom2D): void
 	setSpanLoad(load: ISpanLoad): void
@@ -36,9 +35,10 @@ export interface IElement {
 	newConnectedElement(
 		from: initialOrFinal,
 		to: INode,
-		section?: ISection,
+		section?: IRectangularRCSection,
 		young?: number,
 	): IElement
-	assignHinge(node: initialOrFinal,hinge: Hinge): void
-	getHinge(node:initialOrFinal): Hinge | undefined
+	assignHinge(node: initialOrFinal, hinge: Hinge): void
+	getHinge(node: initialOrFinal): Hinge | undefined
+	resetLoads(): void
 }

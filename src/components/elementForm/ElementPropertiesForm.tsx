@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import '@styles/Form.sass'
 import ElementMechPropertiesForm from '@components/elementForm/ElementMechPropertiesForm'
 import ElementReinforcementForm from '@components/elementForm/ElementReinforcementForm'

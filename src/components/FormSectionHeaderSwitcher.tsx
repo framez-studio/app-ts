@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import '@styles/FormSwitcher.sass'
-import { IFormSections } from '@/entities/ui.types'
+import { IFormSections } from '@types-ui'
 import FormSectionLabel from '@components/FormSectionLabel'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
@@ -10,7 +10,7 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 	}
 }
 
-const FormSwitcherHeader: React.FC<Props> = ({ props }) => {
+const FormSectionHeaderSwitcher: React.FC<Props> = ({ props }) => {
 	return (
 		<section className="form-switcher-header">
 			<FormSectionLabel
@@ -38,4 +38,4 @@ const FormSwitcherHeader: React.FC<Props> = ({ props }) => {
 	)
 }
 
-export default FormSwitcherHeader
+export default FormSectionHeaderSwitcher

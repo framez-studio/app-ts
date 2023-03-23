@@ -1,11 +1,11 @@
 import {
-	IRectangularSectionCR,
+	IRectangularRCSection,
 	IRowReinforcement,
 	IRowReinforcementMechanics,
 } from '@interfaces'
 import { absolutevalue } from './algebra'
 
-export const mn_whitney = (sectionCR: IRectangularSectionCR, p: number = 0) => {
+export const mn_whitney = (sectionCR: IRectangularRCSection, p: number = 0) => {
 	let c = c_whitney(sectionCR, p) as number
 	return eq_moment_whitney(c, sectionCR, p)
 }
@@ -15,7 +15,7 @@ export const curv_mn = (c: number, epsilon: number) => {
 }
 
 export const my_sectionCR = (
-	sectionCR: IRectangularSectionCR,
+	sectionCR: IRectangularRCSection,
 	p: number = 0,
 ) => {
 	let c = cy(sectionCR, p) as number
@@ -26,7 +26,7 @@ export const curv_my = (c: number, d: number, epsilon: number) => {
 	return epsilon / (d - c)
 }
 
-export const c_whitney = (sectionCR: IRectangularSectionCR, p: number = 0) => {
+export const c_whitney = (sectionCR: IRectangularRCSection, p: number = 0) => {
 	let cu = sectionCR.b
 	let ci = 0.001
 	let itmax = 200
@@ -39,7 +39,7 @@ export const c_whitney = (sectionCR: IRectangularSectionCR, p: number = 0) => {
 	}
 }
 
-export const cy = (sectionCR: IRectangularSectionCR, p: number = 0) => {
+export const cy = (sectionCR: IRectangularRCSection, p: number = 0) => {
 	let cu = sectionCR.b
 	let ci = 0.001
 	let itmax = 200
@@ -58,7 +58,7 @@ const fun_a = (ci: number, beta: number): number => {
 
 const eq_forces_whitney = (
 	ci: number,
-	sectionCR: IRectangularSectionCR,
+	sectionCR: IRectangularRCSection,
 	p: number = 0,
 ) => {
 	let a = fun_a(ci, sectionCR.material.beta)
@@ -80,7 +80,7 @@ const eq_forces_whitney = (
 
 const eq_moment_whitney = (
 	ci: number,
-	sectionCR: IRectangularSectionCR,
+	sectionCR: IRectangularRCSection,
 	p: number = 0,
 ) => {
 	let a = fun_a(ci, sectionCR.material.beta)
@@ -103,7 +103,7 @@ const eq_moment_whitney = (
 
 const eq_forces_my = (
 	ci: number,
-	sectionCR: IRectangularSectionCR,
+	sectionCR: IRectangularRCSection,
 	p: number = 0,
 ) => {
 	let r = sectionCR.reinforcement.length - 1
@@ -130,7 +130,7 @@ const eq_forces_my = (
 
 const eq_moment_my = (
 	ci: number,
-	sectionCR: IRectangularSectionCR,
+	sectionCR: IRectangularRCSection,
 	p: number = 0,
 ) => {
 	let r = sectionCR.reinforcement.length - 1

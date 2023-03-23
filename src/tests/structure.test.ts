@@ -1,17 +1,20 @@
 import { describe, expect, it } from 'vitest'
-import {
-	Element,
-	ElementNode,
-	RectangularHSection,
-	RectangularSpanLoad,
-	Structure,
-	Support,
-} from '@classes'
-import { Concrete21Pascal } from '@/utils/material'
+import { Element } from '@classes/complex-elements/element'
+import { Structure } from '@classes/complex-elements/structure'
+import { ElementNode } from '@classes/nodes/element-node'
+import { Support } from '@classes/nodes/support'
+import { RectangularSpanLoad } from '@classes/others/rectangular-span-load'
+import { Concrete21Pascal } from '@utils/material'
 
 describe('Structure Class', () => {
 	// structure definition
-	const section = new RectangularHSection(0.1, 0.1, 0.002, 0.002, Concrete21Pascal)
+	const section = new RectangularHSection(
+		0.1,
+		0.1,
+		0.002,
+		0.002,
+		Concrete21Pascal,
+	)
 	let e = 200000000
 	let a = new Support('fixed', { x: 0, y: 0 })
 	let b = new ElementNode({ x: 0, y: 3 })

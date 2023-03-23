@@ -1,5 +1,5 @@
+import { Support } from '@classes/nodes/support'
 import { describe, expect, it } from 'vitest'
-import { Support } from '@classes'
 
 describe('Support Class', () => {
 	it(`should generate a fixed type support correctly`, () => {
