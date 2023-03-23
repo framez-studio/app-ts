@@ -1,6 +1,5 @@
-import { IElement, INode, IStructure } from "@/entities/interfaces";
-import { coordinates2D, initialOrFinal, stepPushover } from "@/entities/types";
-import clone from "just-clone";
+import { IElement, INode, IStructure } from "@interfaces";
+import { coordinates2D, initialOrFinal, stepPushover } from "@types";
 import { e, max, min, unitDependencies } from "mathjs";
 import { Hinge } from "../others/moment-curvature";
 import { StaticSolver } from "./static-solver";

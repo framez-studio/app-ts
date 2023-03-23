@@ -12,6 +12,7 @@ import {
 } from '@classes/solvers/pushover-solver'
 import { RectangularRCSection } from '@classes/sections/rectangular-cr'
 
+
 describe('Tarea osi osi', () => {
 	//DIMENSIONES GENERALES ESTRUCTURA
 	let hlevel = 3
@@ -178,8 +179,8 @@ describe('Pushover service + stability', () => {
   let hvga = 0.40
   
   //SECCIONES TRANSVERSALES ELEMENTOS
-  let XScol = new RectangularSectionCR(bcol,hcol,mat)
-  let XSvga = new RectangularSectionCR(bvga,hvga,mat)
+  let XScol = new RectangularRCSection(bcol,hcol,mat)
+  let XSvga = new RectangularRCSection(bvga,hvga,mat)
 
   //SE CREAN COLUMNAS
   let c1 = new Element(n1,n2,XScol)
