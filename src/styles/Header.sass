@@ -25,3 +25,10 @@
         color: #fff
     &:active
         color: #fff
+@media screen and (display-mode: standalone)
+    .header-slider
+        border-radius: 0px 0px 30px 30px
+        // &.closed
+        //     transform: translate(0, calc($header-slot-height - 100% + 20px))
+        &-slot
+            height: calc($header-slot-height + 20px)

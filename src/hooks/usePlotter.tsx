@@ -15,19 +15,19 @@ export function usePlotter(settings: IPlotterSettings) {
 		gestures.applyGestures(ctx)
 		plotGrid(ctx, settings, data.current)
 	}
-	function handlePointerDown(e: React.PointerEvent) {
+	function handlePointerDown(e: React.PointerEvent<HTMLCanvasElement>) {
 		gestures.pointerDownHandler(e)
 		updateScreen()
 	}
-	function handlePointerUp(e: React.PointerEvent) {
+	function handlePointerUp(e: React.PointerEvent<HTMLCanvasElement>) {
 		gestures.pointerUpHandler(e)
 		updateScreen()
 	}
-	function handlePointerMove(e: React.PointerEvent) {
+	function handlePointerMove(e: React.PointerEvent<HTMLCanvasElement>) {
 		gestures.pointerMoveHandler(e)
 		updateScreen()
 	}
-	function handleWheel(e: React.WheelEvent) {
+	function handleWheel(e: React.WheelEvent<HTMLCanvasElement>) {
 		gestures.wheelHandler(e)
 		updateScreen()
 	}

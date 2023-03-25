@@ -18,21 +18,21 @@ export function useAppCanvas() {
 		graphicStructure.printOnContext(ctx)
 		context.resetCanvasRedraw()
 	}
-	function handlePointerDown(e: React.PointerEvent) {
+	function handlePointerDown(e: React.PointerEvent<HTMLCanvasElement>) {
 		gestures.pointerDownHandler(e)
 		updateScreen()
 	}
-	function handlePointerUp(e: React.PointerEvent) {
+	function handlePointerUp(e: React.PointerEvent<HTMLCanvasElement>) {
 		gestures.pointerUpHandler(e)
 		graphicStructure.pointerUpHandler(e)
 		updateScreen()
 	}
-	function handlePointerMove(e: React.PointerEvent) {
+	function handlePointerMove(e: React.PointerEvent<HTMLCanvasElement>) {
 		gestures.pointerMoveHandler(e)
 		graphicStructure.pointerMoveHandler(e)
 		updateScreen()
 	}
-	function handleWheel(e: React.WheelEvent) {
+	function handleWheel(e: React.WheelEvent<HTMLCanvasElement>) {
 		gestures.wheelHandler(e)
 		updateScreen()
 	}

@@ -1,27 +1,55 @@
 import React from 'react'
 import '@styles/Plotter.sass'
-import { usePlotter } from '@hooks/usePlotter'
+import {
+	CartesianGrid,
+	Label,
+	Line,
+	LineChart,
+	ResponsiveContainer,
+	XAxis,
+	YAxis,
+} from 'recharts'
 
 interface Props extends React.HTMLProps<HTMLCanvasElement> {
 	props: {
-		width: number
-		height: number
+		title?: string
+		xLabel?: string
+		yLabel?: string
+		data: { x: number; y: number }[]
 	}
 }
 
 const Plotter: React.FC<Props> = ({ props }) => {
-	const plotter = usePlotter({ xLabel: 'x', yLabel: 'y' })
-	plotter.setData({ x: [0, 2, 4], y: [0, 2, 4] })
 	return (
-		<canvas
-			className="plotter"
-			width={props.width}
-			height={props.height}
-			ref={plotter.ref}
-			onPointerDown={plotter.handlePointerDown}
-			onPointerUp={plotter.handlePointerUp}
-			onPointerMove={plotter.handlePointerMove}
-			onWheel={plotter.handleWheel}></canvas>
+		<ResponsiveContainer>
+			<LineChart
+				data={props.data}
+				margin={{ top: 15, right: 30, left: 10, bottom: 20 }}>
+				<CartesianGrid stroke="#676c72" strokeDasharray="3 3" />
+				<Label value={props?.title} position="insideTop" offset={0} />
+				<XAxis dataKey="x">
+					<Label
+						value={props?.xLabel}
+						position="insideBottom"
+						offset={-10}
+					/>
+				</XAxis>
+				<YAxis dataKey="y">
+					<Label
+						value={props?.yLabel}
+						position="insideLeft"
+						angle={-90}
+						offset={10}
+					/>
+				</YAxis>
+				<Line
+					type="monotone"
+					dataKey="x"
+					stroke="#8d4bf6ff"
+					dot={{ fill: '#653AAA' }}
+				/>
+			</LineChart>
+		</ResponsiveContainer>
 	)
 }
 
