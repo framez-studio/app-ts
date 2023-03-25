@@ -12,7 +12,7 @@ const ElementLoadsForm = () => {
 						label: 'Distributed Load:',
 						suffix: 'kN/m',
 						value: String(load),
-						onChange: ($e) => setLoad(Number($e.target.value)),
+						onBlur: ($e) => setLoad(Number($e.target.value)),
 					}}
 				/>
 			</section>

@@ -12,7 +12,7 @@ const NodeLoadsForm = () => {
 						label: 'Fx',
 						suffix: 'kN',
 						value: String(loads.fx),
-						onChange($e) {
+						onBlur($e) {
 							const { value } = $e.target
 							setLoads({ fx: Number(value) })
 						},
@@ -23,7 +23,7 @@ const NodeLoadsForm = () => {
 						label: 'Fy',
 						suffix: 'kN',
 						value: String(loads.fy),
-						onChange($e) {
+						onBlur($e) {
 							const { value } = $e.target
 							setLoads({ fy: Number(value) })
 						},
@@ -34,7 +34,7 @@ const NodeLoadsForm = () => {
 						label: 'Mz',
 						suffix: 'kN.m',
 						value: String(loads.mz),
-						onChange($e) {
+						onBlur($e) {
 							const { value } = $e.target
 							setLoads({ mz: Number(value) })
 						},

@@ -15,6 +15,9 @@ export function useElementSelection() {
 	const element = state.canvas.selection.object as IElement
 
 	const [young, updateYoung] = useState(element.young)
+	const [epsilon, updateEpsilon] = useState(
+		element.section.material.epsilon_max,
+	)
 	const [sectionDims, updateSectionDims] = useState({
 		base: element.section.b,
 		height: element.section.h,
@@ -27,6 +30,11 @@ export function useElementSelection() {
 	function setYoung(newYoung: number) {
 		element.section.material.young = newYoung
 		updateYoung(newYoung)
+		requestStructureSolver()
+	}
+	function setEpsilon(newEpsilon: number) {
+		element.section.material.epsilon_max = newEpsilon
+		updateEpsilon(newEpsilon)
 		requestStructureSolver()
 	}
 	function setLoad(newLoad: number) {
@@ -54,6 +62,7 @@ export function useElementSelection() {
 
 	useEffect(() => {
 		updateYoung(element.young)
+		updateEpsilon(element.section.material.epsilon_max)
 		updateSectionDims({
 			base: element.section.b,
 			height: element.section.h,
@@ -71,5 +80,7 @@ export function useElementSelection() {
 		load,
 		setLoad,
 		response,
+		epsilon,
+		setEpsilon,
 	}
 }

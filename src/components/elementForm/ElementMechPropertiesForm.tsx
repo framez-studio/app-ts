@@ -11,8 +11,15 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 }
 
 const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
-	const { young, setYoung, sectionDims, setSectionBase, setSectionHeight } =
-		useElementSelection()
+	const {
+		young,
+		setYoung,
+		sectionDims,
+		setSectionBase,
+		setSectionHeight,
+		epsilon,
+		setEpsilon,
+	} = useElementSelection()
 	return (
 		<section className="form-container">
 			<section className="form-main element-properties">
@@ -21,7 +28,15 @@ const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
 						label: 'Young Modulus',
 						suffix: 'MPa',
 						value: String(young),
-						onChange: ($e) => setYoung(Number($e.target.value)),
+						onBlur: ($e) => setYoung(Number($e.target.value)),
+					}}
+				/>
+				<FormInput
+					props={{
+						label: 'Concrete Epsilon',
+						suffix: 'mm',
+						value: String(epsilon),
+						onBlur: ($e) => setEpsilon(Number($e.target.value)),
 					}}
 				/>
 				<FormInput
@@ -29,8 +44,7 @@ const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
 						label: 'Section Base',
 						suffix: 'mm',
 						value: String(sectionDims.base),
-						onChange: ($e) =>
-							setSectionBase(Number($e.target.value)),
+						onBlur: ($e) => setSectionBase(Number($e.target.value)),
 					}}
 				/>
 				<FormInput
@@ -38,7 +52,7 @@ const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
 						label: 'Section Height',
 						suffix: 'mm',
 						value: String(sectionDims.height),
-						onChange: ($e) =>
+						onBlur: ($e) =>
 							setSectionHeight(Number($e.target.value)),
 					}}
 				/>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '@styles/FormInput.sass'
 
 export interface FormInputProps extends React.HTMLProps<HTMLDivElement> {
@@ -7,16 +7,19 @@ export interface FormInputProps extends React.HTMLProps<HTMLDivElement> {
 		suffix?: string
 		value?: string
 		readonly?: boolean
-		onChange?($e: React.ChangeEvent<HTMLInputElement>): void
+		onBlur?($e: React.ChangeEvent<HTMLInputElement>): void
 	}
 }
-
+/**
+ * TODO: Add input verification.
+ */
 const FormInput: React.FC<FormInputProps> = ({ props }) => {
 	const [isActive, setIsActive] = useState(false)
+	const [value, setValue] = useState(props?.value ?? '')
 	const classState = `form-input ${props?.suffix ? '' : 'suffix-less'} ${
 		isActive ? 'active' : ''
 	}`
-
+	useEffect(() => setValue(props?.value ?? ''), [props?.value])
 	return (
 		<label className="form-input-container">
 			{props?.label && (
@@ -27,8 +30,8 @@ const FormInput: React.FC<FormInputProps> = ({ props }) => {
 			<div className={classState}>
 				<input
 					type="number"
-					inputMode="decimal"
-					value={props?.value}
+					inputMode="text"
+					value={value}
 					readOnly={props?.readonly}
 					onFocus={onFocus}
 					onBlur={onBlur}
@@ -52,11 +55,15 @@ const FormInput: React.FC<FormInputProps> = ({ props }) => {
 	}
 	function onBlur(e: React.FocusEvent<HTMLInputElement>) {
 		setIsActive(false)
+		props?.onBlur?.(e)
 		e.target.removeEventListener('wheel', onWheel)
 	}
 	function onChange(e: React.ChangeEvent<HTMLInputElement>) {
-		props?.onChange?.(e)
+		setValue(e.target.value)
 	}
 }
 
+function decimalChecker(value: string) {
+	const regexp = new RegExp(`^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$`)
+}
 export default FormInput
