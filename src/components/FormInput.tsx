@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import '@styles/FormInput.sass'
 
 export interface FormInputProps extends React.HTMLProps<HTMLDivElement> {
@@ -7,7 +7,7 @@ export interface FormInputProps extends React.HTMLProps<HTMLDivElement> {
 		suffix?: string
 		value?: string
 		readonly?: boolean
-		onBlur?($e: React.ChangeEvent<HTMLInputElement>): void
+		onChange?($e: React.ChangeEvent<HTMLInputElement>): void
 	}
 }
 /**
@@ -15,11 +15,9 @@ export interface FormInputProps extends React.HTMLProps<HTMLDivElement> {
  */
 const FormInput: React.FC<FormInputProps> = ({ props }) => {
 	const [isActive, setIsActive] = useState(false)
-	const [value, setValue] = useState(props?.value ?? '')
 	const classState = `form-input ${props?.suffix ? '' : 'suffix-less'} ${
 		isActive ? 'active' : ''
 	}`
-	useEffect(() => setValue(props?.value ?? ''), [props?.value])
 	return (
 		<label className="form-input-container">
 			{props?.label && (
@@ -31,7 +29,7 @@ const FormInput: React.FC<FormInputProps> = ({ props }) => {
 				<input
 					type="number"
 					inputMode="text"
-					value={value}
+					value={props?.value}
 					readOnly={props?.readonly}
 					onFocus={onFocus}
 					onBlur={onBlur}
@@ -55,11 +53,10 @@ const FormInput: React.FC<FormInputProps> = ({ props }) => {
 	}
 	function onBlur(e: React.FocusEvent<HTMLInputElement>) {
 		setIsActive(false)
-		props?.onBlur?.(e)
 		e.target.removeEventListener('wheel', onWheel)
 	}
 	function onChange(e: React.ChangeEvent<HTMLInputElement>) {
-		setValue(e.target.value)
+		props?.onChange?.(e)
 	}
 }
 

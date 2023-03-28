@@ -9,7 +9,6 @@ $spacing: 12px
     overflow: hidden
     .form-main
         display: grid
-        // grid-auto-rows: max-content
         gap: $spacing
         overflow-y: scroll
     .form-footer
@@ -23,7 +22,15 @@ $spacing: 12px
 .element-properties
     grid-template-columns: 1fr 1fr
 .element-reinforcement
+    grid-template-columns: 1fr 1fr
+    grid-auto-rows: max-content
+    &--table
+        grid-column: 1 / span 2
+.element-reinforcement--table
+    display: grid
+    gap: $spacing
     grid-template-columns: 2.5fr 3fr 3fr auto
+    grid-auto-rows: max-content
     align-items: center
     .whitespace
         min-width: 18px

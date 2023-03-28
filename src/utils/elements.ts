@@ -4,6 +4,7 @@ import {
 	degsOfFreedom2DArray,
 	elementDegsOfFreedom2DObject,
 	elementLoads2DArray,
+	elementLoads2DObject,
 	stiffnessSubmatrices2D,
 	supportType,
 } from '@types'
@@ -248,7 +249,9 @@ export const nodeType = (node: INode): supportType | 'node' => {
 	})
 	return type
 }
-export function forcesArrayToObject(arr: elementLoads2DArray) {
+export function forcesArrayToObject(
+	arr: elementLoads2DArray,
+): elementLoads2DObject {
 	return {
 		initial: { fx: arr[0][0], fy: arr[1][0], mz: arr[2][0] },
 		final: { fx: arr[3][0], fy: arr[4][0], mz: arr[5][0] },

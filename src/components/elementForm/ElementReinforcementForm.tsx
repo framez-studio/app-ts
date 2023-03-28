@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import '@styles/Form.sass'
-import AddBtn from '@components/svg/AddBtn'
 import FormButton from '@components/FormButton'
-import ElementReinforcementFormRow from '@components/elementForm/ElementReinforcementFormRow'
+import ElementReinforcementTable from './ElementReinforcementTable'
+import FormInput from '@components/FormInput'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props?: {
@@ -11,32 +11,14 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 }
 
 const ElementReinforcementForm: React.FC<Props> = ({ props }) => {
-	const [reinforcement, setReinforcement] = useState<{}[]>([{}])
-
-	const addRow = () => setReinforcement([...reinforcement, {}])
-
-	const removeRow = (row: {}) => {
-		let newState = reinforcement.filter((iRow) => iRow !== row)
-		setReinforcement(newState)
-	}
-
-	const reinforcementInputs = reinforcement.map((row, index) => (
-		<ElementReinforcementFormRow
-			key={`row-${index}`}
-			props={{ onDelete: () => removeRow(row) }}
-		/>
-	))
 	return (
 		<section className="form-container">
 			<section className="form-main element-reinforcement">
-				<span className="reinforcement-th">Bars Quantity</span>
-				<span className="reinforcement-th">Bar Diameter</span>
-				<span className="reinforcement-th">Distance From Edge</span>
-				<span className="whitespace"></span>
-				{reinforcementInputs}
-				<span className="add-container">
-					<AddBtn props={{ onClick: addRow }} />
-				</span>
+				<FormInput
+					props={{ label: 'Yielding Module', suffix: 'MPa' }}
+				/>
+				<FormInput props={{ label: `Max. Strain`, suffix: 'mm' }} />
+				<ElementReinforcementTable />
 			</section>
 			<section className="form-footer">
 				<FormButton

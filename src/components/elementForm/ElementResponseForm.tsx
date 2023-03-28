@@ -1,10 +1,10 @@
 import '@styles/Form.sass'
 import FormDualInput from '@components/FormDualInput'
-import { useElementSelection } from '@hooks/useElementSelection'
+import { useElementSelectionState } from '@hooks/useElementSelectionState'
 import { responseFormatter } from '@utils/ui'
 
 const ElementResponseForm = () => {
-	const { response } = useElementSelection()
+	const { response } = useElementSelectionState()
 	const inputs = generateInputs()
 
 	return (
@@ -25,7 +25,7 @@ const ElementResponseForm = () => {
 					props: {
 						label: 'Initial Node',
 						suffix: 'kN',
-						value: responseFormatter(response.initial.fx),
+						value: responseFormatter(Number(response.initial.fx)),
 						readonly: true,
 					},
 				},
@@ -33,7 +33,7 @@ const ElementResponseForm = () => {
 					props: {
 						label: 'Final Node',
 						suffix: 'kN',
-						value: responseFormatter(response.final.fx),
+						value: responseFormatter(Number(response.final.fx)),
 						readonly: true,
 					},
 				},
@@ -44,7 +44,7 @@ const ElementResponseForm = () => {
 					props: {
 						label: 'Initial Node',
 						suffix: 'kN',
-						value: responseFormatter(response.initial.fy),
+						value: responseFormatter(Number(response.initial.fy)),
 						readonly: true,
 					},
 				},
@@ -52,7 +52,7 @@ const ElementResponseForm = () => {
 					props: {
 						label: 'Final Node',
 						suffix: 'kN',
-						value: responseFormatter(response.final.fy),
+						value: responseFormatter(Number(response.final.fy)),
 						readonly: true,
 					},
 				},
@@ -63,7 +63,7 @@ const ElementResponseForm = () => {
 					props: {
 						label: 'Initial Node',
 						suffix: 'kN.m',
-						value: responseFormatter(response.initial.mz),
+						value: responseFormatter(Number(response.initial.mz)),
 						readonly: true,
 					},
 				},
@@ -71,7 +71,7 @@ const ElementResponseForm = () => {
 					props: {
 						label: 'Final Node',
 						suffix: 'kN.m',
-						value: responseFormatter(response.final.mz),
+						value: responseFormatter(Number(response.final.mz)),
 						readonly: true,
 					},
 				},

@@ -1,9 +1,9 @@
 import '@styles/Form.sass'
 import FormInput from '../FormInput'
-import { useNodeSelection } from '@hooks/useNodeSelection'
+import { useNodeSelectionState } from '@hooks/useNodeSelectionState'
 
 const NodePropertiesForm = () => {
-	const { coordinates } = useNodeSelection()
+	const { coordinates } = useNodeSelectionState()
 
 	return (
 		<section className="form-container">
@@ -12,7 +12,7 @@ const NodePropertiesForm = () => {
 					props={{
 						label: 'X Coordinate',
 						suffix: 'm',
-						value: String(coordinates.x),
+						value: coordinates.x,
 						readonly: true,
 					}}
 				/>
@@ -20,7 +20,7 @@ const NodePropertiesForm = () => {
 					props={{
 						label: 'Y Coordinate',
 						suffix: 'm',
-						value: String(coordinates.y),
+						value: coordinates.y,
 						readonly: true,
 					}}
 				/>

@@ -2,7 +2,7 @@ import React from 'react'
 import '@styles/Form.sass'
 import FormButton from '@components/FormButton'
 import FormInput from '@components/FormInput'
-import { useElementSelection } from '@hooks/useElementSelection'
+import { useElementSelectionState } from '@hooks/useElementSelectionState'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props?: {
@@ -19,24 +19,24 @@ const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
 		setSectionHeight,
 		epsilon,
 		setEpsilon,
-	} = useElementSelection()
+	} = useElementSelectionState()
 	return (
 		<section className="form-container">
 			<section className="form-main element-properties">
 				<FormInput
 					props={{
-						label: 'Young Modulus',
+						label: 'Young Module',
 						suffix: 'MPa',
 						value: String(young),
-						onBlur: ($e) => setYoung(Number($e.target.value)),
+						onChange: ($e) => setYoung($e.target.value),
 					}}
 				/>
 				<FormInput
 					props={{
-						label: 'Concrete Epsilon',
+						label: `Max. Strain`,
 						suffix: 'mm',
 						value: String(epsilon),
-						onBlur: ($e) => setEpsilon(Number($e.target.value)),
+						onChange: ($e) => setEpsilon($e.target.value),
 					}}
 				/>
 				<FormInput
@@ -44,16 +44,15 @@ const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
 						label: 'Section Base',
 						suffix: 'mm',
 						value: String(sectionDims.base),
-						onBlur: ($e) => setSectionBase(Number($e.target.value)),
+						onChange: ($e) => setSectionBase($e.target.value),
 					}}
 				/>
 				<FormInput
 					props={{
 						label: 'Section Height',
 						suffix: 'mm',
-						value: String(sectionDims.height),
-						onBlur: ($e) =>
-							setSectionHeight(Number($e.target.value)),
+						value: sectionDims.height,
+						onChange: ($e) => setSectionHeight($e.target.value),
 					}}
 				/>
 			</section>
