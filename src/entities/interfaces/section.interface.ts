@@ -50,6 +50,6 @@ export interface ICircularSection<MT extends MaterialType>
 }
 
 export interface IBarCR extends ICircularSection<ISteel> {
-	readonly fy: number
-	readonly young: number
+	fy: number
+	young: number
 }
