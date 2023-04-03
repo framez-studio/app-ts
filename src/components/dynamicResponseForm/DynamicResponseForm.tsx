@@ -20,7 +20,7 @@ function DynamicResponseForm() {
 					}}
 				/>
 			</section>
-			<section className="form-footer"></section>
+			<section className="form-footer col-2"></section>
 		</section>
 	)
 }

@@ -1,29 +1,7 @@
-import { IElement } from '@interfaces'
+import { IElement, IElementState } from '@interfaces'
 import { elementLoads2DObject } from '@types'
 import { forcesArrayToObject } from '@utils/elements'
 import { useImmer } from 'use-immer'
-
-export interface IElementState {
-	young: string
-	epsilon: string
-	sectionDims: {
-		base: string
-		height: string
-	}
-	load: string
-	response: {
-		initial: {
-			fx: string
-			fy: string
-			mz: string
-		}
-		final: {
-			fx: string
-			fy: string
-			mz: string
-		}
-	}
-}
 
 export function useElementState() {
 	const initialState: IElementState = {

@@ -1,7 +1,7 @@
 import React from 'react'
-import '@styles/Header.sass'
-import '@styles/_globals.sass'
+import '@styles/HeaderSlider.sass'
 import ArrowUpwardBtn from '@components/svg/ArrowUpwardBtn'
+import AppTitle from '../AppTitle'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props: {
@@ -10,19 +10,16 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 	}
 }
 
-const HeaderSlot: React.FC<Props> = ({ props }) => {
-	const appTitle = 'FramezStudio'
+const HeaderSliderSlot: React.FC<Props> = ({ props }) => {
 	return (
-		<section className="header-slot">
+		<section className="slider-slot">
 			{props.isOpen ? (
 				<ArrowUpwardBtn props={{ onClick: props.onClick }} />
 			) : (
-				<span className="header-title" onPointerUp={props.onClick}>
-					{appTitle}
-				</span>
+				<AppTitle props={{ onClick: props.onClick }} />
 			)}
 		</section>
 	)
 }
 
-export default HeaderSlot
+export default HeaderSliderSlot

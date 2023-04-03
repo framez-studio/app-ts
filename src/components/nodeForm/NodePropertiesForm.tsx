@@ -7,7 +7,7 @@ const NodePropertiesForm = () => {
 
 	return (
 		<section className="form-container">
-			<section className="form-main node-properties">
+			<section className="form-main node-properties col-2">
 				<FormInput
 					props={{
 						label: 'X Coordinate',
@@ -25,7 +25,7 @@ const NodePropertiesForm = () => {
 					}}
 				/>
 			</section>
-			<section className="form-footer"></section>
+			<section className="form-footer col-2"></section>
 		</section>
 	)
 }

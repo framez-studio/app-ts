@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import FormSectionHeaderSwitcher from '../FormSectionHeaderSwitcher'
+import InputSliderHeader from '../inputSlider/InputSliderHeader'
 import ElementFormSwitcher from './ElementFormSwitcher'
 import { IFormSections } from '@types-ui'
 
@@ -8,9 +8,7 @@ const ElementForm = () => {
 		useState<IFormSections>('properties')
 	return (
 		<>
-			<FormSectionHeaderSwitcher
-				props={{ activeSection, setActiveSection }}
-			/>
+			<InputSliderHeader props={{ activeSection, setActiveSection }} />
 			<ElementFormSwitcher props={{ activeSection }} />
 		</>
 	)

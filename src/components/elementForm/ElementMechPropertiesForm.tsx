@@ -22,7 +22,7 @@ const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
 	} = useElementSelectionState()
 	return (
 		<section className="form-container">
-			<section className="form-main element-properties">
+			<section className="form-main element-properties col-2">
 				<FormInput
 					props={{
 						label: 'Young Module',
@@ -56,7 +56,7 @@ const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
 					}}
 				/>
 			</section>
-			<section className="form-footer">
+			<section className="form-footer col-2">
 				<FormButton
 					props={{
 						text: 'Reinforcement',

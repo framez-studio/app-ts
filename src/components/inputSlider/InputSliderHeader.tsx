@@ -10,9 +10,9 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 	}
 }
 
-const FormSectionHeaderSwitcher: React.FC<Props> = ({ props }) => {
+const InputSliderHeader: React.FC<Props> = ({ props }) => {
 	return (
-		<section className="form-switcher-header">
+		<section className="form-header form-header--switcher">
 			<FormSectionLabel
 				props={{
 					label: 'Properties',
@@ -38,4 +38,4 @@ const FormSectionHeaderSwitcher: React.FC<Props> = ({ props }) => {
 	)
 }
 
-export default FormSectionHeaderSwitcher
+export default InputSliderHeader

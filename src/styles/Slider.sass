@@ -4,3 +4,32 @@
     flex-direction: column
     width: 100%
     background-color: $slider-bg-color
+    overflow: hidden
+    &.opened
+        transform: translate(0, 0)
+    &-slot
+        display: flex
+        min-height: $slider-slot-height
+        justify-content: center
+        align-items: center
+    &-body
+        flex: 1
+        display: flex
+        flex-direction: column
+        gap: 12px
+        overflow: hidden
+        .form-container
+            flex: 1
+        .form-header,
+        .form-main,
+        .form-footer
+            padding: 0 $slider-padding-x
+
+@media screen and (display-mode: standalone)
+    .slider
+        &-slot
+            min-height: calc($slider-slot-height + 20px)
+@media screen and (min-width: 768px)
+    .slider-body
+        width: 768px
+        align-self: center

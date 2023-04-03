@@ -12,7 +12,7 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 
 const InputSliderSlot: React.FC<Props> = ({ props }) => {
 	return (
-		<section className="input-slider-slot">
+		<section className="slider-slot">
 			{props.isOpen ? (
 				<ArrowDownwardBtn props={{ onClick: props.onArrowClick }} />
 			) : (

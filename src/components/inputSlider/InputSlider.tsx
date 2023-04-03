@@ -1,7 +1,7 @@
 import '@styles/Slider.sass'
 import '@styles/InputSlider.sass'
-import InputSliderSlot from '@components/InputSliderSlot'
-import InputSliderBody from '@components/InputSliderBody'
+import InputSliderSlot from '@components/inputSlider/InputSliderSlot'
+import InputSliderBody from '@components/inputSlider/InputSliderBody'
 import { useAppContext } from '@context/AppContext'
 
 const InputSlider = () => {

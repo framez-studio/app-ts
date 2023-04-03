@@ -6,7 +6,7 @@ const NodeLoadsForm = () => {
 	const { loads, setLoads } = useNodeSelectionState()
 	return (
 		<section className="form-container">
-			<section className="form-main node-loads">
+			<section className="form-main node-loads col-3">
 				<FormInput
 					props={{
 						label: 'Fx',
@@ -32,7 +32,7 @@ const NodeLoadsForm = () => {
 					}}
 				/>
 			</section>
-			<section className="form-footer"></section>
+			<section className="form-footer col-2"></section>
 		</section>
 	)
 }

@@ -5,17 +5,14 @@
     position: absolute
     top: 0
     left: 0
+    height: 50%
     border-radius: 0px 0px 20px 20px
     &.closed
         transform: translate(0, calc($header-slot-height - 100%))
     &.opened
         transform: translate(0, 0)
-.header-slot
-    display: flex
-    width: 100%
-    height: $header-slot-height
-    justify-content: center
-    align-items: center
+    .slider-body
+        padding: 24px 0px 0px 0px
 .header-title
     font-family: 'Audiowide', cursive
     font-size: 20px
@@ -28,7 +25,3 @@
 @media screen and (display-mode: standalone)
     .header-slider
         border-radius: 0px 0px 30px 30px
-        // &.closed
-        //     transform: translate(0, calc($header-slot-height - 100% + 20px))
-        &-slot
-            height: calc($header-slot-height + 20px)

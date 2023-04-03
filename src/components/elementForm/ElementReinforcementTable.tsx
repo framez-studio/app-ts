@@ -1,22 +1,29 @@
-import { useState } from 'react'
 import '@styles/Form.sass'
 import AddBtn from '@components/svg/AddBtn'
 import ElementReinforcementFormRow from './ElementReinforcementFormRow'
+import { ISteelRowState } from '@interfaces'
 
-const ElementReinforcementTable = () => {
-	const [reinforcement, setReinforcement] = useState<{}[]>([{}])
-
-	const addRow = () => setReinforcement([...reinforcement, {}])
-
-	const removeRow = (row: {}) => {
-		let newState = reinforcement.filter((iRow) => iRow !== row)
-		setReinforcement(newState)
+interface Props extends React.HTMLProps<HTMLDivElement> {
+	props: {
+		rows: ISteelRowState[]
+		rowUpdater(index: number, newData: Partial<ISteelRowState>): void
+		rowDeleter(index: number): void
+		rowCreator(): void
 	}
+}
 
-	const reinforcementInputs = reinforcement.map((row, index) => (
+const ElementReinforcementTable: React.FC<Props> = ({ props }) => {
+	const { rows, rowUpdater, rowDeleter, rowCreator } = props
+
+	const reinforcementInputs = rows.map((row, index) => (
 		<ElementReinforcementFormRow
 			key={`row-${index}`}
-			props={{ onDelete: () => removeRow(row) }}
+			props={{
+				index,
+				row,
+				deleter: rowDeleter,
+				updater: rowUpdater,
+			}}
 		/>
 	))
 	return (
@@ -27,7 +34,7 @@ const ElementReinforcementTable = () => {
 			<span className="whitespace"></span>
 			{reinforcementInputs}
 			<span className="add-container">
-				<AddBtn props={{ onClick: addRow }} />
+				<AddBtn props={{ onClick: rowCreator }} />
 			</span>
 		</section>
 	)

@@ -6,7 +6,7 @@ const NodeResponseForm = () => {
 	const { displacements, reactions } = useNodeSelectionState()
 	return (
 		<section className="form-container">
-			<section className="form-main node-response">
+			<section className="form-main node-response col-2">
 				<FormInput
 					props={{
 						label: 'Fx',
@@ -56,7 +56,7 @@ const NodeResponseForm = () => {
 					}}
 				/>
 			</section>
-			<section className="form-footer"></section>
+			<section className="form-footer col-2"></section>
 		</section>
 	)
 }
