@@ -1,5 +1,5 @@
 import { IUISelection } from '@types-ui'
-import { IUIElement, IUINode } from './ui.interfaces'
+import { IUIElement, IUINode } from './ui-structure.interfaces'
 
 export interface IGraphicStructure {
 	printOnContext(ctx: CanvasRenderingContext2D): void

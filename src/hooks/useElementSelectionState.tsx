@@ -27,14 +27,12 @@ export function useElementSelectionState() {
 		requestStructureSolver()
 		requestCanvasRedraw()
 	}
-	function setSectionBase(base: string) {
+	function setSectionDims(newDims: { base?: string; height?: string }) {
+		let base = newDims.base || sectionDims.base
+		let height = newDims.height || sectionDims.height
 		element.section.b = Number(base)
-		elementState.updateSectionDims({ base })
-		requestStructureSolver()
-	}
-	function setSectionHeight(height: string) {
 		element.section.h = Number(height)
-		elementState.updateSectionDims({ height })
+		elementState.updateSectionDims({ base, height })
 		requestStructureSolver()
 	}
 	useEffect(() => elementState.assignElementState(element), [element])
@@ -42,8 +40,7 @@ export function useElementSelectionState() {
 		young,
 		setYoung,
 		sectionDims,
-		setSectionBase,
-		setSectionHeight,
+		setSectionDims,
 		load,
 		setLoad,
 		response,

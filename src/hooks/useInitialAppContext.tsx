@@ -1,5 +1,4 @@
-import { IAppState, IElement, INode } from '@interfaces'
-import { IAppContext } from '@context/AppContext'
+import { IAppContext, IAppState, IElement, INode } from '@interfaces'
 import { initialStructure } from '@config/structure'
 import { useImmer } from 'use-immer'
 
@@ -21,7 +20,7 @@ const initialState: IAppState = {
 	},
 }
 
-export function useInitialState(): IAppContext {
+export function useInitialAppContext(): IAppContext {
 	const [state, updateState] = useImmer(initialState)
 
 	function setSelection(payload: {

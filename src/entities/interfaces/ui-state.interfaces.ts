@@ -8,7 +8,7 @@ export interface IElementSteelState {
 	yield: string
 	rows: ISteelRowState[]
 }
-export interface IElementState {
+export interface IElementPropsState {
 	young: string
 	epsilon: string
 	sectionDims: {

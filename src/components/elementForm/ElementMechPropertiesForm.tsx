@@ -15,8 +15,7 @@ const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
 		young,
 		setYoung,
 		sectionDims,
-		setSectionBase,
-		setSectionHeight,
+		setSectionDims,
 		epsilon,
 		setEpsilon,
 	} = useElementSelectionState()
@@ -44,7 +43,8 @@ const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
 						label: 'Section Base',
 						suffix: 'mm',
 						value: String(sectionDims.base),
-						onChange: ($e) => setSectionBase($e.target.value),
+						onChange: ($e) =>
+							setSectionDims({ base: $e.target.value }),
 					}}
 				/>
 				<FormInput
@@ -52,7 +52,8 @@ const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
 						label: 'Section Height',
 						suffix: 'mm',
 						value: sectionDims.height,
-						onChange: ($e) => setSectionHeight($e.target.value),
+						onChange: ($e) =>
+							setSectionDims({ height: $e.target.value }),
 					}}
 				/>
 			</section>

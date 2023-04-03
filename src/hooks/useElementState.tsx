@@ -1,10 +1,10 @@
-import { IElement, IElementState } from '@interfaces'
+import { IElement, IElementPropsState } from '@interfaces'
 import { elementLoads2DObject } from '@types'
 import { forcesArrayToObject } from '@utils/elements'
 import { useImmer } from 'use-immer'
 
 export function useElementState() {
-	const initialState: IElementState = {
+	const initialState: IElementPropsState = {
 		young: '',
 		epsilon: '',
 		sectionDims: {
@@ -25,7 +25,7 @@ export function useElementState() {
 			},
 		},
 	}
-	const [state, updateState] = useImmer<IElementState>(initialState)
+	const [state, updateState] = useImmer<IElementPropsState>(initialState)
 
 	function updateYoung(young: string) {
 		updateState((draft) => {
