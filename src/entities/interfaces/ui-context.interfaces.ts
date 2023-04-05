@@ -21,5 +21,5 @@ export interface IAppContext {
 export interface IElementContext {
 	elementProps: ISelectedElementPropsStateHook
 	elementSteel: ISelectedSteelStateHook
-	elementDynamic: IElementDynamicStateHook
+	elementDynamics: IElementDynamicStateHook
 }

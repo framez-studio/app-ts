@@ -3,7 +3,7 @@ import '@styles/Form.sass'
 import FormButton from '@components/FormButton'
 import ElementReinforcementTable from './ElementReinforcementTable'
 import FormInput from '@components/FormInput'
-import { useElementSteelState } from '@hooks/useElementSteelState'
+import { useElementContext } from '@context/ElementContext'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props?: {
@@ -12,8 +12,9 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 }
 
 const ElementReinforcementForm: React.FC<Props> = ({ props }) => {
-	const reinforcement = useElementSteelState()
-	const { state } = reinforcement
+	const { elementSteel } = useElementContext()
+	const { state } = elementSteel
+
 	return (
 		<section className="form-container">
 			<section className="form-main element-reinforcement col-2">
@@ -23,7 +24,7 @@ const ElementReinforcementForm: React.FC<Props> = ({ props }) => {
 						suffix: 'MPa',
 						value: state.young,
 						onChange: ($e) =>
-							reinforcement.updateSteelYoung($e.target.value),
+							elementSteel.updateSteelYoung($e.target.value),
 					}}
 				/>
 				<FormInput
@@ -32,15 +33,15 @@ const ElementReinforcementForm: React.FC<Props> = ({ props }) => {
 						suffix: 'MPa',
 						value: state.yield,
 						onChange: ($e) =>
-							reinforcement.updateYield($e.target.value),
+							elementSteel.updateYield($e.target.value),
 					}}
 				/>
 				<ElementReinforcementTable
 					props={{
 						rows: state.rows,
-						rowCreator: reinforcement.createEmptySteelRow,
-						rowUpdater: reinforcement.updateSteelRow,
-						rowDeleter: reinforcement.removeSteelRow,
+						rowCreator: elementSteel.createEmptySteelRow,
+						rowUpdater: elementSteel.updateSteelRow,
+						rowDeleter: elementSteel.removeSteelRow,
 					}}
 				/>
 			</section>

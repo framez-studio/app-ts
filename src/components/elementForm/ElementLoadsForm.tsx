@@ -1,9 +1,10 @@
 import '@styles/Form.sass'
 import FormInput from '@components/FormInput'
-import { useElementSelectionState } from '@hooks/useElementSelectionState'
+import { useElementContext } from '@context/ElementContext'
 
 const ElementLoadsForm = () => {
-	const { state, setLoad } = useElementSelectionState()
+	const { elementProps } = useElementContext()
+	const { state, updateLoad } = elementProps
 	return (
 		<section className="form-container">
 			<section className="form-main element-loads">
@@ -12,7 +13,7 @@ const ElementLoadsForm = () => {
 						label: 'Distributed Load:',
 						suffix: 'kN/m',
 						value: state.load,
-						onChange: ($e) => setLoad($e.target.value),
+						onChange: ($e) => updateLoad($e.target.value),
 					}}
 				/>
 			</section>

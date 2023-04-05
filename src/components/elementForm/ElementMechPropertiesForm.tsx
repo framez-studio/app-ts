@@ -2,7 +2,7 @@ import React from 'react'
 import '@styles/Form.sass'
 import FormButton from '@components/FormButton'
 import FormInput from '@components/FormInput'
-import { useElementSelectionState } from '@hooks/useElementSelectionState'
+import { useElementContext } from '@context/ElementContext'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props?: {
@@ -12,8 +12,9 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 }
 
 const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
-	const { state, updateYoung, updateSectionDims, updateEpsilon } =
-		useElementSelectionState()
+	const { elementProps } = useElementContext()
+	const { state, updateYoung, updateEpsilon, updateSectionDims } =
+		elementProps
 
 	return (
 		<section className="form-container">

@@ -1,10 +1,11 @@
 import '@styles/Form.sass'
 import FormDualInput from '@components/FormDualInput'
-import { useElementSelectionState } from '@hooks/useElementSelectionState'
+import { useElementContext } from '@context/ElementContext'
 import { responseFormatter } from '@utils/ui'
 
 const ElementResponseForm = () => {
-	const { state } = useElementSelectionState()
+	const { elementProps } = useElementContext()
+	const { state } = elementProps
 	const { response } = state
 	const inputs = generateInputs()
 
