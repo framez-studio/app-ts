@@ -6,7 +6,8 @@ import { useElementSelectionState } from '@hooks/useElementSelectionState'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props?: {
-		onButtonClick?(): void
+		onLeftBtn?(): void
+		onRightBtn?(): void
 	}
 }
 
@@ -60,8 +61,14 @@ const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
 			<section className="form-footer col-2">
 				<FormButton
 					props={{
+						text: 'Dynamic Config.',
+						onClick: props?.onLeftBtn,
+					}}
+				/>
+				<FormButton
+					props={{
 						text: 'Reinforcement',
-						onClick: props?.onButtonClick,
+						onClick: props?.onRightBtn,
 					}}
 				/>
 			</section>

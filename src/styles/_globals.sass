@@ -1,3 +1,5 @@
+@import './_vars'
+
 .text-selection-disabled
    -moz-user-select: none // firefox
    -webkit-user-select: none // Safari
@@ -5,3 +7,18 @@
    user-select: none // Standard syntax 
 .hoverable:hover
    cursor: pointer
+.secondary-text
+    font: inherit
+    color: $slider-input-text-color-secondary
+.info-text
+    font-size: 12px
+    text-align: justify
+    color: $slider-input-text-color-secondary
+.col-1
+    grid-template-columns: 1fr
+.col-2
+    grid-template-columns: 1fr 1fr
+.col-3
+    grid-template-columns: 1fr 1fr 1fr
+.span-2
+    grid-column: span 2

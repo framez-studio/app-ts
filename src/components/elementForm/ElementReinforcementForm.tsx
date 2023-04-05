@@ -7,7 +7,7 @@ import { useElementSteelState } from '@hooks/useElementSteelState'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props?: {
-		onButtonClick?(): void
+		onBackBtn?(): void
 	}
 }
 
@@ -46,7 +46,7 @@ const ElementReinforcementForm: React.FC<Props> = ({ props }) => {
 			</section>
 			<section className="form-footer col-2">
 				<FormButton
-					props={{ text: 'Back', onClick: props?.onButtonClick }}
+					props={{ text: 'Back', onClick: props?.onBackBtn }}
 				/>
 			</section>
 		</section>

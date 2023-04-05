@@ -2,8 +2,9 @@ import { useState } from 'react'
 import '@styles/Form.sass'
 import ElementMechPropertiesForm from '@components/elementForm/ElementMechPropertiesForm'
 import ElementReinforcementForm from '@components/elementForm/ElementReinforcementForm'
+import ElementDynamicPropertiesForm from './ElementDynamicPropertiesForm'
 
-type PropFormSections = 'mech' | 'reinforcement'
+type PropFormSections = 'mech' | 'reinforcement' | 'dynamics'
 
 const ElementPropertiesForm = () => {
 	const [activeSection, setActiveSection] = useState<PropFormSections>('mech')
@@ -13,14 +14,21 @@ const ElementPropertiesForm = () => {
 			return (
 				<ElementMechPropertiesForm
 					props={{
-						onButtonClick: () => setActiveSection('reinforcement'),
+						onRightBtn: () => setActiveSection('reinforcement'),
+						onLeftBtn: () => setActiveSection('dynamics'),
 					}}
 				/>
 			)
 		case 'reinforcement':
 			return (
 				<ElementReinforcementForm
-					props={{ onButtonClick: () => setActiveSection('mech') }}
+					props={{ onBackBtn: () => setActiveSection('mech') }}
+				/>
+			)
+		case 'dynamics':
+			return (
+				<ElementDynamicPropertiesForm
+					props={{ onBackBtn: () => setActiveSection('mech') }}
 				/>
 			)
 

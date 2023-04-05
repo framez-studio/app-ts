@@ -9,10 +9,10 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 	}
 }
 
-const FormSectionLabel: React.FC<Props> = ({ props }) => {
+const FormSectionLabel: React.FC<Props> = ({ props, className }) => {
 	const classes = `form-section-label hoverable ${
 		props.isActive ? 'active-section' : ''
-	}`
+	} ${className ?? ''}`
 	return (
 		<span className={classes} onPointerUp={props?.onClick}>
 			{props.label}
