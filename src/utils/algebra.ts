@@ -46,3 +46,10 @@ export const absolutevalue = (a: number) => {
 }
 export const degsToRads = (degs: number) => (Math.PI * degs) / 180
 export const pi: number = algebra.pi
+
+
+export const RoundFloor = (value: number, precision: number) => {
+	let power = Math.pow(10, precision);
+
+  	return Math.floor(value * power) / power;
+}

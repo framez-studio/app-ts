@@ -1,70 +1,73 @@
 import {
+	IElement,
 	IRectangularRCSection,
 	IRowReinforcement,
 	IRowReinforcementMechanics,
 } from '@interfaces'
 import { absolutevalue } from './algebra'
+import { Hinge } from '@classes/others/moment-curvature'
 
-export const mn_whitney = (sectionCR: IRectangularRCSection, p: number = 0) => {
-	let c = c_whitney(sectionCR, p) as number
-	return eq_moment_whitney(c, sectionCR, p)
+export const NominalMomentWhitney = (sectionCR: IRectangularRCSection, p: number = 0) => {
+	let c = NeutralAxialWhitney(sectionCR, p) as number
+	return WhitneyEquilibriumMoment(c, sectionCR, p)
 }
 
-export const curv_mn = (c: number, epsilon: number) => {
+export const CurvatureNominalMomentWhitney = (c: number, epsilon: number) => {
 	return epsilon / c
 }
 
-export const my_sectionCR = (
+export const YieldMomentRectangularRC = (
 	sectionCR: IRectangularRCSection,
 	p: number = 0,
 ) => {
-	let c = cy(sectionCR, p) as number
-	return eq_moment_my(c, sectionCR, p)
+	let c = YieldNeutralAxis(sectionCR, p) as number
+	return YieldEquilibriumMoment(c, sectionCR, p)
 }
 
-export const curv_my = (c: number, d: number, epsilon: number) => {
+export const YieldCurvatureRC = (c: number, d: number, epsilon: number) => {
 	return epsilon / (d - c)
 }
 
-export const c_whitney = (sectionCR: IRectangularRCSection, p: number = 0) => {
+export const NeutralAxialWhitney = (sectionCR: IRectangularRCSection, p: number = 0) => {
 	let cu = sectionCR.b
 	let ci = 0.001
 	let itmax = 200
 	let tol = 1e-9
 	try {
-		let c = biseccion(eq_forces_whitney, ci, cu, itmax, tol, sectionCR, p)
+		let c = BiseccionMethod(WhitneyEquilibriumForces, ci, cu, itmax, tol, sectionCR, p)
 		return c
 	} catch (error) {
-		return error
+		throw error
 	}
 }
 
-export const cy = (sectionCR: IRectangularRCSection, p: number = 0) => {
+export const YieldNeutralAxis = (sectionCR: IRectangularRCSection, p: number = 0) => {
 	let cu = sectionCR.b
 	let ci = 0.001
 	let itmax = 200
 	let tol = 1e-9
 	try {
-		let c = biseccion(eq_forces_my, ci, cu, itmax, tol, sectionCR, p)
+		let c = BiseccionMethod(YieldEquilibriumForces, ci, cu, itmax, tol, sectionCR, p)
 		return c
 	} catch (error) {
-		return error
+		throw 'Error: NeturalAxis can not find'
 	}
+
 }
 
-const fun_a = (ci: number, beta: number): number => {
+const CoeficentAConcreteSection = (ci: number, beta: number): number => {
 	return ci * beta
 }
 
-const eq_forces_whitney = (
+const WhitneyEquilibriumForces = (
 	ci: number,
 	sectionCR: IRectangularRCSection,
 	p: number = 0,
 ) => {
-	let a = fun_a(ci, sectionCR.material.beta)
+	let a = CoeficentAConcreteSection(ci, sectionCR.material.beta)
 	let epsilon_cncr = sectionCR.material.epsilon_max
-	let force_cncr = force_whitney(a, sectionCR.material.fc, sectionCR.b)
-	let rowr = FMR_Reinforcement(ci, epsilon_cncr, sectionCR.reinforcement)
+	let force_cncr = WhitneyForceConcrete(a, sectionCR.material.fc, sectionCR.b)
+	let rowr = ForcesAndMomentInReinforcement(ci, epsilon_cncr, sectionCR.reinforcement)
 	let forceT = 0
 	let forceC = -force_cncr - p
 	rowr.forEach((element) => {
@@ -78,16 +81,16 @@ const eq_forces_whitney = (
 	return forceT + forceC
 }
 
-const eq_moment_whitney = (
+const WhitneyEquilibriumMoment = (
 	ci: number,
 	sectionCR: IRectangularRCSection,
 	p: number = 0,
 ) => {
-	let a = fun_a(ci, sectionCR.material.beta)
+	let a = CoeficentAConcreteSection(ci, sectionCR.material.beta)
 	let epsilon_cncr = sectionCR.material.epsilon_max
 	let moment_cncr =
-		force_whitney(a, sectionCR.material.fc, sectionCR.b) * a * 0.5
-	let rowr = FMR_Reinforcement(ci, epsilon_cncr, sectionCR.reinforcement)
+		WhitneyForceConcrete(a, sectionCR.material.fc, sectionCR.b) * a * 0.5
+	let rowr = ForcesAndMomentInReinforcement(ci, epsilon_cncr, sectionCR.reinforcement)
 	let momentT = 0
 	let momentC = -moment_cncr - p
 	rowr.forEach((element) => {
@@ -101,7 +104,7 @@ const eq_moment_whitney = (
 	return momentT + momentC
 }
 
-const eq_forces_my = (
+const YieldEquilibriumForces = (
 	ci: number,
 	sectionCR: IRectangularRCSection,
 	p: number = 0,
@@ -113,7 +116,7 @@ const eq_forces_my = (
 	let epsilon_cncr = absolutevalue(epsilon_fy * (ci / (sectionCR.dmax - ci)))
 	let force_cncr =
 		0.5 * (epsilon_cncr * sectionCR.material.young) * ci * sectionCR.b
-	let rowr = FMR_Reinforcement(ci, epsilon_cncr, sectionCR.reinforcement)
+	let rowr = ForcesAndMomentInReinforcement(ci, epsilon_cncr, sectionCR.reinforcement)
 	let forceT = 0
 	let forceC = -force_cncr - p
 	rowr.forEach((element) => {
@@ -128,7 +131,7 @@ const eq_forces_my = (
 	return forceT + forceC
 }
 
-const eq_moment_my = (
+const YieldEquilibriumMoment = (
 	ci: number,
 	sectionCR: IRectangularRCSection,
 	p: number = 0,
@@ -145,7 +148,7 @@ const eq_moment_my = (
 		sectionCR.b *
 		(1 / 3) *
 		ci
-	let rowr = FMR_Reinforcement(ci, epsilon_cncr, sectionCR.reinforcement)
+	let rowr = ForcesAndMomentInReinforcement(ci, epsilon_cncr, sectionCR.reinforcement)
 	let momentT = 0
 	let momentC = -moment_cncr - p
 	rowr.forEach((element) => {
@@ -159,7 +162,7 @@ const eq_moment_my = (
 	return momentT + momentC
 }
 
-const FMR_Reinforcement = (
+const ForcesAndMomentInReinforcement = (
 	ci: number,
 	epsilon_cncr: number,
 	reinforcement: IRowReinforcement[],
@@ -180,11 +183,11 @@ const FMR_Reinforcement = (
 	return r
 }
 
-const force_whitney = (a: number, fc: number, b: number) => {
+const WhitneyForceConcrete = (a: number, fc: number, b: number) => {
 	return 0.85 * a * fc * b
 }
 
-const biseccion = (
+const BiseccionMethod = (
 	fun: Function,
 	xi: number,
 	xu: number,
@@ -219,8 +222,103 @@ const biseccion = (
 		}
 	}
 	if (iter == itmax) {
-		throw 'Not Found: Neutral Axis'
+		throw 'bisection method did not converge'
 	} else {
 		return xr
 	}
+}
+
+const NominalCurvatureWhitney = (epsilon: number, c: number) => {
+	return epsilon/c
+}
+
+const YieldDistanceTensionReinforcement = (sectionRC: IRectangularRCSection, p: number = 0) => {
+	let c = YieldNeutralAxis(sectionRC,p)
+	let row = ForcesAndMomentInReinforcement(c,sectionRC.material.epsilon_max,sectionRC.reinforcement)
+	row.forEach(r => {
+		row
+	});
+	return 0
+
+}
+
+const AreaMomentCurvature = (mn: number,cn: number,my: number,cy: number) => {
+	return (my*cy*0.5)+((my+mn)*0.5*(cn-cy))
+}
+
+const CurvatureFinal = (NominalCurvature:number,SlopeMomentCurvatureElastic:number,CurveArea:number) => {
+	let fun = (cx: number,cn:number,slope: number,area: number) => {
+		let mx = cx*slope
+		return (cx*mx)+(mx*(cn-cx))
+	}
+
+	let cx = BiseccionMethod(fun,0,NominalCurvature,1e6,1e-6,NominalCurvature,SlopeMomentCurvatureElastic,CurveArea)
+	return cx
+}
+
+const MomentFinal = (CurvatureFinal: number,SlopeMomentCurvatureElastic:number) => {
+	return CurvatureFinal*SlopeMomentCurvatureElastic
+}
+
+
+const WhitneyMomentCurvature2Section = (sectionRC: IRectangularRCSection, p: number) => {
+	let YieldMoment = YieldMomentRectangularRC(sectionRC,p)
+	let ccy = YieldNeutralAxis(sectionRC,p)
+	let dy = YieldDistanceTensionReinforcement(sectionRC,p)
+	let YieldCurvature = YieldCurvatureRC(ccy,dy,sectionRC.material.epsilon_max)
+	let NominalMoment = NominalMomentWhitney(sectionRC,p)
+	let c = NeutralAxialWhitney(sectionRC,p)
+	let NominalCurvature = NominalCurvatureWhitney(sectionRC.material.epsilon_max,c)
+
+	let Eslope = YieldMoment/YieldCurvature
+	let AreaC = AreaMomentCurvature(NominalMoment,NominalCurvature,YieldMoment,YieldCurvature)
+
+	let cx = CurvatureFinal(NominalCurvature,Eslope,AreaC)
+	let mx = MomentFinal(cx,Eslope)
+	return {Curvature: cx, Moment: mx}
+}
+
+const AsignHinges2Element = (
+	element: IElement,
+	node: 'initial'|'final'|'both',
+	custom: boolean = false,
+	NominalMaxMoment?: number,
+	NominalMinMoment?: number
+	) =>{
+		let MnMax = 0
+		let MnMin = 0
+		let CurvMax = 0
+		let CurvMin = 0
+		let typeHinge: "Moment-P" | "Moment" | 'Custom' = 'Custom'
+
+
+		if (custom && NominalMaxMoment!=undefined && NominalMinMoment != undefined) {
+			MnMax = NominalMaxMoment
+			MnMin = NominalMinMoment
+		} else {
+			let sectionRC = element.section
+			let p = element.forces[0][0]
+			typeHinge = p==0 ? 'Moment' : 'Moment-P'
+			let mc1 = WhitneyMomentCurvature2Section(sectionRC,p)
+			MnMax = mc1.Moment
+			CurvMax = mc1.Curvature
+
+			sectionRC.rotate180()
+
+			let mc2 = WhitneyMomentCurvature2Section(sectionRC,p)
+			MnMin = mc2.Moment
+			CurvMin = mc2.Curvature
+
+			sectionRC.rotate180()
+		}
+
+		if (node == 'initial' || 'both') {
+			let hinge = new Hinge(MnMax,CurvMax,MnMin,CurvMin,typeHinge)
+			element.assignHinge('initial',hinge)
+		}
+
+		if (node == 'final' || 'both') {
+			let hinge = new Hinge(MnMax,CurvMax,MnMin,CurvMin,typeHinge)
+			element.assignHinge('initial',hinge)
+		}
 }

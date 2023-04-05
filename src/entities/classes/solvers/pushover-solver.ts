@@ -1,6 +1,6 @@
 import { IElement, INode, IStructure } from "@interfaces";
 import { coordinates2D, initialOrFinal, stepPushover } from "@types";
-import { e, max, min, unitDependencies } from "mathjs";
+import { min } from "mathjs";
 import { Hinge } from "../others/moment-curvature";
 import { StaticSolver } from "./static-solver";
 
@@ -69,8 +69,8 @@ export class PushoverSolver {
         cfactors![i][0].nodes.initial.coordinates('static') : 
         cfactors![i][0].nodes.final.coordinates('static')
         //se collapsa el elemento en el nodo releseado
-        cfactors![i][0].release(cfactors![i][1],'rz')
         updateHingesStructure(structure,cfStep)
+        cfactors![i][0].release(cfactors![i][1],'rz')
         try {
             nodeObj = structure.node(nodeObjCoordinates)
             //se registran los valores de interes en el paso j

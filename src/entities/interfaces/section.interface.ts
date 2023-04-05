@@ -1,3 +1,4 @@
+import { Section } from '@classes/sections/section'
 import { MaterialType, IConcrete, ISteel } from '@interfaces'
 
 export interface ISection<MT extends MaterialType> {
@@ -30,7 +31,7 @@ export interface IRowReinforcementMechanics {
 	moment: number
 }
 
-export interface IRectangularRCSection extends IRectangularSection<IConcrete> {
+export interface IRectangularRCSection extends IRectangularSection<IConcrete>  {
 	b: number
 	reinforcement: IRowReinforcement[]
 	readonly young: number
@@ -42,6 +43,7 @@ export interface IRectangularRCSection extends IRectangularSection<IConcrete> {
 	swapRowReinforcement(d: number, quantity: number, BarCR: IBarCR): void
 	deleteReinforcement(): void
 	sortReinforcement(): void
+	rotate180(): void
 }
 
 export interface ICircularSection<MT extends MaterialType>
@@ -52,4 +54,5 @@ export interface ICircularSection<MT extends MaterialType>
 export interface IBarCR extends ICircularSection<ISteel> {
 	readonly fy: number
 	readonly young: number
+	readonly area: number
 }

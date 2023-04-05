@@ -10,6 +10,7 @@ export interface IConcreteProps {
 	young: number
 	epsilon_max: number
 }
+
 export interface IConcrete extends IMaterial {
 	fc: number
 	beta: number
@@ -17,7 +18,10 @@ export interface IConcrete extends IMaterial {
 }
 
 export interface ISteel extends IMaterial {
-	fy: number
+	name: string,
+	young: number,
+	weight: number,
+	fy: number,
 }
 
 export type MaterialType = IConcrete | ISteel

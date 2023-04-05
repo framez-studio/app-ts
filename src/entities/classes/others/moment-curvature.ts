@@ -14,7 +14,7 @@ export class MomentCurvature{
 }
 */
 
-import { IHinge } from "@/entities/interfaces/hinge.interface"
+import { IHinge } from "@interfaces/hinge.interface"
 
 export class Hinge implements IHinge{
     isCollapsed: boolean = false
@@ -25,7 +25,7 @@ export class Hinge implements IHinge{
         public maxCurv: number,
         public minMoment: number,
         public minCurve: number,
-        public type: "Moment-P" | "Moment"
+        public type: "Moment-P" | "Moment" | 'Custom'
     ){
         this.maxMoment = maxMoment
         this.maxCurv = maxCurv

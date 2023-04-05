@@ -1,4 +1,3 @@
-import clone from 'just-clone'
 import { describe, expect, it } from 'vitest'
 import { FrameSystem } from '@classes/complex-elements/frame-system'
 import { ElementNode } from '@classes/nodes/element-node'
@@ -13,7 +12,7 @@ import {
 import { RectangularRCSection } from '@classes/sections/rectangular-cr'
 
 
-describe('Tarea osi osi', () => {
+describe('Lateral loads', () => {
 	//DIMENSIONES GENERALES ESTRUCTURA
 	let hlevel = 3
 	let h = hlevel * 2
@@ -87,21 +86,21 @@ describe('Tarea osi osi', () => {
 	let frm = new FrameSystem(...elementsArray)
 
 	//ASIGNACION DE ROTULAS
-	b1.assignHinge('initial', clone(hingeVga1))
-	b1.assignHinge('final', clone(hingeVga1))
-	b3.assignHinge('initial', clone(hingeVga1))
-	b3.assignHinge('final', clone(hingeVga1))
+	b1.assignHinge('initial', new Hinge(100, 0, -150, 0, 'Moment'))
+	b1.assignHinge('final', new Hinge(100, 0, -150, 0, 'Moment'))
+	b3.assignHinge('initial', new Hinge(100, 0, -150, 0, 'Moment'))
+	b3.assignHinge('final', new Hinge(100, 0, -150, 0, 'Moment'))
 
-	b2.assignHinge('initial', clone(hingeVga2))
-	b2.assignHinge('final', clone(hingeVga2))
-	b4.assignHinge('initial', clone(hingeVga2))
-	b4.assignHinge('final', clone(hingeVga2))
+	b2.assignHinge('initial', new Hinge(80, 0, -80, 0, 'Moment'))
+	b2.assignHinge('final', new Hinge(80, 0, -80, 0, 'Moment'))
+	b4.assignHinge('initial', new Hinge(80, 0, -80, 0, 'Moment'))
+	b4.assignHinge('final', new Hinge(80, 0, -80, 0, 'Moment'))
 
 	frm.elements.forEach((e) => {
 		if (e.inclination == 0) {
 		} else {
-			e.assignHinge('initial', clone(hingeCol))
-			e.assignHinge('final', clone(hingeCol))
+			e.assignHinge('initial', new Hinge(250, 0, -250, 0, 'Moment'))
+			e.assignHinge('final', new Hinge(250, 0, -250, 0, 'Moment'))
 		}
 	})
 
@@ -135,6 +134,8 @@ describe('Tarea osi osi', () => {
 		expect(result[5][0]).toBeCloseTo(curve[5][0], 1)
 	})
 })
+
+
 
 describe('Pushover service + stability', () => {
   //DIMENSIONES GENERALES ESTRUCTURA
@@ -202,6 +203,11 @@ describe('Pushover service + stability', () => {
 
   //SE JUNTAN LOS ELEMENTOS XD
   let elementsArray = [c1,c2,c3,c4,c5,c6,b1,b2,b3,b4]
+
+  /**
+   * PROCESO INTERMEDIO
+   * Calcula los Mn de los elementos a partir de su seccion
+   */
 
   //ROTULAS PLASTICAS
   let hingeCol = new Hinge(250,0,-250,0,'Moment')

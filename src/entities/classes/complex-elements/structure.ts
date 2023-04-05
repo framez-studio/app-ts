@@ -1,22 +1,23 @@
-import { Array2D, coordinates2D, supportType } from '@types'
-import { IElement, INode, IStructure } from '@interfaces'
-import { SMatrixOperator as MatOp } from '@classes/matrices/s-matrix-operator'
-import { constraints } from '@config/globals'
-import {
-	displaceStructure,
-	filterNodeByCoords,
-	filterElementByCoords,
-	assemblyFef,
-	assemblyMatrix,
-} from '@utils/elements'
-import { uniques, allIndexesOf } from '@utils/helpers'
+import { constraints } from "@config/globals"
+import { IStructure, IElement, INode } from "@interfaces"
+import { Array2D, coordinates2D, supportType } from "@types"
+import { displaceStructure, filterNodeByCoords, filterElementByCoords, assemblyFef, assemblyMatrix } from "@utils/elements"
+import { uniques, allIndexesOf } from "@utils/helpers"
+import {SMatrixOperator as MatOp} from "@classes/matrices/s-matrix-operator"
 
+
+ /**
+  * Class structure return structure class
+  */
 export class Structure implements IStructure {
 	private _elements: IElement[]
 
 	constructor(...elements: IElement[]) {
 		this._elements = [...elements]
 	}
+	/**
+	 * 
+	 */
 	get elements(): IElement[] {
 		return this._elements
 	}
@@ -71,28 +72,31 @@ export class Structure implements IStructure {
 		return MatOp.reduceDegs('matrix', full, ...lockedDegs)
 	}
 
-	public filterNodes(y?: number, x?: number) {
-		let r = this.nodes
-		if (y != undefined) {
-			r = r.filter((node) => node.coordinates('static').y == y)
-		}
-		if (x != undefined) {
-			r = r.filter((node) => node.coordinates('static').x == x)
-		}
-		return r
+
+	public filterNodes(y?: number, x?: number){
+        let r = this.nodes
+        if (y!=undefined) {
+            r = r.filter(node => node.coordinates('static').y == y)
+        }
+        if (x!=undefined) {
+            r = r.filter(node => node.coordinates('static').x == x) 
+        }
+        return r
+    }
+	
+	public resetLoadstoZero(){
+		this._elements.forEach(element => {
+			element.loads = []
+		});
+		this.nodes.forEach(node => {
+			node.setLoads({fx:0,fy:0,mz:0})
+		});
 	}
 
-	public resetLoadstoZero() {
-		this._elements.forEach((element) => element.resetLoads())
-		this.nodes.forEach((node) => {
-			node.setLoads({ fx: 0, fy: 0, mz: 0 })
-		})
-	}
-
-	public resetHingesStatus() {
-		this._elements.forEach((element) => {
+	public resetHingesStatus(){
+		this._elements.forEach(element => {
 			element.initialHinge?.resetHinge
 			element.finalHinge?.resetHinge
-		})
+		});
 	}
 }
