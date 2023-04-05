@@ -12,14 +12,9 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 }
 
 const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
-	const {
-		young,
-		setYoung,
-		sectionDims,
-		setSectionDims,
-		epsilon,
-		setEpsilon,
-	} = useElementSelectionState()
+	const { state, updateYoung, updateSectionDims, updateEpsilon } =
+		useElementSelectionState()
+
 	return (
 		<section className="form-container">
 			<section className="form-main element-properties col-2">
@@ -27,34 +22,34 @@ const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
 					props={{
 						label: 'Young Module',
 						suffix: 'MPa',
-						value: String(young),
-						onChange: ($e) => setYoung($e.target.value),
+						value: state.young,
+						onChange: ($e) => updateYoung($e.target.value),
 					}}
 				/>
 				<FormInput
 					props={{
 						label: `Max. Strain`,
 						suffix: 'mm',
-						value: String(epsilon),
-						onChange: ($e) => setEpsilon($e.target.value),
+						value: state.epsilon,
+						onChange: ($e) => updateEpsilon($e.target.value),
 					}}
 				/>
 				<FormInput
 					props={{
 						label: 'Section Base',
 						suffix: 'mm',
-						value: String(sectionDims.base),
+						value: state.sectionDims.base,
 						onChange: ($e) =>
-							setSectionDims({ base: $e.target.value }),
+							updateSectionDims({ base: $e.target.value }),
 					}}
 				/>
 				<FormInput
 					props={{
 						label: 'Section Height',
 						suffix: 'mm',
-						value: sectionDims.height,
+						value: state.sectionDims.height,
 						onChange: ($e) =>
-							setSectionDims({ height: $e.target.value }),
+							updateSectionDims({ height: $e.target.value }),
 					}}
 				/>
 			</section>

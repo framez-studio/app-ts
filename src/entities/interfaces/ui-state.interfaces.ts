@@ -29,3 +29,15 @@ export interface IElementPropsState {
 		}
 	}
 }
+export interface IElementDynamicState {
+	weight: string
+	automatic: boolean
+	curvature: {
+		min: string
+		max: string
+	}
+	moment: {
+		min: string
+		max: string
+	}
+}

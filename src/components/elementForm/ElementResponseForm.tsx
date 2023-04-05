@@ -4,7 +4,8 @@ import { useElementSelectionState } from '@hooks/useElementSelectionState'
 import { responseFormatter } from '@utils/ui'
 
 const ElementResponseForm = () => {
-	const { response } = useElementSelectionState()
+	const { state } = useElementSelectionState()
+	const { response } = state
 	const inputs = generateInputs()
 
 	return (

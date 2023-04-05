@@ -1,7 +1,12 @@
-import { IElement, IElementSteelState, ISteelRowState } from '@interfaces'
+import {
+	IElement,
+	IElementSteelState,
+	ISteelRowState,
+	ISteelStateHook,
+} from '@interfaces'
 import { useImmer } from 'use-immer'
 
-export const useElementSteelState = () => {
+export function useElementSteelState(): ISteelStateHook {
 	const initialState: IElementSteelState = {
 		young: '',
 		yield: '',

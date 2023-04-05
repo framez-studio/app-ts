@@ -1,9 +1,9 @@
-import { ISteelRowState, ISteelStateHook } from '@interfaces'
+import { ISelectedSteelStateHook, ISteelRowState } from '@interfaces'
 import { useElementSelection } from '@hooks/useElementSelection'
 import { useElementSteelState } from '@hooks/useElementSteelState'
 import { useEffect } from 'react'
 
-export const useElementSelectionSteelState: ISteelStateHook = () => {
+export function useElementSelectionSteelState(): ISelectedSteelStateHook {
 	const element = useElementSelection()
 	const steelState = useElementSteelState()
 

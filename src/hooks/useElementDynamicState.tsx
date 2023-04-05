@@ -1,19 +1,7 @@
+import { IElementDynamicState, IElementDynamicStateHook } from '@interfaces'
 import { useImmer } from 'use-immer'
 
-export interface IElementDynamicState {
-	weight: string
-	automatic: boolean
-	curvature: {
-		min: string
-		max: string
-	}
-	moment: {
-		min: string
-		max: string
-	}
-}
-
-export function useElementDynamicState() {
+export function useElementDynamicState(): IElementDynamicStateHook {
 	const initialState: IElementDynamicState = {
 		weight: '',
 		automatic: false,
@@ -38,14 +26,22 @@ export function useElementDynamicState() {
 			draft.automatic = !draft.automatic
 		})
 	}
-	function updateCurvature(value: string, type: 'min' | 'max') {
+	function updateCurvature(
+		payload: Partial<IElementDynamicState['curvature']>,
+	) {
 		updateState((draft) => {
-			draft.curvature[type] = value
+			draft.curvature = {
+				...draft.curvature,
+				...payload,
+			}
 		})
 	}
-	function updateMoment(value: string, type: 'min' | 'max') {
+	function updateMoment(payload: Partial<IElementDynamicState['moment']>) {
 		updateState((draft) => {
-			draft.moment[type] = value
+			draft.moment = {
+				...draft.moment,
+				...payload,
+			}
 		})
 	}
 	return {

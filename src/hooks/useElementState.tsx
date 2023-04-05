@@ -1,9 +1,12 @@
-import { IElement, IElementPropsState } from '@interfaces'
-import { elementLoads2DObject } from '@types'
+import {
+	IElement,
+	IElementPropsState,
+	IElementPropsStateHook,
+} from '@interfaces'
 import { forcesArrayToObject } from '@utils/elements'
 import { useImmer } from 'use-immer'
 
-export function useElementState() {
+export function useElementState(): IElementPropsStateHook {
 	const initialState: IElementPropsState = {
 		young: '',
 		epsilon: '',
@@ -52,17 +55,18 @@ export function useElementState() {
 			draft.load = load
 		})
 	}
-	function updateResponse(response: elementLoads2DObject) {
+	function updateResponse(
+		newResponse: Partial<IElementPropsState['response']>,
+	) {
 		updateState((draft) => {
-			draft.response.initial.fx = String(response.initial.fx)
-			draft.response.initial.fy = String(response.initial.fy)
-			draft.response.initial.mz = String(response.initial.mz)
-			draft.response.final.fx = String(response.final.fx)
-			draft.response.final.fy = String(response.final.fy)
-			draft.response.final.mz = String(response.final.mz)
+			draft.response = {
+				...draft.response,
+				...newResponse,
+			}
 		})
 	}
 	function assignElementState(element: IElement) {
+		const forces = forcesArrayToObject(element.forces)
 		updateYoung(String(element.young))
 		updateEpsilon(String(element.section.material.epsilon_max))
 		updateSectionDims({
@@ -70,7 +74,18 @@ export function useElementState() {
 			height: String(element.section.h),
 		})
 		updateLoad(String(element.loads[0].load))
-		updateResponse(forcesArrayToObject(element.forces))
+		updateResponse({
+			initial: {
+				fx: String(forces.initial.fx),
+				fy: String(forces.initial.fy),
+				mz: String(forces.initial.mz),
+			},
+			final: {
+				fx: String(forces.final.fx),
+				fy: String(forces.final.fy),
+				mz: String(forces.final.mz),
+			},
+		})
 	}
 	return {
 		state,
