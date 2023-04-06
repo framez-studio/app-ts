@@ -4,6 +4,7 @@ import FormButton from '@components/FormButton'
 import ElementReinforcementTable from './ElementReinforcementTable'
 import FormInput from '@components/FormInput'
 import { useElementContext } from '@context/ElementContext'
+import { useActiveSectionContext } from '@context/ActiveSectionContext'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props?: {
@@ -12,6 +13,7 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 }
 
 const ElementReinforcementForm: React.FC<Props> = ({ props }) => {
+	const { setActiveSection } = useActiveSectionContext()
 	const { elementSteel } = useElementContext()
 	const { state } = elementSteel
 
@@ -47,7 +49,10 @@ const ElementReinforcementForm: React.FC<Props> = ({ props }) => {
 			</section>
 			<section className="form-footer col-2">
 				<FormButton
-					props={{ text: 'Back', onClick: props?.onBackBtn }}
+					props={{
+						text: 'Back',
+						onClick: () => setActiveSection('properties'),
+					}}
 				/>
 			</section>
 		</section>

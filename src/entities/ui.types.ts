@@ -1,7 +1,12 @@
 import { IElement, INode, IUIElement, IUINode } from '@interfaces'
 import { coordinates2D } from '@types'
 
-export type IFormSections = 'properties' | 'loads' | 'response'
+export type IFormSections =
+	| 'properties'
+	| 'steel'
+	| 'dynamics'
+	| 'loads'
+	| 'response'
 export type IHeaderSections = 'structure' | 'loads' | 'cross-sections'
 export type IUIObject = {
 	readonly path: Path2D

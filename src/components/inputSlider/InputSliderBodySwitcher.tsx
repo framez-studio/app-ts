@@ -1,29 +1,18 @@
 import React from 'react'
-import { IFormSections } from '@types-ui'
 import { useAppContext } from '@context/AppContext'
 import DefaultForm from '@components/defaultForm/DefaultForm'
-import NodeFormSwitcher from '@components/nodeForm/NodeFormSwitcher'
-import ElementFormSwitcher from '@components/elementForm/ElementFormSwitcher'
-import { ElementContextProvider } from '@context/ElementContext'
+import ElementForm from '@components/elementForm/ElementForm'
+import NodeForm from '@components/nodeForm/NodeForm'
 
-interface Props extends React.HTMLProps<HTMLDivElement> {
-	props: {
-		activeSection: IFormSections
-	}
-}
-const InputSliderBodySwitcher: React.FC<Props> = ({ props }) => {
+interface Props extends React.HTMLProps<HTMLDivElement> {}
+const InputSliderBodySwitcher: React.FC<Props> = () => {
 	const { state } = useAppContext()
-	const { activeSection } = props
 
 	switch (state.canvas.selection.type) {
 		case 'node':
-			return <NodeFormSwitcher props={{ activeSection }} />
+			return <NodeForm />
 		case 'element':
-			return (
-				<ElementContextProvider>
-					<ElementFormSwitcher props={{ activeSection }} />
-				</ElementContextProvider>
-			)
+			return <ElementForm />
 		case null:
 			return <DefaultForm />
 		default:

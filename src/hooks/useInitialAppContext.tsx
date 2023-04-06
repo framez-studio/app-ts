@@ -1,6 +1,7 @@
 import { IAppContext, IAppState, IElement, INode } from '@interfaces'
 import { initialStructure } from '@config/structure'
 import { useImmer } from 'use-immer'
+import { IFormSections } from '@types-ui'
 
 const initialState: IAppState = {
 	structure: initialStructure,
@@ -17,6 +18,7 @@ const initialState: IAppState = {
 	},
 	slider: {
 		isOpen: false,
+		activeSection: 'properties',
 	},
 }
 
@@ -49,11 +51,17 @@ export function useInitialAppContext(): IAppContext {
 			draft.canvas.needsRedraw = false
 		})
 	}
+	function setSliderActiveSection(payload: IFormSections): void {
+		updateState((draft) => {
+			draft.slider.activeSection = payload
+		})
+	}
 	return {
 		state,
 		setSelection,
 		toggleSlider,
 		requestCanvasRedraw,
 		resetCanvasRedraw,
+		setSliderActiveSection,
 	}
 }

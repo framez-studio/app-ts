@@ -1,17 +1,11 @@
-import React from 'react'
 import '@styles/Form.sass'
 import FormButton from '@components/FormButton'
 import FormInput from '@components/FormInput'
 import { useElementContext } from '@context/ElementContext'
+import { useActiveSectionContext } from '@context/ActiveSectionContext'
 
-interface Props extends React.HTMLProps<HTMLDivElement> {
-	props?: {
-		onLeftBtn?(): void
-		onRightBtn?(): void
-	}
-}
-
-const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
+const ElementMechPropertiesForm = () => {
+	const { setActiveSection } = useActiveSectionContext()
 	const { elementProps } = useElementContext()
 	const { state, updateYoung, updateEpsilon, updateSectionDims } =
 		elementProps
@@ -58,13 +52,13 @@ const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
 				<FormButton
 					props={{
 						text: 'Dynamic Config.',
-						onClick: props?.onLeftBtn,
+						onClick: () => setActiveSection('dynamics'),
 					}}
 				/>
 				<FormButton
 					props={{
 						text: 'Reinforcement',
-						onClick: props?.onRightBtn,
+						onClick: () => setActiveSection('steel'),
 					}}
 				/>
 			</section>

@@ -4,6 +4,7 @@ import FormInput from '@components/FormInput'
 import CheckboxInput from '@components/CheckboxInput'
 import { useElementDynamicState } from '@hooks/useElementDynamicState'
 import FormSectionLabel from '@components/FormSectionLabel'
+import { useActiveSectionContext } from '@context/ActiveSectionContext'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props?: {
@@ -12,6 +13,7 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 }
 
 const ElementDynamicPropertiesForm: React.FC<Props> = ({ props }) => {
+	const { setActiveSection } = useActiveSectionContext()
 	const {
 		state,
 		updateCurvature,
@@ -54,7 +56,7 @@ const ElementDynamicPropertiesForm: React.FC<Props> = ({ props }) => {
 						readonly: state.automatic,
 						value: curvature.min,
 						onChange: ($e) =>
-							updateCurvature($e.target.value, 'min'),
+							updateCurvature({ min: $e.target.value }),
 					}}
 				/>
 				<FormInput
@@ -63,7 +65,8 @@ const ElementDynamicPropertiesForm: React.FC<Props> = ({ props }) => {
 						suffix: 'kN.m',
 						readonly: state.automatic,
 						value: moment.min,
-						onChange: ($e) => updateMoment($e.target.value, 'min'),
+						onChange: ($e) =>
+							updateMoment({ min: $e.target.value }),
 					}}
 				/>
 				<FormInput
@@ -73,7 +76,7 @@ const ElementDynamicPropertiesForm: React.FC<Props> = ({ props }) => {
 						readonly: state.automatic,
 						value: curvature.max,
 						onChange: ($e) =>
-							updateCurvature($e.target.value, 'max'),
+							updateCurvature({ max: $e.target.value }),
 					}}
 				/>
 				<FormInput
@@ -82,13 +85,17 @@ const ElementDynamicPropertiesForm: React.FC<Props> = ({ props }) => {
 						suffix: 'kN.m',
 						readonly: state.automatic,
 						value: moment.max,
-						onChange: ($e) => updateMoment($e.target.value, 'max'),
+						onChange: ($e) =>
+							updateMoment({ max: $e.target.value }),
 					}}
 				/>
 			</section>
 			<section className="form-footer col-2">
 				<FormButton
-					props={{ text: 'Back', onClick: props?.onBackBtn }}
+					props={{
+						text: 'Back',
+						onClick: () => setActiveSection('properties'),
+					}}
 				/>
 			</section>
 		</section>

@@ -1,4 +1,5 @@
 import { IElement, INode, IStructure } from '@interfaces'
+import { IFormSections } from '@types-ui'
 
 export interface IAppState {
 	structure: IStructure
@@ -15,5 +16,6 @@ export interface IAppState {
 	}
 	slider: {
 		isOpen: boolean
+		activeSection: IFormSections
 	}
 }
