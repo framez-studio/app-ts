@@ -1,35 +1,31 @@
 import React from 'react'
 import FormSectionLabel from '@components/FormSectionLabel'
-import { IHeaderSections } from '@types-ui'
+import { useActiveSectionContext } from '@context/ActiveSectionContext'
 
-interface Props extends React.HTMLProps<HTMLDivElement> {
-	props: {
-		activeSection: IHeaderSections
-		setActiveSection(section: IHeaderSections): void
-	}
-}
-const HeaderSliderHeader: React.FC<Props> = ({ props }) => {
+interface Props extends React.HTMLProps<HTMLDivElement> {}
+const HeaderSliderHeader: React.FC<Props> = () => {
+	const { activeSection, setActiveSection } = useActiveSectionContext()
 	return (
 		<section className="form-header form-header--switcher">
 			<FormSectionLabel
 				props={{
 					label: 'Structure',
-					isActive: props.activeSection == 'structure',
-					onClick: () => props.setActiveSection('structure'),
+					isActive: activeSection == 'structure',
+					onClick: () => setActiveSection('structure'),
 				}}
 			/>
 			<FormSectionLabel
 				props={{
 					label: 'Sections',
-					isActive: props.activeSection == 'cross-sections',
-					onClick: () => props.setActiveSection('cross-sections'),
+					isActive: activeSection == 'cross-sections',
+					onClick: () => setActiveSection('cross-sections'),
 				}}
 			/>
 			<FormSectionLabel
 				props={{
 					label: 'Loads',
-					isActive: props.activeSection == 'loads',
-					onClick: () => props.setActiveSection('loads'),
+					isActive: activeSection == 'loads',
+					onClick: () => setActiveSection('loads'),
 				}}
 			/>
 		</section>

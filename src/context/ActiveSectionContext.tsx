@@ -17,12 +17,19 @@ export function useActiveSectionContext() {
 }
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
+	props: {
+		default: IFormSections
+	}
 	children: React.ReactNode
 }
 
-export const ActiveSectionContextProvider: React.FC<Props> = ({ children }) => {
-	const [activeSection, setActiveSection] =
-		useState<IFormSections>('properties')
+export const ActiveSectionContextProvider: React.FC<Props> = ({
+	children,
+	props,
+}) => {
+	const [activeSection, setActiveSection] = useState<IFormSections>(
+		props.default,
+	)
 	const value = { activeSection, setActiveSection }
 
 	return (

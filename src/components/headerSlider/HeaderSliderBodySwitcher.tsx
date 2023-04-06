@@ -1,15 +1,11 @@
 import StructureForm from '@components/structureForm/StructureForm'
-import { IHeaderSections } from '@types-ui'
+import { useActiveSectionContext } from '@context/ActiveSectionContext'
 import React from 'react'
 
-interface Props extends React.HTMLProps<HTMLDivElement> {
-	props: {
-		activeSection: IHeaderSections
-	}
-}
+interface Props extends React.HTMLProps<HTMLDivElement> {}
 
-const HeaderSliderBodySwitcher: React.FC<Props> = ({ props }) => {
-	const { activeSection } = props
+const HeaderSliderBodySwitcher: React.FC<Props> = () => {
+	const { activeSection } = useActiveSectionContext()
 
 	switch (activeSection) {
 		case 'structure':

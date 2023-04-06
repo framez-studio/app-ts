@@ -9,7 +9,7 @@ const InputSlider = () => {
 	const { state, toggleSlider } = useAppContext()
 	const { isOpen } = state.slider
 	return (
-		<ActiveSectionContextProvider>
+		<ActiveSectionContextProvider props={{ default: 'properties' }}>
 			<section
 				className={`slider input-slider ${
 					isOpen ? 'opened' : 'closed'

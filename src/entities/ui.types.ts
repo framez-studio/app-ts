@@ -7,7 +7,8 @@ export type IFormSections =
 	| 'dynamics'
 	| 'loads'
 	| 'response'
-export type IHeaderSections = 'structure' | 'loads' | 'cross-sections'
+	| 'cross-sections'
+	| 'structure'
 export type IUIObject = {
 	readonly path: Path2D
 }
