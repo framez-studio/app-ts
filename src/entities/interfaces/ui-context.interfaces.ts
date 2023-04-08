@@ -5,6 +5,7 @@ import {
 	INode,
 	ISelectedElementPropsStateHook,
 	ISelectedSteelStateHook,
+	IStructureGeneratorStateHook,
 } from '@interfaces'
 import { IFormSections } from '@types-ui'
 
@@ -28,3 +29,4 @@ export interface IActiveSectionContext {
 	activeSection: IFormSections
 	setActiveSection(payload: IFormSections): void
 }
+export interface IGeneratorContext extends IStructureGeneratorStateHook {}

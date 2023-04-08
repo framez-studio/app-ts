@@ -1,4 +1,4 @@
-import { PorticSystemGenerator } from '@utils/structure'
+import { generatePorticSystem } from '@utils/structure'
 
 const levels = {
 	quantity: 2,
@@ -9,7 +9,7 @@ const spans = {
 	separation: 2,
 }
 
-export const { structure: initialStructure } = PorticSystemGenerator({
+export const { structure: initialStructure } = generatePorticSystem({
 	levels,
 	spans,
 })

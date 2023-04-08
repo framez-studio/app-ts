@@ -3,7 +3,7 @@ import FormSectionLabel from '@components/FormSectionLabel'
 import { useActiveSectionContext } from '@context/ActiveSectionContext'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {}
-const HeaderSliderHeader: React.FC<Props> = () => {
+const GeneratorHeader: React.FC<Props> = () => {
 	const { activeSection, setActiveSection } = useActiveSectionContext()
 	return (
 		<section className="form-header form-header--switcher">
@@ -17,8 +17,8 @@ const HeaderSliderHeader: React.FC<Props> = () => {
 			<FormSectionLabel
 				props={{
 					label: 'Sections',
-					isActive: activeSection == 'cross-sections',
-					onClick: () => setActiveSection('cross-sections'),
+					isActive: activeSection == 'properties',
+					onClick: () => setActiveSection('properties'),
 				}}
 			/>
 			<FormSectionLabel
@@ -32,4 +32,4 @@ const HeaderSliderHeader: React.FC<Props> = () => {
 	)
 }
 
-export default HeaderSliderHeader
+export default GeneratorHeader

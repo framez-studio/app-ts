@@ -15,22 +15,6 @@ const ElementMechPropertiesForm = () => {
 			<section className="form-main element-properties col-2">
 				<FormInput
 					props={{
-						label: 'Young Module',
-						suffix: 'MPa',
-						value: state.young,
-						onChange: ($e) => updateYoung($e.target.value),
-					}}
-				/>
-				<FormInput
-					props={{
-						label: `Max. Strain`,
-						suffix: 'mm',
-						value: state.epsilon,
-						onChange: ($e) => updateEpsilon($e.target.value),
-					}}
-				/>
-				<FormInput
-					props={{
 						label: 'Section Base',
 						suffix: 'mm',
 						value: state.sectionDims.base,
@@ -45,6 +29,37 @@ const ElementMechPropertiesForm = () => {
 						value: state.sectionDims.height,
 						onChange: ($e) =>
 							updateSectionDims({ height: $e.target.value }),
+					}}
+				/>
+				<FormInput
+					props={{
+						label: `${String.fromCharCode(402)}'c`,
+						tooltip: `Concrete's maximum compressive strength`,
+						suffix: 'MPa',
+					}}
+				/>
+				<FormInput
+					props={{
+						label: 'Young',
+						tooltip: `Concrete's Young's modulus. When changing ${String.fromCharCode(
+							402,
+						)}'c value, Framez will automatically suggest a value based on E=3900${String.fromCharCode(
+							8730,
+						)}${String.fromCharCode(402)}'c`,
+						suffix: 'MPa',
+						value: state.young,
+						onChange: ($e) => updateYoung($e.target.value),
+					}}
+				/>
+				<FormInput
+					props={{
+						label: `Max. Strain`,
+						tooltip: `Concrete's maximum compressive strain (${String.fromCharCode(
+							949,
+						)}) before yielding`,
+						suffix: 'mm',
+						value: state.epsilon,
+						onChange: ($e) => updateEpsilon($e.target.value),
 					}}
 				/>
 			</section>

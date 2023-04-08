@@ -1,6 +1,3 @@
-import { useElementDynamicState } from '@hooks/useElementDynamicState'
-import { useElementSelectionState } from '@hooks/useElementSelectionState'
-import { useElementSteelState } from '@hooks/useElementSteelState'
 import { IElementContext } from '@interfaces'
 import { createContext, useContext } from 'react'
 
@@ -18,17 +15,15 @@ export function useElementContext() {
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	children: React.ReactNode
+	props: { value: IElementContext }
 }
 
-export const ElementContextProvider: React.FC<Props> = ({ children }) => {
-	const elementProps = useElementSelectionState()
-	const elementSteel = useElementSteelState()
-	const elementDynamics = useElementDynamicState()
-
-	const value = { elementProps, elementSteel, elementDynamics }
-
+export const ElementContextProvider: React.FC<Props> = ({
+	children,
+	props,
+}) => {
 	return (
-		<ElementContext.Provider value={value}>
+		<ElementContext.Provider value={props.value}>
 			{children}
 		</ElementContext.Provider>
 	)

@@ -1,9 +1,11 @@
 import {
 	IElement,
+	IElementContext,
 	IElementDynamicState,
 	IElementPropsState,
 	IElementSteelState,
 	ISteelRowState,
+	IStructureGeneratorState,
 } from '@interfaces'
 
 export interface ISteelStateHook {
@@ -16,6 +18,8 @@ export interface ISteelStateHook {
 	removeSteelRow(index: number): void
 	assignElementState(element: IElement): void
 }
+export interface ISelectedSteelStateHook
+	extends Omit<ISteelStateHook, 'assignElementState'> {}
 export interface IElementPropsStateHook {
 	state: IElementPropsState
 	updateYoung(payload: string): void
@@ -25,6 +29,11 @@ export interface IElementPropsStateHook {
 	updateResponse(payload: Partial<IElementPropsState['response']>): void
 	assignElementState(element: IElement): void
 }
+export interface ISelectedElementPropsStateHook
+	extends Omit<
+		IElementPropsStateHook,
+		'assignElementState' | 'updateResponse'
+	> {}
 export interface IElementDynamicStateHook {
 	state: IElementDynamicState
 	updateWeight(payload: string): void
@@ -32,10 +41,13 @@ export interface IElementDynamicStateHook {
 	updateCurvature(payload: Partial<IElementDynamicState['curvature']>): void
 	updateMoment(payload: Partial<IElementDynamicState['moment']>): void
 }
-export interface ISelectedSteelStateHook
-	extends Omit<ISteelStateHook, 'assignElementState'> {}
-export interface ISelectedElementPropsStateHook
-	extends Omit<
-		IElementPropsStateHook,
-		'assignElementState' | 'updateResponse'
-	> {}
+export interface IStructureGeneratorStateHook {
+	state: IStructureGeneratorState
+	columnsContext: IElementContext
+	beamsContext: IElementContext
+	updateSpans(payload: Partial<IStructureGeneratorState['spans']>): void
+	updateLevels(payload: Partial<IStructureGeneratorState['levels']>): void
+	setSectionsConfigToggle(payload: 'column' | 'beam'): void
+	setLoadsConfigToggle(payload: 'column' | 'beam'): void
+	generateStructure(): void
+}

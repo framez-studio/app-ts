@@ -41,3 +41,15 @@ export interface IElementDynamicState {
 		max: string
 	}
 }
+export interface IStructureGeneratorState {
+	spans: {
+		count: string
+		distance: string
+	}
+	levels: {
+		count: string
+		height: string
+	}
+	sectionsConfigToggle: 'column' | 'beam'
+	loadsConfigToggle: 'column' | 'beam'
+}
