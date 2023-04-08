@@ -20,9 +20,9 @@ function StructureForm() {
 					props={{
 						label: 'Distance:',
 						suffix: 'm',
-						value: state.spans.distance,
+						value: state.spans.separation,
 						onChange: (e) =>
-							updateSpans({ distance: e.target.value }),
+							updateSpans({ separation: e.target.value }),
 					}}
 				/>
 				<FormInput
@@ -37,9 +37,9 @@ function StructureForm() {
 					props={{
 						label: 'Height:',
 						suffix: 'm',
-						value: state.levels.height,
+						value: state.levels.separation,
 						onChange: (e) =>
-							updateLevels({ height: e.target.value }),
+							updateLevels({ separation: e.target.value }),
 					}}
 				/>
 			</section>

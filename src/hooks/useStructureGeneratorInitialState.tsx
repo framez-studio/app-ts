@@ -5,11 +5,11 @@ export function useStructureGeneratorInitialState() {
 	const [state, updateState] = useImmer<IStructureGeneratorState>({
 		spans: {
 			count: '',
-			distance: '',
+			separation: '',
 		},
 		levels: {
 			count: '',
-			height: '',
+			separation: '',
 		},
 		sectionsConfigToggle: 'beam',
 		loadsConfigToggle: 'beam',

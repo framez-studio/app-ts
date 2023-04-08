@@ -44,11 +44,11 @@ export interface IElementDynamicState {
 export interface IStructureGeneratorState {
 	spans: {
 		count: string
-		distance: string
+		separation: string
 	}
 	levels: {
 		count: string
-		height: string
+		separation: string
 	}
 	sectionsConfigToggle: 'column' | 'beam'
 	loadsConfigToggle: 'column' | 'beam'
