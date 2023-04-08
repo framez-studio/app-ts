@@ -1,13 +1,13 @@
 import { useRef } from 'react'
-import { initialStructure } from '@config/structure'
 import { IGraphicStructure } from '@interfaces'
 import { useAppContext } from '@context/AppContext'
 import { layerToTypeMap } from '@utils/ui-structure'
 import { UIStructure } from '@classes/ui/UIStructure'
 
 export function useGraphicStructure(): IGraphicStructure {
-	const { setSelection } = useAppContext()
-	const graphicStructure = useRef(new UIStructure(initialStructure))
+	const { setSelection, state } = useAppContext()
+	const { structure } = state
+	const graphicStructure = useRef(new UIStructure(structure))
 
 	function printOnContext(ctx: CanvasRenderingContext2D) {
 		graphicStructure.current.setContext(ctx)

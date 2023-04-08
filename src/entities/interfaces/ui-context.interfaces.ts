@@ -5,6 +5,7 @@ import {
 	INode,
 	ISelectedElementPropsStateHook,
 	ISelectedSteelStateHook,
+	IStructure,
 	IStructureGeneratorStateHook,
 } from '@interfaces'
 import { IFormSections } from '@types-ui'
@@ -15,6 +16,7 @@ export interface IAppContext {
 		type: 'node' | 'element' | null
 		object: INode | IElement | null
 	}): void
+	setStructure(payload: IStructure): void
 	toggleSlider(): void
 	requestCanvasRedraw(): void
 	resetCanvasRedraw(): void

@@ -56,6 +56,11 @@ export function useInitialAppContext(): IAppContext {
 			draft.slider.activeSection = payload
 		})
 	}
+	function setStructure(payload: IAppState['structure']): void {
+		updateState((draft) => {
+			draft.structure = payload
+		})
+	}
 	return {
 		state,
 		setSelection,
@@ -63,5 +68,6 @@ export function useInitialAppContext(): IAppContext {
 		requestCanvasRedraw,
 		resetCanvasRedraw,
 		setSliderActiveSection,
+		setStructure,
 	}
 }

@@ -50,7 +50,7 @@ export function generateGraphicStructure(
 	graphicStructure.elements = structure.elements.map(
 		(element) => new UIElement(element, ctx),
 	)
-	console.log('graphic structure generated', graphicStructure)
+	console.log('graphic structure generated')
 	return graphicStructure
 }
 
