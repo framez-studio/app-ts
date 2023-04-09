@@ -1,8 +1,8 @@
-import { IElement, INode, IStructure } from '@interfaces'
-import { coordinates2D, initialOrFinal, stepPushover } from '@types'
-import { algebra } from '@utils/algebra'
-import { Hinge } from '../others/moment-curvature'
-import { StaticSolver } from './static-solver'
+import { IElement, INode, IStructure } from "@interfaces";
+import { coordinates2D, initialOrFinal, stepPushover } from "@types";
+import { min } from "mathjs";
+import { Hinge } from "../others/moment-curvature";
+import { StaticSolver } from "./static-solver";
 
 export class PushoverSolver {
 	private static _statusAnalysis: boolean = false
@@ -11,91 +11,79 @@ export class PushoverSolver {
 
 	constructor() {}
 
-	public static statusAnalysis() {
-		return this._statusAnalysis
-	}
+    public static statusAnalysis(){
+        return this._statusAnalysis
+    }
 
-	public analysisInitialState() {}
+    public analysisInitialState(){
+        
+    }
+    
+    private static pushByService(structure: IStructure, nodeObjCoordinates: coordinates2D, serviceLoad: number,actualForce:number,stepNumber: number){
+        let nodeObj: INode
+        let cfactors = collapseFactorStructure(structure)
+        let cfValues = cfactors!.map(row => row[2])
+        let cfStep = min(...cfValues)
+        let i = cfValues.indexOf(cfStep)
+        let plasticizedNode: coordinates2D | null
+        if (cfStep+actualForce > serviceLoad) {
+            cfStep = serviceLoad - actualForce
+            plasticizedNode = null
+        }else{
+            plasticizedNode = cfactors![i][1] == 'initial'?
+            cfactors![i][0].nodes.initial.coordinates('static') : 
+            cfactors![i][0].nodes.final.coordinates('static')
+            //se collapsa el elemento en el nodo releseado
+            cfactors![i][0].release(cfactors![i][1],'rz')
+        }
+        updateHingesStructure(structure,cfStep)
+        try {
+            nodeObj = structure.node(nodeObjCoordinates)
+            //se registran los valores de interes en el paso j
+        } catch (error) {
+            throw 'ERROR: Pushover Solver cant find node obj'
+        }
+        let delta = nodeObj.displacements.dx
+        let stepj ={
+            step: 0,
+            plasticizedNode: plasticizedNode == undefined ? plasticizedNode : null,
+            collapseFactor: cfStep,
+            dxAtControlNode: delta,
+        }
 
-	private static pushByService(
-		structure: IStructure,
-		nodeObjCoordinates: coordinates2D,
-		serviceLoad: number,
-		actualForce: number,
-		stepNumber: number,
-	) {
-		let nodeObj: INode
-		let cfactors = collapseFactorStructure(structure)
-		let cfValues = cfactors!.map((row) => row[2])
-		let cfStep = algebra.min(...cfValues)
-		let i = cfValues.indexOf(cfStep)
-		let plasticizedNode: coordinates2D | null
-		if (cfStep + actualForce > serviceLoad) {
-			cfStep = serviceLoad - actualForce
-			plasticizedNode = null
-		} else {
-			plasticizedNode =
-				cfactors![i][1] == 'initial'
-					? cfactors![i][0].nodes.initial.coordinates('static')
-					: cfactors![i][0].nodes.final.coordinates('static')
-			//se collapsa el elemento en el nodo releseado
-			cfactors![i][0].release(cfactors![i][1], 'rz')
-		}
-		updateHingesStructure(structure, cfStep)
-		try {
-			nodeObj = structure.node(nodeObjCoordinates)
-			//se registran los valores de interes en el paso j
-		} catch (error) {
-			throw 'ERROR: Pushover Solver cant find node obj'
-		}
-		let delta = nodeObj.displacements.dx
-		let stepj = {
-			step: 0,
-			plasticizedNode:
-				plasticizedNode == undefined ? plasticizedNode : null,
-			collapseFactor: cfStep,
-			dxAtControlNode: delta,
-		}
-
-		if (this._serviceSteps == undefined || this._serviceSteps.length == 0) {
-			this._serviceSteps = [stepj]
-		} else {
-			this._serviceSteps.push(stepj)
-		}
-	}
-
-	private static pushByStability(
-		structure: IStructure,
-		nodeObjCoordinates: coordinates2D,
-		stepNumber: number,
-	) {
-		let nodeObj: INode
-		let cfactors = collapseFactorStructure(structure)
-		let cfValues = cfactors!.map((row) => row[2])
-		let cfStep = algebra.min(...cfValues)
-		let i = cfValues.indexOf(cfStep)
-		let plasticizedNode: coordinates2D | null
-		plasticizedNode =
-			cfactors![i][1] == 'initial'
-				? cfactors![i][0].nodes.initial.coordinates('static')
-				: cfactors![i][0].nodes.final.coordinates('static')
-		//se collapsa el elemento en el nodo releseado
-		cfactors![i][0].release(cfactors![i][1], 'rz')
-		updateHingesStructure(structure, cfStep)
-		try {
-			nodeObj = structure.node(nodeObjCoordinates)
-			//se registran los valores de interes en el paso j
-		} catch (error) {
-			throw 'ERROR: Pushover Solver cant find node obj'
-		}
-		let delta = nodeObj.displacements.dx
-		let stepj = {
-			step: stepNumber,
-			plasticizedNode:
-				plasticizedNode == undefined ? plasticizedNode : null,
-			collapseFactor: cfStep,
-			dxAtControlNode: delta,
-		}
+        if (this._serviceSteps == undefined || this._serviceSteps.length == 0) {
+            this._serviceSteps = [stepj]
+        } else {
+            this._serviceSteps.push(stepj)
+        }
+    }
+    
+    private static pushByStability(structure: IStructure,nodeObjCoordinates:coordinates2D,stepNumber: number){
+        let nodeObj: INode
+        let cfactors = collapseFactorStructure(structure)
+        let cfValues = cfactors!.map(row => row[2])
+        let cfStep = min(...cfValues)
+        let i = cfValues.indexOf(cfStep)
+        let plasticizedNode: coordinates2D | null
+        plasticizedNode = cfactors![i][1] == 'initial'?
+        cfactors![i][0].nodes.initial.coordinates('static') : 
+        cfactors![i][0].nodes.final.coordinates('static')
+        //se collapsa el elemento en el nodo releseado
+        updateHingesStructure(structure,cfStep)
+        cfactors![i][0].release(cfactors![i][1],'rz')
+        try {
+            nodeObj = structure.node(nodeObjCoordinates)
+            //se registran los valores de interes en el paso j
+        } catch (error) {
+            throw 'ERROR: Pushover Solver cant find node obj'
+        }
+        let delta = nodeObj.displacements.dx
+        let stepj ={
+            step: stepNumber,
+            plasticizedNode: plasticizedNode == undefined ? plasticizedNode : null,
+            collapseFactor: cfStep,
+            dxAtControlNode: delta,
+        }
 
 		if (this._steps == undefined || this._steps.length == 0) {
 			this._steps = [stepj]
@@ -233,22 +221,17 @@ const collapseFactorStructure = (structure: IStructure) => {
 	return cfactors
 }
 
-const updateHingesStructure = (
-	structure: IStructure,
-	collapseFactor: number,
-) => {
-	structure.elements.forEach((element) => {
-		if (element.finalHinge != undefined) {
-			element.finalHinge.moment =
-				element.finalHinge.moment +
-				element.forces[5][0] * collapseFactor
-		}
-		if (element.initialHinge != undefined) {
-			element.initialHinge.moment =
-				element.initialHinge.moment +
-				element.forces[2][0] * collapseFactor
-		}
-	})
+const updateHingesStructure = (structure: IStructure, collapseFactor: number) =>{
+    structure.elements.forEach(element => {
+        if (element.finalHinge != undefined) {
+            let mf = element.finalHinge.moment + element.forces[5][0] * collapseFactor
+            element.finalHinge.setMoment(mf)
+        }
+        if (element.initialHinge != undefined) {
+            let mi = element.initialHinge.moment + element.forces[2][0] * collapseFactor
+            element.initialHinge.setMoment(mi)
+        }
+    })
 }
 
 const totalSpanLoadStructure = (structure: IStructure) => {

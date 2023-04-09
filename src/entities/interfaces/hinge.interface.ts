@@ -3,7 +3,7 @@ export interface IHinge {
     maxCurv: number;
     minMoment: number;
     minCurve: number;
-    type: "Moment-P" | "Moment";
+    type: "Moment-P" | "Moment" | 'Custom';
     isCollapsed: boolean;
     typeCollapsed: string | undefined;
     moment: number;
