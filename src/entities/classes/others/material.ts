@@ -22,7 +22,8 @@ export class Concrete implements IConcrete {
 	) {}
 
 	get beta(): number {
-		return this.fc <= 28 ? 0.85 : 0.85 - (0.05 * (this.fc - 28)) / 7
+		
+		return (this.fc/1000) <= 28 ? 0.85 : 0.85 - (0.05 * (((this.fc/1000) - 28)) / 7)
 	}
 }
 
@@ -37,5 +38,9 @@ export class Steel implements ISteel {
 		this.fy = fy
 		this.name = name
 		this.weight = weight
+	}
+
+	get epsilonY(){
+		return this.fy/this.young
 	}
 }

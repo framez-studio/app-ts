@@ -22,6 +22,7 @@ export interface ISteel extends IMaterial {
 	young: number,
 	weight: number,
 	fy: number,
+	epsilonY: number
 }
 
 export type MaterialType = IConcrete | ISteel

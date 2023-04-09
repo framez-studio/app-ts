@@ -1,20 +1,14 @@
-/*
-import { describe, expect, it } from 'vitest'
-import { FrameSystem } from '@classes/complex-elements/frame-system'
-import { ElementNode } from '@classes/nodes/element-node'
-import { Element } from '@classes/complex-elements/element'
-import { Concrete, Steel } from '@classes/others/material'
-import { Hinge } from '@classes/others/moment-curvature'
-import { RectangularSpanLoad } from '@classes/others/rectangular-span-load'
-import {
-	PushoverSolver,
-	normalizeLoads2Unit,
-} from '@classes/solvers/pushover-solver'
-import { RectangularRCSection } from '@classes/sections/rectangular-cr'
-import { PorticSystemGenerator } from '@utils/structure'
-import { Support } from '@classes/nodes/support'
-import { Concrete21 } from '@utils/material'
-import { BarCR } from '@classes/sections/bar-cr'
+import { Element } from "@classes/complex-elements/element"
+import { Structure } from "@classes/complex-elements/structure"
+import { ElementNode } from "@classes/nodes/element-node"
+import { Support } from "@classes/nodes/support"
+import { Concrete, Steel } from "@classes/others/material"
+import { RectangularSpanLoad } from "@classes/others/rectangular-span-load"
+import { BarCR } from "@classes/sections/bar-cr"
+import { RectangularRCSection } from "@classes/sections/rectangular-cr"
+import { MomentCurvatureFinal2Section } from "@utils/moment-curvature"
+import { describe, expect, it } from "vitest"
+
 
 
 describe('Case 1: Oficial Test', () => {
@@ -23,8 +17,8 @@ describe('Case 1: Oficial Test', () => {
     const Steel60 = new Steel("G60",200e6,70,420e3)
 
 	//sections geometry & material definition
-	const col350x350 = new RectangularRCSection(0.35, 0.35, Concrete21)
-	const vga400x300 = new RectangularRCSection(0.3, 0.4, Concrete21)
+	const col350x350 = new RectangularRCSection(0.35, 0.35, Cncr21000KPA)
+	const vga400x300 = new RectangularRCSection(0.3, 0.4, Cncr21000KPA)
 
     //reinforcement definition
     let barn5 = new BarCR((25.4/1000)*5/8,Steel60)
@@ -36,7 +30,7 @@ describe('Case 1: Oficial Test', () => {
     col350x350.addRowReinforcement(0.30,4,barn5)
 
     vga400x300.addRowReinforcement(0.045,4,barn5)
-    vga400x300.addRowReinforcement(0.4-0.045,3,barn5)
+    vga400x300.addRowReinforcement(0.355,4,barn5)
 
 	//nodes definition
 	let a = new Support('fixed', { x: 0, y: 0 })
@@ -49,11 +43,9 @@ describe('Case 1: Oficial Test', () => {
 	let beam = new Element(b, c, vga400x300)
 	let rCol = new Element(d, c, col350x350)
 
-
-
-
 	//structure definition
 	let structure = new Structure(lCol, beam, rCol)
+	let r = MomentCurvatureFinal2Section(vga400x300)
 
 	//loads definition & assign
 	let load = new RectangularSpanLoad(beam, 1)
@@ -96,4 +88,3 @@ describe('Case 1: Oficial Test', () => {
 //DIAMETROS DE LAS BARRAS mm
 //FY Mpa
 //COORD (m)
-*/
