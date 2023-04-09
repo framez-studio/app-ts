@@ -17,6 +17,11 @@ export function useElementSelectionState(): ISelectedElementPropsStateHook {
 		elementState.updateYoung(newYoung)
 		requestStructureSolver()
 	}
+	function updateFc(newFc: string) {
+		element.section.material.fc = Number(newFc)
+		elementState.updateFc(newFc)
+		requestStructureSolver()
+	}
 	function updateEpsilon(newEpsilon: string) {
 		element.section.material.epsilon_max = Number(newEpsilon)
 		elementState.updateEpsilon(newEpsilon)
@@ -41,6 +46,7 @@ export function useElementSelectionState(): ISelectedElementPropsStateHook {
 	return {
 		state,
 		updateYoung,
+		updateFc,
 		updateSectionDims,
 		updateLoad,
 		updateEpsilon,

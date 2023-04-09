@@ -4,35 +4,19 @@ import {
 	IElementPropsStateHook,
 } from '@interfaces'
 import { forcesArrayToObject } from '@utils/elements'
-import { useImmer } from 'use-immer'
+import { useElementInitialState } from './useElementInitialState'
 
 export function useElementState(): IElementPropsStateHook {
-	const initialState: IElementPropsState = {
-		young: '',
-		epsilon: '',
-		sectionDims: {
-			base: '',
-			height: '',
-		},
-		load: '',
-		response: {
-			initial: {
-				fx: '',
-				fy: '',
-				mz: '',
-			},
-			final: {
-				fx: '',
-				fy: '',
-				mz: '',
-			},
-		},
-	}
-	const [state, updateState] = useImmer<IElementPropsState>(initialState)
+	const [state, updateState] = useElementInitialState()
 
 	function updateYoung(young: string) {
 		updateState((draft) => {
 			draft.young = young
+		})
+	}
+	function updateFc(fc: string) {
+		updateState((draft) => {
+			draft.fc = fc
 		})
 	}
 	function updateEpsilon(epsilon: string) {
@@ -68,6 +52,7 @@ export function useElementState(): IElementPropsStateHook {
 	function assignElementState(element: IElement) {
 		const forces = forcesArrayToObject(element.forces)
 		updateYoung(String(element.young))
+		updateFc(String(element.section.material.fc))
 		updateEpsilon(String(element.section.material.epsilon_max))
 		updateSectionDims({
 			base: String(element.section.b),
@@ -91,6 +76,7 @@ export function useElementState(): IElementPropsStateHook {
 		state,
 		assignElementState,
 		updateYoung,
+		updateFc,
 		updateEpsilon,
 		updateSectionDims,
 		updateLoad,

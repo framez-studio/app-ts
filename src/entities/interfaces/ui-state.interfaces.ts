@@ -9,6 +9,7 @@ export interface IElementSteelState {
 	rows: ISteelRowState[]
 }
 export interface IElementPropsState {
+	fc: string
 	young: string
 	epsilon: string
 	sectionDims: {
@@ -52,4 +53,5 @@ export interface IStructureGeneratorState {
 	}
 	sectionsConfigToggle: 'column' | 'beam'
 	loadsConfigToggle: 'column' | 'beam'
+	arePropsValid: boolean
 }

@@ -1,3 +1,4 @@
+import ErrorMessage from '@components/ErrorMessage'
 import FormButton from '@components/FormButton'
 import FormInput from '@components/FormInput'
 import { useGeneratorContext } from '@context/GeneratorContext'
@@ -51,6 +52,14 @@ function StructureForm() {
 					}}
 					className="span-2"
 				/>
+				{!state.arePropsValid && (
+					<ErrorMessage
+						props={{
+							text: `There are missing or invalid properties`,
+						}}
+						className="span-2"
+					/>
+				)}
 			</section>
 		</section>
 	)

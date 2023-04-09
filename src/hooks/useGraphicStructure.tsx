@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { IGraphicStructure } from '@interfaces'
 import { useAppContext } from '@context/AppContext'
 import { layerToTypeMap } from '@utils/ui-structure'
@@ -35,6 +35,9 @@ export function useGraphicStructure(): IGraphicStructure {
 			: null
 		setSelection({ type, object })
 	}
+	useEffect(() => {
+		graphicStructure.current = new UIStructure(structure)
+	}, [structure])
 	return {
 		printOnContext,
 		pointerUpHandler,

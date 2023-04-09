@@ -1,20 +1,8 @@
 import { IElementDynamicState, IElementDynamicStateHook } from '@interfaces'
-import { useImmer } from 'use-immer'
+import { useElementDynamicInitialState } from './useElementDynamicInitialState'
 
 export function useElementDynamicState(): IElementDynamicStateHook {
-	const initialState: IElementDynamicState = {
-		weight: '',
-		automatic: false,
-		curvature: {
-			min: '',
-			max: '',
-		},
-		moment: {
-			min: '',
-			max: '',
-		},
-	}
-	const [state, updateState] = useImmer(initialState)
+	const [state, updateState] = useElementDynamicInitialState()
 
 	function updateWeight(value: string) {
 		updateState((draft) => {

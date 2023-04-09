@@ -22,6 +22,7 @@ export interface ISelectedSteelStateHook
 	extends Omit<ISteelStateHook, 'assignElementState'> {}
 export interface IElementPropsStateHook {
 	state: IElementPropsState
+	updateFc(payload: string): void
 	updateYoung(payload: string): void
 	updateEpsilon(payload: string): void
 	updateSectionDims(payload: Partial<IElementPropsState['sectionDims']>): void

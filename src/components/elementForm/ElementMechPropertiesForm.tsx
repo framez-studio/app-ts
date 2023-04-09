@@ -7,7 +7,7 @@ import { useActiveSectionContext } from '@context/ActiveSectionContext'
 const ElementMechPropertiesForm = () => {
 	const { setActiveSection } = useActiveSectionContext()
 	const { elementProps } = useElementContext()
-	const { state, updateYoung, updateEpsilon, updateSectionDims } =
+	const { state, updateYoung, updateEpsilon, updateSectionDims, updateFc } =
 		elementProps
 
 	return (
@@ -36,6 +36,8 @@ const ElementMechPropertiesForm = () => {
 						label: `${String.fromCharCode(402)}'c`,
 						tooltip: `Concrete's maximum compressive strength`,
 						suffix: 'MPa',
+						value: state.fc,
+						onChange: ($e) => updateFc($e.target.value),
 					}}
 				/>
 				<FormInput

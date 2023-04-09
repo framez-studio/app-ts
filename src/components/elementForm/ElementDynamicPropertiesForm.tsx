@@ -2,25 +2,24 @@ import React from 'react'
 import FormButton from '@components/FormButton'
 import FormInput from '@components/FormInput'
 import CheckboxInput from '@components/CheckboxInput'
-import { useElementDynamicState } from '@hooks/useElementDynamicState'
 import FormSectionLabel from '@components/FormSectionLabel'
 import { useActiveSectionContext } from '@context/ActiveSectionContext'
+import { useElementContext } from '@context/ElementContext'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
-	props?: {
-		onBackBtn?(): void
-	}
+	props?: {}
 }
 
 const ElementDynamicPropertiesForm: React.FC<Props> = ({ props }) => {
 	const { setActiveSection } = useActiveSectionContext()
+	const { elementDynamics } = useElementContext()
 	const {
 		state,
 		updateCurvature,
 		updateMoment,
 		updateWeight,
 		toggleAutomatic,
-	} = useElementDynamicState()
+	} = elementDynamics
 	const { curvature, moment, weight } = state
 	return (
 		<section className="form-container">

@@ -4,9 +4,12 @@ import {
 } from '@interfaces'
 import { useStructureGeneratorInitialState } from './useStructureGeneratorInitialState'
 import { useElementContextEmptyState } from './useElementContextEmptyState'
+import { generatePorticSystemFromContext } from '@utils/structure-generator'
+import { useAppContext } from '@context/AppContext'
 
 export function useStructureGeneratorState(): IStructureGeneratorStateHook {
 	const [state, updateState] = useStructureGeneratorInitialState()
+	const { setStructure, requestCanvasRedraw } = useAppContext()
 	const columnsContext = useElementContextEmptyState()
 	const beamsContext = useElementContextEmptyState()
 
@@ -34,8 +37,25 @@ export function useStructureGeneratorState(): IStructureGeneratorStateHook {
 			draft.loadsConfigToggle = payload
 		})
 	}
+	function setArePropsValid(payload: boolean): void {
+		updateState((draft) => {
+			draft.arePropsValid = payload
+		})
+	}
 	function generateStructure() {
-		console.log('generateSructure')
+		try {
+			const { structure } = generatePorticSystemFromContext({
+				state,
+				columnsContext,
+				beamsContext,
+			})
+			setArePropsValid(true)
+			setStructure(structure)
+			requestCanvasRedraw()
+		} catch (e) {
+			setArePropsValid(false)
+			console.log(e)
+		}
 	}
 	return {
 		state,
