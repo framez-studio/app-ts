@@ -58,3 +58,15 @@ export interface IStructureGeneratorState {
 	loadsConfigToggle: 'column' | 'beam'
 	arePropsValid: boolean
 }
+export interface IStructurePushoverState {
+	node: {
+		x: string
+		y: string
+	}
+	direction: 'left' | 'right'
+	constants: {
+		av: string
+		fv: string
+	}
+	arePropsValid: boolean
+}

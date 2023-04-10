@@ -5,6 +5,7 @@ import FormInputLabel from './FormInputLabel'
 export interface FormInputProps extends React.HTMLProps<HTMLDivElement> {
 	props?: {
 		label?: string
+		labelCentered?: boolean
 		suffix?: string
 		value?: string
 		readonly?: boolean
@@ -25,6 +26,7 @@ const FormInput: React.FC<FormInputProps> = ({ props, className }) => {
 			{props?.label && (
 				<FormInputLabel
 					props={{ label: props.label, tooltip: props.tooltip }}
+					className={props?.labelCentered ? 'jc-center' : ''}
 				/>
 			)}
 			<div className={classState}>

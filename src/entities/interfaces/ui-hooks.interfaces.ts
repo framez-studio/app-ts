@@ -6,6 +6,7 @@ import {
 	IElementSteelState,
 	ISteelRowState,
 	IStructureGeneratorState,
+	IStructurePushoverState,
 } from '@interfaces'
 
 export interface ISteelStateHook {
@@ -58,4 +59,13 @@ export interface IStructureGeneratorStateHook {
 	setSectionsConfigToggle(payload: 'column' | 'beam'): void
 	setLoadsConfigToggle(payload: 'column' | 'beam'): void
 	generateStructure(): void
+}
+export interface IStructurePushoverHook {
+	state: IStructurePushoverState
+	updateDirection(payload: IStructurePushoverState['direction']): void
+	updateNode(payload: Partial<IStructurePushoverState['node']>): void
+	updateConstants(
+		payload: Partial<IStructurePushoverState['constants']>,
+	): void
+	runPushover(): void
 }

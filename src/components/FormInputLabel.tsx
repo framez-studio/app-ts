@@ -7,9 +7,9 @@ interface Props extends React.HTMLProps<HTMLSpanElement> {
 	}
 }
 
-const FormInputLabel: React.FC<Props> = ({ props }) => {
+const FormInputLabel: React.FC<Props> = ({ props, className }) => {
 	return (
-		<section className="input-label">
+		<section className={`input-label ${className ?? ''}`}>
 			<span className="secondary-text">{props.label}</span>
 			{props.tooltip && <InfoTooltip props={{ text: props.tooltip }} />}
 		</section>

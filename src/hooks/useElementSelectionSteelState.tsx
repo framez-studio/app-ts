@@ -30,6 +30,7 @@ export function useElementSelectionSteelState(): ISelectedSteelStateHook {
 		const oldRow = steelState.state.rows[index]
 		steelState.updateSteelRow(index, newData)
 		syncronizeSteelRow(oldRow, newData)
+		console.log(element.section.reinforcement)
 	}
 	function createEmptySteelRow() {
 		steelState.createEmptySteelRow()

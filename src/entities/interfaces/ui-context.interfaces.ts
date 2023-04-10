@@ -3,6 +3,7 @@ import {
 	IElement,
 	IElementDynamicStateHook,
 	INode,
+	ISelectedElementDynamicStateHook,
 	ISelectedElementPropsStateHook,
 	ISelectedSteelStateHook,
 	IStructure,
@@ -25,7 +26,7 @@ export interface IAppContext {
 export interface IElementContext {
 	elementProps: ISelectedElementPropsStateHook
 	elementSteel: ISelectedSteelStateHook
-	elementDynamics: IElementDynamicStateHook
+	elementDynamics: ISelectedElementDynamicStateHook
 }
 export interface IActiveSectionContext {
 	activeSection: IFormSections

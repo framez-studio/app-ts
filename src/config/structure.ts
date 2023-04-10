@@ -29,6 +29,9 @@ const config: IGeneratorConfig = {
 		load: 0,
 		material,
 		steel,
+		momentCurvature: {
+			automatic: true,
+		},
 	},
 	beams: {
 		section: {
@@ -38,6 +41,9 @@ const config: IGeneratorConfig = {
 		load: 20,
 		material,
 		steel,
+		momentCurvature: {
+			automatic: true,
+		},
 	},
 }
 

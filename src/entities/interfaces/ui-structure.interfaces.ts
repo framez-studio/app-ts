@@ -51,6 +51,17 @@ export interface IGeneratorElementConfig {
 		rows: ISteelNumRowsState[]
 	}
 	load: number
+	momentCurvature: {
+		automatic: boolean
+		moment?: {
+			min: number
+			max: number
+		}
+		curvature?: {
+			min: number
+			max: number
+		}
+	}
 }
 export interface IGeneratorConfig {
 	levels: { count: number; separation: number }

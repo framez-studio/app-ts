@@ -10,11 +10,11 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	}
 }
 
-const RadioInput: React.FC<Props> = ({ props }) => {
+const RadioInput: React.FC<Props> = ({ props, className }) => {
 	const { label, checked } = props
 
 	return (
-		<section className="form-radio-container">
+		<section className={`form-radio-container ${className ?? ''}`}>
 			<input
 				type="radio"
 				className="element-type-item"
