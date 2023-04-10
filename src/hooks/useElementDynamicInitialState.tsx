@@ -4,7 +4,7 @@ import { useImmer } from 'use-immer'
 export function useElementDynamicInitialState() {
 	const initialState: IElementDynamicState = {
 		weight: '24',
-		automatic: false,
+		automatic: true,
 		curvature: {
 			min: '',
 			max: '',

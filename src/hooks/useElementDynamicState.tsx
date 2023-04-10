@@ -1,4 +1,8 @@
-import { IElementDynamicState, IElementDynamicStateHook } from '@interfaces'
+import {
+	IElement,
+	IElementDynamicState,
+	IElementDynamicStateHook,
+} from '@interfaces'
 import { useElementDynamicInitialState } from './useElementDynamicInitialState'
 
 export function useElementDynamicState(): IElementDynamicStateHook {
@@ -7,6 +11,11 @@ export function useElementDynamicState(): IElementDynamicStateHook {
 	function updateWeight(value: string) {
 		updateState((draft) => {
 			draft.weight = value
+		})
+	}
+	function updateAutomatic(value: boolean) {
+		updateState((draft) => {
+			draft.automatic = value
 		})
 	}
 	function toggleAutomatic() {
@@ -32,11 +41,31 @@ export function useElementDynamicState(): IElementDynamicStateHook {
 			}
 		})
 	}
+	function assignElementState(element: IElement) {
+		const { weight } = element.section.material
+		const hinge = element.getHinge('initial')
+
+		updateWeight(String(weight))
+		if (hinge) {
+			updateAutomatic(false)
+			updateCurvature({
+				max: String(hinge.maxCurv),
+				min: String(hinge.minCurve),
+			})
+			updateMoment({
+				max: String(hinge.maxMoment),
+				min: String(hinge.minMoment),
+			})
+		} else {
+			updateAutomatic(true)
+		}
+	}
 	return {
 		state,
 		updateWeight,
 		toggleAutomatic,
 		updateCurvature,
 		updateMoment,
+		assignElementState,
 	}
 }

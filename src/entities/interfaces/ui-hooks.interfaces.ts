@@ -45,7 +45,10 @@ export interface IElementDynamicStateHook {
 	toggleAutomatic(): void
 	updateCurvature(payload: Partial<IElementDynamicState['curvature']>): void
 	updateMoment(payload: Partial<IElementDynamicState['moment']>): void
+	assignElementState(element: IElement): void
 }
+export interface ISelectedElementDynamicStateHook
+	extends Omit<IElementDynamicStateHook, 'assignElementState'> {}
 export interface IStructureGeneratorStateHook {
 	state: IStructureGeneratorState
 	columnsContext: IElementContext
