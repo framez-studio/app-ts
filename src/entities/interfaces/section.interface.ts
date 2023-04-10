@@ -41,6 +41,7 @@ export interface IRectangularRCSection extends IRectangularSection<IConcrete> {
 	addRowReinforcement(d: number, quantity: number, BarCR: IBarCR): void
 	findRowReinforcement(d: number): number
 	swapRowReinforcement(d: number, quantity: number, BarCR: IBarCR): void
+	deleteRowReinforcement(d: number): void
 	deleteReinforcement(): void
 	sortReinforcement(): void
 	rotate180(): void

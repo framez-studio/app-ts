@@ -17,9 +17,13 @@ export interface ISteelStateHook {
 	updateSteelRow(index: number, payload: Partial<ISteelRowState>): void
 	removeSteelRow(index: number): void
 	assignElementState(element: IElement): void
+	clearEmptySteelRows(): void
 }
 export interface ISelectedSteelStateHook
-	extends Omit<ISteelStateHook, 'assignElementState'> {}
+	extends Omit<
+		ISteelStateHook,
+		'assignElementState' | 'clearEmptySteelRows'
+	> {}
 export interface IElementPropsStateHook {
 	state: IElementPropsState
 	updateFc(payload: string): void

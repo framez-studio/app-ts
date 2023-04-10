@@ -6,15 +6,17 @@ import {
 	IElementSteelState,
 	IElementDynamicState,
 	IGeneratorConfig,
-	IGeneratorContext,
+	IGeneratorElementConfig,
 } from '@interfaces'
 import { Element } from '@classes/complex-elements/element'
 import { Structure } from '@classes/complex-elements/structure'
 import { ElementNode } from '@classes/nodes/element-node'
 import { Support } from '@classes/nodes/support'
-import { Concrete } from '@classes/others/material'
+import { Concrete, Steel } from '@classes/others/material'
 import { RectangularSpanLoad } from '@classes/others/rectangular-span-load'
 import { RectangularRCSection } from '@classes/sections/rectangular-cr'
+import { isRowFull } from './ui'
+import { BarCR } from '@classes/sections/bar-cr'
 
 export function generatePorticSystem(config: IGeneratorConfig) {
 	const { levels, spans } = config
@@ -86,6 +88,7 @@ function generateColumns(config: IGeneratorConfig, nodes: INode[][]) {
 	const { spans, levels, columns } = config
 	const { young, weight, fc, epsilon_max } = columns.material
 	const { base, height } = columns.section
+	const { steel } = columns
 	const columnsArr = []
 
 	for (let j = 0; j <= spans.count; j++) {
@@ -102,7 +105,24 @@ function generateColumns(config: IGeneratorConfig, nodes: INode[][]) {
 			let iNode = nodes[i][j]
 			let fNode = nodes[i + 1][j]
 			let element = new Element(iNode, fNode, section)
+
 			element.setSpanLoad(new RectangularSpanLoad(element, 0))
+			steel.rows.forEach((row) => {
+				if (isRowFull(row)) {
+					let { diameter, distance, quantity } = row
+					let { young, fy } = steel
+
+					const material = new Steel('custom', young, 0, fy)
+					const section = new BarCR(diameter, material)
+
+					element.section.addRowReinforcement(
+						distance,
+						quantity,
+						section,
+					)
+				}
+			})
+
 			columnsArr.push(element)
 		}
 	}
@@ -112,6 +132,7 @@ function generateBeams(config: IGeneratorConfig, nodes: INode[][]) {
 	const { spans, levels, beams } = config
 	const { young, weight, fc, epsilon_max } = beams.material
 	const { base, height } = beams.section
+	const { steel } = beams
 	const beamsArr = []
 
 	for (let i = 1; i <= levels.count; i++) {
@@ -128,7 +149,24 @@ function generateBeams(config: IGeneratorConfig, nodes: INode[][]) {
 			let iNode = nodes[i][j]
 			let fNode = nodes[i][j + 1]
 			let element = new Element(iNode, fNode, section)
+
 			element.setSpanLoad(new RectangularSpanLoad(element, 20))
+			steel.rows.forEach((row) => {
+				if (isRowFull(row)) {
+					let { diameter, distance, quantity } = row
+					let { young, fy } = steel
+
+					const material = new Steel('custom', young, 0, fy)
+					const section = new BarCR(diameter, material)
+
+					element.section.addRowReinforcement(
+						distance,
+						quantity,
+						section,
+					)
+				}
+			})
+
 			beamsArr.push(element)
 		}
 	}
@@ -141,28 +179,29 @@ function extractElementConfigFromContext(context: IElementContext) {
 	const { state: elementSteelState } = elementSteel
 	const { state: elementDynamicsState } = elementDynamics
 
-	const {
-		epsilon,
-		fc,
-		sectionDims,
-		young: concreteYoung,
-		load,
-	} = elementPropsState
+	const { sectionDims } = elementPropsState
 
-	const { weight } = elementDynamicsState
-
-	let config = {
+	let config: IGeneratorElementConfig = {
 		material: {
-			young: Number(concreteYoung),
-			weight: Number(weight),
-			fc: Number(fc),
-			epsilon_max: Number(epsilon),
+			young: Number(elementPropsState.young),
+			weight: Number(elementDynamicsState.weight),
+			fc: Number(elementPropsState.fc),
+			epsilon_max: Number(elementPropsState.epsilon),
 		},
 		section: {
 			base: Number(sectionDims.base),
 			height: Number(sectionDims.height),
 		},
-		load: Number(load),
+		steel: {
+			young: Number(elementSteelState.young),
+			fy: Number(elementSteelState.yield),
+			rows: elementSteelState.rows.map((row) => ({
+				diameter: Number(row.diameter),
+				distance: Number(row.distance),
+				quantity: Number(row.quantity),
+			})),
+		},
+		load: Number(elementPropsState.load),
 	}
 	return config
 }

@@ -1,5 +1,5 @@
 import { IUISelection, IUIStructureObject } from '@types-ui'
-import { IElement, IGeneratorContext, INode, IStructure } from '@interfaces'
+import { IElement, INode, ISteelNumRowsState, IStructure } from '@interfaces'
 
 export interface IUIPrintable {
 	printOnContext(): void
@@ -37,27 +37,24 @@ export interface IUIOutline {
 	readonly width: number
 	readonly color: string
 }
+export interface IGeneratorElementConfig {
+	material: {
+		young: number
+		weight: number
+		fc: number
+		epsilon_max: number
+	}
+	section: { base: number; height: number }
+	steel: {
+		fy: number
+		young: number
+		rows: ISteelNumRowsState[]
+	}
+	load: number
+}
 export interface IGeneratorConfig {
 	levels: { count: number; separation: number }
 	spans: { count: number; separation: number }
-	columns: {
-		material: {
-			young: number
-			weight: number
-			fc: number
-			epsilon_max: number
-		}
-		section: { base: number; height: number }
-		load: number
-	}
-	beams: {
-		material: {
-			young: number
-			weight: number
-			fc: number
-			epsilon_max: number
-		}
-		section: { base: number; height: number }
-		load: number
-	}
+	columns: IGeneratorElementConfig
+	beams: IGeneratorElementConfig
 }

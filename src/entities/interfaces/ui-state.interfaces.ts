@@ -3,6 +3,9 @@ export interface ISteelRowState {
 	diameter: string
 	distance: string
 }
+export type ISteelNumRowsState = {
+	[key in keyof ISteelRowState]: number
+}
 export interface IElementSteelState {
 	young: string
 	yield: string
