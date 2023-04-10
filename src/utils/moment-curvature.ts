@@ -6,9 +6,10 @@ import {
 } from '@interfaces'
 import { absolutevalue } from './algebra'
 import { Hinge } from '@classes/others/moment-curvature'
+import { roundedRectPath } from './canvas-paths'
 
 export const NominalMomentWhitney = (sectionCR: IRectangularRCSection, p: number = 0) => {
-	let c = NeutralAxialWhitney(sectionCR, p) as number
+	let c = NominalNeutralAxisWhitney(sectionCR, p) as number
 	return WhitneyEquilibriumMoment(c, sectionCR, p)
 }
 
@@ -28,10 +29,10 @@ export const YieldCurvatureRC = (c: number, d: number, epsilon: number) => {
 	return epsilon / (d - c)
 }
 
-export const NeutralAxialWhitney = (sectionCR: IRectangularRCSection, p: number = 0) => {
-	let cu = sectionCR.b
+export const NominalNeutralAxisWhitney = (sectionCR: IRectangularRCSection, p: number = 0) => {
+	let cu = sectionCR.h*10
 	let ci = 0.001
-	let itmax = 200
+	let itmax = 200e6
 	let tol = 1e-9
 	try {
 		let c = BiseccionMethod(WhitneyEquilibriumForces, ci, cu, itmax, tol, sectionCR, p)
@@ -42,7 +43,7 @@ export const NeutralAxialWhitney = (sectionCR: IRectangularRCSection, p: number 
 }
 
 export const YieldNeutralAxis = (sectionCR: IRectangularRCSection, p: number = 0) => {
-	let cu = sectionCR.b
+	let cu = sectionCR.h*10
 	let ci = 0.001
 	let itmax = 200
 	let tol = 1e-9
@@ -162,7 +163,7 @@ const YieldEquilibriumMoment = (
 	return momentT + momentC
 }
 
-const ForcesAndMomentInReinforcement = (
+export const ForcesAndMomentInReinforcement = (
 	ci: number,
 	epsilon_cncr: number,
 	reinforcement: IRowReinforcement[],
@@ -235,11 +236,15 @@ const NominalCurvatureWhitney = (epsilon: number, c: number) => {
 const YieldDistanceTensionReinforcement = (sectionRC: IRectangularRCSection, p: number = 0) => {
 	let c = YieldNeutralAxis(sectionRC,p)
 	let row = ForcesAndMomentInReinforcement(c,sectionRC.material.epsilon_max,sectionRC.reinforcement)
+	let sumAS = 0
+	let sumDAS = 0
 	row.forEach(r => {
-		row
+		if (r.force>0) {
+			sumAS = sumAS + r.section.area
+			sumDAS = sumDAS + r.section.area*r.distance
+		}
 	});
-	return 0
-
+	return sumDAS/sumAS
 }
 
 const AreaMomentCurvature = (mn: number,cn: number,my: number,cy: number) => {
@@ -249,10 +254,10 @@ const AreaMomentCurvature = (mn: number,cn: number,my: number,cy: number) => {
 const CurvatureFinal = (NominalCurvature:number,SlopeMomentCurvatureElastic:number,CurveArea:number) => {
 	let fun = (cx: number,cn:number,slope: number,area: number) => {
 		let mx = cx*slope
-		return (cx*mx)+(mx*(cn-cx))
+		return absolutevalue(0.5*(cx*mx)+(mx*(cn-cx)))-area
 	}
 
-	let cx = BiseccionMethod(fun,0,NominalCurvature,1e6,1e-6,NominalCurvature,SlopeMomentCurvatureElastic,CurveArea)
+	let cx = BiseccionMethod(fun,1e-12,NominalCurvature,1e6,1e-6,NominalCurvature,SlopeMomentCurvatureElastic,CurveArea)
 	return cx
 }
 
@@ -265,9 +270,9 @@ const WhitneyMomentCurvature2Section = (sectionRC: IRectangularRCSection, p: num
 	let YieldMoment = YieldMomentRectangularRC(sectionRC,p)
 	let ccy = YieldNeutralAxis(sectionRC,p)
 	let dy = YieldDistanceTensionReinforcement(sectionRC,p)
-	let YieldCurvature = YieldCurvatureRC(ccy,dy,sectionRC.material.epsilon_max)
+	let YieldCurvature = YieldCurvatureRC(ccy,dy,sectionRC.reinforcement[0].section.material.epsilonY)
+	let c = NominalNeutralAxisWhitney(sectionRC,p)
 	let NominalMoment = NominalMomentWhitney(sectionRC,p)
-	let c = NeutralAxialWhitney(sectionRC,p)
 	let NominalCurvature = NominalCurvatureWhitney(sectionRC.material.epsilon_max,c)
 
 	let Eslope = YieldMoment/YieldCurvature
@@ -306,8 +311,8 @@ const AsignHinges2Element = (
 			sectionRC.rotate180()
 
 			let mc2 = WhitneyMomentCurvature2Section(sectionRC,p)
-			MnMin = mc2.Moment
-			CurvMin = mc2.Curvature
+			MnMin = -mc2.Moment
+			CurvMin = -mc2.Curvature
 
 			sectionRC.rotate180()
 		}
@@ -321,4 +326,11 @@ const AsignHinges2Element = (
 			let hinge = new Hinge(MnMax,CurvMax,MnMin,CurvMin,typeHinge)
 			element.assignHinge('initial',hinge)
 		}
+}
+
+export const MomentCurvatureFinal2Section = (sectionRC: IRectangularRCSection) => {
+	let mc1 = WhitneyMomentCurvature2Section(sectionRC,0)
+	sectionRC.rotate180()
+	let mc2 = WhitneyMomentCurvature2Section(sectionRC,0)
+	return {maxMoment: mc1.Moment, maxCurv: mc1.Curvature,minMoment: -mc2.Moment, minCurve: -mc2.Curvature}
 }

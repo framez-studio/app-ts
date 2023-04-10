@@ -2,7 +2,7 @@ import { Concrete } from '@classes/others/material'
 import { RectangularRCSection } from '@classes/sections/rectangular-cr'
 import { BarNo6, BarNo5 } from '@utils/bar-cr'
 import {
-	NeutralAxialWhitney,
+	NominalNeutralAxisWhitney,
 	NominalMomentWhitney,
 	YieldNeutralAxis,
 	YieldMomentRectangularRC,
@@ -16,10 +16,10 @@ describe('Nominal moment RSCR', () => {
 	section.addRowReinforcement(240, 4, BarNo6)
 
 	it('should calculate correctly} c whitney', () => {
-		expect(NeutralAxialWhitney(section)).toBeCloseTo(65.68)
+		expect(NominalNeutralAxisWhitney(section)).toBeCloseTo(65.86)
 	})
 	it('should calculate correctly nominal moment', () => {
-		expect(NominalMomentWhitney(section)).toBeCloseTo(98671347.18)
+		expect(NominalMomentWhitney(section)).toBeCloseTo(99438410.384)
 	})
 })
 
@@ -30,10 +30,10 @@ describe('Yield moment RSCR', () => {
 	section.addRowReinforcement(240, 4, BarNo6)
 
 	it('should calculate correctly c yield', () => {
-		expect(YieldNeutralAxis(section)).toBeCloseTo(83.656615)
+		expect(YieldNeutralAxis(section)).toBeCloseTo(83.8834)
 	})
 	it('should calculate correctly yield moment', () => {
-		expect(YieldMomentRectangularRC(section)).toBeCloseTo(98885582.52)
+		expect(YieldMomentRectangularRC(section)).toBeCloseTo(99706731.585)
 	})
 })
 
@@ -44,10 +44,10 @@ describe('Nominal moment Tarea', () => {
 	section.addRowReinforcement(352.06, 3, BarNo5)
 
 	it('should calculate correctly c by whitney', () => {
-		expect(NeutralAxialWhitney(section)).toBeCloseTo(50.34)
+		expect(NominalNeutralAxisWhitney(section)).toBeCloseTo(50.216876)
 	})
 
 	it('should calculate correctly nominal moment', () => {
-		expect(NominalMomentWhitney(section)).toBeCloseTo(82720558.09)
+		expect(NominalMomentWhitney(section)).toBeCloseTo(82164696.5246)
 	})
 })
