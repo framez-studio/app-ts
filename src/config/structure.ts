@@ -8,8 +8,8 @@ const material: IGeneratorElementConfig['material'] = {
 	epsilon_max: 0.004,
 }
 const steel: IGeneratorElementConfig['steel'] = {
-	fy: 500,
-	young: 210000,
+	fy: 420000,
+	young: 200000,
 	rows: [],
 }
 const config: IGeneratorConfig = {
