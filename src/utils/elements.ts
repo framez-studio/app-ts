@@ -9,10 +9,12 @@ import {
 	supportType,
 } from '@types'
 import { constraints } from '@config/globals'
-import { IElement, INode, IStructure } from '@interfaces'
+import { IElement, IFrameSystem, INode, IStructure } from '@interfaces'
 import { SMatrixOperator as SMatOp } from '@classes/matrices/s-matrix-operator'
 import { solveLinearSystem } from '@utils/solver'
 import { allIndexesOf } from './helpers'
+import { FHE } from '@classes/seismic-analysis/fhe'
+import { PushoverSolver } from '@classes/solvers/pushover-solver'
 
 export const releasesArray = (
 	releases: elementDegsOfFreedom2DObject,
@@ -271,4 +273,19 @@ export function hasNonZeroLoad(element: IElement): boolean {
 		throw new Error('Element has more than one load object')
 	if (element.loads[0].load) hasLoad = true
 	return hasLoad
+}
+
+export function getCapacityCurve(config: {
+	structure: IFrameSystem
+	direction: 'left' | 'right'
+	node: { x: number; y: number }
+	constants: { av: number; fv: number }
+}) {
+	const { direction, node, constants, structure } = config
+	const { av, fv } = constants
+
+	FHE.setFHEinNodes(structure, direction == 'left' ? -1 : 1, 2, av, fv)
+	PushoverSolver.Run(structure, node, 'stability')
+
+	return PushoverSolver.capacityCurve()
 }
