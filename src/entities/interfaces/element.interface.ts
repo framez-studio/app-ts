@@ -42,5 +42,5 @@ export interface IElement {
 	assignHinge(node: initialOrFinal, hinge: IHinge): void
 	getHinge(node: initialOrFinal): IHinge | undefined
 	resetLoads(): void
-	copy(): IElement
+	copy(nodeInitial: INode, nodeFinal: INode): IElement
 }

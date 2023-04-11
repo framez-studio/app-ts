@@ -4,6 +4,7 @@ import { Array2D, coordinates2D, supportType } from "@types"
 import { displaceStructure, filterNodeByCoords, filterElementByCoords, assemblyFef, assemblyMatrix } from "@utils/elements"
 import { uniques, allIndexesOf } from "@utils/helpers"
 import {SMatrixOperator as MatOp} from "@classes/matrices/s-matrix-operator"
+import { forEach } from "mathjs"
 
 
  /**
@@ -102,9 +103,38 @@ export class Structure implements IStructure {
 
 	public copy(): IStructure {
 		let eArray = [] as IElement[]
-		this._elements.forEach(e => {
-			eArray.push(e.copy())
+		let nodesNew: INode[] = []
+		this.nodes.forEach(n => {
+			nodesNew.push(n.copy())
 		});
-		return new Structure(...eArray!)
+		
+		this._elements.forEach(e => {
+			let ni = findNodeinArrayByCoordinates(e.nodes.initial.coordinates('static'),nodesNew)
+			let nf = findNodeinArrayByCoordinates(e.nodes.final.coordinates('static'),nodesNew)
+			eArray.push(e.copy(ni,nf))
+		});
+		return new Structure(...eArray)
 	}
+
+	public unReleaseAll(): void {
+		this.elements.forEach(e => {
+			e.unrelease('initial',"rz")
+			e.unrelease('initial',"dx")
+			e.unrelease('initial',"dy")
+			e.unrelease('final',"rz")
+			e.unrelease('final',"dx")
+			e.unrelease('final',"dy")
+		});
+	}
+}
+
+const findNodeinArrayByCoordinates = (coordinates2D:coordinates2D,array: INode[]) => {
+	let nf: INode
+	array.forEach(n => {
+		if (n.coordinates('static').x==coordinates2D.x &&
+		n.coordinates('static').y==coordinates2D.y) {
+			nf = n
+		}
+	});
+	return nf!
 }

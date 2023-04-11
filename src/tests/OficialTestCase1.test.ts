@@ -64,7 +64,7 @@ describe('Case 1: Oficial Test', () => {
 
 	it(`Case 1: Capacity Curve`, () => {
 		normalizeLoads2Unit(frm,40)
-		PushoverSolver.Run(frm,{x: 0, y:3},'service',40)
+		PushoverSolver.Run(frm,{x: 0, y:7},'service',40)
 		let resultService = PushoverSolver.serviceCapacityCurve()
 		frm.resetLoadstoZero()
 		let av = 0.25

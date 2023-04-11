@@ -1,8 +1,9 @@
 import { IElement, INode, IStructure } from '@interfaces'
 import { coordinates2D, initialOrFinal, stepPushover } from '@types'
-import { min } from 'mathjs'
+import { forEach, min, row } from 'mathjs'
 import { Hinge } from '../others/moment-curvature'
 import { StaticSolver } from './static-solver'
+import { RoundFloor } from '@utils/algebra'
 
 export class PushoverSolver {
 	private static _statusAnalysis: boolean = false
@@ -36,7 +37,11 @@ export class PushoverSolver {
             cfactors![i][0].nodes.final.coordinates('static')
             //se collapsa el elemento en el nodo releseado
 			updateHingesStructure(structure,cfStep)
-            cfactors![i][0].release(cfactors![i][1],'rz')
+			cfactors!.forEach(rowc => {
+				if (RoundFloor(rowc[2],9)==RoundFloor(cfStep,9)) {
+					rowc[0].release(rowc[1],'rz')
+				}
+			});
         }
 
 		try {
@@ -62,26 +67,33 @@ export class PushoverSolver {
     }
     
     private static pushByStability(structure: IStructure,nodeObjCoordinates:coordinates2D,stepNumber: number){
-        let nodeObj: INode
+		let nodeObj: INode
         let cfactors = collapseFactorStructure(structure)
         let cfValues = cfactors!.map(row => row[2])
         let cfStep = min(...cfValues)
         let i = cfValues.indexOf(cfStep)
         let plasticizedNode: coordinates2D | null
         plasticizedNode = cfactors![i][1] == 'initial'?
-        cfactors![i][0].nodes.initial.coordinates('static') : 
-        cfactors![i][0].nodes.final.coordinates('static')
+        cfactors![i][0].nodes.initial.coordinates('static'):
+		cfactors![i][0].nodes.final.coordinates('static')
         //se collapsa el elemento en el nodo releseado
 
         updateHingesStructure(structure,cfStep)
-
-		cfactors![i][0].release(cfactors![i][1],'rz')
+        //updateHingesStructure(structureService,cfStep)
+		cfactors!.forEach(rowc => {
+			if (rowc[2]==cfStep) {
+				rowc[0].release(rowc[1],'rz')
+			}
+		});
+		//structureService.element(cfactors![i][0].nodes.initial.coordinates('static'),cfactors![i][0].nodes.final.coordinates('static')).release(cfactors![i][1],'rz')
+		
 		try {
             nodeObj = structure.node(nodeObjCoordinates)
             //se registran los valores de interes en el paso j
         } catch (error) {
             throw 'ERROR: Pushover Solver cant find node obj'
         }
+        //let delta = (structureService.node(nodeObj.coordinates('static'))).displacements.dx
         let delta = nodeObj.displacements.dx
         let stepj ={
 			step: stepNumber,
@@ -112,8 +124,11 @@ export class PushoverSolver {
 		if (stopCriteria == 'service' && serviceLoad == undefined) {
 			throw 'ERROR: cant run pushover analysis by service without a service load'
 		}
+		//let structureService = structure.copy()
+		//unReleaseInverseHingesFromService(structureService)
 		while (!stopAnalysis(structure, stopCriteria, serviceLoad)) {
 			structure.displacements
+			//structureService.displacements
 			if (stopCriteria == 'service' && serviceLoad != undefined) {
 				let actualForce =
 					this._serviceSteps == undefined ? 0 : this.actualForce()
@@ -125,7 +140,15 @@ export class PushoverSolver {
 					j,
 				)
 			} else {
-				this.pushByStability(structure, nodeObjCoordinates, j)
+				if (j==0) {unReleaseInverseHingesFromService(structure)
+				structure.displacements}
+				//if (j==0) {structure.unReleaseAll()}
+				try {
+					//this.pushByStability(structure, nodeObjCoordinates, j,structureService)		
+					this.pushByStability(structure, nodeObjCoordinates, j)		
+				} catch (error) {
+					break
+				}
 			}
 			j = j + 1
 		}
@@ -172,6 +195,38 @@ export class PushoverSolver {
 		this._statusAnalysis = false
 	}
 }
+
+
+const unReleaseInverseHingesFromService = (strFromService: IStructure) => {
+	let str2 = strFromService.copy()
+	str2.unReleaseAll()
+	str2.displacements
+	strFromService.elements.forEach(eS => {
+		let e0 = str2.element(eS.nodes.initial.coordinates('static'),eS.nodes.final.coordinates('static'))
+		let hiS = eS.getHinge('initial')
+		let miS = 0
+		let hfS = eS.getHinge('final')
+		let mfS = 0
+		let hi0 = e0.getHinge('initial')
+		let mi0 = 0
+		let hf0 = e0.getHinge('final')
+		let mf0 = 0
+		if (hiS!=undefined && hiS.isCollapsed) {miS = hiS.moment}
+		if (hfS!=undefined && hfS.isCollapsed) {mfS = hfS.moment}
+		if (hi0!=undefined && hi0.isCollapsed) {mi0 = e0.forces[2][0]}
+		if (hf0!=undefined && hf0.isCollapsed) {mf0 = e0.forces[5][0]}
+		if (miS*mi0<0 && hiS!=undefined) {
+			hiS.moment=hiS.moment-1e-6
+			eS.unrelease('initial','rz')
+		}
+		if (mfS*mf0<0&& hfS!=undefined) {
+			hfS.moment=hfS.moment-1e-6
+			eS.unrelease('final','rz')
+		}
+	});
+
+}
+
 
 const collapseFactor = (moment: number, hinge: Hinge) => {
 	if (moment != 0 && !hinge.isCollapsed) {

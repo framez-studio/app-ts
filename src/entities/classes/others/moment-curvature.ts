@@ -18,8 +18,8 @@ import { IHinge } from "@interfaces/hinge.interface"
 
 export class Hinge implements IHinge{
     isCollapsed: boolean = false
-    positiveCollapsed: boolean = false
-    negativeCollapsed: boolean = false
+    isPositiveCollapsed: boolean = false
+    isNegativeCollapsed: boolean = false
     moment: number = 0
     constructor(
         public maxMoment: number,
@@ -41,11 +41,11 @@ export class Hinge implements IHinge{
     public setMoment(moment: number) {
         if (moment >= this.maxMoment) {
             this.isCollapsed = true
-            this.positiveCollapsed = true
+            this.isPositiveCollapsed = true
         }
         if (moment<=this.minMoment) {
             this.isCollapsed = true
-            this.negativeCollapsed = true
+            this.isNegativeCollapsed = true
         }
         this.moment = moment
     }
@@ -53,8 +53,8 @@ export class Hinge implements IHinge{
     public resetHinge(){
         this.moment = 0
         this.isCollapsed = false
-        this.positiveCollapsed = false
-        this.negativeCollapsed = false
+        this.isPositiveCollapsed = false
+        this.isNegativeCollapsed = false
     }
 
     public setCollapse(isCollapsed: boolean){
@@ -62,19 +62,19 @@ export class Hinge implements IHinge{
     }
 
     public setPositiveCollapse(value: boolean){
-        this.positiveCollapsed=value
+        this.isPositiveCollapsed=value
     }
 
     public setNegativeCollapse(value: boolean){
-        this.negativeCollapsed=value
+        this.isNegativeCollapsed=value
     }
 
     public copy(): IHinge{
         let h = new Hinge(this.maxMoment,this.maxCurv,this.minMoment,this.minCurve,this.type)
         h.setMoment(this.moment)
         h.setCollapse(this.isCollapsed)
-        h.setNegativeCollapse(this.negativeCollapsed)
-        h.setPositiveCollapse(this.positiveCollapsed)
+        h.setNegativeCollapse(this.isNegativeCollapsed)
+        h.setPositiveCollapse(this.isPositiveCollapsed)
         return h
     }
 }

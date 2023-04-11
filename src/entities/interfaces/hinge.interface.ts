@@ -5,8 +5,8 @@ export interface IHinge {
     minCurve: number;
     type: "Moment-P" | "Moment" | 'Custom';
     isCollapsed: boolean;
-    positiveCollapsed: boolean;
-    negativeCollapsed: boolean;
+    isPositiveCollapsed: boolean;
+    isNegativeCollapsed: boolean;
     moment: number;
     setMoment(moment: number): void;
     resetHinge():void

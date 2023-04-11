@@ -171,8 +171,15 @@ export class Element implements IElement {
 		this._loads = [...defaultElementLoads]
 	}
 
-	public copy(): IElement {
-		let e = new Element(this.nodes.initial.copy(),this.nodes.final.copy(),this.section.copy())
+	public copy(nodeInitial: INode, nodeFinal: INode): IElement {
+		let e = new Element(nodeInitial,nodeFinal,this.section.copy())
+		if (this._releases.initial.rz) {e.release('initial','rz')}
+		if (this._releases.initial.dx) {e.release('initial','dx')}
+		if (this._releases.initial.dy) {e.release('initial','dy')}
+		if (this._releases.final.rz) {e.release('final','rz')}
+		if (this._releases.final.dx) {e.release('final','dx')}
+		if (this._releases.final.dy) {e.release('final','dy')}
+
 		this._loads.forEach(l => {
 			e.addSpanLoad(l)
 		});

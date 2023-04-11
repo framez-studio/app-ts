@@ -14,4 +14,6 @@ export interface IStructure {
 	stiffness(type: 'full' | 'reduced'): Array2D
 	fef(type: 'full' | 'reduced'): Array2D
 	resetLoadstoZero(): void
+	unReleaseAll(): void
+	copy(): IStructure
 }

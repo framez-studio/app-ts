@@ -74,18 +74,18 @@ describe('Case 3: Oficial Test', () => {
 
 
 	//loads definition & assign
-	let load = new RectangularSpanLoad(beam, 40)
-	let load2 = new RectangularSpanLoad(beam2, 40)
+	let load = new RectangularSpanLoad(beam, 60)
+	let load2 = new RectangularSpanLoad(beam2, 60)
 
 	it(`Case 3: Capacity Curve`, () => {
-		normalizeLoads2Unit(frm,40)
-		PushoverSolver.Run(frm,{x: 0, y:3},'service',40)
+		normalizeLoads2Unit(frm,60)
+		PushoverSolver.Run(frm,{x: 0, y:7},'service',60)
 		let resultService = PushoverSolver.serviceCapacityCurve()
 		frm.resetLoadstoZero()
 		let av = 0.25
 		let fv = 0.25
 		FHE.setFHEinNodes(frm,1,2,av,fv)
-		PushoverSolver.Run(frm,{x: 0, y:3},'stability')
+		PushoverSolver.Run(frm,{x: 0, y:7},'stability')
 		let result = PushoverSolver.capacityCurve()
 		let curve = [
 			[
