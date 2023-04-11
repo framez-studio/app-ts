@@ -44,4 +44,8 @@ export const graphics = {
 		lineWidth: 0.8,
 		minSeparation: 8,
 	},
+	hinges: {
+		fill: '#8D4BF6',
+		radius: 6,
+	},
 }

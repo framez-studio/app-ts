@@ -1,7 +1,7 @@
 import { graphics } from '@config/app-canvas'
 import { IElement, INode } from '@interfaces'
 import { degsToRads } from './algebra'
-import { globalMeterToCanvasCoords } from './app-canvas'
+import { globalMeterToCanvasCoords, pixelsToMeters } from './app-canvas'
 import {
 	roundedRectPath,
 	circlePath,
@@ -9,6 +9,7 @@ import {
 	linePath,
 } from './canvas-paths'
 import { nodeType } from './elements'
+import { coordinates2D } from '@types'
 
 export function elementPath(
 	element: IElement,
@@ -109,5 +110,39 @@ export function rectangularLoadPath(lenghtInPixels: number): Path2D {
 		lineWidth,
 	)
 	path.addPath(topLine)
+	return path
+}
+
+export function hingePath(
+	element: IElement,
+	hinge: 'initial' | 'final',
+	ctx: CanvasRenderingContext2D,
+	status: 'static' | 'displaced',
+): Path2D {
+	let iPoint: coordinates2D, fPoint: coordinates2D
+	const { radius } = graphics.node
+	const { height } = graphics.supports.fixed
+
+	if (hinge === 'initial') {
+		iPoint = element.nodes.initial.coordinates(status)
+		fPoint = element.nodes.final.coordinates(status)
+	} else {
+		iPoint = element.nodes.final.coordinates(status)
+		fPoint = element.nodes.initial.coordinates(status)
+	}
+	const isSupport = nodeType(element.nodes[hinge]) !== 'node'
+	const distance = pixelsToMeters(
+		graphics.hinges.radius - 1 + (isSupport ? height / 2 : radius),
+	)
+
+	const [dx, dy] = [fPoint.x - iPoint.x, fPoint.y - iPoint.y]
+	const m = dy / dx
+	const angle = Math.atan(m)
+
+	const x = iPoint.x + distance * (dy == 0 && dx <= 0 ? -1 : Math.cos(angle))
+	const y = iPoint.y + distance * Math.sin(angle)
+
+	const point = globalMeterToCanvasCoords({ x, y }, ctx)
+	const path = circlePath(point, graphics.hinges.radius)
 	return path
 }

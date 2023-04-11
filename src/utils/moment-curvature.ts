@@ -413,7 +413,7 @@ export const assignHinges2Element = (args: {
 		let hinge = new Hinge(MnMax, CurvMax, MnMin, CurvMin, hingeType)
 		element.assignHinge('initial', hinge)
 	}
-	console.log('hinge assigned', { MnMax, CurvMax, MnMin, CurvMin, hingeType })
+	// console.log('hinge assigned', { MnMax, CurvMax, MnMin, CurvMin, hingeType })
 }
 
 export const MomentCurvatureFinal2Section = (

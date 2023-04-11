@@ -6,12 +6,14 @@ import { coordinates2D } from '@types'
 import { IGraphicStructure } from '@types-ui'
 import { extractContextDims } from './canvas'
 import { degsToRads } from './algebra'
-import { rectangularLoadPath } from './app-canvas-paths'
+import { hingePath, rectangularLoadPath } from './app-canvas-paths'
 
 export function metersToPixels(meters: number) {
 	return (meters * scale.pixels) / scale.meters
 }
-
+export function pixelsToMeters(pixels: number) {
+	return (pixels * scale.meters) / scale.pixels
+}
 export function globalPixelToCanvasCoords(
 	coords: coordinates2D,
 	ctx: CanvasRenderingContext2D,
@@ -90,6 +92,25 @@ export function printElementLoad(
 	ctx.translate(radius, -width / 2)
 	fillPath(path, ctx, graphics.loads.fill)
 	ctx.restore()
+}
+
+export function printElementHinges(
+	element: IElement,
+	ctx: CanvasRenderingContext2D,
+	status: 'static' | 'displaced',
+) {
+	const path: Path2D = new Path2D()
+	const [initial, final] = [
+		element.getHinge('initial'),
+		element.getHinge('final'),
+	]
+	if (initial && initial.isCollapsed)
+		path.addPath(hingePath(element, 'initial', ctx, status))
+
+	if (final && final.isCollapsed)
+		path.addPath(hingePath(element, 'final', ctx, status))
+
+	fillPath(path, ctx, graphics.hinges.fill)
 }
 
 export function fillPath(

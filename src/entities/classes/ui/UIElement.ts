@@ -1,7 +1,12 @@
 import { IElement, IUIElement } from '@interfaces'
 import { graphics } from '@config/app-canvas'
-import { elementPath } from '@utils/app-canvas-paths'
-import { fillPath, outlinePath, printElementLoad } from '@utils/app-canvas'
+import { elementPath, hingePath } from '@utils/app-canvas-paths'
+import {
+	fillPath,
+	outlinePath,
+	printElementHinges,
+	printElementLoad,
+} from '@utils/app-canvas'
 import { hasNonZeroLoad } from '@utils/elements'
 
 export class UIElement implements IUIElement {
@@ -45,6 +50,7 @@ export class UIElement implements IUIElement {
 
 		fillPath(path, ctx, fill)
 		if (hasNonZeroLoad(object)) printElementLoad(object, ctx, 'static')
+		printElementHinges(object, ctx, 'static')
 
 		if (isSelected)
 			outlinePath(path, ctx, {
