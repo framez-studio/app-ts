@@ -99,4 +99,10 @@ export class ElementNode implements INode {
 		this._displacements = { ...defaultNodeDeformations }
 		this._reactions = { fx: 0, fy: 0, mz: 0 }
 	}
+
+	copy(): INode {
+		let n =  new ElementNode(this.coordinates('static'))
+		n.addLoads(this._loads)
+		return n
+	}
 }

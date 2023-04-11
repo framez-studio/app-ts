@@ -5,8 +5,13 @@ export interface IHinge {
     minCurve: number;
     type: "Moment-P" | "Moment" | 'Custom';
     isCollapsed: boolean;
-    typeCollapsed: string | undefined;
+    positiveCollapsed: boolean;
+    negativeCollapsed: boolean;
     moment: number;
     setMoment(moment: number): void;
     resetHinge():void
+    setPositiveCollapse(value: boolean): void
+    setNegativeCollapse(value: boolean): void
+    setCollapse(value: boolean): void
+    copy(): IHinge
 }

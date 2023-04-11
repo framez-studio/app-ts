@@ -283,7 +283,7 @@ const WhitneyMomentCurvature2Section = (sectionRC: IRectangularRCSection, p: num
 	return {Curvature: cx, Moment: mx}
 }
 
-const AsignHinges2Element = (
+export const AsignHinges2Element = (
 	element: IElement,
 	node: 'initial'|'final'|'both',
 	custom: boolean = false,

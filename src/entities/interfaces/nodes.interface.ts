@@ -21,4 +21,7 @@ export interface INode extends Resetable {
 	addDisplacements(displacements: Partial<nodeDisplacements2DObject>): void
 	setReactions(reactions: Partial<nodeLoads2DObject>): void
 	isSupport(): boolean
+	copy(): INode
 }
+
+

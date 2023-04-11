@@ -9,6 +9,7 @@ import {
 } from '@types'
 import { INode, IRectangularRCSection, ISpanLoad } from '@interfaces'
 import { Hinge } from '@classes/others/moment-curvature'
+import { IHinge } from './hinge.interface';
 
 export interface IElement {
 	readonly nodes: { initial: INode; final: INode }
@@ -21,8 +22,8 @@ export interface IElement {
 	readonly loads: ISpanLoad[]
 	young: number
 	section: IRectangularRCSection
-	initialHinge: Hinge | undefined
-	finalHinge: Hinge | undefined
+	initialHinge: IHinge | undefined
+	finalHinge: IHinge | undefined
 	weigth: number
 	mass: number
 	release(node: initialOrFinal, direction: degsOfFreedom2D): void
@@ -38,7 +39,8 @@ export interface IElement {
 		section?: IRectangularRCSection,
 		young?: number,
 	): IElement
-	assignHinge(node: initialOrFinal, hinge: Hinge): void
-	getHinge(node: initialOrFinal): Hinge | undefined
+	assignHinge(node: initialOrFinal, hinge: IHinge): void
+	getHinge(node: initialOrFinal): IHinge | undefined
 	resetLoads(): void
+	copy(): IElement
 }

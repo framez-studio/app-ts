@@ -34,4 +34,8 @@ export class BarCR implements IBarCR {
 	get fy(): number {
 		return this.material.fy
 	}
+
+	copy(): IBarCR {
+		return new BarCR(this.diameter,this.material.copy())
+	}
 }

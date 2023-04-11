@@ -86,7 +86,7 @@ export class Structure implements IStructure {
 	
 	public resetLoadstoZero(){
 		this._elements.forEach(element => {
-			element.loads = []
+			element.resetLoads()
 		});
 		this.nodes.forEach(node => {
 			node.setLoads({fx:0,fy:0,mz:0})
@@ -98,5 +98,13 @@ export class Structure implements IStructure {
 			element.initialHinge?.resetHinge
 			element.finalHinge?.resetHinge
 		});
+	}
+
+	public copy(): IStructure {
+		let eArray = [] as IElement[]
+		this._elements.forEach(e => {
+			eArray.push(e.copy())
+		});
+		return new Structure(...eArray!)
 	}
 }

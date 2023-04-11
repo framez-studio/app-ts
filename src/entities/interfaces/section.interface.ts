@@ -44,6 +44,7 @@ export interface IRectangularRCSection extends IRectangularSection<IConcrete>  {
 	deleteReinforcement(): void
 	sortReinforcement(): void
 	rotate180(): void
+	copy(): IRectangularRCSection
 }
 
 export interface ICircularSection<MT extends MaterialType>
@@ -55,4 +56,5 @@ export interface IBarCR extends ICircularSection<ISteel> {
 	readonly fy: number
 	readonly young: number
 	readonly area: number
+	copy(): IBarCR
 }

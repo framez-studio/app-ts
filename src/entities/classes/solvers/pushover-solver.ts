@@ -26,35 +26,40 @@ export class PushoverSolver {
         let cfStep = min(...cfValues)
         let i = cfValues.indexOf(cfStep)
         let plasticizedNode: coordinates2D | null
+		let stepj:stepPushover
         if (cfStep+actualForce > serviceLoad) {
             cfStep = serviceLoad - actualForce
             plasticizedNode = null
+			updateHingesStructure(structure,cfStep)
+			
         }else{
             plasticizedNode = cfactors![i][1] == 'initial'?
             cfactors![i][0].nodes.initial.coordinates('static') : 
             cfactors![i][0].nodes.final.coordinates('static')
             //se collapsa el elemento en el nodo releseado
+			updateHingesStructure(structure,cfStep)
             cfactors![i][0].release(cfactors![i][1],'rz')
         }
-        updateHingesStructure(structure,cfStep)
-        try {
-            nodeObj = structure.node(nodeObjCoordinates)
-            //se registran los valores de interes en el paso j
-        } catch (error) {
-            throw 'ERROR: Pushover Solver cant find node obj'
-        }
-        let delta = nodeObj.displacements.dx
-        let stepj ={
-            step: 0,
-            plasticizedNode: plasticizedNode == undefined ? plasticizedNode : null,
-            collapseFactor: cfStep,
-            dxAtControlNode: delta,
-        }
+
+		try {
+			nodeObj = structure.node(nodeObjCoordinates)
+			//se registran los valores de interes en el paso j
+		} catch (error) {
+			throw 'ERROR: Pushover Solver cant find node obj'
+		}
+		let delta = nodeObj.displacements.dx
+		stepj ={
+			step: 0,
+			plasticizedNode: plasticizedNode == undefined ? null : plasticizedNode,
+			collapseFactor: cfStep,
+			dxAtControlNode: delta,
+		}
+        
 
         if (this._serviceSteps == undefined || this._serviceSteps.length == 0) {
-            this._serviceSteps = [stepj]
+            this._serviceSteps = [stepj!]
         } else {
-            this._serviceSteps.push(stepj)
+            this._serviceSteps.push(stepj!)
         }
     }
     
@@ -69,9 +74,11 @@ export class PushoverSolver {
         cfactors![i][0].nodes.initial.coordinates('static') : 
         cfactors![i][0].nodes.final.coordinates('static')
         //se collapsa el elemento en el nodo releseado
+
         updateHingesStructure(structure,cfStep)
-        cfactors![i][0].release(cfactors![i][1],'rz')
-        try {
+
+		cfactors![i][0].release(cfactors![i][1],'rz')
+		try {
             nodeObj = structure.node(nodeObjCoordinates)
             //se registran los valores de interes en el paso j
         } catch (error) {
@@ -79,8 +86,8 @@ export class PushoverSolver {
         }
         let delta = nodeObj.displacements.dx
         let stepj ={
-            step: stepNumber,
-            plasticizedNode: plasticizedNode == undefined ? plasticizedNode : null,
+			step: stepNumber,
+            plasticizedNode: plasticizedNode == undefined ? null : plasticizedNode,
             collapseFactor: cfStep,
             dxAtControlNode: delta,
         }
@@ -144,9 +151,10 @@ export class PushoverSolver {
 	}
 
 	public static capacityCurve() {
-		let curve: number[][] = [[0, 0]]
+		let serviceStep = this.serviceCapacityCurve()[this.serviceCapacityCurve().length-1][0]
+		let curve: number[][] = [[0, 0],[serviceStep,0]]
 		let shearForce = 0
-		let dx = 0
+		let dx = serviceStep
 		for (let i = 0; i < this._steps.length; i++) {
 			const ei = this._steps[i]
 			dx = dx + ei.dxAtControlNode * ei.collapseFactor * 1000 //1000x para obtener resultados en mm
@@ -157,7 +165,7 @@ export class PushoverSolver {
 	}
 
 	public static actualForce() {
-		return this.capacityCurve()[this.capacityCurve().length - 1][0]
+		return this.serviceCapacityCurve()[this.serviceCapacityCurve().length - 1][1]
 	}
 
 	public static reset() {

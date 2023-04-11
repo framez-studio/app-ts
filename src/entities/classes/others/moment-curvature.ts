@@ -18,7 +18,8 @@ import { IHinge } from "@interfaces/hinge.interface"
 
 export class Hinge implements IHinge{
     isCollapsed: boolean = false
-    typeCollapsed: string | undefined = undefined
+    positiveCollapsed: boolean = false
+    negativeCollapsed: boolean = false
     moment: number = 0
     constructor(
         public maxMoment: number,
@@ -40,11 +41,11 @@ export class Hinge implements IHinge{
     public setMoment(moment: number) {
         if (moment >= this.maxMoment) {
             this.isCollapsed = true
-            this.typeCollapsed = 'positive'
+            this.positiveCollapsed = true
         }
         if (moment<=this.minMoment) {
             this.isCollapsed = true
-            this.typeCollapsed = 'negative'
+            this.negativeCollapsed = true
         }
         this.moment = moment
     }
@@ -52,6 +53,28 @@ export class Hinge implements IHinge{
     public resetHinge(){
         this.moment = 0
         this.isCollapsed = false
-        this.typeCollapsed = undefined
+        this.positiveCollapsed = false
+        this.negativeCollapsed = false
+    }
+
+    public setCollapse(isCollapsed: boolean){
+        this.isCollapsed = isCollapsed
+    }
+
+    public setPositiveCollapse(value: boolean){
+        this.positiveCollapsed=value
+    }
+
+    public setNegativeCollapse(value: boolean){
+        this.negativeCollapsed=value
+    }
+
+    public copy(): IHinge{
+        let h = new Hinge(this.maxMoment,this.maxCurv,this.minMoment,this.minCurve,this.type)
+        h.setMoment(this.moment)
+        h.setCollapse(this.isCollapsed)
+        h.setNegativeCollapse(this.negativeCollapsed)
+        h.setPositiveCollapse(this.positiveCollapsed)
+        return h
     }
 }
