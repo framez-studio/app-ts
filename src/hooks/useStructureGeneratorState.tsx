@@ -4,7 +4,7 @@ import {
 } from '@interfaces'
 import { useStructureGeneratorInitialState } from './useStructureGeneratorInitialState'
 import { useElementContextEmptyState } from './useElementContextEmptyState'
-import { generatePorticSystemFromContext } from '@utils/structure-generator'
+import { generateFramezSystemFromContext } from '@utils/structure-generator'
 import { useAppContext } from '@context/AppContext'
 
 export function useStructureGeneratorState(): IStructureGeneratorStateHook {
@@ -44,7 +44,7 @@ export function useStructureGeneratorState(): IStructureGeneratorStateHook {
 	}
 	function generateStructure() {
 		try {
-			const { structure } = generatePorticSystemFromContext({
+			const { structure } = generateFramezSystemFromContext({
 				state,
 				columnsContext,
 				beamsContext,

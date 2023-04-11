@@ -1,5 +1,5 @@
 import { IGeneratorConfig, IGeneratorElementConfig } from '@interfaces'
-import { generatePorticSystem } from '@utils/structure-generator'
+import { generateFramezSystem } from '@utils/structure-generator'
 
 const material: IGeneratorElementConfig['material'] = {
 	young: 17872000,
@@ -63,4 +63,4 @@ const config: IGeneratorConfig = {
 	},
 }
 
-export const { structure: initialStructure } = generatePorticSystem(config)
+export const { structure: initialStructure } = generateFramezSystem(config)

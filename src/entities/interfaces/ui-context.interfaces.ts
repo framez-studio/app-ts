@@ -1,12 +1,11 @@
 import {
 	IAppState,
 	IElement,
-	IElementDynamicStateHook,
+	IFrameSystem,
 	INode,
 	ISelectedElementDynamicStateHook,
 	ISelectedElementPropsStateHook,
 	ISelectedSteelStateHook,
-	IStructure,
 	IStructureGeneratorStateHook,
 	IStructurePushoverState,
 	IStructurePushoverUIState,
@@ -19,7 +18,7 @@ export interface IAppContext {
 		type: 'node' | 'element' | null
 		object: INode | IElement | null
 	}): void
-	setStructure(payload: IStructure): void
+	setStructure(payload: IFrameSystem): void
 	toggleSlider(): void
 	requestCanvasRedraw(): void
 	resetCanvasRedraw(): void

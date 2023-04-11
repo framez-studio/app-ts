@@ -7,12 +7,10 @@ import {
 	IElementDynamicState,
 	IGeneratorConfig,
 	IGeneratorElementConfig,
-	ISection,
 	IElement,
 	IRectangularRCSection,
 } from '@interfaces'
 import { Element } from '@classes/complex-elements/element'
-import { Structure } from '@classes/complex-elements/structure'
 import { ElementNode } from '@classes/nodes/element-node'
 import { Support } from '@classes/nodes/support'
 import { Concrete, Steel } from '@classes/others/material'
@@ -21,25 +19,26 @@ import { RectangularRCSection } from '@classes/sections/rectangular-cr'
 import { isRowFull } from './ui'
 import { BarCR } from '@classes/sections/bar-cr'
 import { assignHinges2Element } from './moment-curvature'
+import { FrameSystem } from '@classes/complex-elements/frame-system'
 
-export function generatePorticSystem(config: IGeneratorConfig) {
+export function generateFramezSystem(config: IGeneratorConfig) {
 	const { levels, spans } = config
 
 	const nodes = generateNodes(spans, levels)
 	const beams = generateBeams(config, nodes)
 	const columns = generateColumns(config, nodes)
 
-	const structure = new Structure(...beams, ...columns)
+	const structure = new FrameSystem(...beams, ...columns)
 
 	return { beams, columns, structure }
 }
-export function generatePorticSystemFromContext(context: {
+export function generateFramezSystemFromContext(context: {
 	state: IStructureGeneratorState
 	columnsContext: IElementContext
 	beamsContext: IElementContext
 }) {
 	const config = extractConfigFromContext(context)
-	return generatePorticSystem(config)
+	return generateFramezSystem(config)
 }
 function extractConfigFromContext(context: {
 	state: IStructureGeneratorState
