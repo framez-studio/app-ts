@@ -2,6 +2,21 @@ import { responseDecimals } from '@config/ui'
 import { ISteelNumRowsState, ISteelRowState } from '@interfaces'
 import { coordinates2D } from '@types'
 
+const unitFactors = {
+	MPa: {
+		kPa: 1000,
+	},
+	kPa: {
+		MPa: 0.001,
+	},
+	m: {
+		mm: 1000,
+	},
+	mm: {
+		m: 0.001,
+	},
+}
+
 export function responseFormatter(response: number): string {
 	return response.toFixed(responseDecimals)
 }
@@ -24,3 +39,13 @@ export function toPlotterData(data: number[][]): coordinates2D[] {
 		return { x: row[0], y: row[1] }
 	})
 }
+
+// export function outputFilter(config: {
+// 	value: string | number
+// 	from: 'MPa' | 'kPa' | 'm' | 'mm'
+// 	to: 'MPa' | 'kPa' | 'm' | 'mm'
+// }):string {
+// 	const{value, from, to} = config
+// 	let output = Number(value)
+// 	output = output * unitFactors[from][to]
+// }
