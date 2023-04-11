@@ -9,5 +9,18 @@ export function useStructureAPI() {
 		displaceStructure(structure)
 		setStructureReactions(structure)
 	}
-	return { requestStructureSolver }
+
+	function getNode(node: { x: number; y: number }) {
+		return structure.node(node)
+	}
+
+	function requestStructurePushover(config: {
+		direction: 'left' | 'right'
+		node: { x: number; y: number }
+		constants: { av: number; fv: number }
+	}) {
+		console.log('solving pushover at useStructureAPI')
+	}
+
+	return { requestStructureSolver, requestStructurePushover, getNode }
 }

@@ -22,7 +22,8 @@ const ElementReinforcementForm: React.FC<Props> = ({ props }) => {
 			<section className="form-main element-reinforcement col-2">
 				<FormInput
 					props={{
-						label: `Young Module`,
+						label: `Young`,
+						tooltip: `Steel's young modulus`,
 						suffix: 'MPa',
 						value: state.young,
 						onChange: ($e) =>
@@ -31,7 +32,8 @@ const ElementReinforcementForm: React.FC<Props> = ({ props }) => {
 				/>
 				<FormInput
 					props={{
-						label: 'Yielding Module',
+						label: `${String.fromCharCode(402)}y`,
+						tooltip: `Steel's yield strength`,
 						suffix: 'MPa',
 						value: state.yield,
 						onChange: ($e) =>

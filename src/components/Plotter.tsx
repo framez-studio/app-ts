@@ -15,13 +15,14 @@ interface Props extends React.HTMLProps<HTMLCanvasElement> {
 		title?: string
 		xLabel?: string
 		yLabel?: string
+		height?: number
 		data: { x: number; y: number }[]
 	}
 }
 
 const Plotter: React.FC<Props> = ({ props }) => {
 	return (
-		<ResponsiveContainer>
+		<ResponsiveContainer height={props.height ?? '100%'}>
 			<LineChart
 				data={props.data}
 				margin={{ top: 15, right: 30, left: 10, bottom: 20 }}>
@@ -39,7 +40,7 @@ const Plotter: React.FC<Props> = ({ props }) => {
 						value={props?.yLabel}
 						position="insideLeft"
 						angle={-90}
-						offset={10}
+						offset={0}
 					/>
 				</YAxis>
 				<Line

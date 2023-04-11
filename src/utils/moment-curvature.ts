@@ -365,30 +365,32 @@ const WhitneyMomentCurvature2Section = (
 	return { Curvature: cx, Moment: mx }
 }
 
-const assignHinges2Element = (
-	element: IElement,
-	node: 'initial' | 'final' | 'both',
-	custom: boolean = false,
-	NominalMaxMoment?: number,
-	NominalMinMoment?: number,
-) => {
+export const assignHinges2Element = (args: {
+	element: IElement
+	node: 'initial' | 'final' | 'both'
+	hingeType: 'Moment-P' | 'Moment' | 'Custom'
+	moment?: { max: number; min: number }
+	curvature?: { max: number; min: number }
+}) => {
+	let { hingeType, element, node, moment, curvature } = args
 	let MnMax = 0
 	let MnMin = 0
 	let CurvMax = 0
 	let CurvMin = 0
-	let typeHinge: 'Moment-P' | 'Moment' | 'Custom' = 'Custom'
 
 	if (
-		custom &&
-		NominalMaxMoment != undefined &&
-		NominalMinMoment != undefined
+		hingeType == 'Custom' &&
+		moment != undefined &&
+		curvature != undefined
 	) {
-		MnMax = NominalMaxMoment
-		MnMin = NominalMinMoment
+		MnMax = moment.max
+		MnMin = moment.min
+		CurvMax = curvature.max
+		CurvMin = curvature.min
 	} else {
 		let sectionRC = element.section
 		let p = element.forces[0][0]
-		typeHinge = p == 0 ? 'Moment' : 'Moment-P'
+		hingeType = p == 0 ? 'Moment' : 'Moment-P'
 		let mc1 = WhitneyMomentCurvature2Section(sectionRC, p)
 		MnMax = mc1.Moment
 		CurvMax = mc1.Curvature
@@ -403,14 +405,15 @@ const assignHinges2Element = (
 	}
 
 	if (node == 'initial' || 'both') {
-		let hinge = new Hinge(MnMax, CurvMax, MnMin, CurvMin, typeHinge)
+		let hinge = new Hinge(MnMax, CurvMax, MnMin, CurvMin, hingeType)
 		element.assignHinge('initial', hinge)
 	}
 
 	if (node == 'final' || 'both') {
-		let hinge = new Hinge(MnMax, CurvMax, MnMin, CurvMin, typeHinge)
+		let hinge = new Hinge(MnMax, CurvMax, MnMin, CurvMin, hingeType)
 		element.assignHinge('initial', hinge)
 	}
+	console.log('hinge assigned', { MnMax, CurvMax, MnMin, CurvMin, hingeType })
 }
 
 export const MomentCurvatureFinal2Section = (

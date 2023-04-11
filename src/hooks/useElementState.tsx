@@ -15,9 +15,12 @@ export function useElementState(): IElementPropsStateHook {
 		})
 	}
 	function updateFc(fc: string) {
+		const newFc = Number(fc) * 1000
+		const newYoung = 3900 * Math.sqrt(newFc) * 1000
 		updateState((draft) => {
 			draft.fc = fc
 		})
+		updateYoung(String(newYoung))
 	}
 	function updateEpsilon(epsilon: string) {
 		updateState((draft) => {

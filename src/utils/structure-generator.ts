@@ -20,6 +20,7 @@ import { RectangularSpanLoad } from '@classes/others/rectangular-span-load'
 import { RectangularRCSection } from '@classes/sections/rectangular-cr'
 import { isRowFull } from './ui'
 import { BarCR } from '@classes/sections/bar-cr'
+import { assignHinges2Element } from './moment-curvature'
 
 export function generatePorticSystem(config: IGeneratorConfig) {
 	const { levels, spans } = config
@@ -135,10 +136,9 @@ function generateElement(
 	iNode: INode,
 	fNode: INode,
 ): IElement {
-	const { momentCurvature } = config
 	const section = generateSection(config)
 	const element = new Element(iNode, fNode, section)
-	element.setSpanLoad(new RectangularSpanLoad(element, 0))
+	generateHinges(config, element)
 	return element
 }
 function generateReinforcement(
@@ -160,11 +160,30 @@ function generateReinforcement(
 }
 function generateHinges(config: IGeneratorElementConfig, element: IElement) {
 	const { momentCurvature } = config
-	if (momentCurvature.automatic) return
-	const { moment, curvature } = momentCurvature
-	if (!moment) throw new Error('Moment is not defined in generator config')
+	const { moment, curvature, automatic } = momentCurvature
+
+	if (automatic) {
+		console.log(element.section.reinforcement)
+		assignHinges2Element({
+			element,
+			node: 'both',
+			hingeType: 'Moment',
+		})
+		return
+	}
+
+	if (!moment)
+		throw new Error('Nominal moment is not defined in generator config')
 	if (!curvature)
 		throw new Error('Curvature is not defined in generator config')
+
+	assignHinges2Element({
+		element,
+		node: 'both',
+		hingeType: 'Custom',
+		moment,
+		curvature,
+	})
 }
 function extractElementConfigFromContext(context: IElementContext) {
 	const { elementProps, elementSteel, elementDynamics } = context

@@ -5,13 +5,13 @@ export function useElementDynamicInitialState() {
 	const initialState: IElementDynamicState = {
 		weight: '24',
 		automatic: false,
-		curvature: {
-			min: '',
-			max: '',
-		},
 		moment: {
-			min: '',
-			max: '',
+			min: '-120',
+			max: '120',
+		},
+		curvature: {
+			min: '-0.008',
+			max: '0.008',
 		},
 	}
 	const [state, updateState] = useImmer(initialState)

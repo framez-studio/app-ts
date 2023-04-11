@@ -7,6 +7,7 @@ import {
 	ISteelRowState,
 	IStructureGeneratorState,
 	IStructurePushoverState,
+	IStructurePushoverUIState,
 } from '@interfaces'
 
 export interface ISteelStateHook {
@@ -68,4 +69,18 @@ export interface IStructurePushoverHook {
 		payload: Partial<IStructurePushoverState['constants']>,
 	): void
 	runPushover(): void
+}
+export interface IStructurePushoverUIHook {
+	state: IStructurePushoverUIState
+	updatePropsValidity(payload: boolean): void
+	updateErrorState(payload: boolean): void
+	updateActiveSection(
+		payload: IStructurePushoverUIState['activeSection'],
+	): void
+	updateSelectedStep(
+		payload: IStructurePushoverUIState['selected']['step'],
+	): void
+	updateSelectedNode(
+		payload: IStructurePushoverUIState['selected']['nodeIndex'],
+	): void
 }

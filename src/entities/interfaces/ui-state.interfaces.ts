@@ -1,3 +1,6 @@
+import { coordinates2D } from '@types'
+import { IPushoverFormSections } from '@types-ui'
+
 export interface ISteelRowState {
 	quantity: string
 	diameter: string
@@ -60,13 +63,25 @@ export interface IStructureGeneratorState {
 }
 export interface IStructurePushoverState {
 	node: {
-		x: string
-		y: string
+		x: number
+		y: number
 	}
+	isNodeValid: boolean
 	direction: 'left' | 'right'
 	constants: {
-		av: string
-		fv: string
+		av: number
+		fv: number
+	}
+	results: {
+		data: coordinates2D[]
+	}
+}
+export interface IStructurePushoverUIState {
+	activeSection: IPushoverFormSections
+	selected: {
+		nodeIndex: number
+		step: number
 	}
 	arePropsValid: boolean
+	analysisError: boolean
 }

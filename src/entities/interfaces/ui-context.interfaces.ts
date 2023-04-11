@@ -8,6 +8,8 @@ import {
 	ISelectedSteelStateHook,
 	IStructure,
 	IStructureGeneratorStateHook,
+	IStructurePushoverState,
+	IStructurePushoverUIState,
 } from '@interfaces'
 import { IFormSections } from '@types-ui'
 
@@ -33,3 +35,22 @@ export interface IActiveSectionContext {
 	setActiveSection(payload: IFormSections): void
 }
 export interface IGeneratorContext extends IStructureGeneratorStateHook {}
+export interface IStructurePushoverContext {
+	state: IStructurePushoverState
+	ui: IStructurePushoverUIState
+	updateDirection(payload: IStructurePushoverState['direction']): void
+	updateNode(payload: Partial<IStructurePushoverState['node']>): void
+	updateConstants(
+		payload: Partial<IStructurePushoverState['constants']>,
+	): void
+	updateSelectedStep(
+		payload: IStructurePushoverUIState['selected']['step'],
+	): void
+	updateSelectedNode(
+		payload: IStructurePushoverUIState['selected']['nodeIndex'],
+	): void
+	updateActiveSection(
+		payload: IStructurePushoverUIState['activeSection'],
+	): void
+	runPushover(): void
+}

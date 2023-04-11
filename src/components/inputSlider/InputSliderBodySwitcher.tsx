@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppContext } from '@context/AppContext'
-import DefaultForm from '@components/defaultForm/DefaultForm'
+import PushoverForm from '@components/pushoverForm/PushoverForm'
 import ElementForm from '@components/elementForm/ElementForm'
 import NodeForm from '@components/nodeForm/NodeForm'
 
@@ -14,7 +14,7 @@ const InputSliderBodySwitcher: React.FC<Props> = () => {
 		case 'element':
 			return <ElementForm />
 		case null:
-			return <DefaultForm />
+			return <PushoverForm />
 		default:
 			return <div>Something weird happened with Selection State</div>
 	}

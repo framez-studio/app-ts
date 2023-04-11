@@ -10,7 +10,7 @@ const material: IGeneratorElementConfig['material'] = {
 const steel: IGeneratorElementConfig['steel'] = {
 	fy: 420000,
 	young: 200000,
-	rows: [],
+	rows: [{ diameter: 0.0125, distance: 0.05, quantity: 3 }],
 }
 const config: IGeneratorConfig = {
 	levels: {
@@ -30,7 +30,15 @@ const config: IGeneratorConfig = {
 		material,
 		steel,
 		momentCurvature: {
-			automatic: true,
+			automatic: false,
+			moment: {
+				min: -120,
+				max: 120,
+			},
+			curvature: {
+				min: -0.008,
+				max: 0.008,
+			},
 		},
 	},
 	beams: {
@@ -42,7 +50,15 @@ const config: IGeneratorConfig = {
 		material,
 		steel,
 		momentCurvature: {
-			automatic: true,
+			automatic: false,
+			moment: {
+				min: -120,
+				max: 120,
+			},
+			curvature: {
+				min: -0.008,
+				max: 0.008,
+			},
 		},
 	},
 }

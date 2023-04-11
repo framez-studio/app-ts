@@ -1,9 +1,20 @@
+import ErrorMessage from '@components/ErrorMessage'
 import FormButton from '@components/FormButton'
 import FormInput from '@components/FormInput'
 import FormSectionLabel from '@components/FormSectionLabel'
 import RadioInput from '@components/RadioInput'
+import { usePushoverContext } from '@context/PushoverContext'
 
-const DefaultForm = () => {
+const PushoverConfigForm = () => {
+	const {
+		ui,
+		state,
+		updateDirection,
+		updateNode,
+		updateConstants,
+		runPushover,
+	} = usePushoverContext()
+
 	return (
 		<section className="form-container">
 			<section className="form-main col-2">
@@ -20,16 +31,28 @@ const DefaultForm = () => {
 					props={{
 						label: 'X Coordinate',
 						labelCentered: true,
-						readonly: true,
+						value: String(state.node.x),
+						onChange: (e) =>
+							updateNode({ x: Number(e.target.value) }),
 					}}
 				/>
 				<FormInput
 					props={{
 						label: 'Y Coordinate',
 						labelCentered: true,
-						readonly: true,
+						value: String(state.node.y),
+						onChange: (e) =>
+							updateNode({ y: Number(e.target.value) }),
 					}}
 				/>
+				{!state.isNodeValid && (
+					<ErrorMessage
+						props={{
+							text: 'Please enter existing node coordinates',
+						}}
+						className="span-2"
+					/>
+				)}
 				<FormSectionLabel
 					props={{
 						label: 'Pushover Direction',
@@ -43,16 +66,20 @@ const DefaultForm = () => {
 				<RadioInput
 					props={{
 						label: 'Left',
-						checked: true,
-						onChange: () => {},
+						checked: state.direction === 'left',
+						onChange: (value) => {
+							if (value) updateDirection('left')
+						},
 					}}
 					className="jc-center"
 				/>
 				<RadioInput
 					props={{
 						label: 'Right',
-						checked: false,
-						onChange: () => {},
+						checked: state.direction === 'right',
+						onChange: (value) => {
+							if (value) updateDirection('right')
+						},
 					}}
 					className="jc-center"
 				/>
@@ -60,7 +87,7 @@ const DefaultForm = () => {
 					props={{
 						label: 'Dynamic Constants',
 						tooltip:
-							'Values of the dynamic constants used in the pushover analysis for HEF distribution',
+							'Values of the dynamic constants used in the pushover analysis for EHF distribution',
 						isActive: true,
 					}}
 					className="span-2"
@@ -71,6 +98,9 @@ const DefaultForm = () => {
 						labelCentered: true,
 						tooltip:
 							'Effective peak horizontal velocity coefficient. Given on NSR-10 A.2.2.',
+						value: String(state.constants.av),
+						onChange: (e) =>
+							updateConstants({ av: Number(e.target.value) }),
 					}}
 				/>
 				<FormInput
@@ -79,12 +109,23 @@ const DefaultForm = () => {
 						labelCentered: true,
 						tooltip:
 							'Amplification coefficient that affects the acceleration in the zone of intermediate periods',
+						value: String(state.constants.fv),
+						onChange: (e) =>
+							updateConstants({ fv: Number(e.target.value) }),
 					}}
 				/>
 			</section>
 			<section className="form-footer col-2">
+				{!ui.arePropsValid && (
+					<ErrorMessage
+						props={{
+							text: 'Please fill all the fields and try again',
+						}}
+						className="span-2"
+					/>
+				)}
 				<FormButton
-					props={{ text: 'Run Pushover' }}
+					props={{ text: 'Run Pushover', onClick: runPushover }}
 					className="span-2"
 				/>
 			</section>
@@ -92,4 +133,4 @@ const DefaultForm = () => {
 	)
 }
 
-export default DefaultForm
+export default PushoverConfigForm
