@@ -16,10 +16,6 @@ export class PushoverSolver {
 	}
 
 	public analysisInitialState() {}
-
-    public analysisInitialState(){
-        
-    }
     
     private static pushByService(structure: IStructure, nodeObjCoordinates: coordinates2D, serviceLoad: number,actualForce:number,stepNumber: number){
         let nodeObj: INode
