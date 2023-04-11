@@ -39,9 +39,13 @@ export const graphics = {
 		},
 	},
 	loads: {
-		fill: '#89170F',
-		height: 8,
+		fill: '#d00000',
+		height: 12,
 		lineWidth: 0.8,
 		minSeparation: 8,
+	},
+	hinges: {
+		fill: '#8D4BF6',
+		radius: 6,
 	},
 }

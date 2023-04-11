@@ -1,15 +1,19 @@
 import { UIElement } from '@classes/ui/UIElement'
 import { UINode } from '@classes/ui/UINode'
-import { scale, origin } from '@config/app-canvas'
-import { IStructure } from '@interfaces'
+import { scale, origin, graphics } from '@config/app-canvas'
+import { IElement, IStructure, IUIOutline } from '@interfaces'
 import { coordinates2D } from '@types'
 import { IGraphicStructure } from '@types-ui'
 import { extractContextDims } from './canvas'
+import { degsToRads } from './algebra'
+import { hingePath, rectangularLoadPath } from './app-canvas-paths'
 
 export function metersToPixels(meters: number) {
 	return (meters * scale.pixels) / scale.meters
 }
-
+export function pixelsToMeters(pixels: number) {
+	return (pixels * scale.meters) / scale.pixels
+}
 export function globalPixelToCanvasCoords(
 	coords: coordinates2D,
 	ctx: CanvasRenderingContext2D,
@@ -48,7 +52,7 @@ export function generateGraphicStructure(
 	graphicStructure.elements = structure.elements.map(
 		(element) => new UIElement(element, ctx),
 	)
-	console.log('graphic structure generated', graphicStructure)
+	console.log('graphic structure generated')
 	return graphicStructure
 }
 
@@ -56,4 +60,74 @@ export function printStructure(structure: IGraphicStructure) {
 	const { nodes, elements } = structure
 	elements.forEach((element) => element.printOnContext())
 	nodes.forEach((node) => node.printOnContext())
+}
+/**
+ * Prints a load on an element in a canvas context according to its inclination and setting a positive x-axis from its initial to its final node.
+ * @param element - Element to print load on
+ * @param ctx - Canvas context
+ * @param status - 'static' or 'displaced'
+ */
+export function printElementLoad(
+	element: IElement,
+	ctx: CanvasRenderingContext2D,
+	status: 'static' | 'displaced',
+): void {
+	const globalMeterPoints = {
+		initial: element.nodes.initial.coordinates(status),
+		final: element.nodes.final.coordinates(status),
+	}
+	const points = {
+		initial: globalMeterToCanvasCoords(globalMeterPoints.initial, ctx),
+		final: globalMeterToCanvasCoords(globalMeterPoints.final, ctx),
+	}
+	const { radius } = graphics.node
+	const { width } = graphics.element
+
+	const availableSpace = metersToPixels(element.length) - 2 * radius
+	const path = rectangularLoadPath(availableSpace)
+
+	ctx.save()
+	ctx.translate(points.initial.x, points.initial.y)
+	ctx.rotate(-degsToRads(element.inclination))
+	ctx.translate(radius, -width / 2)
+	fillPath(path, ctx, graphics.loads.fill)
+	ctx.restore()
+}
+
+export function printElementHinges(
+	element: IElement,
+	ctx: CanvasRenderingContext2D,
+	status: 'static' | 'displaced',
+) {
+	const path: Path2D = new Path2D()
+	const [initial, final] = [
+		element.getHinge('initial'),
+		element.getHinge('final'),
+	]
+	if (initial && initial.isCollapsed)
+		path.addPath(hingePath(element, 'initial', ctx, status))
+
+	if (final && final.isCollapsed)
+		path.addPath(hingePath(element, 'final', ctx, status))
+
+	fillPath(path, ctx, graphics.hinges.fill)
+}
+
+export function fillPath(
+	path: Path2D,
+	ctx: CanvasRenderingContext2D,
+	fill: string,
+) {
+	ctx.fillStyle = fill
+	ctx.fill(path)
+}
+
+export function outlinePath(
+	path: Path2D,
+	ctx: CanvasRenderingContext2D,
+	config: IUIOutline,
+) {
+	ctx.strokeStyle = config.color
+	ctx.lineWidth = config.width
+	ctx.stroke(path)
 }

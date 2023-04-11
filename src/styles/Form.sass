@@ -8,23 +8,24 @@ $spacing: 12px
     overflow: hidden
     .form-main
         display: grid
-        grid-auto-rows: max-content
         gap: $spacing
         overflow-y: scroll
-    .form-footer
-        display: grid
-        grid-template-columns: 1fr 1fr
-        gap: $spacing
         grid-auto-rows: max-content
-        .form-button
-            grid-column: 2 / span 1
+.form-footer
+    display: grid
+    gap: $spacing
+    grid-auto-rows: max-content
             
-.element-properties
-    grid-template-columns: 1fr 1fr
-    & > .form-input-container:nth-child(1)
-          grid-column: span 2
 .element-reinforcement
+    grid-auto-rows: max-content
+    &--table
+        grid-column: 1 / span 2
+
+.element-reinforcement--table
+    display: grid
+    gap: $spacing
     grid-template-columns: 2.5fr 3fr 3fr auto
+    grid-auto-rows: max-content
     align-items: center
     .whitespace
         min-width: 18px
@@ -35,9 +36,8 @@ $spacing: 12px
         grid-column: 1 / span 4
         display: flex
         justify-content: center
-.node-properties
-    grid-template-columns: 1fr 1fr
-.node-loads
-    grid-template-columns: 1fr 1fr 1fr
-.node-response
-    grid-template-columns: 1fr 1fr
+
+.element-type-selector
+    display: flex
+    padding: 0 calc($slider-padding-x)
+    justify-content: space-evenly

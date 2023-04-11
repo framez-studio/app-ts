@@ -1,33 +1,38 @@
 import React, { useState } from 'react'
 import '@styles/FormInput.sass'
+import FormInputLabel from './FormInputLabel'
 
 export interface FormInputProps extends React.HTMLProps<HTMLDivElement> {
 	props?: {
 		label?: string
+		labelCentered?: boolean
 		suffix?: string
 		value?: string
 		readonly?: boolean
+		tooltip?: string
 		onChange?($e: React.ChangeEvent<HTMLInputElement>): void
 	}
 }
-
-const FormInput: React.FC<FormInputProps> = ({ props }) => {
+/**
+ * TODO: Add input verification.
+ */
+const FormInput: React.FC<FormInputProps> = ({ props, className }) => {
 	const [isActive, setIsActive] = useState(false)
 	const classState = `form-input ${props?.suffix ? '' : 'suffix-less'} ${
 		isActive ? 'active' : ''
 	}`
-
 	return (
-		<label className="form-input-container">
+		<section className={`form-input-container ${className ?? ''}`}>
 			{props?.label && (
-				<span className="input-label secondary-text">
-					{props?.label}
-				</span>
+				<FormInputLabel
+					props={{ label: props.label, tooltip: props.tooltip }}
+					className={props?.labelCentered ? 'jc-center' : ''}
+				/>
 			)}
 			<div className={classState}>
 				<input
 					type="number"
-					inputMode="decimal"
+					inputMode="text"
 					value={props?.value}
 					readOnly={props?.readonly}
 					onFocus={onFocus}
@@ -40,11 +45,8 @@ const FormInput: React.FC<FormInputProps> = ({ props }) => {
 					</span>
 				)}
 			</div>
-		</label>
+		</section>
 	)
-	function onWheel(e: WheelEvent) {
-		e.preventDefault()
-	}
 	function onFocus(e: React.FocusEvent<HTMLInputElement>) {
 		e.preventDefault()
 		setIsActive(true)
@@ -57,6 +59,13 @@ const FormInput: React.FC<FormInputProps> = ({ props }) => {
 	function onChange(e: React.ChangeEvent<HTMLInputElement>) {
 		props?.onChange?.(e)
 	}
+}
+
+function decimalChecker(value: string) {
+	const regexp = new RegExp(`^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$`)
+}
+function onWheel(e: WheelEvent) {
+	e.preventDefault()
 }
 
 export default FormInput

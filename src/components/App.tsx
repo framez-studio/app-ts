@@ -1,19 +1,19 @@
 import '@styles/App.sass'
 import '@styles/_globals.sass'
 import { AppContextProvider } from '@context/AppContext'
-import Header from '@components/Header'
-import InputSlider from '@components/InputSlider'
+import HeaderSlider from '@components/headerSlider/HeaderSlider'
+import InputSlider from '@components/inputSlider/InputSlider'
 import AppCanvas from '@components/AppCanvas'
 
 function App() {
 	return (
-		<AppContextProvider>
-			<div id="framez" className="app text-selection-disabled">
-				<Header />
+		<div id="framez" className="app text-selection-disabled">
+			<AppContextProvider>
+				<HeaderSlider />
 				<AppCanvas />
 				<InputSlider />
-			</div>
-		</AppContextProvider>
+			</AppContextProvider>
+		</div>
 	)
 }
 

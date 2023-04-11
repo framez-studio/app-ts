@@ -15,13 +15,6 @@ export const Concre21D3Props: IConcreteProps = {
 	young: 21538,
 	epsilon_max: 0.003,
 }
-export const Concrete21PascalProps: IConcreteProps = {
-	name: 'Concrete21Pascal',
-	fc: 21,
-	weight: 24,
-	young: 200000000,
-	epsilon_max: 0.003,
-}
 
 export const Concrete21 = new Concrete('Concrete21MPA', 21, 24, 21538, 0.004)
 export const Concrete21Tarea = new Concrete(

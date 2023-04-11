@@ -1,18 +1,15 @@
-import { useState } from 'react'
-import FormSectionHeaderSwitcher from '../FormSectionHeaderSwitcher'
+import InputSliderHeader from '../inputSlider/InputSliderHeader'
 import ElementFormSwitcher from './ElementFormSwitcher'
-import { IFormSections } from '@types-ui'
+import { ElementContextProvider } from '@context/ElementContext'
+import { useElementContextSelectionState } from '@hooks/useElementContextSelectionState'
 
 const ElementForm = () => {
-	const [activeSection, setActiveSection] =
-		useState<IFormSections>('properties')
+	const value = useElementContextSelectionState()
 	return (
-		<>
-			<FormSectionHeaderSwitcher
-				props={{ activeSection, setActiveSection }}
-			/>
-			<ElementFormSwitcher props={{ activeSection }} />
-		</>
+		<ElementContextProvider props={{ value }}>
+			<InputSliderHeader />
+			<ElementFormSwitcher />
+		</ElementContextProvider>
 	)
 }
 

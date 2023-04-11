@@ -1,17 +1,6 @@
 import React, { createContext, useContext } from 'react'
-import { useInitialState } from '@hooks/useInitialState'
-import { IAppState, IElement, INode } from '@interfaces'
-
-export interface IAppContext {
-	state: IAppState
-	setSelection(payload: {
-		type: 'node' | 'element' | null
-		object: INode | IElement | null
-	}): void
-	toggleSlider(): void
-	requestCanvasRedraw(): void
-	resetCanvasRedraw(): void
-}
+import { useInitialAppContext } from '@hooks/useInitialAppContext'
+import { IAppContext } from '@interfaces'
 
 const AppContext = createContext<IAppContext | undefined>(undefined)
 
@@ -30,6 +19,6 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 }
 
 export const AppContextProvider: React.FC<Props> = ({ children }) => {
-	const value = useInitialState()
+	const value = useInitialAppContext()
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }

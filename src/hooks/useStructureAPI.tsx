@@ -1,5 +1,11 @@
+import { FHE } from '@classes/seismic-analysis/fhe'
+import { PushoverSolver } from '@classes/solvers/pushover-solver'
 import { useAppContext } from '@context/AppContext'
-import { displaceStructure, setStructureReactions } from '@utils/elements'
+import {
+	displaceStructure,
+	getCapacityCurve,
+	setStructureReactions,
+} from '@utils/elements'
 
 export function useStructureAPI() {
 	const { state } = useAppContext()
@@ -9,5 +15,18 @@ export function useStructureAPI() {
 		displaceStructure(structure)
 		setStructureReactions(structure)
 	}
-	return { requestStructureSolver }
+
+	function getNode(node: { x: number; y: number }) {
+		return structure.node(node)
+	}
+
+	function requestCapacityCurve(config: {
+		direction: 'left' | 'right'
+		node: { x: number; y: number }
+		constants: { av: number; fv: number }
+	}) {
+		return getCapacityCurve({ structure, ...config })
+	}
+
+	return { requestStructureSolver, requestCapacityCurve, getNode }
 }

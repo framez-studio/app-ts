@@ -1,7 +1,8 @@
-import { IElement, INode, IStructure } from '@interfaces'
+import { IElement, IFrameSystem, INode } from '@interfaces'
+import { IFormSections } from '@types-ui'
 
 export interface IAppState {
-	structure: IStructure
+	structure: IFrameSystem
 	canvas: {
 		selection: {
 			type: null | 'node' | 'element'
@@ -15,5 +16,6 @@ export interface IAppState {
 	}
 	slider: {
 		isOpen: boolean
+		activeSection: IFormSections
 	}
 }

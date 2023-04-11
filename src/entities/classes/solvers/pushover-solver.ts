@@ -1,8 +1,8 @@
-import { IElement, INode, IStructure } from "@interfaces";
-import { coordinates2D, initialOrFinal, stepPushover } from "@types";
-import { min } from "mathjs";
-import { Hinge } from "../others/moment-curvature";
-import { StaticSolver } from "./static-solver";
+import { IElement, INode, IStructure } from '@interfaces'
+import { coordinates2D, initialOrFinal, stepPushover } from '@types'
+import { min } from 'mathjs'
+import { Hinge } from '../others/moment-curvature'
+import { StaticSolver } from './static-solver'
 
 export class PushoverSolver {
 	private static _statusAnalysis: boolean = false
@@ -11,9 +11,11 @@ export class PushoverSolver {
 
 	constructor() {}
 
-    public static statusAnalysis(){
-        return this._statusAnalysis
-    }
+	public static statusAnalysis() {
+		return this._statusAnalysis
+	}
+
+	public analysisInitialState() {}
 
     public analysisInitialState(){
         
@@ -229,17 +231,24 @@ const collapseFactorStructure = (structure: IStructure) => {
 	return cfactors
 }
 
-const updateHingesStructure = (structure: IStructure, collapseFactor: number) =>{
-    structure.elements.forEach(element => {
-        if (element.finalHinge != undefined) {
-            let mf = element.finalHinge.moment + element.forces[5][0] * collapseFactor
-            element.finalHinge.setMoment(mf)
-        }
-        if (element.initialHinge != undefined) {
-            let mi = element.initialHinge.moment + element.forces[2][0] * collapseFactor
-            element.initialHinge.setMoment(mi)
-        }
-    })
+const updateHingesStructure = (
+	structure: IStructure,
+	collapseFactor: number,
+) => {
+	structure.elements.forEach((element) => {
+		if (element.finalHinge != undefined) {
+			let mf =
+				element.finalHinge.moment +
+				element.forces[5][0] * collapseFactor
+			element.finalHinge.setMoment(mf)
+		}
+		if (element.initialHinge != undefined) {
+			let mi =
+				element.initialHinge.moment +
+				element.forces[2][0] * collapseFactor
+			element.initialHinge.setMoment(mi)
+		}
+	})
 }
 
 const totalSpanLoadStructure = (structure: IStructure) => {

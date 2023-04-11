@@ -1,53 +1,81 @@
-import React from 'react'
 import '@styles/Form.sass'
 import FormButton from '@components/FormButton'
 import FormInput from '@components/FormInput'
-import { useElementSelection } from '@hooks/useElementSelection'
+import { useElementContext } from '@context/ElementContext'
+import { useActiveSectionContext } from '@context/ActiveSectionContext'
 
-interface Props extends React.HTMLProps<HTMLDivElement> {
-	props?: {
-		onButtonClick?(): void
-	}
-}
+const ElementMechPropertiesForm = () => {
+	const { setActiveSection } = useActiveSectionContext()
+	const { elementProps } = useElementContext()
+	const { state, updateYoung, updateEpsilon, updateSectionDims, updateFc } =
+		elementProps
 
-const ElementMechPropertiesForm: React.FC<Props> = ({ props }) => {
-	const { young, setYoung, sectionDims, setSectionBase, setSectionHeight } =
-		useElementSelection()
 	return (
 		<section className="form-container">
-			<section className="form-main element-properties">
-				<FormInput
-					props={{
-						label: 'Young Modulus',
-						suffix: 'MPa',
-						value: String(young),
-						onChange: ($e) => setYoung(Number($e.target.value)),
-					}}
-				/>
+			<section className="form-main element-properties col-2">
 				<FormInput
 					props={{
 						label: 'Section Base',
 						suffix: 'mm',
-						value: String(sectionDims.base),
+						value: state.sectionDims.base,
 						onChange: ($e) =>
-							setSectionBase(Number($e.target.value)),
+							updateSectionDims({ base: $e.target.value }),
 					}}
 				/>
 				<FormInput
 					props={{
 						label: 'Section Height',
 						suffix: 'mm',
-						value: String(sectionDims.height),
+						value: state.sectionDims.height,
 						onChange: ($e) =>
-							setSectionHeight(Number($e.target.value)),
+							updateSectionDims({ height: $e.target.value }),
+					}}
+				/>
+				<FormInput
+					props={{
+						label: `${String.fromCharCode(402)}'c`,
+						tooltip: `Concrete's maximum compressive strength`,
+						suffix: 'MPa',
+						value: state.fc,
+						onChange: ($e) => updateFc($e.target.value),
+					}}
+				/>
+				<FormInput
+					props={{
+						label: 'Young',
+						tooltip: `Concrete's Young's modulus. When changing ${String.fromCharCode(
+							402,
+						)}'c value, Framez will automatically suggest a value based on E=3900${String.fromCharCode(
+							8730,
+						)}${String.fromCharCode(402)}'c`,
+						suffix: 'MPa',
+						value: state.young,
+						onChange: ($e) => updateYoung($e.target.value),
+					}}
+				/>
+				<FormInput
+					props={{
+						label: `Max. Strain`,
+						tooltip: `Concrete's maximum compressive strain (${String.fromCharCode(
+							949,
+						)}) before yielding`,
+						suffix: 'mm',
+						value: state.epsilon,
+						onChange: ($e) => updateEpsilon($e.target.value),
 					}}
 				/>
 			</section>
-			<section className="form-footer">
+			<section className="form-footer col-2">
+				<FormButton
+					props={{
+						text: 'Dynamic Config.',
+						onClick: () => setActiveSection('dynamics'),
+					}}
+				/>
 				<FormButton
 					props={{
 						text: 'Reinforcement',
-						onClick: props?.onButtonClick,
+						onClick: () => setActiveSection('steel'),
 					}}
 				/>
 			</section>

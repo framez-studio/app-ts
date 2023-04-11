@@ -1,46 +1,60 @@
-import React, { useState } from 'react'
+import React from 'react'
 import '@styles/Form.sass'
-import AddBtn from '@components/svg/AddBtn'
 import FormButton from '@components/FormButton'
-import ElementReinforcementFormRow from '@components/elementForm/ElementReinforcementFormRow'
+import ElementReinforcementTable from './ElementReinforcementTable'
+import FormInput from '@components/FormInput'
+import { useElementContext } from '@context/ElementContext'
+import { useActiveSectionContext } from '@context/ActiveSectionContext'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props?: {
-		onButtonClick?(): void
+		onBackBtn?(): void
 	}
 }
 
 const ElementReinforcementForm: React.FC<Props> = ({ props }) => {
-	const [reinforcement, setReinforcement] = useState<{}[]>([{}])
+	const { setActiveSection } = useActiveSectionContext()
+	const { elementSteel } = useElementContext()
+	const { state } = elementSteel
 
-	const addRow = () => setReinforcement([...reinforcement, {}])
-
-	const removeRow = (row: {}) => {
-		let newState = reinforcement.filter((iRow) => iRow !== row)
-		setReinforcement(newState)
-	}
-
-	const reinforcementInputs = reinforcement.map((row, index) => (
-		<ElementReinforcementFormRow
-			key={`row-${index}`}
-			props={{ onDelete: () => removeRow(row) }}
-		/>
-	))
 	return (
 		<section className="form-container">
-			<section className="form-main element-reinforcement">
-				<span className="reinforcement-th">Bars Quantity</span>
-				<span className="reinforcement-th">Bar Diameter</span>
-				<span className="reinforcement-th">Distance From Edge</span>
-				<span className="whitespace"></span>
-				{reinforcementInputs}
-				<span className="add-container">
-					<AddBtn props={{ onClick: addRow }} />
-				</span>
+			<section className="form-main element-reinforcement col-2">
+				<FormInput
+					props={{
+						label: `Young`,
+						tooltip: `Steel's young modulus`,
+						suffix: 'MPa',
+						value: state.young,
+						onChange: ($e) =>
+							elementSteel.updateSteelYoung($e.target.value),
+					}}
+				/>
+				<FormInput
+					props={{
+						label: `${String.fromCharCode(402)}y`,
+						tooltip: `Steel's yield strength`,
+						suffix: 'MPa',
+						value: state.yield,
+						onChange: ($e) =>
+							elementSteel.updateYield($e.target.value),
+					}}
+				/>
+				<ElementReinforcementTable
+					props={{
+						rows: state.rows,
+						rowCreator: elementSteel.createEmptySteelRow,
+						rowUpdater: elementSteel.updateSteelRow,
+						rowDeleter: elementSteel.removeSteelRow,
+					}}
+				/>
 			</section>
-			<section className="form-footer">
+			<section className="form-footer col-2">
 				<FormButton
-					props={{ text: 'Back', onClick: props?.onButtonClick }}
+					props={{
+						text: 'Back',
+						onClick: () => setActiveSection('properties'),
+					}}
 				/>
 			</section>
 		</section>

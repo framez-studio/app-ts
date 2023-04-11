@@ -26,16 +26,23 @@
 		"husky": "^8.0.1",
 		"madge": "^6.0.0",
 		"prettier": "^2.7.1",
+		"pwa-asset-generator": "^6.2.1",
 		"sass": "^1.57.1",
+		"sass-loader": "^13.2.1",
 		"typescript": "^4.9.3",
 		"vite": "^4.0.0",
 		"vitest": "0.24.3"
 	},
 	"dependencies": {
+		"@emotion/react": "^11.10.6",
+		"@emotion/styled": "^11.10.6",
+		"@mui/icons-material": "^5.11.16",
+		"@mui/material": "^5.11.16",
 		"just-clone": "^6.2.0",
 		"mathjs": "11.3.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
+		"recharts": "^2.5.0",
 		"ts-node": "^10.9.1",
 		"use-immer": "^0.8.1"
 	}

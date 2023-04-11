@@ -1,47 +1,38 @@
 import '@styles/Form.sass'
 import FormInput from '../FormInput'
-import { useNodeSelection } from '@hooks/useNodeSelection'
+import { useNodeSelectionState } from '@hooks/useNodeSelectionState'
 
 const NodeLoadsForm = () => {
-	const { loads, setLoads } = useNodeSelection()
+	const { loads, setLoads } = useNodeSelectionState()
 	return (
 		<section className="form-container">
-			<section className="form-main node-loads">
+			<section className="form-main node-loads col-3">
 				<FormInput
 					props={{
 						label: 'Fx',
 						suffix: 'kN',
-						value: String(loads.fx),
-						onChange($e) {
-							const { value } = $e.target
-							setLoads({ fx: Number(value) })
-						},
+						value: loads.fx,
+						onChange: ($e) => setLoads({ fx: $e.target.value }),
 					}}
 				/>
 				<FormInput
 					props={{
 						label: 'Fy',
 						suffix: 'kN',
-						value: String(loads.fy),
-						onChange($e) {
-							const { value } = $e.target
-							setLoads({ fy: Number(value) })
-						},
+						value: loads.fy,
+						onChange: ($e) => setLoads({ fy: $e.target.value }),
 					}}
 				/>
 				<FormInput
 					props={{
 						label: 'Mz',
 						suffix: 'kN.m',
-						value: String(loads.mz),
-						onChange($e) {
-							const { value } = $e.target
-							setLoads({ mz: Number(value) })
-						},
+						value: loads.mz,
+						onChange: ($e) => setLoads({ mz: $e.target.value }),
 					}}
 				/>
 			</section>
-			<section className="form-footer"></section>
+			<section className="form-footer col-2"></section>
 		</section>
 	)
 }

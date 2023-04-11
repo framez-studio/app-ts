@@ -31,7 +31,7 @@ export interface IRowReinforcementMechanics {
 	moment: number
 }
 
-export interface IRectangularRCSection extends IRectangularSection<IConcrete>  {
+export interface IRectangularRCSection extends IRectangularSection<IConcrete> {
 	b: number
 	reinforcement: IRowReinforcement[]
 	readonly young: number
@@ -41,6 +41,7 @@ export interface IRectangularRCSection extends IRectangularSection<IConcrete>  {
 	addRowReinforcement(d: number, quantity: number, BarCR: IBarCR): void
 	findRowReinforcement(d: number): number
 	swapRowReinforcement(d: number, quantity: number, BarCR: IBarCR): void
+	deleteRowReinforcement(d: number): void
 	deleteReinforcement(): void
 	sortReinforcement(): void
 	rotate180(): void
@@ -53,8 +54,8 @@ export interface ICircularSection<MT extends MaterialType>
 }
 
 export interface IBarCR extends ICircularSection<ISteel> {
-	readonly fy: number
-	readonly young: number
+	fy: number
+	young: number
 	readonly area: number
 	copy(): IBarCR
 }

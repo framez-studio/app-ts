@@ -22,7 +22,7 @@ const FormDualInput: React.FC<Props> = ({ props }) => {
 		<section className="form-dual-input" onFocus={onFocus} onBlur={onBlur}>
 			<div className="form-dual-input-title">
 				<FormSectionLabel
-					props={{ label: props.title, isActive: isActive }}
+					props={{ label: props.title, isActive: true }}
 				/>
 			</div>
 			<FormInput props={props.first.props} />

@@ -1,37 +1,38 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useAppContext } from '@context/AppContext'
-import { getContextFromRef, clearContext } from '@utils/canvas'
+import { clearContext } from '@utils/canvas'
 import { useCanvasGestures } from './useCanvasGestures'
 import { useGraphicStructure } from './useGraphicStructure'
+import { useCanvasRef } from './useCanvasRef'
 
 export function useAppCanvas() {
-	const canvasRef = useRef<HTMLCanvasElement | null>(null)
+	const canvas = useCanvasRef()
 	const context = useAppContext()
 	const graphicStructure = useGraphicStructure()
 	const gestures = useCanvasGestures()
 
 	function updateScreen() {
-		const ctx = getContextFromRef(canvasRef)
+		const ctx = canvas.getContext()
 		clearContext(ctx)
 		gestures.applyGestures(ctx)
 		graphicStructure.printOnContext(ctx)
 		context.resetCanvasRedraw()
 	}
-	function handlePointerDown(e: React.PointerEvent) {
+	function handlePointerDown(e: React.PointerEvent<HTMLCanvasElement>) {
 		gestures.pointerDownHandler(e)
 		updateScreen()
 	}
-	function handlePointerUp(e: React.PointerEvent) {
+	function handlePointerUp(e: React.PointerEvent<HTMLCanvasElement>) {
 		gestures.pointerUpHandler(e)
 		graphicStructure.pointerUpHandler(e)
 		updateScreen()
 	}
-	function handlePointerMove(e: React.PointerEvent) {
+	function handlePointerMove(e: React.PointerEvent<HTMLCanvasElement>) {
 		gestures.pointerMoveHandler(e)
 		graphicStructure.pointerMoveHandler(e)
 		updateScreen()
 	}
-	function handleWheel(e: React.WheelEvent) {
+	function handleWheel(e: React.WheelEvent<HTMLCanvasElement>) {
 		gestures.wheelHandler(e)
 		updateScreen()
 	}
@@ -41,7 +42,7 @@ export function useAppCanvas() {
 		updateScreen()
 	}, [context.state.canvas.needsRedraw])
 	return {
-		canvasRef,
+		ref: canvas.ref,
 		updateScreen,
 		handlePointerUp,
 		handlePointerDown,

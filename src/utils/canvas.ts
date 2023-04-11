@@ -1,3 +1,5 @@
+import { coordinates2D } from '@types'
+
 /**
  * Handle the extraction process of a canvas context from a react ref.
  * @param {(React.MutableRefObject<null | HTMLCanvasElement>)} canvasRef
@@ -43,4 +45,25 @@ export function transformContext(
 ) {
 	const { dx, dy, scale } = transformation
 	ctx.setTransform(scale, 0, 0, scale, dx, dy)
+}
+/**
+ * Get the coordinates of a mouse event in the canvas coordinate system.
+ * @param e - The mouse event.
+ * @returns - The coordinates of the pointer event in the canvas coordinate system.
+ */
+export function getPointerCanvasCoords(e: React.MouseEvent<HTMLCanvasElement>) {
+	const coords = { x: e.clientX, y: e.clientY }
+	const canvas = e.currentTarget
+	return substractCanvasPosition(coords, canvas)
+}
+
+export function substractCanvasPosition(
+	coords: coordinates2D,
+	canvas: HTMLCanvasElement,
+) {
+	const rect = canvas.getBoundingClientRect()
+	return {
+		x: coords.x - rect.left,
+		y: coords.y - rect.top,
+	}
 }

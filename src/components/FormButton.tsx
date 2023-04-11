@@ -8,9 +8,11 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 	}
 }
 
-const FormButton: React.FC<Props> = ({ props }) => {
+const FormButton: React.FC<Props> = ({ props, className }) => {
 	return (
-		<button onPointerUp={props.onClick} className="form-button hoverable">
+		<button
+			onPointerUp={props.onClick}
+			className={`form-button hoverable ${className ?? ''}`}>
 			{props.text}
 		</button>
 	)

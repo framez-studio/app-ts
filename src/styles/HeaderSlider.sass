@@ -1,0 +1,34 @@
+@import './_vars'
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Baloo+2&display=swap')
+
+.header-slider
+    position: absolute
+    top: 0
+    left: 0
+    height: 50%
+    border-radius: 0px 0px 20px 20px
+    &.closed
+        transform: translate(0, calc($header-slot-height - 100%))
+    &.opened
+        transform: translate(0, 0)
+    .slider-body
+        padding: 24px 0px 0px 0px
+        .generator-container
+            flex: 1
+.header-title
+    font-family: 'Audiowide', cursive
+    font-size: 20px
+    color: #e9e7e7
+    &:hover
+        cursor: pointer
+        color: #fff
+    &:active
+        color: #fff
+.generator-container
+    display: grid
+    grid-template-rows: auto 1fr
+    overflow-y: scroll
+    row-gap: 12px
+@media screen and (display-mode: standalone)
+    .header-slider
+        border-radius: 0px 0px 30px 30px

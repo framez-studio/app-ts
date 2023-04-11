@@ -92,7 +92,12 @@ export class RectangularRCSection implements IRectangularRCSection {
 			this._reinforcement[row] = rowi
 		}
 	}
-
+	public deleteRowReinforcement(d: number): void {
+		const row: number = this.findRowReinforcement(d)
+		if (row != -1) {
+			this._reinforcement.splice(row, 1)
+		}
+	}
 	public deleteReinforcement(): void {
 		this._reinforcement = []
 	}

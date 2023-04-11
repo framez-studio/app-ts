@@ -1,25 +1,25 @@
 import FormInput from '../FormInput'
-import { useNodeSelection } from '@hooks/useNodeSelection'
+import { useNodeSelectionState } from '@hooks/useNodeSelectionState'
 import { responseFormatter } from '@utils/ui'
 
 const NodeResponseForm = () => {
-	const { displacements, reactions } = useNodeSelection()
+	const { displacements, reactions } = useNodeSelectionState()
 	return (
 		<section className="form-container">
-			<section className="form-main node-response">
+			<section className="form-main node-response col-2">
 				<FormInput
 					props={{
 						label: 'Fx',
 						suffix: 'kN',
 						readonly: true,
-						value: responseFormatter(reactions.fx),
+						value: responseFormatter(Number(reactions.fx)),
 					}}
 				/>
 				<FormInput
 					props={{
 						label: 'dx',
 						suffix: 'mm',
-						value: responseFormatter(displacements.dx),
+						value: responseFormatter(Number(displacements.dx)),
 						readonly: true,
 					}}
 				/>
@@ -27,7 +27,7 @@ const NodeResponseForm = () => {
 					props={{
 						label: 'Fy',
 						suffix: 'kN',
-						value: responseFormatter(reactions.fy),
+						value: responseFormatter(Number(reactions.fy)),
 						readonly: true,
 					}}
 				/>
@@ -35,7 +35,7 @@ const NodeResponseForm = () => {
 					props={{
 						label: 'dy',
 						suffix: 'mm',
-						value: responseFormatter(displacements.dy),
+						value: responseFormatter(Number(displacements.dy)),
 						readonly: true,
 					}}
 				/>
@@ -43,7 +43,7 @@ const NodeResponseForm = () => {
 					props={{
 						label: 'Mz',
 						suffix: 'kN.m',
-						value: responseFormatter(reactions.mz),
+						value: responseFormatter(Number(reactions.mz)),
 						readonly: true,
 					}}
 				/>
@@ -51,12 +51,12 @@ const NodeResponseForm = () => {
 					props={{
 						label: 'rz',
 						suffix: 'rad',
-						value: responseFormatter(displacements.rz),
+						value: responseFormatter(Number(displacements.rz)),
 						readonly: true,
 					}}
 				/>
 			</section>
-			<section className="form-footer"></section>
+			<section className="form-footer col-2"></section>
 		</section>
 	)
 }

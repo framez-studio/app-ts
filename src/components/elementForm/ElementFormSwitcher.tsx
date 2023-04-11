@@ -1,19 +1,20 @@
-import React from 'react'
-import { IFormSections } from '@types-ui'
+import { useActiveSectionContext } from '@context/ActiveSectionContext'
+import ElementDynamicPropertiesForm from './ElementDynamicPropertiesForm'
 import ElementLoadsForm from './ElementLoadsForm'
-import ElementPropertiesForm from './ElementPropertiesForm'
+import ElementMechPropertiesForm from './ElementMechPropertiesForm'
+import ElementReinforcementForm from './ElementReinforcementForm'
 import ElementResponseForm from './ElementResponseForm'
 
-interface Props extends React.HTMLProps<HTMLDivElement> {
-	props: {
-		activeSection: IFormSections
-	}
-}
+const ElementFormSwitcher = () => {
+	const { activeSection } = useActiveSectionContext()
 
-const ElementFormSwitcher: React.FC<Props> = ({ props }) => {
-	switch (props.activeSection) {
+	switch (activeSection) {
 		case 'properties':
-			return <ElementPropertiesForm />
+			return <ElementMechPropertiesForm />
+		case 'steel':
+			return <ElementReinforcementForm />
+		case 'dynamics':
+			return <ElementDynamicPropertiesForm />
 		case 'loads':
 			return <ElementLoadsForm />
 		case 'response':

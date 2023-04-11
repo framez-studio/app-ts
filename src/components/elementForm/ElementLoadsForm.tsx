@@ -1,9 +1,10 @@
 import '@styles/Form.sass'
 import FormInput from '@components/FormInput'
-import { useElementSelection } from '@hooks/useElementSelection'
+import { useElementContext } from '@context/ElementContext'
 
 const ElementLoadsForm = () => {
-	const { load, setLoad } = useElementSelection()
+	const { elementProps } = useElementContext()
+	const { state, updateLoad } = elementProps
 	return (
 		<section className="form-container">
 			<section className="form-main element-loads">
@@ -11,12 +12,12 @@ const ElementLoadsForm = () => {
 					props={{
 						label: 'Distributed Load:',
 						suffix: 'kN/m',
-						value: String(load),
-						onChange: ($e) => setLoad(Number($e.target.value)),
+						value: state.load,
+						onChange: ($e) => updateLoad($e.target.value),
 					}}
 				/>
 			</section>
-			<section className="form-footer"></section>
+			<section className="form-footer col-2"></section>
 		</section>
 	)
 }
