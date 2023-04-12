@@ -38,5 +38,5 @@ export class RectangularSpanLoad implements ISpanLoad {
 			[fef.final.fy],
 			[fef.final.mz],
 		]
-	}
+	}  
 }

@@ -14,9 +14,9 @@ import { describe, expect, it } from "vitest"
 
 
 
-describe('Case 3: Oficial Test', () => {
+describe('Case 1: Oficial Test', () => {
     //materials
-    const Cncr21000KPA = new Concrete("Cncr21MPA",21000,24,17872000,0.003)
+    const Cncr21000KPA = new Concrete("Cncr21MPA",21000,24,21538105.77,0.003)
     const Steel60 = new Steel("G60",200e6,70,420e3)
 
 	//sections geometry & material definition
@@ -40,21 +40,14 @@ describe('Case 3: Oficial Test', () => {
 	let b = new ElementNode({ x: 0, y: 3 })
 	let c = new ElementNode({ x: 6, y: 3 })
 	let d = new Support('fixed', { x: 6, y: 0 })
-	let e = new ElementNode({ x: 0, y: 7 })
-	let f = new ElementNode({ x: 6, y: 7 })
-
 
 	//elements definition
 	let lCol = new Element(a, b, col350x350)
 	let beam = new Element(b, c, vga400x300)
 	let rCol = new Element(d, c, col350x350)
 
-	let lCol2 = new Element(b, e, col350x350)
-	let beam2 = new Element(e, f, vga400x300)
-	let rCol2 = new Element(c, f, col350x350)
-
 	//structure definition
-	let frm = new FrameSystem(lCol, beam, rCol,lCol2, beam2, rCol2)
+	let frm = new FrameSystem(lCol, beam, rCol)
 	let MnVga = MomentCurvatureFinal2Section(vga400x300)
 	let MnCol = MomentCurvatureFinal2Section(col350x350)
 
@@ -64,30 +57,22 @@ describe('Case 3: Oficial Test', () => {
 	rCol.assignHinge('final',new Hinge(MnCol.maxMoment,MnCol.maxCurv,MnCol.minMoment,MnCol.minCurve,'Moment'))
 	beam.assignHinge('initial',new Hinge(MnVga.maxMoment,MnVga.maxCurv,MnVga.minMoment,MnVga.minCurve,'Moment'))
 	beam.assignHinge('final',new Hinge(MnVga.maxMoment,MnVga.maxCurv,MnVga.minMoment,MnVga.minCurve,'Moment'))
-	
-	lCol2.assignHinge('initial',new Hinge(MnCol.maxMoment,MnCol.maxCurv,MnCol.minMoment,MnCol.minCurve,'Moment'))
-	lCol2.assignHinge('final',new Hinge(MnCol.maxMoment,MnCol.maxCurv,MnCol.minMoment,MnCol.minCurve,'Moment'))
-	rCol2.assignHinge('initial',new Hinge(MnCol.maxMoment,MnCol.maxCurv,MnCol.minMoment,MnCol.minCurve,'Moment'))
-	rCol2.assignHinge('final',new Hinge(MnCol.maxMoment,MnCol.maxCurv,MnCol.minMoment,MnCol.minCurve,'Moment'))
-	beam2.assignHinge('initial',new Hinge(MnVga.maxMoment,MnVga.maxCurv,MnVga.minMoment,MnVga.minCurve,'Moment'))
-	beam2.assignHinge('final',new Hinge(MnVga.maxMoment,MnVga.maxCurv,MnVga.minMoment,MnVga.minCurve,'Moment'))
 
 
 	//loads definition & assign
-	let load = new RectangularSpanLoad(beam, 60)
-	let load2 = new RectangularSpanLoad(beam2, 60)
+	let load = new RectangularSpanLoad(beam, 40)
 
-	it(`Case 3: Capacity Curve`, () => {
-		normalizeLoads2Unit(frm,60)
-		PushoverSolver.Run(frm,{x: 0, y:7},'service',60)
+	it(`Case 1: Capacity Curve`, () => {
+		normalizeLoads2Unit(frm,40)
+		PushoverSolver.Run(frm,{x: 0, y:7},'service',40)
 		let resultService = PushoverSolver.serviceCapacityCurve()
 		frm.resetLoadstoZero()
 		let av = 0.25
 		let fv = 0.25
 		FHE.setFHEinNodes(frm,1,2,av,fv)
-		PushoverSolver.Run(frm,{x: 0, y:7},'stability')
+		PushoverSolver.Run(frm,{x: 0, y:3},'stability')
 		let result = PushoverSolver.capacityCurve()
-		let curve = [ 
+		let curve = [
 			[
 			  0,
 			  0,
