@@ -17,14 +17,15 @@ import { defaultElementLoads, defaultElementReleases } from '@config/globals'
 import { eucDistance, degSlope } from '@utils/algebra'
 import { elementLocalDisplacementsArray, releasesArray } from '@utils/elements'
 import clone from 'just-clone'
+import { IHinge } from '@interfaces/hinge.interface'
 
 export class Element implements IElement {
 	private _nodes: initialFinal<INode>
 	private _releases: initialFinal<degsOfFreedom2DBoolean>
 	private _loads: ISpanLoad[] = [...defaultElementLoads]
 	public section: IRectangularRCSection
-	public initialHinge!: Hinge | undefined
-	public finalHinge!: Hinge | undefined
+	public initialHinge!: IHinge | undefined
+	public finalHinge!: IHinge | undefined
 
 	constructor(iNode: INode, fNode: INode, section: IRectangularRCSection) {
 		this.section = section
@@ -151,7 +152,7 @@ export class Element implements IElement {
 		return new Element(this.nodes[from], to, section ?? this.section)
 	}
 
-	public assignHinge(node: initialOrFinal, hinge: Hinge) {
+	public assignHinge(node: initialOrFinal, hinge: IHinge) {
 		if (node == 'initial') {
 			this.initialHinge = hinge
 		} else {
@@ -168,5 +169,29 @@ export class Element implements IElement {
 	}
 	public resetLoads(): void {
 		this._loads = [...defaultElementLoads]
+	}
+
+	public copy(nodeInitial: INode, nodeFinal: INode): IElement {
+		let e = new Element(nodeInitial,nodeFinal,this.section.copy())
+		if (this._releases.initial.rz) {e.release('initial','rz')}
+		if (this._releases.initial.dx) {e.release('initial','dx')}
+		if (this._releases.initial.dy) {e.release('initial','dy')}
+		if (this._releases.final.rz) {e.release('final','rz')}
+		if (this._releases.final.dx) {e.release('final','dx')}
+		if (this._releases.final.dy) {e.release('final','dy')}
+
+		this._loads.forEach(l => {
+			e.addSpanLoad(l)
+		});
+		let hi = this.getHinge('initial')
+		let hf = this.getHinge('final')
+		if (hi!=undefined) {
+			e.assignHinge('initial',hi.copy())
+		}
+		if (hf!=undefined) {
+			e.assignHinge('final',hf.copy())
+		}
+
+		return e
 	}
 }

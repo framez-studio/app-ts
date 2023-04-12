@@ -15,6 +15,7 @@ export interface IConcrete extends IMaterial {
 	fc: number
 	beta: number
 	epsilon_max: number
+	copy(): IConcrete
 }
 
 export interface ISteel extends IMaterial {
@@ -23,6 +24,7 @@ export interface ISteel extends IMaterial {
 	weight: number,
 	fy: number,
 	epsilonY: number
+	copy(): ISteel
 }
 
 export type MaterialType = IConcrete | ISteel

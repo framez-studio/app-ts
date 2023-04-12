@@ -117,4 +117,14 @@ export class RectangularRCSection implements IRectangularRCSection {
 		})
 		return new RectangularRCSection(this.b, this.h, this.material, rnew)
 	}
+
+	copy(): IRectangularRCSection {
+		let r: IRowReinforcement[] = []
+		this._reinforcement.forEach(rowi => {
+			let row = {distance: rowi.distance,quantity: rowi.quantity,section: rowi.section.copy()}
+			r.push(row)
+		});
+		let IRC = new RectangularRCSection(this.b,this.h,this.material.copy(),r)
+		return IRC
+	}
 }
