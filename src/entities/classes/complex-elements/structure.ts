@@ -121,7 +121,11 @@ export class Structure implements IStructure {
 				e.nodes.final.coordinates('static'),
 				nodesNew,
 			)
-			eArray.push(e.copy(ni, nf))
+			let e2 = e.copy(ni, nf)
+			e.loads.forEach((l) => {
+				e2.addSpanLoad(l)
+			})
+			eArray.push(e2)
 		})
 		return new Structure(...eArray)
 	}

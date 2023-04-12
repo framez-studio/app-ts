@@ -103,20 +103,9 @@ const ElementMechPropertiesForm = () => {
 						tooltip: `Concrete's maximum compressive strain (${String.fromCharCode(
 							949,
 						)}) before yielding`,
-						suffix: 'mm',
-						value: outputUnitsFilter({
-							value: epsilon,
-							from: 'm',
-							to: 'mm',
-						}),
-						onChange: ($e) => {
-							const value = inputUnitsFilter({
-								value: $e.target.value,
-								from: 'mm',
-								to: 'm',
-							})
-							updateEpsilon(value)
-						},
+						suffix: 'mm/mm',
+						value: epsilon,
+						onChange: ($e) => updateEpsilon($e.target.value),
 					}}
 				/>
 			</section>
