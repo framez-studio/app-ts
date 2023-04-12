@@ -111,6 +111,10 @@ export class Structure implements IStructure {
 		this._elements.forEach(e => {
 			let ni = findNodeinArrayByCoordinates(e.nodes.initial.coordinates('static'),nodesNew)
 			let nf = findNodeinArrayByCoordinates(e.nodes.final.coordinates('static'),nodesNew)
+			let e2 = e.copy(ni,nf)
+			e.loads.forEach(l => {
+				e2.addSpanLoad(l)
+			});
 			eArray.push(e.copy(ni,nf))
 		});
 		return new Structure(...eArray)

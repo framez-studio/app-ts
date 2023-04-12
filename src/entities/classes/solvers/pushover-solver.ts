@@ -1,6 +1,6 @@
 import { IElement, INode, IStructure } from '@interfaces'
 import { coordinates2D, initialOrFinal, stepPushover } from '@types'
-import { forEach, min, row } from 'mathjs'
+import { min } from 'mathjs'
 import { Hinge } from '../others/moment-curvature'
 import { StaticSolver } from './static-solver'
 import { RoundFloor } from '@utils/algebra'
@@ -127,7 +127,11 @@ export class PushoverSolver {
 		//let structureService = structure.copy()
 		//unReleaseInverseHingesFromService(structureService)
 		while (!stopAnalysis(structure, stopCriteria, serviceLoad)) {
-			structure.displacements
+			try {
+				structure.displacements
+			} catch (error) {
+				break
+			}
 			//structureService.displacements
 			if (stopCriteria == 'service' && serviceLoad != undefined) {
 				let actualForce =
@@ -140,8 +144,8 @@ export class PushoverSolver {
 					j,
 				)
 			} else {
-				if (j==0) {unReleaseInverseHingesFromService(structure)
-				structure.displacements}
+				unReleaseInverseHingesFromService(structure)
+				structure.displacements
 				//if (j==0) {structure.unReleaseAll()}
 				try {
 					//this.pushByStability(structure, nodeObjCoordinates, j,structureService)		
@@ -217,10 +221,13 @@ const unReleaseInverseHingesFromService = (strFromService: IStructure) => {
 		if (hf0!=undefined && hf0.isCollapsed) {mf0 = e0.forces[5][0]}
 		if (miS*mi0<0 && hiS!=undefined) {
 			hiS.moment=hiS.moment-1e-6
+			hiS.isCollapsed = false
 			eS.unrelease('initial','rz')
+			
 		}
 		if (mfS*mf0<0&& hfS!=undefined) {
 			hfS.moment=hfS.moment-1e-6
+			hfS.isCollapsed = false
 			eS.unrelease('final','rz')
 		}
 	});

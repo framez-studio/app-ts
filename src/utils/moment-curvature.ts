@@ -411,7 +411,7 @@ export const assignHinges2Element = (args: {
 
 	if (node == 'final' || 'both') {
 		let hinge = new Hinge(MnMax, CurvMax, MnMin, CurvMin, hingeType)
-		element.assignHinge('initial', hinge)
+		element.assignHinge('final', hinge)
 	}
 	// console.log('hinge assigned', { MnMax, CurvMax, MnMin, CurvMin, hingeType })
 }
