@@ -116,6 +116,14 @@ const PushoverConfigForm = () => {
 				/>
 			</section>
 			<section className="form-footer col-2">
+				{ui.analysisError && (
+					<ErrorMessage
+						props={{
+							text: 'Oops! There was an error running the analysis',
+						}}
+						className="span-2"
+					/>
+				)}
 				{!ui.arePropsValid && (
 					<ErrorMessage
 						props={{

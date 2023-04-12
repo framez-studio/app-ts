@@ -5,6 +5,7 @@ import ElementReinforcementTable from './ElementReinforcementTable'
 import FormInput from '@components/FormInput'
 import { useElementContext } from '@context/ElementContext'
 import { useActiveSectionContext } from '@context/ActiveSectionContext'
+import { inputUnitsFilter, outputUnitsFilter } from '@utils/ui'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props?: {
@@ -25,9 +26,19 @@ const ElementReinforcementForm: React.FC<Props> = ({ props }) => {
 						label: `Young`,
 						tooltip: `Steel's young modulus`,
 						suffix: 'MPa',
-						value: state.young,
-						onChange: ($e) =>
-							elementSteel.updateSteelYoung($e.target.value),
+						value: outputUnitsFilter({
+							value: state.young,
+							from: 'kPa',
+							to: 'MPa',
+						}),
+						onChange: ($e) => {
+							const value = inputUnitsFilter({
+								value: $e.target.value,
+								from: 'MPa',
+								to: 'kPa',
+							})
+							elementSteel.updateSteelYoung(value)
+						},
 					}}
 				/>
 				<FormInput
@@ -35,9 +46,19 @@ const ElementReinforcementForm: React.FC<Props> = ({ props }) => {
 						label: `${String.fromCharCode(402)}y`,
 						tooltip: `Steel's yield strength`,
 						suffix: 'MPa',
-						value: state.yield,
-						onChange: ($e) =>
-							elementSteel.updateYield($e.target.value),
+						value: outputUnitsFilter({
+							value: state.yield,
+							from: 'kPa',
+							to: 'MPa',
+						}),
+						onChange: ($e) => {
+							const value = inputUnitsFilter({
+								value: $e.target.value,
+								from: 'MPa',
+								to: 'kPa',
+							})
+							elementSteel.updateYield(value)
+						},
 					}}
 				/>
 				<ElementReinforcementTable

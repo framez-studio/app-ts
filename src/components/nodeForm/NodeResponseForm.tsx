@@ -1,6 +1,6 @@
 import FormInput from '../FormInput'
 import { useNodeSelectionState } from '@hooks/useNodeSelectionState'
-import { responseFormatter } from '@utils/ui'
+import { responseFormatter, outputUnitsFilter } from '@utils/ui'
 
 const NodeResponseForm = () => {
 	const { displacements, reactions } = useNodeSelectionState()
@@ -12,14 +12,19 @@ const NodeResponseForm = () => {
 						label: 'Fx',
 						suffix: 'kN',
 						readonly: true,
-						value: responseFormatter(Number(reactions.fx)),
+						value: responseFormatter(reactions.fx),
 					}}
 				/>
 				<FormInput
 					props={{
 						label: 'dx',
 						suffix: 'mm',
-						value: responseFormatter(Number(displacements.dx)),
+						value: outputUnitsFilter({
+							value: displacements.dx,
+							from: 'm',
+							to: 'mm',
+							formatter: responseFormatter,
+						}),
 						readonly: true,
 					}}
 				/>
@@ -27,7 +32,7 @@ const NodeResponseForm = () => {
 					props={{
 						label: 'Fy',
 						suffix: 'kN',
-						value: responseFormatter(Number(reactions.fy)),
+						value: responseFormatter(reactions.fy),
 						readonly: true,
 					}}
 				/>
@@ -35,7 +40,12 @@ const NodeResponseForm = () => {
 					props={{
 						label: 'dy',
 						suffix: 'mm',
-						value: responseFormatter(Number(displacements.dy)),
+						value: outputUnitsFilter({
+							value: displacements.dy,
+							from: 'm',
+							to: 'mm',
+							formatter: responseFormatter,
+						}),
 						readonly: true,
 					}}
 				/>
@@ -43,7 +53,7 @@ const NodeResponseForm = () => {
 					props={{
 						label: 'Mz',
 						suffix: 'kN.m',
-						value: responseFormatter(Number(reactions.mz)),
+						value: responseFormatter(reactions.mz),
 						readonly: true,
 					}}
 				/>
@@ -51,7 +61,7 @@ const NodeResponseForm = () => {
 					props={{
 						label: 'rz',
 						suffix: 'rad',
-						value: responseFormatter(Number(displacements.rz)),
+						value: responseFormatter(displacements.rz),
 						readonly: true,
 					}}
 				/>

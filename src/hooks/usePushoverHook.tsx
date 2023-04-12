@@ -1,7 +1,7 @@
 import { IStructurePushoverHook, IStructurePushoverState } from '@interfaces'
 import { usePushoverHookInitialState } from './usePushoverHookInitialState'
 import { useStructureAPI } from './useStructureAPI'
-import { toPlotterData } from '@utils/ui'
+import { capacityCurveToPlotter } from '@utils/ui'
 
 export function useStructurePushoverHook(): IStructurePushoverHook {
 	const { requestCapacityCurve, getNode } = useStructureAPI()
@@ -58,7 +58,7 @@ export function useStructurePushoverHook(): IStructurePushoverHook {
 			node: { x: Number(state.node.x), y: Number(state.node.y) },
 			constants: state.constants,
 		})
-		const data = toPlotterData(curve)
+		const data = capacityCurveToPlotter(curve)
 		updateResults({ data })
 	}
 

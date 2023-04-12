@@ -1,6 +1,15 @@
 import { IElement, INode, IUIElement, IUINode } from '@interfaces'
 import { coordinates2D } from '@types'
 
+export type supportedUnits = 'MPa' | 'kPa' | 'm' | 'mm'
+export type IUnitFactors = {
+	[key in supportedUnits]: {
+		[key in supportedUnits]?: {
+			operator: 'multiply' | 'divide'
+			factor: number
+		}
+	}
+}
 export type IFormSections =
 	| 'properties'
 	| 'steel'
