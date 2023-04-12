@@ -1,5 +1,11 @@
 import { IUISelection, IUIStructureObject } from '@types-ui'
-import { IElement, INode, ISteelNumRowsState, IStructure } from '@interfaces'
+import {
+	IElement,
+	IFrameSystem,
+	INode,
+	ISteelNumRowsState,
+	IStructure,
+} from '@interfaces'
 
 export interface IUIPrintable {
 	printOnContext(): void
@@ -64,8 +70,20 @@ export interface IGeneratorElementConfig {
 	}
 }
 export interface IGeneratorConfig {
-	levels: { count: number; separation: number }
-	spans: { count: number; separation: number }
+	levels: number[]
+	spans: number[]
 	columns: IGeneratorElementConfig
 	beams: IGeneratorElementConfig
+}
+export interface IGeneratorOutput {
+	structure: IFrameSystem
+	spans: IFramezStep[]
+	levels: IFramezStep[]
+	columns: IElement[]
+	beams: IElement[]
+}
+export interface IFramezStep {
+	index: number
+	separation: number
+	elements: IElement[]
 }

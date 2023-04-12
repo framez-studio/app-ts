@@ -5,6 +5,7 @@ import {
 } from '@interfaces'
 import { forcesArrayToObject } from '@utils/elements'
 import { useElementInitialState } from './useElementInitialState'
+import { inputUnitsFilter } from '@utils/ui'
 
 export function useElementState(): IElementPropsStateHook {
 	const [state, updateState] = useElementInitialState()
@@ -15,12 +16,18 @@ export function useElementState(): IElementPropsStateHook {
 		})
 	}
 	function updateFc(fc: string) {
-		const newFc = Number(fc) * 1000
-		const newYoung = 3900 * Math.sqrt(newFc) * 1000
+		const newFc = inputUnitsFilter({ value: fc, from: 'kPa', to: 'MPa' })
+		const newYoung = 3900 * Math.sqrt(Number(newFc)) //MPa
 		updateState((draft) => {
 			draft.fc = fc
 		})
-		updateYoung(String(newYoung))
+		updateYoung(
+			inputUnitsFilter({
+				value: newYoung,
+				from: 'MPa',
+				to: 'kPa',
+			}),
+		)
 	}
 	function updateEpsilon(epsilon: string) {
 		updateState((draft) => {

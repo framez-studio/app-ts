@@ -3,12 +3,14 @@ import FormButton from '@components/FormButton'
 import FormInput from '@components/FormInput'
 import { useElementContext } from '@context/ElementContext'
 import { useActiveSectionContext } from '@context/ActiveSectionContext'
+import { inputUnitsFilter, outputUnitsFilter } from '@utils/ui'
 
 const ElementMechPropertiesForm = () => {
 	const { setActiveSection } = useActiveSectionContext()
 	const { elementProps } = useElementContext()
 	const { state, updateYoung, updateEpsilon, updateSectionDims, updateFc } =
 		elementProps
+	const { sectionDims, fc, young, epsilon } = state
 
 	return (
 		<section className="form-container">
@@ -17,18 +19,38 @@ const ElementMechPropertiesForm = () => {
 					props={{
 						label: 'Section Base',
 						suffix: 'mm',
-						value: state.sectionDims.base,
-						onChange: ($e) =>
-							updateSectionDims({ base: $e.target.value }),
+						value: outputUnitsFilter({
+							value: sectionDims.base,
+							from: 'm',
+							to: 'mm',
+						}),
+						onChange: ($e) => {
+							const value = inputUnitsFilter({
+								value: $e.target.value,
+								from: 'mm',
+								to: 'm',
+							})
+							updateSectionDims({ base: value })
+						},
 					}}
 				/>
 				<FormInput
 					props={{
 						label: 'Section Height',
 						suffix: 'mm',
-						value: state.sectionDims.height,
-						onChange: ($e) =>
-							updateSectionDims({ height: $e.target.value }),
+						value: outputUnitsFilter({
+							value: sectionDims.height,
+							from: 'm',
+							to: 'mm',
+						}),
+						onChange: ($e) => {
+							const value = inputUnitsFilter({
+								value: $e.target.value,
+								from: 'mm',
+								to: 'm',
+							})
+							updateSectionDims({ height: value })
+						},
 					}}
 				/>
 				<FormInput
@@ -36,8 +58,19 @@ const ElementMechPropertiesForm = () => {
 						label: `${String.fromCharCode(402)}'c`,
 						tooltip: `Concrete's maximum compressive strength`,
 						suffix: 'MPa',
-						value: state.fc,
-						onChange: ($e) => updateFc($e.target.value),
+						value: outputUnitsFilter({
+							value: fc,
+							from: 'kPa',
+							to: 'MPa',
+						}),
+						onChange: ($e) => {
+							const value = inputUnitsFilter({
+								value: $e.target.value,
+								from: 'MPa',
+								to: 'kPa',
+							})
+							updateFc(value)
+						},
 					}}
 				/>
 				<FormInput
@@ -49,8 +82,19 @@ const ElementMechPropertiesForm = () => {
 							8730,
 						)}${String.fromCharCode(402)}'c`,
 						suffix: 'MPa',
-						value: state.young,
-						onChange: ($e) => updateYoung($e.target.value),
+						value: outputUnitsFilter({
+							value: young,
+							from: 'kPa',
+							to: 'MPa',
+						}),
+						onChange: ($e) => {
+							const value = inputUnitsFilter({
+								value: $e.target.value,
+								from: 'MPa',
+								to: 'kPa',
+							})
+							updateYoung(value)
+						},
 					}}
 				/>
 				<FormInput
@@ -59,8 +103,8 @@ const ElementMechPropertiesForm = () => {
 						tooltip: `Concrete's maximum compressive strain (${String.fromCharCode(
 							949,
 						)}) before yielding`,
-						suffix: 'mm',
-						value: state.epsilon,
+						suffix: 'mm/mm',
+						value: epsilon,
 						onChange: ($e) => updateEpsilon($e.target.value),
 					}}
 				/>

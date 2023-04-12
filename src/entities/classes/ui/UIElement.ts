@@ -50,7 +50,6 @@ export class UIElement implements IUIElement {
 
 		fillPath(path, ctx, fill)
 		if (hasNonZeroLoad(object)) printElementLoad(object, ctx, 'static')
-		printElementHinges(object, ctx, 'static')
 
 		if (isSelected)
 			outlinePath(path, ctx, {
@@ -62,5 +61,6 @@ export class UIElement implements IUIElement {
 				width: outline.width,
 				color: outline.hovered,
 			})
+		printElementHinges(object, ctx, 'static')
 	}
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '@styles/FormInput.sass'
 import FormInputLabel from './FormInputLabel'
 
@@ -18,9 +18,14 @@ export interface FormInputProps extends React.HTMLProps<HTMLDivElement> {
  */
 const FormInput: React.FC<FormInputProps> = ({ props, className }) => {
 	const [isActive, setIsActive] = useState(false)
+	const [value, setValue] = useState(props?.value ?? '')
 	const classState = `form-input ${props?.suffix ? '' : 'suffix-less'} ${
 		isActive ? 'active' : ''
 	}`
+
+	useEffect(() => {
+		setValue(props?.value ?? '')
+	}, [props?.value])
 	return (
 		<section className={`form-input-container ${className ?? ''}`}>
 			{props?.label && (
@@ -33,7 +38,7 @@ const FormInput: React.FC<FormInputProps> = ({ props, className }) => {
 				<input
 					type="number"
 					inputMode="text"
-					value={props?.value}
+					value={value}
 					readOnly={props?.readonly}
 					onFocus={onFocus}
 					onBlur={onBlur}
@@ -54,15 +59,18 @@ const FormInput: React.FC<FormInputProps> = ({ props, className }) => {
 	}
 	function onBlur(e: React.FocusEvent<HTMLInputElement>) {
 		setIsActive(false)
+		props?.onChange?.(e)
 		e.target.removeEventListener('wheel', onWheel)
 	}
 	function onChange(e: React.ChangeEvent<HTMLInputElement>) {
-		props?.onChange?.(e)
+		// if (!isRealNumber(e.target.value)) return
+		setValue(e.target.value)
 	}
 }
 
-function decimalChecker(value: string) {
-	const regexp = new RegExp(`^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$`)
+function isRealNumber(value: string) {
+	const regexp = new RegExp('^-?[0-9]+(?:\\.[0-9]+)?$')
+	return regexp.test(value)
 }
 function onWheel(e: WheelEvent) {
 	e.preventDefault()

@@ -27,7 +27,7 @@ const ElementResponseForm = () => {
 					props: {
 						label: 'Initial Node',
 						suffix: 'kN',
-						value: responseFormatter(Number(response.initial.fx)),
+						value: responseFormatter(response.initial.fx),
 						readonly: true,
 					},
 				},
@@ -35,7 +35,7 @@ const ElementResponseForm = () => {
 					props: {
 						label: 'Final Node',
 						suffix: 'kN',
-						value: responseFormatter(Number(response.final.fx)),
+						value: responseFormatter(response.final.fx),
 						readonly: true,
 					},
 				},
@@ -46,7 +46,7 @@ const ElementResponseForm = () => {
 					props: {
 						label: 'Initial Node',
 						suffix: 'kN',
-						value: responseFormatter(Number(response.initial.fy)),
+						value: responseFormatter(response.initial.fy),
 						readonly: true,
 					},
 				},
@@ -54,7 +54,7 @@ const ElementResponseForm = () => {
 					props: {
 						label: 'Final Node',
 						suffix: 'kN',
-						value: responseFormatter(Number(response.final.fy)),
+						value: responseFormatter(response.final.fy),
 						readonly: true,
 					},
 				},
@@ -65,7 +65,7 @@ const ElementResponseForm = () => {
 					props: {
 						label: 'Initial Node',
 						suffix: 'kN.m',
-						value: responseFormatter(Number(response.initial.mz)),
+						value: responseFormatter(response.initial.mz),
 						readonly: true,
 					},
 				},
@@ -73,7 +73,7 @@ const ElementResponseForm = () => {
 					props: {
 						label: 'Final Node',
 						suffix: 'kN.m',
-						value: responseFormatter(Number(response.final.mz)),
+						value: responseFormatter(response.final.mz),
 						readonly: true,
 					},
 				},

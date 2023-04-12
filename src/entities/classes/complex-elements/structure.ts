@@ -1,23 +1,28 @@
-import { constraints } from "@config/globals"
-import { IStructure, IElement, INode } from "@interfaces"
-import { Array2D, coordinates2D, supportType } from "@types"
-import { displaceStructure, filterNodeByCoords, filterElementByCoords, assemblyFef, assemblyMatrix } from "@utils/elements"
-import { uniques, allIndexesOf } from "@utils/helpers"
-import {SMatrixOperator as MatOp} from "@classes/matrices/s-matrix-operator"
-import { forEach } from "mathjs"
+import { constraints } from '@config/globals'
+import { IStructure, IElement, INode } from '@interfaces'
+import { Array2D, coordinates2D, supportType } from '@types'
+import {
+	displaceStructure,
+	filterNodeByCoords,
+	filterElementByCoords,
+	assemblyFef,
+	assemblyMatrix,
+} from '@utils/elements'
+import { uniques, allIndexesOf } from '@utils/helpers'
+import { SMatrixOperator as MatOp } from '@classes/matrices/s-matrix-operator'
+import { forEach } from 'mathjs'
 
-
- /**
-  * Class structure return structure class
-  */
+/**
+ * Class structure return structure class
+ */
 export class Structure implements IStructure {
-	private _elements: IElement[]
+	protected _elements: IElement[]
 
 	constructor(...elements: IElement[]) {
 		this._elements = [...elements]
 	}
 	/**
-	 * 
+	 *
 	 */
 	get elements(): IElement[] {
 		return this._elements
@@ -73,72 +78,82 @@ export class Structure implements IStructure {
 		return MatOp.reduceDegs('matrix', full, ...lockedDegs)
 	}
 
-
-	public filterNodes(y?: number, x?: number){
-        let r = this.nodes
-        if (y!=undefined) {
-            r = r.filter(node => node.coordinates('static').y == y)
-        }
-        if (x!=undefined) {
-            r = r.filter(node => node.coordinates('static').x == x) 
-        }
-        return r
-    }
-	
-	public resetLoadstoZero(){
-		this._elements.forEach(element => {
-			element.resetLoads()
-		});
-		this.nodes.forEach(node => {
-			node.setLoads({fx:0,fy:0,mz:0})
-		});
+	public filterNodes(y?: number, x?: number) {
+		let r = this.nodes
+		if (y != undefined) {
+			r = r.filter((node) => node.coordinates('static').y == y)
+		}
+		if (x != undefined) {
+			r = r.filter((node) => node.coordinates('static').x == x)
+		}
+		return r
 	}
 
-	public resetHingesStatus(){
-		this._elements.forEach(element => {
+	public resetLoadstoZero() {
+		this._elements.forEach((element) => {
+			element.resetLoads()
+		})
+		this.nodes.forEach((node) => {
+			node.setLoads({ fx: 0, fy: 0, mz: 0 })
+		})
+	}
+
+	public resetHingesStatus() {
+		this._elements.forEach((element) => {
 			element.initialHinge?.resetHinge
 			element.finalHinge?.resetHinge
-		});
+		})
 	}
 
 	public copy(): IStructure {
 		let eArray = [] as IElement[]
 		let nodesNew: INode[] = []
-		this.nodes.forEach(n => {
+		this.nodes.forEach((n) => {
 			nodesNew.push(n.copy())
-		});
-		
-		this._elements.forEach(e => {
-			let ni = findNodeinArrayByCoordinates(e.nodes.initial.coordinates('static'),nodesNew)
-			let nf = findNodeinArrayByCoordinates(e.nodes.final.coordinates('static'),nodesNew)
-			let e2 = e.copy(ni,nf)
-			e.loads.forEach(l => {
+		})
+
+		this._elements.forEach((e) => {
+			let ni = findNodeinArrayByCoordinates(
+				e.nodes.initial.coordinates('static'),
+				nodesNew,
+			)
+			let nf = findNodeinArrayByCoordinates(
+				e.nodes.final.coordinates('static'),
+				nodesNew,
+			)
+			let e2 = e.copy(ni, nf)
+			e.loads.forEach((l) => {
 				e2.addSpanLoad(l)
-			});
-			eArray.push(e.copy(ni,nf))
-		});
+			})
+			eArray.push(e2)
+		})
 		return new Structure(...eArray)
 	}
 
 	public unReleaseAll(): void {
-		this.elements.forEach(e => {
-			e.unrelease('initial',"rz")
-			e.unrelease('initial',"dx")
-			e.unrelease('initial',"dy")
-			e.unrelease('final',"rz")
-			e.unrelease('final',"dx")
-			e.unrelease('final',"dy")
-		});
+		this.elements.forEach((e) => {
+			e.unrelease('initial', 'rz')
+			e.unrelease('initial', 'dx')
+			e.unrelease('initial', 'dy')
+			e.unrelease('final', 'rz')
+			e.unrelease('final', 'dx')
+			e.unrelease('final', 'dy')
+		})
 	}
 }
 
-const findNodeinArrayByCoordinates = (coordinates2D:coordinates2D,array: INode[]) => {
+export const findNodeinArrayByCoordinates = (
+	coordinates2D: coordinates2D,
+	array: INode[],
+) => {
 	let nf: INode
-	array.forEach(n => {
-		if (n.coordinates('static').x==coordinates2D.x &&
-		n.coordinates('static').y==coordinates2D.y) {
+	array.forEach((n) => {
+		if (
+			n.coordinates('static').x == coordinates2D.x &&
+			n.coordinates('static').y == coordinates2D.y
+		) {
 			nf = n
 		}
-	});
+	})
 	return nf!
 }

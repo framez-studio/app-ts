@@ -14,7 +14,10 @@ import { SMatrixOperator as SMatOp } from '@classes/matrices/s-matrix-operator'
 import { solveLinearSystem } from '@utils/solver'
 import { allIndexesOf } from './helpers'
 import { FHE } from '@classes/seismic-analysis/fhe'
-import { PushoverSolver } from '@classes/solvers/pushover-solver'
+import {
+	PushoverSolver,
+	normalizeLoads2Unit,
+} from '@classes/solvers/pushover-solver'
 
 export const releasesArray = (
 	releases: elementDegsOfFreedom2DObject,
@@ -284,8 +287,14 @@ export function getCapacityCurve(config: {
 	const { direction, node, constants, structure } = config
 	const { av, fv } = constants
 
-	FHE.setFHEinNodes(structure, direction == 'left' ? -1 : 1, 2, av, fv)
-	PushoverSolver.Run(structure, node, 'stability')
+	const structurePivot = structure.copy()
+	normalizeLoads2Unit(structurePivot, 100)
+
+	PushoverSolver.Run(structurePivot, node, 'service', 100)
+	structurePivot.resetLoadstoZero()
+
+	FHE.setFHEinNodes(structurePivot, direction == 'left' ? -1 : 1, 2, av, fv)
+	PushoverSolver.Run(structurePivot, node, 'stability')
 
 	return PushoverSolver.capacityCurve()
 }

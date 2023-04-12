@@ -9,6 +9,7 @@ import {
 	IGeneratorElementConfig,
 	IElement,
 	IRectangularRCSection,
+	IFramezStep,
 } from '@interfaces'
 import { Element } from '@classes/complex-elements/element'
 import { ElementNode } from '@classes/nodes/element-node'
@@ -25,8 +26,8 @@ export function generateFramezSystem(config: IGeneratorConfig) {
 	const { levels, spans } = config
 
 	const nodes = generateNodes(spans, levels)
-	const beams = generateBeams(config, nodes)
-	const columns = generateColumns(config, nodes)
+	const { beams } = generateBeams(config, nodes)
+	const { columns } = generateColumns(config, nodes)
 
 	const structure = new FrameSystem(...beams, ...columns)
 
@@ -56,69 +57,91 @@ function extractConfigFromContext(context: {
 	const columns = extractElementConfigFromContext(columnsContext)
 	const beams = extractElementConfigFromContext(beamsContext)
 	const config: IGeneratorConfig = {
-		levels: {
-			count: Number(levels.count),
-			separation: Number(levels.separation),
-		},
-		spans: {
-			count: Number(spans.count),
-			separation: Number(spans.separation),
-		},
+		levels: new Array(Number(levels.count)).fill(Number(levels.separation)),
+		spans: new Array(Number(spans.count)).fill(Number(spans.separation)),
 		columns,
 		beams,
 	}
 	return config
 }
-function generateNodes(
-	spans: { count: number; separation: number },
-	levels: { count: number; separation: number },
-) {
+function generateNodes(spans: number[], levels: number[]) {
 	const nodes: INode[][] = []
-	for (let i = 0; i <= levels.count; i++) {
-		let level = []
+	let heightSum = 0
 
-		for (let j = 0; j <= spans.count; j++) {
-			let coords = { x: j * spans.separation, y: i * levels.separation }
-			let node =
-				i == 0 ? new Support('fixed', coords) : new ElementNode(coords)
-			level.push(node)
+	levels.forEach((height, l) => {
+		heightSum += height
+		let level: INode[]
+		let lengthSum: number
+
+		if (l == 0) {
+			lengthSum = 0
+			level = []
+			spans.forEach((length, s) => {
+				lengthSum += length
+				if (s == 0) {
+					level.push(new Support('fixed', { x: 0, y: 0 }))
+				}
+				level.push(new Support('fixed', { x: lengthSum, y: 0 }))
+			})
+			nodes.push(level)
 		}
+		lengthSum = 0
+		level = []
+		spans.forEach((length, s) => {
+			lengthSum += length
+			if (s == 0) {
+				level.push(new ElementNode({ x: 0, y: heightSum }))
+			}
+			level.push(new ElementNode({ x: lengthSum, y: heightSum }))
+		})
+
 		nodes.push(level)
-	}
+	})
 	return nodes
 }
 function generateColumns(
 	config: IGeneratorConfig,
 	nodes: INode[][],
-): IElement[] {
+): { columns: IElement[]; levels: IFramezStep[] } {
 	const { spans, levels, columns } = config
-	const { load } = columns
-	const columnsArr = []
+	const columnsArr: IElement[] = []
+	const levelsArr: IFramezStep[] = []
 
-	for (let j = 0; j <= spans.count; j++) {
-		for (let i = 0; i <= levels.count - 1; i++) {
-			const [iNode, fNode] = [nodes[i][j], nodes[i + 1][j]]
+	levels.forEach((height, l) => {
+		levelsArr.push({ index: l, separation: height, elements: [] })
+
+		const [iNode, fNode] = [nodes[l][0], nodes[l + 1][0]]
+		const firstElement = generateElement(columns, iNode, fNode)
+		levelsArr[l].elements.push(firstElement)
+
+		spans.forEach((_, s) => {
+			const [iNode, fNode] = [nodes[l][s + 1], nodes[l + 1][s + 1]]
 			const element = generateElement(columns, iNode, fNode)
-			element.setSpanLoad(new RectangularSpanLoad(element, load))
-			columnsArr.push(element)
-		}
-	}
-	return columnsArr
+			levelsArr[l].elements.push(element)
+		})
+		columnsArr.push(...levelsArr[l].elements)
+	})
+	return { columns: columnsArr, levels: levelsArr }
 }
-function generateBeams(config: IGeneratorConfig, nodes: INode[][]): IElement[] {
+function generateBeams(
+	config: IGeneratorConfig,
+	nodes: INode[][],
+): { beams: IElement[]; levels: IFramezStep[] } {
 	const { spans, levels, beams } = config
-	const { load } = beams
-	const beamsArr = []
+	const beamsArr: IElement[] = []
+	const spansArr: IFramezStep[] = []
 
-	for (let i = 1; i <= levels.count; i++) {
-		for (let j = 0; j <= spans.count - 1; j++) {
-			const [iNode, fNode] = [nodes[i][j], nodes[i][j + 1]]
+	spans.forEach((length, s) => {
+		spansArr.push({ index: s, separation: length, elements: [] })
+
+		levels.forEach((_, l) => {
+			const [iNode, fNode] = [nodes[l + 1][s], nodes[l + 1][s + 1]]
 			const element = generateElement(beams, iNode, fNode)
-			element.setSpanLoad(new RectangularSpanLoad(element, load))
-			beamsArr.push(element)
-		}
-	}
-	return beamsArr
+			spansArr[s].elements.push(element)
+		})
+		beamsArr.push(...spansArr[s].elements)
+	})
+	return { beams: beamsArr, levels: spansArr }
 }
 function generateSection(config: IGeneratorElementConfig) {
 	const { young, weight, fc, epsilon_max } = config.material
@@ -138,6 +161,7 @@ function generateElement(
 	const section = generateSection(config)
 	const element = new Element(iNode, fNode, section)
 	generateHinges(config, element)
+	element.setSpanLoad(new RectangularSpanLoad(element, config.load))
 	return element
 }
 function generateReinforcement(

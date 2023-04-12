@@ -1,5 +1,3 @@
-import { FHE } from '@classes/seismic-analysis/fhe'
-import { PushoverSolver } from '@classes/solvers/pushover-solver'
 import { useAppContext } from '@context/AppContext'
 import {
 	displaceStructure,

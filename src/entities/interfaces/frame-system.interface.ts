@@ -6,4 +6,5 @@ export interface IFrameSystem extends IStructure {
 	spans: number[]
 	numberSpans: number
 	levelNodeMass(level: number): number
+	copy(): IFrameSystem
 }

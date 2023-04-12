@@ -8,7 +8,7 @@ export function usePushoverHookInitialState() {
 			y: 0,
 		},
 		isNodeValid: true,
-		direction: 'left',
+		direction: 'right',
 		constants: {
 			av: 0.25,
 			fv: 0.25,

@@ -2,6 +2,7 @@ import React from 'react'
 import FormInput from '@components/FormInput'
 import DeleteBtn from '@components/svg/DeleteBtn'
 import { ISteelRowState } from '@interfaces'
+import { inputUnitsFilter, outputUnitsFilter } from '@utils/ui'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
 	props: {
@@ -25,18 +26,38 @@ const ElementReinforcementFormRow: React.FC<Props> = ({ props }) => {
 			/>
 			<FormInput
 				props={{
-					value: row.diameter,
+					value: outputUnitsFilter({
+						value: row.diameter,
+						from: 'm',
+						to: 'mm',
+					}),
 					suffix: 'mm',
-					onChange: ($e) =>
-						updater(index, { diameter: $e.target.value }),
+					onChange: ($e) => {
+						const value = inputUnitsFilter({
+							value: $e.target.value,
+							from: 'mm',
+							to: 'm',
+						})
+						updater(index, { diameter: value })
+					},
 				}}
 			/>
 			<FormInput
 				props={{
-					value: row.distance,
+					value: outputUnitsFilter({
+						value: row.distance,
+						from: 'm',
+						to: 'mm',
+					}),
 					suffix: 'mm',
-					onChange: ($e) =>
-						updater(index, { distance: $e.target.value }),
+					onChange: ($e) => {
+						const value = inputUnitsFilter({
+							value: $e.target.value,
+							from: 'mm',
+							to: 'm',
+						})
+						updater(index, { distance: value })
+					},
 				}}
 			/>
 			<DeleteBtn props={{ onClick: () => deleter(index) }} />

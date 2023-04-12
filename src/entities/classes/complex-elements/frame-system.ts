@@ -1,7 +1,7 @@
 import { IElement, INode, IFrameSystem } from '@interfaces'
 import { supportType } from '@types'
 import { ElementNode } from '../nodes/element-node'
-import { Structure } from './structure'
+import { Structure, findNodeinArrayByCoordinates } from './structure'
 import { constraints } from '@config/globals'
 import { uniques } from '@utils/helpers'
 
@@ -59,6 +59,26 @@ export class FrameSystem extends Structure implements IFrameSystem {
 			mass = n.nodeMass != undefined ? mass + n.nodeMass : mass
 		})
 		return mass
+	}
+	public copy(): IFrameSystem {
+		let eArray = [] as IElement[]
+		let nodesNew: INode[] = []
+		this.nodes.forEach((n) => {
+			nodesNew.push(n.copy())
+		})
+
+		this._elements.forEach((e) => {
+			let ni = findNodeinArrayByCoordinates(
+				e.nodes.initial.coordinates('static'),
+				nodesNew,
+			)
+			let nf = findNodeinArrayByCoordinates(
+				e.nodes.final.coordinates('static'),
+				nodesNew,
+			)
+			eArray.push(e.copy(ni, nf))
+		})
+		return new FrameSystem(...eArray)
 	}
 }
 

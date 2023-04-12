@@ -26,6 +26,12 @@ export function checkCoordsMatchTroughLayers(
 			let coincidence = ctx.isPointInPath(element.path, x, y)
 			if (!coincidence) continue
 			match = { layer: layer.name, index: elementIndex }
+			// console.log(
+			// 	match,
+			// 	x,
+			// 	y,
+			// 	ctx.isPointInPath(layers[0].elements[0].path, x, y),
+			// )
 			break
 		}
 	}

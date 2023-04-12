@@ -8,11 +8,11 @@ import {
 	ResponsiveContainer,
 	XAxis,
 	YAxis,
+	Tooltip,
 } from 'recharts'
 
 interface Props extends React.HTMLProps<HTMLCanvasElement> {
 	props: {
-		title?: string
 		xLabel?: string
 		yLabel?: string
 		height?: number
@@ -27,15 +27,14 @@ const Plotter: React.FC<Props> = ({ props }) => {
 				data={props.data}
 				margin={{ top: 15, right: 30, left: 10, bottom: 20 }}>
 				<CartesianGrid stroke="#676c72" strokeDasharray="3 3" />
-				<Label value={props?.title} position="insideTop" offset={0} />
-				<XAxis dataKey="x">
+				<XAxis dataKey="x" type="number">
 					<Label
 						value={props?.xLabel}
 						position="insideBottom"
 						offset={-10}
 					/>
 				</XAxis>
-				<YAxis dataKey="y">
+				<YAxis type="number">
 					<Label
 						value={props?.yLabel}
 						position="insideLeft"
@@ -43,9 +42,10 @@ const Plotter: React.FC<Props> = ({ props }) => {
 						offset={0}
 					/>
 				</YAxis>
+				<Tooltip />
 				<Line
-					type="monotone"
-					dataKey="x"
+					type="linear"
+					dataKey="y"
 					stroke="#8d4bf6ff"
 					dot={{ fill: '#653AAA' }}
 				/>

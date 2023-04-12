@@ -5,35 +5,42 @@ const material: IGeneratorElementConfig['material'] = {
 	young: 17872000,
 	weight: 24,
 	fc: 21000,
-	epsilon_max: 0.004,
+	epsilon_max: 0.003,
 }
-const steel: IGeneratorElementConfig['steel'] = {
+const beamsSteel: IGeneratorElementConfig['steel'] = {
 	fy: 420000,
 	young: 200000,
-	rows: [{ diameter: 0.0125, distance: 0.05, quantity: 3 }],
+	rows: [
+		{ diameter: 0.015875, distance: 0.045, quantity: 4 },
+		{ diameter: 0.015875, distance: 0.355, quantity: 3 },
+	],
+}
+const columnsSteel: IGeneratorElementConfig['steel'] = {
+	fy: 420000,
+	young: 200000,
+	rows: [
+		{ diameter: 0.015875, distance: 0.045, quantity: 4 },
+		{ diameter: 0.015875, distance: 0.13, quantity: 2 },
+		{ diameter: 0.015875, distance: 0.215, quantity: 2 },
+		{ diameter: 0.015875, distance: 0.3, quantity: 4 },
+	],
 }
 const config: IGeneratorConfig = {
-	levels: {
-		count: 1,
-		separation: 2,
-	},
-	spans: {
-		count: 1,
-		separation: 2,
-	},
+	levels: [3],
+	spans: [6],
 	columns: {
 		section: {
-			base: 0.2,
-			height: 0.2,
+			base: 0.35,
+			height: 0.35,
 		},
 		load: 0,
 		material,
-		steel,
+		steel: columnsSteel,
 		momentCurvature: {
 			automatic: false,
 			moment: {
-				min: -120,
-				max: 120,
+				min: -120.2854,
+				max: 118.42,
 			},
 			curvature: {
 				min: -0.008,
@@ -43,17 +50,17 @@ const config: IGeneratorConfig = {
 	},
 	beams: {
 		section: {
-			base: 0.2,
-			height: 0.2,
+			base: 0.3,
+			height: 0.4,
 		},
-		load: 20,
+		load: 40,
 		material,
-		steel,
+		steel: beamsSteel,
 		momentCurvature: {
 			automatic: false,
 			moment: {
-				min: -120,
-				max: 120,
+				min: -106.4797,
+				max: 80.9312,
 			},
 			curvature: {
 				min: -0.008,
