@@ -8,6 +8,7 @@ import {
 	IStructureGeneratorState,
 	IStructurePushoverState,
 	IStructurePushoverUIState,
+	IStructureSpace,
 } from '@interfaces'
 
 export interface ISteelStateHook {
@@ -55,8 +56,12 @@ export interface IStructureGeneratorStateHook {
 	state: IStructureGeneratorState
 	columnsContext: IElementContext
 	beamsContext: IElementContext
-	updateSpans(payload: Partial<IStructureGeneratorState['spans']>): void
-	updateLevels(payload: Partial<IStructureGeneratorState['levels']>): void
+	createLevelRow(): void
+	updateLevelRow(index: number, payload: Partial<IStructureSpace>): void
+	deleteLevelRow(index: number): void
+	createSpanRow(): void
+	updateSpanRow(index: number, payload: Partial<IStructureSpace>): void
+	deleteSpanRow(index: number): void
 	setSectionsConfigToggle(payload: 'column' | 'beam'): void
 	setLoadsConfigToggle(payload: 'column' | 'beam'): void
 	generateStructure(): void

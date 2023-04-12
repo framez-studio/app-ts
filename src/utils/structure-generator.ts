@@ -10,6 +10,7 @@ import {
 	IElement,
 	IRectangularRCSection,
 	IFramezStep,
+	IStructureSpace,
 } from '@interfaces'
 import { Element } from '@classes/complex-elements/element'
 import { ElementNode } from '@classes/nodes/element-node'
@@ -57,8 +58,8 @@ function extractConfigFromContext(context: {
 	const columns = extractElementConfigFromContext(columnsContext)
 	const beams = extractElementConfigFromContext(beamsContext)
 	const config: IGeneratorConfig = {
-		levels: new Array(Number(levels.count)).fill(Number(levels.separation)),
-		spans: new Array(Number(spans.count)).fill(Number(spans.separation)),
+		levels: levels.map((level) => arrayFromStructureSpace(level)).flat(),
+		spans: spans.map((span) => arrayFromStructureSpace(span)).flat(),
 		columns,
 		beams,
 	}
@@ -253,18 +254,16 @@ function extractElementConfigFromContext(context: IElementContext) {
 	return config
 }
 function checkStructureState(state: IStructureGeneratorState) {
+	let isValid = true
+
 	let { levels, spans } = state
-	let { count: levelsCount, separation: levelsSeparation } = levels
-	let { count: spansCount, separation: spansSeparation } = spans
-	if (
-		levelsCount === '' ||
-		levelsSeparation === '' ||
-		spansCount === '' ||
-		spansSeparation === ''
-	) {
-		return false
-	}
-	return true
+	const filteredLevels = filteredArrayFromStructureSpaces(levels)
+	const filteredSpans = filteredArrayFromStructureSpaces(spans)
+
+	if (filteredLevels.length == 0) isValid = false
+	if (filteredSpans.length == 0) isValid = false
+
+	return isValid
 }
 function checkElementContext(context: IElementContext) {
 	let { elementProps, elementSteel, elementDynamics } = context
@@ -320,4 +319,12 @@ function checkElementDynamicsState(state: IElementDynamicState) {
 		)
 	}
 	return true
+}
+function arrayFromStructureSpace(space: IStructureSpace) {
+	return new Array(Number(space.count)).fill(Number(space.separation))
+}
+function filteredArrayFromStructureSpaces(spaces: IStructureSpace[]) {
+	return spaces.filter(
+		(space) => Number(space.count) !== 0 && Number(space.separation) !== 0,
+	)
 }

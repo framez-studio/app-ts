@@ -1,0 +1,18 @@
+@import './_vars'
+$spacing: 12px
+
+.generator--table
+    display: grid
+    gap: $spacing
+    grid-template-columns: 1fr 1fr auto
+    grid-auto-rows: max-content
+    align-items: center
+    .whitespace
+        min-width: 18px
+    .generator-th
+        text-align: center
+        color: $slider-text-color
+    .add-container
+        grid-column: 1 / span 3
+        display: flex
+        justify-content: center

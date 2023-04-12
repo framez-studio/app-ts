@@ -1,47 +1,61 @@
+import { useGeneratorContext } from '@context/GeneratorContext'
 import ErrorMessage from '@components/ErrorMessage'
 import FormButton from '@components/FormButton'
-import FormInput from '@components/FormInput'
-import { useGeneratorContext } from '@context/GeneratorContext'
+import FormSectionLabel from '@components/FormSectionLabel'
+import GeneratorSpaceTable from '@components/generatorForm/GeneratorSpaceTable'
 
 function StructureForm() {
-	const { state, updateLevels, updateSpans, generateStructure } =
-		useGeneratorContext()
+	const {
+		state,
+		createLevelRow,
+		updateLevelRow,
+		deleteLevelRow,
+		createSpanRow,
+		updateSpanRow,
+		deleteSpanRow,
+		generateStructure,
+	} = useGeneratorContext()
 
 	return (
 		<section className="form-container">
 			<section className="form-main col-2">
-				<FormInput
+				<div className="form-dual-input-title">
+					<FormSectionLabel
+						props={{
+							label: 'Levels',
+							tooltip:
+								'Tapp on the add button to add a new level to the structure. Levels are added from the bottom up, so the first level in the list is the bottom level of the structure',
+							isActive: true,
+						}}
+					/>
+				</div>
+				<GeneratorSpaceTable
 					props={{
-						label: 'Span Count:',
-						value: state.spans.count,
-						onChange: (e) => updateSpans({ count: e.target.value }),
+						rows: state.levels,
+						rowCreator: createLevelRow,
+						rowUpdater: updateLevelRow,
+						rowDeleter: deleteLevelRow,
 					}}
+					className="span-2"
 				/>
-				<FormInput
+				<div className="form-dual-input-title">
+					<FormSectionLabel
+						props={{
+							label: 'Spans',
+							tooltip:
+								'Tapp on the add button to add a new span to the structure. Spans are added from left to right, so the first span in the list is the leftmost span of the structure',
+							isActive: true,
+						}}
+					/>
+				</div>
+				<GeneratorSpaceTable
 					props={{
-						label: 'Distance:',
-						suffix: 'm',
-						value: state.spans.separation,
-						onChange: (e) =>
-							updateSpans({ separation: e.target.value }),
+						rows: state.spans,
+						rowCreator: createSpanRow,
+						rowUpdater: updateSpanRow,
+						rowDeleter: deleteSpanRow,
 					}}
-				/>
-				<FormInput
-					props={{
-						label: 'Level Count:',
-						value: state.levels.count,
-						onChange: (e) =>
-							updateLevels({ count: e.target.value }),
-					}}
-				/>
-				<FormInput
-					props={{
-						label: 'Height:',
-						suffix: 'm',
-						value: state.levels.separation,
-						onChange: (e) =>
-							updateLevels({ separation: e.target.value }),
-					}}
+					className="span-2"
 				/>
 			</section>
 			<section className="form-footer col-2">

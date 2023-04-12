@@ -4,11 +4,13 @@ import FormInput from '@components/FormInput'
 import ArrowLeftBtn from '@components/svg/ArrowLeftBtn'
 import ArrowRightBtn from '@components/svg/ArrowRightBtn'
 
-const PushoverStepSwitcher = () => {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {}
+
+const PushoverStepSwitcher: React.FC<Props> = ({ className }) => {
 	const { ui, updateSelectedStep } = usePushoverContext()
 	const { step } = ui.selected
 	return (
-		<section className="step-switcher-container">
+		<section className={`step-switcher-container ${className ?? ''}`}>
 			<ArrowLeftBtn
 				props={{ onClick: () => updateSelectedStep(step - 1) }}
 			/>

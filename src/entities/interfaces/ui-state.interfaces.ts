@@ -48,15 +48,13 @@ export interface IElementDynamicState {
 		max: string
 	}
 }
+export interface IStructureSpace {
+	count: string
+	separation: string
+}
 export interface IStructureGeneratorState {
-	spans: {
-		count: string
-		separation: string
-	}
-	levels: {
-		count: string
-		separation: string
-	}
+	spans: IStructureSpace[]
+	levels: IStructureSpace[]
 	sectionsConfigToggle: 'column' | 'beam'
 	loadsConfigToggle: 'column' | 'beam'
 	arePropsValid: boolean
