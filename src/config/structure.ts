@@ -5,7 +5,7 @@ const material: IGeneratorElementConfig['material'] = {
 	young: 17872000,
 	weight: 24,
 	fc: 21000,
-	epsilon_max: 0.004,
+	epsilon_max: 0.003,
 }
 const steel: IGeneratorElementConfig['steel'] = {
 	fy: 420000,
