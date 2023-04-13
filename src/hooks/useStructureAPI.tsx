@@ -18,7 +18,7 @@ export function useStructureAPI() {
 		return structure.node(node)
 	}
 
-	function requestCapacityCurve(config: {
+	function requestPushoverSolver(config: {
 		direction: 'left' | 'right'
 		node: { x: number; y: number }
 		constants: { av: number; fv: number }
@@ -26,5 +26,9 @@ export function useStructureAPI() {
 		return getCapacityCurve({ structure, ...config })
 	}
 
-	return { requestStructureSolver, requestCapacityCurve, getNode }
+	return {
+		requestStructureSolver,
+		requestPushoverSolver,
+		getNode,
+	}
 }

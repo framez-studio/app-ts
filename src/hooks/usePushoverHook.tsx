@@ -4,7 +4,7 @@ import { useStructureAPI } from './useStructureAPI'
 import { capacityCurveToPlotter } from '@utils/ui'
 
 export function useStructurePushoverHook(): IStructurePushoverHook {
-	const { requestCapacityCurve, getNode } = useStructureAPI()
+	const { requestPushoverSolver, getNode } = useStructureAPI()
 	const [state, updateState] = usePushoverHookInitialState()
 
 	function updateDirection(
@@ -53,7 +53,7 @@ export function useStructurePushoverHook(): IStructurePushoverHook {
 	}
 
 	function runPushover(): void {
-		const curve = requestCapacityCurve({
+		const curve = requestPushoverSolver({
 			direction: state.direction,
 			node: { x: Number(state.node.x), y: Number(state.node.y) },
 			constants: state.constants,
