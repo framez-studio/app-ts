@@ -1,5 +1,5 @@
 import { IElement, INode, IStructure } from '@interfaces'
-import { coordinates2D, initialOrFinal, stepPushover } from '@types'
+import { coordinates2D, initialOrFinal, stepPSequence, stepPushover } from '@types'
 import { min } from 'mathjs'
 import { Hinge } from '../others/moment-curvature'
 import { StaticSolver } from './static-solver'
@@ -9,6 +9,7 @@ export class PushoverSolver {
 	private static _statusAnalysis: boolean = false
 	private static _steps: stepPushover[]
 	private static _serviceSteps: stepPushover[]
+	private static _pSequence: stepPSequence[]
 
 	constructor() {}
 
@@ -63,6 +64,7 @@ export class PushoverSolver {
 				plasticizedNode == undefined ? null : plasticizedNode,
 			collapseFactor: cfStep,
 			dxAtControlNode: delta,
+			structure: copyStructureUpdateDelta(structure,cfStep)
 		}
 
 		if (this._serviceSteps == undefined || this._serviceSteps.length == 0) {
@@ -112,6 +114,7 @@ export class PushoverSolver {
 				plasticizedNode == undefined ? null : plasticizedNode,
 			collapseFactor: cfStep,
 			dxAtControlNode: delta,
+			structure: copyStructureUpdateDelta(structure,cfStep)
 		}
 
 		if (this._steps == undefined || this._steps.length == 0) {
@@ -194,16 +197,15 @@ export class PushoverSolver {
 	}
 
 	public static capacityCurve() {
-		let serviceStep =
+		let dxFromService =
 			this.serviceCapacityCurve()[
 				this.serviceCapacityCurve().length - 1
 			][0]
 		let curve: number[][] = [
-			[0, 0],
-			[serviceStep, 0],
+			[dxFromService, 0],
 		]
 		let shearForce = 0
-		let dx = serviceStep
+		let dx = dxFromService
 		for (let i = 0; i < this._steps.length; i++) {
 			const ei = this._steps[i]
 			dx = dx + ei.dxAtControlNode * ei.collapseFactor //1000x para obtener resultados en mm xdd
@@ -211,6 +213,43 @@ export class PushoverSolver {
 			curve.push([dx, shearForce])
 		}
 		return curve
+	}
+
+
+
+	public static updatePlasticizingSequence(){
+		let steps = this._steps
+		this._pSequence = []
+
+		for (let i = 0; i < this._steps.length; i++) {
+			const step = this._steps[i].step;
+			let str2 =this._steps[0].structure.copy()
+			for (let j = 1; j < i+1; j++) {
+				const str1 = this._steps[j].structure;
+				let cf = this._steps[j].collapseFactor
+				str2.nodes.forEach(n2 => {
+					let n1 = str1.node(n2.coordinates('static'))
+					n2.addDisplacements({dx: n1.displacements.dx*cf,
+						dy: n1.displacements.dy*cf,
+						rz: n1.displacements.rz*cf,
+					})
+					n2.setReactions({fx: n2.reactions.fx +n1.reactions.fx*cf,
+						fy: n2.reactions.fy +n1.reactions.fy*cf,
+						mz: n2.reactions.mz +n1.reactions.mz*cf})
+				});
+			}
+			let stepj = {step: step,structure: str2}
+			if (this._pSequence == undefined || this._pSequence.length == 0) {
+				this._pSequence = [stepj]
+			} else {
+				this._pSequence.push(stepj)
+			}
+		}
+	}
+
+	public static plasticizingSequence(){
+		this.updatePlasticizingSequence()
+		return this._pSequence
 	}
 
 	public static actualForce() {
@@ -224,6 +263,22 @@ export class PushoverSolver {
 		this._steps = []
 		this._statusAnalysis = false
 	}
+}
+
+const copyStructureUpdateDelta = (structure: IStructure, cf: number) => {
+	let str2 = structure.copy()
+	structure.nodes.forEach(n => {
+		let n2 = str2.node(n.coordinates('static'))
+		n2.reset()
+		n2.addDisplacements({dx: n.displacements.dx*cf,
+			dy: n.displacements.dy*cf,
+			rz: n.displacements.rz*cf,
+		})
+		n2.setReactions({fx: n2.reactions.fx +n.reactions.fx*cf,
+			fy: n2.reactions.fy +n.reactions.fy*cf,
+			mz: n2.reactions.mz +n.reactions.mz*cf})
+	});
+	return str2
 }
 
 const unReleaseInverseHingesFromService = (strFromService: IStructure) => {

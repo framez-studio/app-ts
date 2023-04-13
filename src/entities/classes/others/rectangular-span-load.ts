@@ -39,4 +39,8 @@ export class RectangularSpanLoad implements ISpanLoad {
 			[fef.final.mz],
 		]
 	}  
+
+	public copy(element: IElement): ISpanLoad{
+		return new RectangularSpanLoad(element,this.load)
+	}
 }
