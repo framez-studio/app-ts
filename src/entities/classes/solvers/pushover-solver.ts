@@ -4,6 +4,7 @@ import { min } from 'mathjs'
 import { Hinge } from '../others/moment-curvature'
 import { StaticSolver } from './static-solver'
 import { RoundFloor } from '@utils/algebra'
+import { BiseccionMethod } from '@utils/moment-curvature'
 
 export class PushoverSolver {
 	private static _statusAnalysis: boolean = false
@@ -217,6 +218,11 @@ export class PushoverSolver {
 		return curve
 	}
 
+	public static bilinearCapacityCurve(){
+		let cc = this.capacityCurve()
+		return bilinearizeCapacityCurve(cc)
+	}
+
 
 
 	public static updatePlasticizingSequence(){
@@ -280,15 +286,18 @@ const bilinearizeCapacityCurve = (capacityCurve: number[][]) => {
 	let dy06 = 0.6*dy1
 	let vy06 = slopeY1*dy06
 
-	let fun = (d0: number,v0: number,dy06: number,vy06: number,dy2: number,du: number,vu: number,area1: number) => {
+	let fun = (dy2: number,d0: number,v0: number,dy06: number,vy06: number,du: number,vu: number,area1: number) => {
 		dy06 = d0+dy06
 		let area2 = areaCapacityCurve([[d0,v0],[dy06,vy06],[dy2,vu],[du,vu]])
 		return area1-area2
-
 	}
-
-
-
+	let dy2 = BiseccionMethod(fun,dy06+d0,du,1e9,1e-7,d0,v0,dy06,vy06,du,vu,area1)
+	return [
+		[d0,v0],
+		[dy06,vy06],
+		[dy2,vu],
+		[du,vu]
+	]
 }
 
 const areaCapacityCurve = (capacityCurve: number[][]) =>{
