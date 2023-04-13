@@ -1,9 +1,10 @@
-import { IElement, INode, IStructure } from '@interfaces'
+import { IElement, IFrameSystem, INode, IStructure } from '@interfaces'
 import { coordinates2D, initialOrFinal, stepPSequence, stepPushover } from '@types'
 import { min } from 'mathjs'
 import { Hinge } from '../others/moment-curvature'
 import { StaticSolver } from './static-solver'
 import { RoundFloor } from '@utils/algebra'
+import { BiseccionMethod } from '@utils/moment-curvature'
 
 export class PushoverSolver {
 	private static _statusAnalysis: boolean = false
@@ -20,7 +21,7 @@ export class PushoverSolver {
 	public analysisInitialState() {}
 
 	private static pushByService(
-		structure: IStructure,
+		structure: IFrameSystem,
 		nodeObjCoordinates: coordinates2D,
 		serviceLoad: number,
 		actualForce: number,
@@ -75,7 +76,7 @@ export class PushoverSolver {
 	}
 
 	private static pushByStability(
-		structure: IStructure,
+		structure: IFrameSystem,
 		nodeObjCoordinates: coordinates2D,
 		stepNumber: number,
 	) {
@@ -125,7 +126,7 @@ export class PushoverSolver {
 	}
 
 	public static Run(
-		structure: IStructure,
+		structure: IFrameSystem,
 		nodeObjCoordinates: coordinates2D,
 		stopCriteria: 'stability' | 'service',
 		serviceLoad?: number,
@@ -210,9 +211,16 @@ export class PushoverSolver {
 			const ei = this._steps[i]
 			dx = dx + ei.dxAtControlNode * ei.collapseFactor //1000x para obtener resultados en mm xdd
 			shearForce = shearForce + ei.collapseFactor
-			curve.push([dx, shearForce])
+			if (dx<1e6) {
+				curve.push([dx, shearForce])
+			}else{break}
 		}
 		return curve
+	}
+
+	public static bilinearCapacityCurve(){
+		let cc = this.capacityCurve()
+		return bilinearizeCapacityCurve(cc)
 	}
 
 
@@ -265,7 +273,48 @@ export class PushoverSolver {
 	}
 }
 
-const copyStructureUpdateDelta = (structure: IStructure, cf: number) => {
+const bilinearizeCapacityCurve = (capacityCurve: number[][]) => {
+	let area1 = areaCapacityCurve(capacityCurve)
+	let d0 = capacityCurve[0][0]
+	let v0 = capacityCurve[0][1]
+	let dy1 = capacityCurve[1][0]
+	let vy1 = capacityCurve[1][1]
+	let du = capacityCurve[capacityCurve.length-1][0]
+	let vu = capacityCurve[capacityCurve.length-1][1]
+	let slopeY1 =(vy1-v0)/(dy1-d0)
+
+	let dy06 = 0.6*dy1
+	let vy06 = slopeY1*dy06
+
+	let fun = (dy2: number,d0: number,v0: number,dy06: number,vy06: number,du: number,vu: number,area1: number) => {
+		dy06 = d0+dy06
+		let area2 = areaCapacityCurve([[d0,v0],[dy06,vy06],[dy2,vu],[du,vu]])
+		return area1-area2
+	}
+	let dy2 = BiseccionMethod(fun,dy06+d0,du,1e9,1e-7,d0,v0,dy06,vy06,du,vu,area1)
+	return [
+		[d0,v0],
+		[dy06,vy06],
+		[dy2,vu],
+		[du,vu]
+	]
+}
+
+const areaCapacityCurve = (capacityCurve: number[][]) =>{
+	let d0 = capacityCurve[0][0]
+	let v0 = capacityCurve[0][1]
+	let area = 0
+	for (let i = 1; i < capacityCurve.length; i++) {
+		let di = capacityCurve[i-1][0];
+		let vi = capacityCurve[i-1][1];
+		let di1 = capacityCurve[i][0];
+		let vi1 = capacityCurve[i][1];
+		area = area + 0.5*(vi*vi1)*(di1-di)
+	}
+	return area
+}
+const copyStructureUpdateDelta = (structure: IFrameSystem, cf: number) => {
+
 	let str2 = structure.copy()
 	structure.nodes.forEach(n => {
 		let n2 = str2.node(n.coordinates('static'))

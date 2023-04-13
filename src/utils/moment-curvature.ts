@@ -228,7 +228,7 @@ const WhitneyForceConcrete = (a: number, fc: number, b: number) => {
 	return 0.85 * a * fc * b
 }
 
-const BiseccionMethod = (
+export const BiseccionMethod = (
 	fun: Function,
 	xi: number,
 	xu: number,
