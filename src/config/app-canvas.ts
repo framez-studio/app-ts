@@ -1,5 +1,5 @@
 // multiplier
-const alpha = 2
+const alpha = 1
 // border separation from first support in pixels
 const margin = 30
 const border = {
@@ -60,3 +60,6 @@ export const origin = {
 	x: border.left + graphics.supports.fixed.width / 2,
 	y: border.bottom + graphics.supports.fixed.height / 2,
 }
+// change origin when standalone
+const pwaMode = window.matchMedia('(display-mode: standalone)').matches
+if (pwaMode) origin.y += 20

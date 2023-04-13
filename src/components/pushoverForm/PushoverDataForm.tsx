@@ -2,6 +2,7 @@ import { usePushoverContext } from '@context/PushoverContext'
 import FormButton from '@components/FormButton'
 import PushoverDataRow from './PushoverDataRow'
 import FormSectionLabel from '@components/FormSectionLabel'
+import { downloadGraphToCSVFile } from '@utils/csv'
 
 const PushoverDataForm = () => {
 	const { state, updateActiveSection } = usePushoverContext()
@@ -24,6 +25,17 @@ const PushoverDataForm = () => {
 					props={{
 						text: 'Back',
 						onClick: () => updateActiveSection('graph'),
+					}}
+				/>
+				<FormButton
+					props={{
+						text: 'Download as CSV',
+						onClick: () =>
+							downloadGraphToCSVFile({
+								graphData: data,
+								keys: ['x', 'y'],
+								headers: ['U[mm]', 'Vs[kN]'],
+							}),
 					}}
 				/>
 			</section>
