@@ -87,7 +87,7 @@ describe('Case 3: Oficial Test', () => {
 		FHE.setFHEinNodes(frm,1,2,av,fv)
 		PushoverSolver.Run(frm,{x: 0, y:7},'stability')
 		let result = PushoverSolver.capacityCurve()
-		let curve = [
+		let curve = [ 
 			[
 			  0,
 			  0,

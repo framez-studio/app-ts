@@ -10,7 +10,6 @@ import {
 } from '@utils/elements'
 import { uniques, allIndexesOf } from '@utils/helpers'
 import { SMatrixOperator as MatOp } from '@classes/matrices/s-matrix-operator'
-import { forEach } from 'mathjs'
 
 /**
  * Class structure return structure class
@@ -123,7 +122,7 @@ export class Structure implements IStructure {
 			)
 			let e2 = e.copy(ni, nf)
 			e.loads.forEach((l) => {
-				e2.addSpanLoad(l)
+				l.copy(e2)
 			})
 			eArray.push(e2)
 		})

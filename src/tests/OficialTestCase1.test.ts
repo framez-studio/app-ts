@@ -21,7 +21,7 @@ describe('Case 1: Oficial Test', () => {
 
 	//sections geometry & material definition
 	const col350x350 = new RectangularRCSection(0.35, 0.35, Cncr21000KPA)
-	const vga400x300 = new RectangularRCSection(0.3, 0.4, Cncr21000KPA)
+	const vga300x400 = new RectangularRCSection(0.3, 0.4, Cncr21000KPA)
 
     //reinforcement definition
     let barn5 = new BarCR((25.4/1000)*5/8,Steel60)
@@ -32,8 +32,8 @@ describe('Case 1: Oficial Test', () => {
     col350x350.addRowReinforcement(0.215,2,barn5)
     col350x350.addRowReinforcement(0.30,4,barn5)
 
-    vga400x300.addRowReinforcement(0.045,4,barn5)
-    vga400x300.addRowReinforcement(0.355,3,barn5)
+    vga300x400.addRowReinforcement(0.045,4,barn5)
+    vga300x400.addRowReinforcement(0.355,3,barn5)
 
 	//nodes definition
 	let a = new Support('fixed', { x: 0, y: 0 })
@@ -43,12 +43,12 @@ describe('Case 1: Oficial Test', () => {
 
 	//elements definition
 	let lCol = new Element(a, b, col350x350)
-	let beam = new Element(b, c, vga400x300)
+	let beam = new Element(b, c, vga300x400)
 	let rCol = new Element(d, c, col350x350)
 
 	//structure definition
 	let frm = new FrameSystem(lCol, beam, rCol)
-	let MnVga = MomentCurvatureFinal2Section(vga400x300)
+	let MnVga = MomentCurvatureFinal2Section(vga300x400)
 	let MnCol = MomentCurvatureFinal2Section(col350x350)
 
 	lCol.assignHinge('initial',new Hinge(MnCol.maxMoment,MnCol.maxCurv,MnCol.minMoment,MnCol.minCurve,'Moment'))
@@ -64,7 +64,7 @@ describe('Case 1: Oficial Test', () => {
 
 	it(`Case 1: Capacity Curve`, () => {
 		normalizeLoads2Unit(frm,40)
-		PushoverSolver.Run(frm,{x: 0, y:7},'service',40)
+		PushoverSolver.Run(frm,{x: 0, y:3},'service',40)
 		let resultService = PushoverSolver.serviceCapacityCurve()
 		frm.resetLoadstoZero()
 		let av = 0.25
