@@ -7,7 +7,7 @@ import PushoverStepSwitcher from './PushoverStepSwitcher'
 
 const PushoverGraphForm = () => {
 	const { state, updateActiveSection } = usePushoverContext()
-	const { data } = state.results
+	const { data, bilineal } = state.results
 	return (
 		<section className="form-container">
 			<section className="form-main">
@@ -23,7 +23,20 @@ const PushoverGraphForm = () => {
 						yLabel: 'Vs [kN]',
 						xLabel: 'U [mm]',
 						height: 240,
-						data,
+						series: [
+							{
+								name: 'Regular Model',
+								data: data,
+								color: '#8d4bf6ff',
+								dotColor: '#653AAA',
+							},
+							{
+								name: 'Bilineal Model',
+								data: bilineal,
+								color: '#ffffff',
+								dotColor: '#ffffff',
+							},
+						],
 					}}
 				/>
 			</section>

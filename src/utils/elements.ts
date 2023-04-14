@@ -306,11 +306,9 @@ export function getCapacityCurve(config: {
 }
 
 export function getPlasticizingSequence() {
-	try {
-		return PushoverSolver.plasticizingSequence()
-	} catch (err) {
-		console.log('ERROR IN PLASTICIZING SEQUENCE')
-		console.log(err)
-		return []
-	}
+	return PushoverSolver.plasticizingSequence()
+}
+
+export function getBilinealCurve() {
+	return PushoverSolver.bilinearCapacityCurve()
 }

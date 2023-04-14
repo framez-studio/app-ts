@@ -61,15 +61,17 @@ export function useStructurePushoverHook(): IStructurePushoverHook {
 	}
 
 	function runPushover(): void {
-		const { curve, sequence } = requestPushoverSolver({
+		const { curve, sequence, bilineal } = requestPushoverSolver({
 			direction: state.direction,
 			node: { x: Number(state.node.x), y: Number(state.node.y) },
 			constants: state.constants,
 		})
 		const data = capacityCurveToPlotter(curve)
+		const bilinealData = capacityCurveToPlotter(bilineal)
+		console.log(bilinealData)
 
 		updateInitialStructure(structure)
-		updateResults({ data, sequence })
+		updateResults({ data, sequence, bilineal: bilinealData })
 	}
 
 	return {

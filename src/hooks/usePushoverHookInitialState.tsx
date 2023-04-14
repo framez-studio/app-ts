@@ -16,6 +16,7 @@ export function usePushoverHookInitialState() {
 		},
 		results: {
 			data: [],
+			bilineal: [],
 			sequence: [],
 		},
 	}

@@ -74,6 +74,7 @@ export interface IStructurePushoverState {
 	}
 	results: {
 		data: coordinates2D[]
+		bilineal: coordinates2D[]
 		sequence: stepPSequence[]
 	}
 }
