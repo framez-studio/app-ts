@@ -1,11 +1,11 @@
 import { useAppContext } from '@context/AppContext'
+import { displaceStructure, setStructureReactions } from '@utils/elements'
 import {
-	displaceStructure,
-	getBilinealCurve,
 	getCapacityCurve,
 	getPlasticizingSequence,
-	setStructureReactions,
-} from '@utils/elements'
+	getBilinealCurve,
+	resetPushover,
+} from '@utils/pushover'
 
 export function useStructureAPI() {
 	const { state } = useAppContext()
@@ -28,6 +28,7 @@ export function useStructureAPI() {
 		const curve = getCapacityCurve({ structure, ...config })
 		const sequence = getPlasticizingSequence()
 		const bilineal = getBilinealCurve()
+		resetPushover()
 		return { curve, sequence, bilineal }
 	}
 

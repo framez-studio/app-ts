@@ -63,7 +63,11 @@ export function useInitialPushoverContext(): IStructurePushoverContext {
 		payload: IStructurePushoverUIState['activeSection'],
 	): void {
 		ui.updateActiveSection(payload)
-		if (payload === 'config') pushover.updateInitialStructure(null)
+		if (payload === 'config') {
+			setStructure(pushover.state.initialStructure!)
+			requestCanvasRedraw()
+			pushover.updateInitialStructure(null)
+		}
 	}
 
 	function runPushover(): void {

@@ -171,38 +171,38 @@ export class Element implements IElement {
 	}
 
 	public copy(nodeInitial: INode, nodeFinal: INode): IElement {
-		let e = new Element(nodeInitial, nodeFinal, this.section.copy())
+		let copy = new Element(nodeInitial, nodeFinal, this.section.copy())
 		if (this._releases.initial.rz) {
-			e.release('initial', 'rz')
+			copy.release('initial', 'rz')
 		}
 		if (this._releases.initial.dx) {
-			e.release('initial', 'dx')
+			copy.release('initial', 'dx')
 		}
 		if (this._releases.initial.dy) {
-			e.release('initial', 'dy')
+			copy.release('initial', 'dy')
 		}
 		if (this._releases.final.rz) {
-			e.release('final', 'rz')
+			copy.release('final', 'rz')
 		}
 		if (this._releases.final.dx) {
-			e.release('final', 'dx')
+			copy.release('final', 'dx')
 		}
 		if (this._releases.final.dy) {
-			e.release('final', 'dy')
+			copy.release('final', 'dy')
 		}
 
-		this._loads.forEach((l) => {
-			e.addSpanLoad(l)
+		this.loads.forEach((load) => {
+			load.copy(copy)
 		})
 		let hi = this.getHinge('initial')
 		let hf = this.getHinge('final')
 		if (hi != undefined) {
-			e.assignHinge('initial', hi.copy())
+			copy.assignHinge('initial', hi.copy())
 		}
 		if (hf != undefined) {
-			e.assignHinge('final', hf.copy())
+			copy.assignHinge('final', hf.copy())
 		}
 
-		return e
+		return copy
 	}
 }

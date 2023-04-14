@@ -38,9 +38,10 @@ export class RectangularSpanLoad implements ISpanLoad {
 			[fef.final.fy],
 			[fef.final.mz],
 		]
-	}  
+	}
 
-	public copy(element: IElement): ISpanLoad{
-		return new RectangularSpanLoad(element,this.load)
+	public copy(targetElement: IElement): ISpanLoad {
+		const { load } = this
+		return new RectangularSpanLoad(targetElement, load)
 	}
 }

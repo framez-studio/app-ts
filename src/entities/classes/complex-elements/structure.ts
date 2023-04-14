@@ -105,28 +105,25 @@ export class Structure implements IStructure {
 	}
 
 	public copy(): IStructure {
-		let eArray = [] as IElement[]
-		let nodesNew: INode[] = []
-		this.nodes.forEach((n) => {
-			nodesNew.push(n.copy())
+		let copiedElements: IElement[] = []
+		let copiedNodes: INode[] = []
+		this.nodes.forEach((node) => {
+			copiedNodes.push(node.copy())
 		})
 
-		this._elements.forEach((e) => {
-			let ni = findNodeinArrayByCoordinates(
-				e.nodes.initial.coordinates('static'),
-				nodesNew,
+		this.elements.forEach((element) => {
+			let iNode = findNodeinArrayByCoordinates(
+				element.nodes.initial.coordinates('static'),
+				copiedNodes,
 			)
-			let nf = findNodeinArrayByCoordinates(
-				e.nodes.final.coordinates('static'),
-				nodesNew,
+			let fNode = findNodeinArrayByCoordinates(
+				element.nodes.final.coordinates('static'),
+				copiedNodes,
 			)
-			let e2 = e.copy(ni, nf)
-			e.loads.forEach((l) => {
-				l.copy(e2)
-			})
-			eArray.push(e2)
+			let copiedElement = element.copy(iNode, fNode)
+			copiedElements.push(copiedElement)
 		})
-		return new Structure(...eArray)
+		return new Structure(...copiedElements)
 	}
 
 	public unReleaseAll(): void {

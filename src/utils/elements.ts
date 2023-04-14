@@ -9,15 +9,10 @@ import {
 	supportType,
 } from '@types'
 import { constraints } from '@config/globals'
-import { IElement, IFrameSystem, INode, IStructure } from '@interfaces'
+import { IElement, INode, IStructure } from '@interfaces'
 import { SMatrixOperator as SMatOp } from '@classes/matrices/s-matrix-operator'
 import { solveLinearSystem } from '@utils/solver'
 import { allIndexesOf } from './helpers'
-import { FHE } from '@classes/seismic-analysis/fhe'
-import {
-	PushoverSolver,
-	normalizeLoads2Unit,
-} from '@classes/solvers/pushover-solver'
 import { RectangularSpanLoad } from '@classes/others/rectangular-span-load'
 
 export const releasesArray = (
@@ -282,33 +277,4 @@ export function hasNonZeroLoad(element: IElement): boolean {
 export function assignLoadIfAbsent(element: IElement) {
 	if (element.loads.length == 0)
 		element.setSpanLoad(new RectangularSpanLoad(element, 0))
-}
-
-export function getCapacityCurve(config: {
-	structure: IFrameSystem
-	direction: 'left' | 'right'
-	node: { x: number; y: number }
-	constants: { av: number; fv: number }
-}) {
-	const { direction, node, constants, structure } = config
-	const { av, fv } = constants
-
-	const structurePivot = structure.copy()
-	normalizeLoads2Unit(structurePivot, 100)
-
-	PushoverSolver.Run(structurePivot, node, 'service', 100)
-	structurePivot.resetLoadstoZero()
-
-	FHE.setFHEinNodes(structurePivot, direction == 'left' ? -1 : 1, 2, av, fv)
-	PushoverSolver.Run(structurePivot, node, 'stability')
-
-	return PushoverSolver.capacityCurve()
-}
-
-export function getPlasticizingSequence() {
-	return PushoverSolver.plasticizingSequence()
-}
-
-export function getBilinealCurve() {
-	return PushoverSolver.bilinearCapacityCurve()
 }
