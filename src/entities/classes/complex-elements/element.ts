@@ -12,7 +12,6 @@ import {
 import { IElement, INode, IRectangularRCSection, ISpanLoad } from '@interfaces'
 import { MatrixGenerator as MatGen } from '@classes/matrices/matrix-generator'
 import { SMatrixOperator as MatOp } from '@classes/matrices/s-matrix-operator'
-import { Hinge } from '../others/moment-curvature'
 import { defaultElementLoads, defaultElementReleases } from '@config/globals'
 import { eucDistance, degSlope } from '@utils/algebra'
 import { elementLocalDisplacementsArray, releasesArray } from '@utils/elements'
@@ -172,24 +171,36 @@ export class Element implements IElement {
 	}
 
 	public copy(nodeInitial: INode, nodeFinal: INode): IElement {
-		let e = new Element(nodeInitial,nodeFinal,this.section.copy())
-		if (this._releases.initial.rz) {e.release('initial','rz')}
-		if (this._releases.initial.dx) {e.release('initial','dx')}
-		if (this._releases.initial.dy) {e.release('initial','dy')}
-		if (this._releases.final.rz) {e.release('final','rz')}
-		if (this._releases.final.dx) {e.release('final','dx')}
-		if (this._releases.final.dy) {e.release('final','dy')}
+		let e = new Element(nodeInitial, nodeFinal, this.section.copy())
+		if (this._releases.initial.rz) {
+			e.release('initial', 'rz')
+		}
+		if (this._releases.initial.dx) {
+			e.release('initial', 'dx')
+		}
+		if (this._releases.initial.dy) {
+			e.release('initial', 'dy')
+		}
+		if (this._releases.final.rz) {
+			e.release('final', 'rz')
+		}
+		if (this._releases.final.dx) {
+			e.release('final', 'dx')
+		}
+		if (this._releases.final.dy) {
+			e.release('final', 'dy')
+		}
 
-		this._loads.forEach(l => {
+		this._loads.forEach((l) => {
 			e.addSpanLoad(l)
-		});
+		})
 		let hi = this.getHinge('initial')
 		let hf = this.getHinge('final')
-		if (hi!=undefined) {
-			e.assignHinge('initial',hi.copy())
+		if (hi != undefined) {
+			e.assignHinge('initial', hi.copy())
 		}
-		if (hf!=undefined) {
-			e.assignHinge('final',hf.copy())
+		if (hf != undefined) {
+			e.assignHinge('final', hf.copy())
 		}
 
 		return e

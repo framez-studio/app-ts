@@ -5,7 +5,6 @@ import {
 	stepPSequence,
 	stepPushover,
 } from '@types'
-import { min } from 'mathjs'
 import { Hinge } from '../others/moment-curvature'
 import { StaticSolver } from './static-solver'
 import { RoundFloor } from '@utils/algebra'
@@ -35,7 +34,7 @@ export class PushoverSolver {
 		let nodeObj: INode
 		let cfactors = collapseFactorStructure(structure)
 		let cfValues = cfactors!.map((row) => row[2])
-		let cfStep = min(...cfValues)
+		let cfStep = Math.min(...cfValues)
 		let i = cfValues.indexOf(cfStep)
 		let plasticizedNode: coordinates2D | null
 		let stepj: stepPushover
@@ -88,7 +87,7 @@ export class PushoverSolver {
 		let nodeObj: INode
 		let cfactors = collapseFactorStructure(structure)
 		let cfValues = cfactors!.map((row) => row[2])
-		let cfStep = min(...cfValues)
+		let cfStep = Math.min(...cfValues)
 		let i = cfValues.indexOf(cfStep)
 		let plasticizedNode: coordinates2D | null
 		plasticizedNode =
@@ -147,18 +146,15 @@ export class PushoverSolver {
 		}
 		//let structureService = structure.copy()
 		//unReleaseInverseHingesFromService(structureService)
-		let timeinicio = Date.now()
-		let timeActual = 0
-		let timeAnterior = 0
+		// let timeinicio = Date.now()
+		// let timeActual = 0
 		while (!stopAnalysis(structure, stopCriteria, serviceLoad)) {
 			try {
 				structure.displacements
 			} catch (error) {
 				break
 			}
-			//structureService.displacements
-			timeAnterior = timeActual
-			timeActual = Date.now() - timeinicio
+			// timeActual = Date.now() - timeinicio
 			// let timeStep = (timeActual-timeAnterior)/1000
 			if (stopCriteria == 'service' && serviceLoad != undefined) {
 				let actualForce =

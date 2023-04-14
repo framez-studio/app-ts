@@ -1,5 +1,3 @@
-import React from 'react'
-
 const ElementMomentCurvatureForm = () => {
 	return <div>ElementMomentCurvature</div>
 }

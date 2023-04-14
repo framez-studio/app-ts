@@ -8,8 +8,7 @@ import {
 	initialOrFinal,
 } from '@types'
 import { INode, IRectangularRCSection, ISpanLoad } from '@interfaces'
-import { Hinge } from '@classes/others/moment-curvature'
-import { IHinge } from './hinge.interface';
+import { IHinge } from './hinge.interface'
 
 export interface IElement {
 	readonly nodes: { initial: INode; final: INode }

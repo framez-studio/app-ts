@@ -62,7 +62,7 @@ export function useCanvasGestures() {
 		camera.zoomCamera(zoomFactor, zoomFocus)
 		pinchDistance.current = newDistance
 	}
-	function doubleTapHandler(e?: React.PointerEvent) {
+	function doubleTapHandler(_e?: React.PointerEvent) {
 		camera.resetCamera()
 	}
 	// gestures helpers

@@ -1,8 +1,5 @@
 import { IElement, INode, IFrameSystem } from '@interfaces'
-import { supportType } from '@types'
-import { ElementNode } from '../nodes/element-node'
 import { Structure, findNodeinArrayByCoordinates } from './structure'
-import { constraints } from '@config/globals'
 import { uniques } from '@utils/helpers'
 
 export class FrameSystem extends Structure implements IFrameSystem {
@@ -80,49 +77,4 @@ export class FrameSystem extends Structure implements IFrameSystem {
 		})
 		return new FrameSystem(...eArray)
 	}
-}
-
-const createNodes = (
-	numberLevels: number,
-	heightLevels: number,
-	numberSpans: number,
-	distanceSpans: number,
-) => {
-	let i = 0
-	let j = 0
-	let xi = 0
-	let yi = 0
-	let n = new ElementNode({ x: xi, y: yi })
-	let nodes: INode[] = [n]
-	xi = xi + distanceSpans
-	while (i <= numberLevels) {
-		while (j <= numberSpans) {
-			n = new ElementNode({ x: xi, y: yi })
-			nodes.push(n)
-			xi = xi + distanceSpans
-			j++
-		}
-		xi = 0
-		yi = yi + heightLevels
-		i++
-	}
-	return nodes
-}
-
-const constraintLevelNodes = (
-	nodes: INode[],
-	level: number,
-	type: supportType = 'fixed',
-) => {
-	nodes.forEach((n) => {
-		if (n.coordinates('static').y == level) {
-			n.constraints = { ...constraints[type] }
-		} else {
-		}
-	})
-	return nodes
-}
-
-const createElements = (n: null) => {
-	return null
 }
