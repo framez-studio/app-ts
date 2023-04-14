@@ -26,8 +26,8 @@ const columnsSteel: IGeneratorElementConfig['steel'] = {
 	],
 }
 const config: IGeneratorConfig = {
-	levels: [3],
-	spans: [6],
+	levels: [2],
+	spans: [2],
 	columns: {
 		section: {
 			base: 0.35,
