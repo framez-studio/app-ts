@@ -323,9 +323,8 @@ const copyStructureUpdateDelta = (structure: IFrameSystem, cf: number) => {
 			dy: n.displacements.dy*cf,
 			rz: n.displacements.rz*cf,
 		})
-		n2.setReactions({fx: n2.reactions.fx +n.reactions.fx*cf,
-			fy: n2.reactions.fy +n.reactions.fy*cf,
-			mz: n2.reactions.mz +n.reactions.mz*cf})
+		n2.addLoads({fx: n.loads.fx*cf,fy: n.loads.fy*cf,mz: n.loads.mz*cf,})
+		n2.setReactions({fx: n.reactions.fx*cf,fy: n.reactions.fy*cf,mz: n.reactions.mz*cf,})
 	});
 	return str2
 }
