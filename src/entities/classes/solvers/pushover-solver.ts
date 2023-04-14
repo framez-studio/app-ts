@@ -231,7 +231,7 @@ export class PushoverSolver {
 
 		for (let i = 0; i < this._steps.length; i++) {
 			const step = this._steps[i].step;
-			let str2 =this._steps[0].structure.copy()
+			let str2 =this._steps[i].structure.copy()
 			for (let j = 1; j < i+1; j++) {
 				const str1 = this._steps[j].structure;
 				let cf = this._steps[j].collapseFactor
@@ -269,6 +269,7 @@ export class PushoverSolver {
 	public static reset() {
 		this._serviceSteps = []
 		this._steps = []
+		this._pSequence=[]
 		this._statusAnalysis = false
 	}
 }
