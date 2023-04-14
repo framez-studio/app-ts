@@ -234,7 +234,7 @@ export class PushoverSolver {
 
 		for (let i = 0; i < this._steps.length; i++) {
 			const step = this._steps[i].step
-			let str2 = this._steps[0].structure.copy()
+			let str2 = this._steps[i].structure.copy()
 			for (let j = 1; j < i + 1; j++) {
 				const str1 = this._steps[j].structure
 				let cf = this._steps[j].collapseFactor
@@ -275,6 +275,7 @@ export class PushoverSolver {
 	public static reset() {
 		this._serviceSteps = []
 		this._steps = []
+		this._pSequence = []
 		this._statusAnalysis = false
 	}
 }
@@ -360,6 +361,16 @@ const copyStructureUpdateDelta = (structure: IFrameSystem, cf: number) => {
 			fx: n2.reactions.fx + n.reactions.fx * cf,
 			fy: n2.reactions.fy + n.reactions.fy * cf,
 			mz: n2.reactions.mz + n.reactions.mz * cf,
+		})
+		n2.addLoads({
+			fx: n.loads.fx * cf,
+			fy: n.loads.fy * cf,
+			mz: n.loads.mz * cf,
+		})
+		n2.setReactions({
+			fx: n.reactions.fx * cf,
+			fy: n.reactions.fy * cf,
+			mz: n.reactions.mz * cf,
 		})
 	})
 	return str2

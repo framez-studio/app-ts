@@ -72,6 +72,7 @@ describe('Case 1: Oficial Test', () => {
 		FHE.setFHEinNodes(frm,1,2,av,fv)
 		PushoverSolver.Run(frm,{x: 0, y:3},'stability')
 		let result = PushoverSolver.capacityCurve()
+		let sq = PushoverSolver.plasticizingSequence()
 		let curve = [
 			[
 			  0,
