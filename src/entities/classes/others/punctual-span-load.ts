@@ -1,5 +1,5 @@
 import { elementLoads2DArray, elementLoads2DObject } from '@types'
-import { ISpanLoad } from '@interfaces'
+import { IElement, ISpanLoad } from '@interfaces'
 import { punctualLoadFef } from '@utils/fefs'
 
 // TODO: throw error if distance is greater than elementLength
@@ -14,6 +14,9 @@ export class PunctualSpanLoad implements ISpanLoad {
 		this.load = load
 		this.elementLength = elementLength
 		this.distance = distance
+	}
+	copy(_element: IElement): ISpanLoad {
+		throw new Error('Method not implemented.')
 	}
 	get fef(): elementLoads2DObject {
 		return punctualLoadFef(this.load, this.elementLength, this.distance)

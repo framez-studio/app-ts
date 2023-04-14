@@ -27,7 +27,7 @@ export function getGridPointDist(min: number, max: number, factor?: number) {
 
 export function plotGrid(
 	ctx: CanvasRenderingContext2D,
-	settings: IPlotterSettings,
+	_settings: IPlotterSettings,
 	data: IPlotterData,
 ) {
 	const { x, y } = data

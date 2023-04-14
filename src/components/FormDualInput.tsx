@@ -12,7 +12,7 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 }
 
 const FormDualInput: React.FC<Props> = ({ props }) => {
-	const [isActive, setIsActive] = useState(false)
+	const [_isActive, setIsActive] = useState(false)
 	const onFocus = (e: React.FocusEvent) => {
 		e.preventDefault()
 		setIsActive(true)

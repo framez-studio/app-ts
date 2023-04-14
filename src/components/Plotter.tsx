@@ -8,7 +8,7 @@ import {
 	ResponsiveContainer,
 	XAxis,
 	YAxis,
-	Tooltip,
+	Legend,
 } from 'recharts'
 
 interface Props extends React.HTMLProps<HTMLCanvasElement> {
@@ -16,16 +16,32 @@ interface Props extends React.HTMLProps<HTMLCanvasElement> {
 		xLabel?: string
 		yLabel?: string
 		height?: number
-		data: { x: number; y: number }[]
+		series: {
+			name: string
+			data: { x: number; y: number }[]
+			color: string
+			dotColor: string
+		}[]
 	}
 }
 
 const Plotter: React.FC<Props> = ({ props }) => {
+	const { series } = props
+	const lines = series.map((serie) => (
+		<Line
+			key={serie.name}
+			type="linear"
+			data={serie.data}
+			dataKey="y"
+			name={serie.name}
+			stroke={serie.color}
+			dot={{ fill: serie.dotColor }}
+		/>
+	))
+
 	return (
 		<ResponsiveContainer height={props.height ?? '100%'}>
-			<LineChart
-				data={props.data}
-				margin={{ top: 15, right: 30, left: 10, bottom: 20 }}>
+			<LineChart margin={{ top: 15, right: 30, left: 10, bottom: 20 }}>
 				<CartesianGrid stroke="#676c72" strokeDasharray="3 3" />
 				<XAxis dataKey="x" type="number">
 					<Label
@@ -34,7 +50,7 @@ const Plotter: React.FC<Props> = ({ props }) => {
 						offset={-10}
 					/>
 				</XAxis>
-				<YAxis type="number">
+				<YAxis dataKey="y" type="number">
 					<Label
 						value={props?.yLabel}
 						position="insideLeft"
@@ -42,13 +58,9 @@ const Plotter: React.FC<Props> = ({ props }) => {
 						offset={0}
 					/>
 				</YAxis>
-				<Tooltip />
-				<Line
-					type="linear"
-					dataKey="y"
-					stroke="#8d4bf6ff"
-					dot={{ fill: '#653AAA' }}
-				/>
+				{/* <Tooltip /> */}
+				<Legend height={0} />
+				{lines}
 			</LineChart>
 		</ResponsiveContainer>
 	)

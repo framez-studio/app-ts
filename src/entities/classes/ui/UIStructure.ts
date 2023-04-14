@@ -75,7 +75,7 @@ export class UIStructure implements IUIStructure {
 		if (isTheSameAsHovered) return
 		else this.hover(layer, index)
 	}
-	private generatePaths(status: 'static' | 'displaced' = 'static'): void {
+	private generatePaths(_status: 'static' | 'displaced' = 'static'): void {
 		const { structure, _hasChanged: hasChanged } = this
 		if (!hasChanged) return
 		const ctx = this.getContext()

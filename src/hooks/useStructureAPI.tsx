@@ -1,6 +1,7 @@
 import { useAppContext } from '@context/AppContext'
 import {
 	displaceStructure,
+	getBilinealCurve,
 	getCapacityCurve,
 	getPlasticizingSequence,
 	setStructureReactions,
@@ -26,7 +27,8 @@ export function useStructureAPI() {
 	}) {
 		const curve = getCapacityCurve({ structure, ...config })
 		const sequence = getPlasticizingSequence()
-		return { curve, sequence }
+		const bilineal = getBilinealCurve()
+		return { curve, sequence, bilineal }
 	}
 
 	return {

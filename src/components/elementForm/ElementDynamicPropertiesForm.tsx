@@ -10,7 +10,7 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 	props?: {}
 }
 
-const ElementDynamicPropertiesForm: React.FC<Props> = ({ props }) => {
+const ElementDynamicPropertiesForm: React.FC<Props> = () => {
 	const { setActiveSection } = useActiveSectionContext()
 	const { elementDynamics } = useElementContext()
 	const {

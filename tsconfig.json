@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "ESNext",
+		"outDir": "dist",
 		"useDefineForClassFields": true,
 		"module": "ESNext",
 		"lib": ["ESNext", "DOM", "DOM.Iterable", "WebWorker"],
@@ -34,5 +35,6 @@
 		}
 	},
 	"include": ["src"],
+	"exclude": ["**/*.test.ts", "**/*.test.tsx"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -6,7 +6,6 @@ import {
 } from '@interfaces'
 import { absolutevalue } from './algebra'
 import { Hinge } from '@classes/others/moment-curvature'
-import { roundedRectPath } from './canvas-paths'
 
 export const NominalMomentWhitney = (
 	sectionCR: IRectangularRCSection,

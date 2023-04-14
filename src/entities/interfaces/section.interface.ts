@@ -1,4 +1,3 @@
-import { Section } from '@classes/sections/section'
 import { MaterialType, IConcrete, ISteel } from '@interfaces'
 
 export interface ISection<MT extends MaterialType> {
