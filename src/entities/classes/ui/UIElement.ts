@@ -7,7 +7,7 @@ import {
 	printElementHinges,
 	printElementLoad,
 } from '@utils/app-canvas'
-import { hasNonZeroLoad } from '@utils/elements'
+import { assignLoadIfAbsent, hasNonZeroLoad } from '@utils/elements'
 
 export class UIElement implements IUIElement {
 	// Posibility: Add a set status method to change from static to displaced and viceversa
@@ -49,6 +49,8 @@ export class UIElement implements IUIElement {
 		const { fill, outline } = graphics.element
 
 		fillPath(path, ctx, fill)
+
+		assignLoadIfAbsent(object)
 		if (hasNonZeroLoad(object)) printElementLoad(object, ctx, 'static')
 
 		if (isSelected)

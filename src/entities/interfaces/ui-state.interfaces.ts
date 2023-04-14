@@ -1,5 +1,6 @@
 import { coordinates2D, stepPSequence } from '@types'
 import { IPushoverFormSections } from '@types-ui'
+import { IFrameSystem } from './frame-system.interface'
 
 export interface ISteelRowState {
 	quantity: string
@@ -60,6 +61,7 @@ export interface IStructureGeneratorState {
 	arePropsValid: boolean
 }
 export interface IStructurePushoverState {
+	initialStructure: IFrameSystem | null
 	node: {
 		x: number
 		y: number

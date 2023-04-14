@@ -4,14 +4,17 @@ import { AppContextProvider } from '@context/AppContext'
 import HeaderSlider from '@components/headerSlider/HeaderSlider'
 import InputSlider from '@components/inputSlider/InputSlider'
 import AppCanvas from '@components/AppCanvas'
+import { PushoverContextProvider } from '@context/PushoverContext'
 
 function App() {
 	return (
 		<div id="framez" className="app text-selection-disabled">
 			<AppContextProvider>
-				<HeaderSlider />
-				<AppCanvas />
-				<InputSlider />
+				<PushoverContextProvider>
+					<HeaderSlider />
+					<AppCanvas />
+					<InputSlider />
+				</PushoverContextProvider>
 			</AppContextProvider>
 		</div>
 	)

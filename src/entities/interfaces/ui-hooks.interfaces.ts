@@ -73,6 +73,9 @@ export interface IStructurePushoverHook {
 	updateConstants(
 		payload: Partial<IStructurePushoverState['constants']>,
 	): void
+	updateInitialStructure(
+		payload: IStructurePushoverState['initialStructure'],
+	): void
 	runPushover(): void
 }
 export interface IStructurePushoverUIHook {

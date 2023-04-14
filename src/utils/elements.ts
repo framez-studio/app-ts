@@ -18,6 +18,7 @@ import {
 	PushoverSolver,
 	normalizeLoads2Unit,
 } from '@classes/solvers/pushover-solver'
+import { RectangularSpanLoad } from '@classes/others/rectangular-span-load'
 
 export const releasesArray = (
 	releases: elementDegsOfFreedom2DObject,
@@ -264,7 +265,7 @@ export function forcesArrayToObject(
 }
 
 /**
- * Checks if an element has a single load object with a non-zero load inside its loads array. If the element has more than one load object, an error is thrown. If the element has no load object, an error is thrown.
+ * Checks if an element has a single load object with a non-zero load inside its loads array. If the element has no load object, an empty load object is assigned.
  * @param element - Element to check
  * @returns
  */
@@ -276,6 +277,11 @@ export function hasNonZeroLoad(element: IElement): boolean {
 		throw new Error('Element has more than one load object')
 	if (element.loads[0].load) hasLoad = true
 	return hasLoad
+}
+
+export function assignLoadIfAbsent(element: IElement) {
+	if (element.loads.length == 0)
+		element.setSpanLoad(new RectangularSpanLoad(element, 0))
 }
 
 export function getCapacityCurve(config: {
@@ -297,4 +303,14 @@ export function getCapacityCurve(config: {
 	PushoverSolver.Run(structurePivot, node, 'stability')
 
 	return PushoverSolver.capacityCurve()
+}
+
+export function getPlasticizingSequence() {
+	try {
+		return PushoverSolver.plasticizingSequence()
+	} catch (err) {
+		console.log('ERROR IN PLASTICIZING SEQUENCE')
+		console.log(err)
+		return []
+	}
 }

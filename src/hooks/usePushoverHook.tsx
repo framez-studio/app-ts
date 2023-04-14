@@ -4,7 +4,7 @@ import { useStructureAPI } from './useStructureAPI'
 import { capacityCurveToPlotter } from '@utils/ui'
 
 export function useStructurePushoverHook(): IStructurePushoverHook {
-	const { requestPushoverSolver, getNode } = useStructureAPI()
+	const { requestPushoverSolver, getNode, structure } = useStructureAPI()
 	const [state, updateState] = usePushoverHookInitialState()
 
 	function updateDirection(
@@ -46,6 +46,14 @@ export function useStructurePushoverHook(): IStructurePushoverHook {
 		})
 	}
 
+	function updateInitialStructure(
+		payload: IStructurePushoverState['initialStructure'],
+	): void {
+		updateState((draft) => {
+			draft.initialStructure = payload
+		})
+	}
+
 	function updateIsNodeValid(payload: boolean): void {
 		updateState((draft) => {
 			draft.isNodeValid = payload
@@ -53,13 +61,15 @@ export function useStructurePushoverHook(): IStructurePushoverHook {
 	}
 
 	function runPushover(): void {
-		const curve = requestPushoverSolver({
+		const { curve, sequence } = requestPushoverSolver({
 			direction: state.direction,
 			node: { x: Number(state.node.x), y: Number(state.node.y) },
 			constants: state.constants,
 		})
 		const data = capacityCurveToPlotter(curve)
-		updateResults({ data })
+
+		updateInitialStructure(structure)
+		updateResults({ data, sequence })
 	}
 
 	return {
@@ -67,6 +77,7 @@ export function useStructurePushoverHook(): IStructurePushoverHook {
 		updateDirection,
 		updateNode,
 		updateConstants,
+		updateInitialStructure,
 		runPushover,
 	}
 }

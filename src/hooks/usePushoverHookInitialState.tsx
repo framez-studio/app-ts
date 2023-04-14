@@ -3,6 +3,7 @@ import { useImmer } from 'use-immer'
 
 export function usePushoverHookInitialState() {
 	const initialState: IStructurePushoverState = {
+		initialStructure: null,
 		node: {
 			x: 0,
 			y: 0,
@@ -15,6 +16,7 @@ export function usePushoverHookInitialState() {
 		},
 		results: {
 			data: [],
+			sequence: [],
 		},
 	}
 	const [state, updateState] = useImmer(initialState)
