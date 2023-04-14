@@ -1,4 +1,4 @@
-import { coordinates2D } from '@types'
+import { coordinates2D, stepPSequence } from '@types'
 import { IPushoverFormSections } from '@types-ui'
 
 export interface ISteelRowState {
@@ -72,6 +72,7 @@ export interface IStructurePushoverState {
 	}
 	results: {
 		data: coordinates2D[]
+		sequence: stepPSequence[]
 	}
 }
 export interface IStructurePushoverUIState {
