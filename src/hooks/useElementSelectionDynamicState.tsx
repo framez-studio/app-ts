@@ -4,10 +4,7 @@ import {
 } from '@interfaces'
 import { useElementSelection } from './useElementSelection'
 import { useElementDynamicState } from './useElementDynamicState'
-import {
-	MomentCurvatureFinal2Section,
-	assignHinges2Element,
-} from '@utils/moment-curvature'
+import { assignHinges2Element } from '@utils/moment-curvature'
 import { useEffect } from 'react'
 
 export function useElementSelectionDynamicState(): ISelectedElementDynamicStateHook {
@@ -39,25 +36,25 @@ export function useElementSelectionDynamicState(): ISelectedElementDynamicStateH
 	function toggleAutomatic() {
 		dynamicState.toggleAutomatic()
 	}
-	function autoCalculateMomentCurvature() {
-		const { maxMoment, minMoment, maxCurv, minCurve } =
-			MomentCurvatureFinal2Section(element.section)
-		updateCurvature({
-			max: String(maxCurv),
-			min: String(minCurve),
-		})
-		updateMoment({
-			max: String(maxMoment),
-			min: String(minMoment),
-		})
-	}
+	// function autoCalculateMomentCurvature() {
+	// 	const { maxMoment, minMoment, maxCurv, minCurve } =
+	// 		MomentCurvatureFinal2Section(element.section)
+	// 	updateCurvature({
+	// 		max: String(maxCurv),
+	// 		min: String(minCurve),
+	// 	})
+	// 	updateMoment({
+	// 		max: String(maxMoment),
+	// 		min: String(minMoment),
+	// 	})
+	// }
 	function assignMomentCurvature(values: {
 		moment: IElementDynamicState['moment']
 		curvature: IElementDynamicState['curvature']
 	}) {
 		const { moment, curvature } = values
 		if (!isMomentCurvatureFull({ moment, curvature })) return
-		const hingeType = element.inclination === 90 ? 'Moment-P' : 'Moment'
+		// const hingeType = element.inclination === 90 ? 'Moment-P' : 'Moment'
 		assignHinges2Element({
 			element,
 			hingeType: 'Custom',

@@ -1,6 +1,6 @@
 import { IElement, IUIElement } from '@interfaces'
 import { graphics } from '@config/app-canvas'
-import { elementPath, hingePath } from '@utils/app-canvas-paths'
+import { elementPath } from '@utils/app-canvas-paths'
 import {
 	fillPath,
 	outlinePath,

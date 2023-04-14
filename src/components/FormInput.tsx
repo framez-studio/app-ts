@@ -68,10 +68,10 @@ const FormInput: React.FC<FormInputProps> = ({ props, className }) => {
 	}
 }
 
-function isRealNumber(value: string) {
-	const regexp = new RegExp('^-?[0-9]+(?:\\.[0-9]+)?$')
-	return regexp.test(value)
-}
+// function isRealNumber(value: string) {
+// 	const regexp = new RegExp('^-?[0-9]+(?:\\.[0-9]+)?$')
+// 	return regexp.test(value)
+// }
 function onWheel(e: WheelEvent) {
 	e.preventDefault()
 }
