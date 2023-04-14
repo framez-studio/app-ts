@@ -241,6 +241,9 @@ export class PushoverSolver {
 						dy: n1.displacements.dy*cf,
 						rz: n1.displacements.rz*cf,
 					})
+					n2.addLoads({fx: n2.reactions.fx +n1.reactions.fx*cf,
+						fy: n2.reactions.fy +n1.reactions.fy*cf,
+						mz: n2.reactions.mz +n1.reactions.mz*cf})
 					n2.setReactions({fx: n2.reactions.fx +n1.reactions.fx*cf,
 						fy: n2.reactions.fy +n1.reactions.fy*cf,
 						mz: n2.reactions.mz +n1.reactions.mz*cf})
