@@ -1,4 +1,4 @@
-import { IStructure } from "@interfaces";
+import { IFrameSystem, IStructure } from "@interfaces";
 
 export type coordinateSystem = 'local' | 'global'
 export type coordinates2D = { x: number; y: number }
@@ -59,10 +59,10 @@ export type stepPushover = {
 	plasticizedNode: coordinates2D | null
 	collapseFactor: number
 	dxAtControlNode: number
-	structure: IStructure
+	structure: IFrameSystem
 }
 
 export type stepPSequence = {
 	step: number
-	structure: IStructure
+	structure: IFrameSystem
 }
