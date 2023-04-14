@@ -146,15 +146,15 @@ export class PushoverSolver {
 		}
 		//let structureService = structure.copy()
 		//unReleaseInverseHingesFromService(structureService)
-		let timeinicio = Date.now()
-		let timeActual = 0
+		// let timeinicio = Date.now()
+		// let timeActual = 0
 		while (!stopAnalysis(structure, stopCriteria, serviceLoad)) {
 			try {
 				structure.displacements
 			} catch (error) {
 				break
 			}
-			timeActual = Date.now() - timeinicio
+			// timeActual = Date.now() - timeinicio
 			// let timeStep = (timeActual-timeAnterior)/1000
 			if (stopCriteria == 'service' && serviceLoad != undefined) {
 				let actualForce =

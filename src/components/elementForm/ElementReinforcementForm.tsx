@@ -13,7 +13,7 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 	}
 }
 
-const ElementReinforcementForm: React.FC<Props> = ({ props }) => {
+const ElementReinforcementForm: React.FC<Props> = () => {
 	const { setActiveSection } = useActiveSectionContext()
 	const { elementSteel } = useElementContext()
 	const { state } = elementSteel
