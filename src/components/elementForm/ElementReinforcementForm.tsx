@@ -31,7 +31,7 @@ const ElementReinforcementForm: React.FC<Props> = () => {
 							from: 'kPa',
 							to: 'MPa',
 						}),
-						onChange: ($e) => {
+						onBlur: ($e) => {
 							const value = inputUnitsFilter({
 								value: $e.target.value,
 								from: 'MPa',
@@ -51,7 +51,7 @@ const ElementReinforcementForm: React.FC<Props> = () => {
 							from: 'kPa',
 							to: 'MPa',
 						}),
-						onChange: ($e) => {
+						onBlur: ($e) => {
 							const value = inputUnitsFilter({
 								value: $e.target.value,
 								from: 'MPa',

@@ -24,7 +24,7 @@ const ElementMechPropertiesForm = () => {
 							from: 'm',
 							to: 'mm',
 						}),
-						onChange: ($e) => {
+						onBlur: ($e) => {
 							const value = inputUnitsFilter({
 								value: $e.target.value,
 								from: 'mm',
@@ -43,7 +43,7 @@ const ElementMechPropertiesForm = () => {
 							from: 'm',
 							to: 'mm',
 						}),
-						onChange: ($e) => {
+						onBlur: ($e) => {
 							const value = inputUnitsFilter({
 								value: $e.target.value,
 								from: 'mm',
@@ -63,7 +63,7 @@ const ElementMechPropertiesForm = () => {
 							from: 'kPa',
 							to: 'MPa',
 						}),
-						onChange: ($e) => {
+						onBlur: ($e) => {
 							const value = inputUnitsFilter({
 								value: $e.target.value,
 								from: 'MPa',
@@ -87,7 +87,7 @@ const ElementMechPropertiesForm = () => {
 							from: 'kPa',
 							to: 'MPa',
 						}),
-						onChange: ($e) => {
+						onBlur: ($e) => {
 							const value = inputUnitsFilter({
 								value: $e.target.value,
 								from: 'MPa',
@@ -105,7 +105,7 @@ const ElementMechPropertiesForm = () => {
 						)}) before yielding`,
 						suffix: 'mm/mm',
 						value: epsilon,
-						onChange: ($e) => updateEpsilon($e.target.value),
+						onBlur: ($e) => updateEpsilon($e.target.value),
 					}}
 				/>
 			</section>

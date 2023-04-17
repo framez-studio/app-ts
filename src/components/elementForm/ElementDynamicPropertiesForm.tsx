@@ -30,7 +30,7 @@ const ElementDynamicPropertiesForm: React.FC<Props> = () => {
 						tooltip: `Self weight will only be considered in Horizontal Equivalent Force load distribution. It wont't be considered as a service load.`,
 						suffix: 'kN/m3',
 						value: weight,
-						onChange: ($e) => updateWeight($e.target.value),
+						onBlur: ($e) => updateWeight($e.target.value),
 					}}
 					className="span-2"
 				/>
@@ -54,7 +54,7 @@ const ElementDynamicPropertiesForm: React.FC<Props> = () => {
 						suffix: 'rad',
 						readonly: state.automatic,
 						value: curvature.min,
-						onChange: ($e) =>
+						onBlur: ($e) =>
 							updateCurvature({ min: $e.target.value }),
 					}}
 				/>
@@ -64,8 +64,7 @@ const ElementDynamicPropertiesForm: React.FC<Props> = () => {
 						suffix: 'kN.m',
 						readonly: state.automatic,
 						value: moment.min,
-						onChange: ($e) =>
-							updateMoment({ min: $e.target.value }),
+						onBlur: ($e) => updateMoment({ min: $e.target.value }),
 					}}
 				/>
 				<FormInput
@@ -74,7 +73,7 @@ const ElementDynamicPropertiesForm: React.FC<Props> = () => {
 						suffix: 'rad',
 						readonly: state.automatic,
 						value: curvature.max,
-						onChange: ($e) =>
+						onBlur: ($e) =>
 							updateCurvature({ max: $e.target.value }),
 					}}
 				/>
@@ -84,8 +83,7 @@ const ElementDynamicPropertiesForm: React.FC<Props> = () => {
 						suffix: 'kN.m',
 						readonly: state.automatic,
 						value: moment.max,
-						onChange: ($e) =>
-							updateMoment({ max: $e.target.value }),
+						onBlur: ($e) => updateMoment({ max: $e.target.value }),
 					}}
 				/>
 			</section>

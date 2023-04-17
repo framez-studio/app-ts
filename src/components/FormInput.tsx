@@ -10,6 +10,7 @@ export interface FormInputProps extends React.HTMLProps<HTMLDivElement> {
 		value?: string
 		readonly?: boolean
 		tooltip?: string
+		onBlur?($e: React.ChangeEvent<HTMLInputElement>): void
 		onChange?($e: React.ChangeEvent<HTMLInputElement>): void
 	}
 }
@@ -59,12 +60,16 @@ const FormInput: React.FC<FormInputProps> = ({ props, className }) => {
 	}
 	function onBlur(e: React.FocusEvent<HTMLInputElement>) {
 		setIsActive(false)
-		props?.onChange?.(e)
+		props?.onBlur?.(e)
 		e.target.removeEventListener('wheel', onWheel)
 	}
 	function onChange(e: React.ChangeEvent<HTMLInputElement>) {
 		// if (!isRealNumber(e.target.value)) return
-		setValue(e.target.value)
+		if (props?.onChange) {
+			props.onChange(e)
+		} else {
+			setValue(e.target.value)
+		}
 	}
 }
 

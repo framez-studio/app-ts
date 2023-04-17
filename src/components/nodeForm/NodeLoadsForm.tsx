@@ -12,7 +12,7 @@ const NodeLoadsForm = () => {
 						label: 'Fx',
 						suffix: 'kN',
 						value: loads.fx,
-						onChange: ($e) => setLoads({ fx: $e.target.value }),
+						onBlur: ($e) => setLoads({ fx: $e.target.value }),
 					}}
 				/>
 				<FormInput
@@ -20,7 +20,7 @@ const NodeLoadsForm = () => {
 						label: 'Fy',
 						suffix: 'kN',
 						value: loads.fy,
-						onChange: ($e) => setLoads({ fy: $e.target.value }),
+						onBlur: ($e) => setLoads({ fy: $e.target.value }),
 					}}
 				/>
 				<FormInput
@@ -28,7 +28,7 @@ const NodeLoadsForm = () => {
 						label: 'Mz',
 						suffix: 'kN.m',
 						value: loads.mz,
-						onChange: ($e) => setLoads({ mz: $e.target.value }),
+						onBlur: ($e) => setLoads({ mz: $e.target.value }),
 					}}
 				/>
 			</section>

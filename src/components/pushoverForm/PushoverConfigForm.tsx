@@ -99,7 +99,7 @@ const PushoverConfigForm = () => {
 						tooltip:
 							'Effective peak horizontal velocity coefficient. Given on NSR-10 A.2.2.',
 						value: String(state.constants.av),
-						onChange: (e) =>
+						onBlur: (e) =>
 							updateConstants({ av: Number(e.target.value) }),
 					}}
 				/>
@@ -110,7 +110,7 @@ const PushoverConfigForm = () => {
 						tooltip:
 							'Amplification coefficient that affects the acceleration in the zone of intermediate periods',
 						value: String(state.constants.fv),
-						onChange: (e) =>
+						onBlur: (e) =>
 							updateConstants({ fv: Number(e.target.value) }),
 					}}
 				/>

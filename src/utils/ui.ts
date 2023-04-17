@@ -47,19 +47,21 @@ export function isRowFull(row: ISteelRowState | ISteelNumRowsState) {
 }
 
 export function capacityCurveToPlotter(data: number[][]): coordinates2D[] {
-	return data.map((row) => {
-		if (row.length !== 2)
-			throw new Error('Invalid data, must be a nx2 matrix')
+	return data
+		.map((row) => {
+			if (row.length !== 2)
+				throw new Error('Invalid data, must be a nx2 matrix')
 
-		const x = outputUnitsFilter({
-			value: row[0],
-			from: 'm',
-			to: 'mm',
-			formatter: responseFormatter,
+			const x = outputUnitsFilter({
+				value: row[0],
+				from: 'm',
+				to: 'mm',
+				formatter: responseFormatter,
+			})
+			const y = responseFormatter(row[1])
+			return { x: Number(x), y: Number(y) }
 		})
-		const y = responseFormatter(row[1])
-		return { x: Number(x), y: Number(y) }
-	})
+		.filter((row) => row.x >= 0)
 }
 
 export function outputUnitsFilter(config: {

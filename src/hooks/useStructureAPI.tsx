@@ -27,9 +27,8 @@ export function useStructureAPI() {
 	}) {
 		const curve = getCapacityCurve({ structure, ...config })
 		const sequence = getPlasticizingSequence()
-		const bilineal = getBilinealCurve()
 		resetPushover()
-		return { curve, sequence, bilineal }
+		return { curve, sequence }
 	}
 
 	return {

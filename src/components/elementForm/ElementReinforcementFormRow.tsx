@@ -20,7 +20,7 @@ const ElementReinforcementFormRow: React.FC<Props> = ({ props }) => {
 			<FormInput
 				props={{
 					value: row.quantity,
-					onChange: ($e) =>
+					onBlur: ($e) =>
 						updater(index, { quantity: $e.target.value }),
 				}}
 			/>
@@ -32,7 +32,7 @@ const ElementReinforcementFormRow: React.FC<Props> = ({ props }) => {
 						to: 'mm',
 					}),
 					suffix: 'mm',
-					onChange: ($e) => {
+					onBlur: ($e) => {
 						const value = inputUnitsFilter({
 							value: $e.target.value,
 							from: 'mm',
@@ -50,7 +50,7 @@ const ElementReinforcementFormRow: React.FC<Props> = ({ props }) => {
 						to: 'mm',
 					}),
 					suffix: 'mm',
-					onChange: ($e) => {
+					onBlur: ($e) => {
 						const value = inputUnitsFilter({
 							value: $e.target.value,
 							from: 'mm',
