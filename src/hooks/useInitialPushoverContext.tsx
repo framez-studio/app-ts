@@ -34,7 +34,6 @@ export function useInitialPushoverContext(): IStructurePushoverContext {
 		payload: IStructurePushoverUIState['selected']['step'],
 	): void {
 		const currentSteps = pushover.state.results.sequence.length
-
 		if (payload < 0) return
 		if (payload > currentSteps) return
 		if (!pushover.state.initialStructure)
