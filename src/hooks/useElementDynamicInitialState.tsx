@@ -13,6 +13,10 @@ export function useElementDynamicInitialState() {
 			min: '-0.008',
 			max: '0.008',
 		},
+		errorState: {
+			active: false,
+			message: '',
+		},
 	}
 	const [state, updateState] = useImmer(initialState)
 

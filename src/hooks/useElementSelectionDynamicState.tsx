@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import {
 	IElementDynamicState,
 	ISelectedElementDynamicStateHook,
@@ -5,12 +6,11 @@ import {
 import { useElementSelection } from './useElementSelection'
 import { useElementDynamicState } from './useElementDynamicState'
 import { assignHinges2Element } from '@utils/moment-curvature'
-import { useEffect } from 'react'
 
 export function useElementSelectionDynamicState(): ISelectedElementDynamicStateHook {
 	const element = useElementSelection()
 	const dynamicState = useElementDynamicState()
-	const { state } = dynamicState
+	const { state, assignElementState } = dynamicState
 
 	function updateWeight(value: string) {
 		dynamicState.updateWeight(value)
@@ -36,18 +36,6 @@ export function useElementSelectionDynamicState(): ISelectedElementDynamicStateH
 	function toggleAutomatic() {
 		dynamicState.toggleAutomatic()
 	}
-	// function autoCalculateMomentCurvature() {
-	// 	const { maxMoment, minMoment, maxCurv, minCurve } =
-	// 		MomentCurvatureFinal2Section(element.section)
-	// 	updateCurvature({
-	// 		max: String(maxCurv),
-	// 		min: String(minCurve),
-	// 	})
-	// 	updateMoment({
-	// 		max: String(maxMoment),
-	// 		min: String(minMoment),
-	// 	})
-	// }
 	function assignMomentCurvature(values: {
 		moment: IElementDynamicState['moment']
 		curvature: IElementDynamicState['curvature']
@@ -66,10 +54,11 @@ export function useElementSelectionDynamicState(): ISelectedElementDynamicStateH
 			},
 		})
 	}
+
 	useEffect(() => {
-		if (!state.automatic) return
-		if (element.section.reinforcement.length == 0) return
-	}, [state.automatic, element.section])
+		assignElementState(element)
+	}, [element])
+
 	return {
 		state,
 		updateWeight,

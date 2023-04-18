@@ -42,6 +42,10 @@ export function generateFramezSystemFromContext(context: {
 	const config = extractConfigFromContext(context)
 	return generateFramezSystem(config)
 }
+export function generateSectionFromContext(context: IElementContext) {
+	const config = extractElementConfigFromContext(context)
+	return generateSection(config)
+}
 function extractConfigFromContext(context: {
 	state: IStructureGeneratorState
 	columnsContext: IElementContext

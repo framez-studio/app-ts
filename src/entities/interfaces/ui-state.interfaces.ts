@@ -48,6 +48,10 @@ export interface IElementDynamicState {
 		min: string
 		max: string
 	}
+	errorState: {
+		active: boolean
+		message: string
+	}
 }
 export interface IStructureSpace {
 	count: string

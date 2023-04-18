@@ -67,7 +67,6 @@ export function useStructurePushoverHook(): IStructurePushoverHook {
 			constants: state.constants,
 		})
 		const data = capacityCurveToPlotter(curve)
-		// const bilinealData = capacityCurveToPlotter(bilineal)
 
 		updateInitialStructure(structure)
 		updateResults({ data, sequence })

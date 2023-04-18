@@ -3,7 +3,6 @@ import { displaceStructure, setStructureReactions } from '@utils/elements'
 import {
 	getCapacityCurve,
 	getPlasticizingSequence,
-	getBilinealCurve,
 	resetPushover,
 } from '@utils/pushover'
 
