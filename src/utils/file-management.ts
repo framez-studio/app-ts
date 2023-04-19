@@ -1,3 +1,7 @@
+import { ElementNode } from '@classes/nodes/element-node'
+import { RectangularSpanLoad } from '@classes/others/rectangular-span-load'
+import { IStructure } from '@interfaces'
+
 type IGraphData = {
 	[key: string]: string | number | boolean
 }[]
@@ -45,4 +49,18 @@ export function downloadGraphToCSVFile(config: {
 	link.setAttribute('href', url)
 	link.setAttribute('download', 'data.csv')
 	link.click()
+}
+export function structureJSONString(structure: IStructure) {
+	function replacer(_key: string, value: any) {
+		let output: any | undefined = value
+
+		if (value instanceof ElementNode) {
+			output._elements = undefined
+		} else if (value instanceof RectangularSpanLoad) {
+			output.element = undefined
+		}
+
+		return output
+	}
+	return JSON.stringify(structure, replacer)
 }

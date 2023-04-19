@@ -3,6 +3,7 @@ import ErrorMessage from '@components/ErrorMessage'
 import FormButton from '@components/FormButton'
 import FormSectionLabel from '@components/FormSectionLabel'
 import GeneratorSpaceTable from '@components/generatorForm/GeneratorSpaceTable'
+import { useStructureLoader } from '@hooks/useStructureLoader'
 
 function StructureForm() {
 	const {
@@ -15,6 +16,7 @@ function StructureForm() {
 		deleteSpanRow,
 		generateStructure,
 	} = useGeneratorContext()
+	const { downloadStructure } = useStructureLoader()
 
 	return (
 		<section className="form-container">
@@ -64,7 +66,14 @@ function StructureForm() {
 						text: 'Generate',
 						onClick: generateStructure,
 					}}
-					className="span-2"
+					className="span-1"
+				/>
+				<FormButton
+					props={{
+						text: 'Download',
+						onClick: downloadStructure,
+					}}
+					className="span-1"
 				/>
 				{!state.arePropsValid && (
 					<ErrorMessage
