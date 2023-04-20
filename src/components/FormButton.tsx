@@ -1,4 +1,3 @@
-import React from 'react'
 import '@styles/FormButton.sass'
 
 interface Props extends React.HTMLProps<HTMLDivElement> {

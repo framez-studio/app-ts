@@ -10,8 +10,8 @@ const GeneratorHeader: React.FC<Props> = () => {
 			<FormSectionLabel
 				props={{
 					label: 'Structure',
-					isActive: activeSection == 'structure',
-					onClick: () => setActiveSection('structure'),
+					isActive: activeSection == 'generator',
+					onClick: () => setActiveSection('generator'),
 				}}
 			/>
 			<FormSectionLabel

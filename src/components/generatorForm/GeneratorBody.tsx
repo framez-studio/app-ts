@@ -1,7 +1,13 @@
 import GeneratorBodySwitcher from '@components/generatorForm/GeneratorBodySwitcher'
+import GeneratorHeader from './GeneratorHeader'
 
 const GeneratorBody = () => {
-	return <GeneratorBodySwitcher />
+	return (
+		<>
+			<GeneratorHeader />
+			<GeneratorBodySwitcher />
+		</>
+	)
 }
 
 export default GeneratorBody

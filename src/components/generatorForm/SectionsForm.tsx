@@ -1,7 +1,7 @@
 import '@styles/Form.sass'
-import ElementFormSwitcher from '@components/elementForm/ElementFormSwitcher'
 import { ElementContextProvider } from '@context/ElementContext'
 import { useGeneratorContext } from '@context/GeneratorContext'
+import ElementFormSwitcher from '@components/elementForm/ElementFormSwitcher'
 import RadioInput from '@components/RadioInput'
 
 const SectionsForm = () => {

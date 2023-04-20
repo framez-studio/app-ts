@@ -1,24 +1,51 @@
+import { useEffect, useRef, useState } from 'react'
 import { useAppContext } from '@context/AppContext'
 import { structureJSONString } from '@utils/file-management'
+import { FramezFile } from '@interfaces'
+import { generateStructureFromFile } from '@utils/framez-file-parser'
 
 export function useStructureLoader() {
-	const { state } = useAppContext()
+	const { state, setStructure, requestCanvasRedraw } = useAppContext()
 	const { structure } = state
+
+	const [file, setFile] = useState<File>()
+	const downloadAnchorRef = useRef(document.createElement('a'))
 
 	function downloadStructure() {
 		const json = structureJSONString(structure)
-		console.log(json)
 		const blob = new Blob([json], { type: 'application/json' })
 		const url = URL.createObjectURL(blob)
-		const link = document.createElement('a')
 
-		link.setAttribute('href', url)
-		link.setAttribute('download', 'structure.framez')
-		link.click()
+		downloadAnchorRef.current.setAttribute('href', url)
+		downloadAnchorRef.current.setAttribute('download', 'structure.framez')
+		downloadAnchorRef.current.click()
 	}
 
-	async function loadStructure() {
-		console.log('loading')
+	function handleUploadInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+		if (e.target.files) {
+			setFile(e.target.files[0])
+		}
 	}
-	return { downloadStructure, loadStructure }
+
+	async function setFileChange() {
+		if (!file) return
+		if (getFileExtension(file.name) !== 'framez') return
+
+		const text = await file.text()
+		const loadedStructureFile = JSON.parse(text) as FramezFile
+		const loadedStructure = generateStructureFromFile(loadedStructureFile)
+
+		setStructure(loadedStructure)
+		requestCanvasRedraw()
+	}
+
+	useEffect(() => {
+		setFileChange()
+	}, [file])
+
+	return { downloadStructure, handleUploadInputChange }
+}
+
+function getFileExtension(filename: string) {
+	return filename.split('.')[1]
 }

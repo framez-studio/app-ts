@@ -1,12 +1,10 @@
 import '@styles/Form.sass'
-import GeneratorHeader from '../generatorForm/GeneratorHeader'
-import GeneratorBody from '@components/generatorForm/GeneratorBody'
+import HeaderSliderBodySwitcher from './HeaderSliderBodySwitcher'
 
 const HeaderSliderBody = () => {
 	return (
 		<section className="slider-body">
-			<GeneratorHeader />
-			<GeneratorBody />
+			<HeaderSliderBodySwitcher />
 		</section>
 	)
 }

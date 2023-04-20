@@ -17,7 +17,9 @@ export type IFormSections =
 	| 'loads'
 	| 'response'
 	| 'cross-sections'
-	| 'structure'
+	| 'generator'
+	| 'settings'
+
 export type IPushoverFormSections = 'config' | 'graph' | 'data' | 'loading'
 export type IUIObject = {
 	readonly path: Path2D

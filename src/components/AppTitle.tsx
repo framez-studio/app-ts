@@ -7,11 +7,13 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
 	}
 }
 
-const AppTitle: React.FC<Props> = ({ props }) => {
+const AppTitle: React.FC<Props> = ({ props, className }) => {
 	const appTitle = 'FramezStudio'
 
 	return (
-		<span className="header-title" onPointerUp={props?.onClick}>
+		<span
+			className={`header-title ${className ?? ''}`}
+			onPointerUp={props?.onClick}>
 			{appTitle}
 		</span>
 	)

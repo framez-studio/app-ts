@@ -3,7 +3,7 @@ import ErrorMessage from '@components/ErrorMessage'
 import FormButton from '@components/FormButton'
 import FormSectionLabel from '@components/FormSectionLabel'
 import GeneratorSpaceTable from '@components/generatorForm/GeneratorSpaceTable'
-import { useStructureLoader } from '@hooks/useStructureLoader'
+import { useActiveSectionContext } from '@context/ActiveSectionContext'
 
 function StructureForm() {
 	const {
@@ -16,7 +16,7 @@ function StructureForm() {
 		deleteSpanRow,
 		generateStructure,
 	} = useGeneratorContext()
-	const { downloadStructure } = useStructureLoader()
+	const { setActiveSection } = useActiveSectionContext()
 
 	return (
 		<section className="form-container">
@@ -63,15 +63,15 @@ function StructureForm() {
 			<section className="form-footer col-2">
 				<FormButton
 					props={{
-						text: 'Generate',
-						onClick: generateStructure,
+						text: 'Back',
+						onClick: () => setActiveSection('settings'),
 					}}
 					className="span-1"
 				/>
 				<FormButton
 					props={{
-						text: 'Download',
-						onClick: downloadStructure,
+						text: 'Generate',
+						onClick: generateStructure,
 					}}
 					className="span-1"
 				/>

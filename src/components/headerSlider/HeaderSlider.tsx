@@ -12,7 +12,7 @@ const HeaderSlider = () => {
 	const sliderOpener = () => setIsOpen(!isOpen)
 
 	return (
-		<ActiveSectionContextProvider props={{ default: 'structure' }}>
+		<ActiveSectionContextProvider props={{ default: 'settings' }}>
 			<GeneratorContextProvider>
 				<section
 					className={`slider header-slider ${
