@@ -45,6 +45,10 @@ export default defineConfig({
 				find: '@context',
 				replacement: path.resolve(__dirname, 'src/context'),
 			},
+			{
+				find: '@workers',
+				replacement: path.resolve(__dirname, 'src/workers'),
+			},
 		],
 	},
 	plugins: [react()],

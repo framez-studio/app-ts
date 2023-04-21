@@ -31,7 +31,8 @@
 			"@components/*": ["src/components/*"],
 			"@styles/*": ["src/styles/*"],
 			"@hooks/*": ["src/hooks/*"],
-			"@context/*": ["src/context/*"]
+			"@context/*": ["src/context/*"],
+			"@workers/*": ["src/workers/*"]
 		}
 	},
 	"include": ["src"],
