@@ -14,6 +14,7 @@ import {
 	FileSectionData,
 	FramezFile,
 	IElement,
+	INode,
 } from '@interfaces'
 import { initialFinal } from '@types'
 import { assignHinges2Element } from './moment-curvature'
@@ -22,9 +23,10 @@ import { FrameSystem } from '@classes/complex-elements/frame-system'
 export function generateStructureFromFile(file: FramezFile) {
 	const { _elements } = file
 	const elements: IElement[] = []
+	const nodesCache: INode[] = []
 
 	_elements.forEach((elementData) => {
-		let element = generateElementFromFile(elementData)
+		let element = generateElementFromFile(elementData, nodesCache)
 		elements.push(element)
 	})
 
@@ -32,11 +34,11 @@ export function generateStructureFromFile(file: FramezFile) {
 	return structure
 }
 
-function generateElementFromFile(data: FileElementData) {
+function generateElementFromFile(data: FileElementData, nodesCache: INode[]) {
 	const { _loads, _nodes, section, initialHinge, finalHinge } = data
 
-	const initialNode = generateNodeFromFile(_nodes.initial)
-	const finalNode = generateNodeFromFile(_nodes.final)
+	const initialNode = generateNodeFromFile(_nodes.initial, nodesCache)
+	const finalNode = generateNodeFromFile(_nodes.final, nodesCache)
 	const elementSection = generateSectionFromFile(section)
 
 	const element = new Element(initialNode, finalNode, elementSection)
@@ -130,9 +132,31 @@ function generateLoadFromFile(element: IElement, data: FileLoadData) {
 	)
 	return load
 }
-function generateNodeFromFile(data: FileNodeData) {
+function generateNodeFromFile(data: FileNodeData, nodesCache: INode[]) {
+	const coincidence = getNodeCoincidenceByCoords(data, nodesCache)
+	if (coincidence) return coincidence
+
 	const node = new ElementNode({ ...data._coordinates })
-	node.setLoads({ ...data._loads })
 	node.constraints = { ...data.constraints }
+	node.setLoads({ ...data._loads })
+	node.setDisplacements({ ...data._displacements })
+	node.setReactions({ ...data._reactions })
+
+	nodesCache.push(node)
 	return node
+}
+
+function findFileNodeDataIndex(data: FileNodeData, nodesCache: INode[]) {
+	const { _coordinates } = data
+	const filter = (node: INode) => {
+		const coordinates = node.coordinates('static')
+		const coordsMatch =
+			coordinates.x === _coordinates.x && coordinates.y === _coordinates.y
+		return coordsMatch
+	}
+	return nodesCache.findIndex(filter)
+}
+function getNodeCoincidenceByCoords(data: FileNodeData, nodesCache: INode[]) {
+	let index = findFileNodeDataIndex(data, nodesCache)
+	return index === -1 ? undefined : nodesCache[index]
 }
