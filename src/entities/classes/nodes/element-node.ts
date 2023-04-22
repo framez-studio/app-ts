@@ -102,9 +102,10 @@ export class ElementNode implements INode {
 
 	copy(): INode {
 		const coordinates = this.coordinates('static')
-		const loads = this.loads
+		const { loads, constraints } = this
 		const copy = new ElementNode({ ...coordinates })
 		copy.addLoads({ ...loads })
+		copy.constraints = { ...constraints }
 		return copy
 	}
 }
