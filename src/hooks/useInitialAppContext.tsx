@@ -60,7 +60,7 @@ export function useInitialAppContext(): IAppContext {
 		updateState((draft) => {
 			draft.structure = payload
 		})
-		// setStructureInstance(payload)
+		setStructureInstance(payload)
 	}
 	return {
 		state,

@@ -33,23 +33,12 @@ export function useInitialPushoverContext(): IStructurePushoverContext {
 	function updateSelectedStep(
 		payload: IStructurePushoverUIState['selected']['step'],
 	): void {
-		const currentSteps = pushover.state.results.sequence.length
+		const { steps } = pushover.state.results
 		if (payload < 0) return
-		if (payload > currentSteps) return
-		if (!pushover.state.initialStructure)
-			return console.error('initial structure does not exist')
+		if (payload > steps) return
 
 		ui.updateSelectedStep(payload)
-		if (payload == 0) {
-			setStructure(pushover.state.initialStructure)
-			requestCanvasRedraw()
-		} else {
-			const { structure } = pushover.state.results.sequence.filter(
-				(plasticStep) => plasticStep.step === payload - 1,
-			)[0]
-			setStructure(structure)
-			requestCanvasRedraw()
-		}
+		pushover.getStep(payload)
 	}
 
 	function updateSelectedNode(

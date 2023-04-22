@@ -66,6 +66,7 @@ export interface IStructureGeneratorState {
 }
 export interface IStructurePushoverState {
 	initialStructure: IFrameSystem | null
+	isCalculating: boolean
 	node: {
 		x: number
 		y: number
@@ -79,7 +80,7 @@ export interface IStructurePushoverState {
 	results: {
 		data: coordinates2D[]
 		bilineal: coordinates2D[]
-		sequence: stepPSequence[]
+		steps: number
 	}
 }
 export interface IStructurePushoverUIState {

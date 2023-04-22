@@ -70,6 +70,10 @@ function generateHingesFromFile(
 			min: initial.minMoment,
 		},
 	})
+	element.initialHinge!.isCollapsed = data.initial.isCollapsed
+	element.initialHinge!.isNegativeCollapsed = data.initial.isNegativeCollapsed
+	element.initialHinge!.isPositiveCollapsed = data.initial.isPositiveCollapsed
+
 	assignHinges2Element({
 		element,
 		node: 'final',
@@ -83,6 +87,9 @@ function generateHingesFromFile(
 			min: final.minMoment,
 		},
 	})
+	element.finalHinge!.isCollapsed = data.final.isCollapsed
+	element.finalHinge!.isNegativeCollapsed = data.final.isNegativeCollapsed
+	element.finalHinge!.isPositiveCollapsed = data.final.isPositiveCollapsed
 }
 // function generateReleasesFromFile(
 // 	element: IElement,

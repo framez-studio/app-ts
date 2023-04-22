@@ -30,5 +30,5 @@ export interface StructurePushoverWorkerResponse {
 		steps: number
 		curve: number[][]
 	}
-	step?: stepPSequence
+	step?: FramezFile
 }

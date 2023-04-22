@@ -4,6 +4,7 @@ import {
 	IElementDynamicState,
 	IElementPropsState,
 	IElementSteelState,
+	IFrameSystem,
 	ISteelRowState,
 	IStructureGeneratorState,
 	IStructurePushoverState,
@@ -77,6 +78,7 @@ export interface IStructurePushoverHook {
 		payload: IStructurePushoverState['initialStructure'],
 	): void
 	runPushover(): void
+	getStep(step: number): void
 }
 export interface IStructurePushoverUIHook {
 	state: IStructurePushoverUIState

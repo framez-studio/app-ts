@@ -377,11 +377,7 @@ export const assignHinges2Element = (args: {
 	let CurvMax = 0
 	let CurvMin = 0
 
-	if (
-		hingeType == 'Custom' &&
-		moment != undefined &&
-		curvature != undefined
-	) {
+	if (hingeType == 'Custom' && moment && curvature) {
 		MnMax = moment.max
 		MnMin = moment.min
 		CurvMax = curvature.max
@@ -403,12 +399,12 @@ export const assignHinges2Element = (args: {
 		sectionRC.rotate180()
 	}
 
-	if (node == 'initial' || 'both') {
+	if (node === 'initial' || node === 'both') {
 		let hinge = new Hinge(MnMax, CurvMax, MnMin, CurvMin, hingeType)
 		element.assignHinge('initial', hinge)
 	}
 
-	if (node == 'final' || 'both') {
+	if (node == 'final' || node === 'both') {
 		let hinge = new Hinge(MnMax, CurvMax, MnMin, CurvMin, hingeType)
 		element.assignHinge('final', hinge)
 	}

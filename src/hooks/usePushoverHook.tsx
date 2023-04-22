@@ -1,10 +1,18 @@
-import { IStructurePushoverHook, IStructurePushoverState } from '@interfaces'
+import {
+	FramezFile,
+	IStructurePushoverHook,
+	IStructurePushoverState,
+} from '@interfaces'
 import { usePushoverHookInitialState } from './usePushoverHookInitialState'
 import { useStructureAPI } from './useStructureAPI'
 import { capacityCurveToPlotter } from '@utils/ui'
+import { useAppContext } from '@context/AppContext'
+import { generateStructureFromFile } from '@utils/framez-file-parser'
 
 export function useStructurePushoverHook(): IStructurePushoverHook {
-	const { requestPushoverSolver, getNode, structure } = useStructureAPI()
+	const { requestPushoverSolver, requestPushoverStep, getNode, structure } =
+		useStructureAPI()
+	const { setStructure, requestCanvasRedraw } = useAppContext()
 	const [state, updateState] = usePushoverHookInitialState()
 
 	function updateDirection(
@@ -59,17 +67,44 @@ export function useStructurePushoverHook(): IStructurePushoverHook {
 			draft.isNodeValid = payload
 		})
 	}
+	function updateIsCalculating(payload: boolean): void {
+		updateState((draft) => {
+			draft.isCalculating = payload
+		})
+	}
 
 	function runPushover(): void {
-		const { curve, sequence } = requestPushoverSolver({
-			direction: state.direction,
-			node: { x: Number(state.node.x), y: Number(state.node.y) },
-			constants: state.constants,
-		})
-		const data = capacityCurveToPlotter(curve)
-
 		updateInitialStructure(structure)
-		updateResults({ data, sequence })
+		updateIsCalculating(true)
+		requestPushoverSolver(
+			{
+				direction: state.direction,
+				node: { x: Number(state.node.x), y: Number(state.node.y) },
+				constants: state.constants,
+			},
+			onPushoverRun,
+		)
+	}
+	function getStep(step: number): void {
+		if (!state.initialStructure)
+			throw new Error('initial structure does not exist')
+		if (step > 0) {
+			requestPushoverStep({ step }, onGetStep)
+		} else if (step === 0) {
+			setStructure(state.initialStructure)
+			requestCanvasRedraw()
+		}
+	}
+	function onPushoverRun(results: { curve: number[][]; steps: number }) {
+		const { curve, steps } = results
+		const data = capacityCurveToPlotter(curve)
+		updateIsCalculating(false)
+		updateResults({ data, steps })
+	}
+	function onGetStep(results: { step: FramezFile }) {
+		const pStep = generateStructureFromFile(results.step)
+		setStructure(pStep)
+		requestCanvasRedraw()
 	}
 
 	return {
@@ -79,5 +114,6 @@ export function useStructurePushoverHook(): IStructurePushoverHook {
 		updateConstants,
 		updateInitialStructure,
 		runPushover,
+		getStep,
 	}
 }
