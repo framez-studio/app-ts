@@ -64,7 +64,7 @@ export class FrameSystem extends Structure implements IFrameSystem {
 			nodesNew.push(n.copy())
 		})
 
-		this._elements.forEach((e) => {
+		this.elements.forEach((e) => {
 			let ni = findNodeinArrayByCoordinates(
 				e.nodes.initial.coordinates('static'),
 				nodesNew,

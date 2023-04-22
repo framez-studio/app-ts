@@ -3,10 +3,12 @@ import { useStructureGeneratorInitialState } from './useStructureGeneratorInitia
 import { useElementContextEmptyState } from './useElementContextEmptyState'
 import { generateFramezSystemFromContext } from '@utils/structure-generator'
 import { useAppContext } from '@context/AppContext'
+import { useStructureAPI } from './useStructureAPI'
 
 export function useStructureGeneratorState(): IStructureGeneratorStateHook {
 	const [state, updateState] = useStructureGeneratorInitialState()
-	const { setStructure, requestCanvasRedraw } = useAppContext()
+	const { setStructure } = useAppContext()
+	const { requestStructureSolver } = useStructureAPI()
 	const columnsContext = useElementContextEmptyState()
 	const beamsContext = useElementContextEmptyState()
 
@@ -70,7 +72,7 @@ export function useStructureGeneratorState(): IStructureGeneratorStateHook {
 			})
 			setArePropsValid(true)
 			setStructure(structure)
-			requestCanvasRedraw()
+			requestStructureSolver()
 			cleanEmptyRows()
 		} catch (e) {
 			setArePropsValid(false)

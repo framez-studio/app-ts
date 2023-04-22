@@ -15,5 +15,7 @@ export interface IStructure {
 	fef(type: 'full' | 'reduced'): Array2D
 	resetLoadstoZero(): void
 	unReleaseAll(): void
+	resetHingesStatus(): void
+	filterNodes(y?: number, x?: number): INode[]
 	copy(): IStructure
 }

@@ -11,6 +11,7 @@ import {
 	IRectangularRCSection,
 	IFramezStep,
 	IStructureSpace,
+	IGeneratorOutput,
 } from '@interfaces'
 import { Element } from '@classes/complex-elements/element'
 import { ElementNode } from '@classes/nodes/element-node'
@@ -23,7 +24,9 @@ import { BarCR } from '@classes/sections/bar-cr'
 import { assignHinges2Element } from './moment-curvature'
 import { FrameSystem } from '@classes/complex-elements/frame-system'
 
-export function generateFramezSystem(config: IGeneratorConfig) {
+export function generateFramezSystem(
+	config: IGeneratorConfig,
+): IGeneratorOutput {
 	const { levels, spans } = config
 
 	const nodes = generateNodes(spans, levels)
@@ -38,7 +41,7 @@ export function generateFramezSystemFromContext(context: {
 	state: IStructureGeneratorState
 	columnsContext: IElementContext
 	beamsContext: IElementContext
-}) {
+}): IGeneratorOutput {
 	const config = extractConfigFromContext(context)
 	return generateFramezSystem(config)
 }

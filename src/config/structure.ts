@@ -1,4 +1,8 @@
-import { IGeneratorConfig, IGeneratorElementConfig } from '@interfaces'
+import {
+	IFrameSystem,
+	IGeneratorConfig,
+	IGeneratorElementConfig,
+} from '@interfaces'
 import { generateFramezSystem } from '@utils/structure-generator'
 
 const material: IGeneratorElementConfig['material'] = {
@@ -70,4 +74,16 @@ const config: IGeneratorConfig = {
 	},
 }
 
-export const { structure: initialStructure } = generateFramezSystem(config)
+const structure = {
+	instance: generateFramezSystem(config).structure,
+}
+
+export function setStructureInstance(newStructure: IFrameSystem) {
+	structure.instance = newStructure
+	console.log('instance setter', structure.instance)
+}
+
+export function getStructureInstance() {
+	console.log('instance getter', structure.instance)
+	return structure.instance
+}

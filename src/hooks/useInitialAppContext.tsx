@@ -1,10 +1,10 @@
 import { IAppContext, IAppState, IElement, INode } from '@interfaces'
-import { initialStructure } from '@config/structure'
+import { getStructureInstance, setStructureInstance } from '@config/structure'
 import { useImmer } from 'use-immer'
 import { IFormSections } from '@types-ui'
 
 const initialState: IAppState = {
-	structure: initialStructure,
+	structure: getStructureInstance(),
 	canvas: {
 		selection: {
 			type: null,
@@ -60,6 +60,7 @@ export function useInitialAppContext(): IAppContext {
 		updateState((draft) => {
 			draft.structure = payload
 		})
+		// setStructureInstance(payload)
 	}
 	return {
 		state,

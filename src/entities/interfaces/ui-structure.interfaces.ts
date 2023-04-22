@@ -77,10 +77,10 @@ export interface IGeneratorConfig {
 }
 export interface IGeneratorOutput {
 	structure: IFrameSystem
-	spans: IFramezStep[]
-	levels: IFramezStep[]
 	columns: IElement[]
 	beams: IElement[]
+	spans?: IFramezStep[]
+	levels?: IFramezStep[]
 }
 export interface IFramezStep {
 	index: number

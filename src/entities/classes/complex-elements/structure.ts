@@ -15,7 +15,7 @@ import { SMatrixOperator as MatOp } from '@classes/matrices/s-matrix-operator'
  * Class structure return structure class
  */
 export class Structure implements IStructure {
-	protected _elements: IElement[]
+	private _elements: IElement[]
 
 	constructor(...elements: IElement[]) {
 		this._elements = [...elements]
