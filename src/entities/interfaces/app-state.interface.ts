@@ -3,6 +3,7 @@ import { IFormSections } from '@types-ui'
 
 export interface IAppState {
 	structure: IFrameSystem
+	isSolving: boolean
 	canvas: {
 		selection: {
 			type: null | 'node' | 'element'

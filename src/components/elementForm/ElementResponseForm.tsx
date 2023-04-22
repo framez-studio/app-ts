@@ -2,13 +2,22 @@ import '@styles/Form.sass'
 import FormDualInput from '@components/FormDualInput'
 import { useElementContext } from '@context/ElementContext'
 import { responseFormatter } from '@utils/ui'
+import LoaderSliderBody from '@components/LoaderSliderBody'
+import { useAppContext } from '@context/AppContext'
 
 const ElementResponseForm = () => {
+	const context = useAppContext()
 	const { elementProps } = useElementContext()
 	const { state } = elementProps
 	const { response } = state
 	const inputs = generateInputs()
 
+	if (context.state.isSolving)
+		return (
+			<LoaderSliderBody
+				props={{ text: 'Solving matrices and that stuff...' }}
+			/>
+		)
 	return (
 		<section className="form-container">
 			<section className="form-main element-response">

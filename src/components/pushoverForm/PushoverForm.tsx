@@ -8,7 +8,7 @@ const PushoverForm = () => {
 	const { isCalculating } = state
 
 	if (isCalculating) {
-		return <LoaderSliderBody props={{ text: 'Pushover running...' }} />
+		return <LoaderSliderBody props={{ text: 'Running pushover...' }} />
 	} else {
 		return <PushoverFormSwitcher />
 	}

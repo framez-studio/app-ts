@@ -19,6 +19,7 @@ export interface IAppContext {
 		object: INode | IElement | null
 	}): void
 	setStructure(payload: IFrameSystem): void
+	setIsSolving(payload: boolean): void
 	toggleSlider(): void
 	requestCanvasRedraw(): void
 	resetCanvasRedraw(): void

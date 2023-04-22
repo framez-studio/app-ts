@@ -5,15 +5,30 @@ import {
 	PushoverProcess,
 	SolverProcess,
 	StructurePushoverWorkerResponse,
+	StructureSolverWorkerResponse,
 } from '@interfaces'
+import { generateStructureFromFile } from '@utils/framez-file-parser'
+import { FrameSystem } from '@classes/complex-elements/frame-system'
 
 export function useStructureAPI() {
-	const { state } = useAppContext()
+	const { state, setIsSolving } = useAppContext()
 	const { structure } = state
 	const { StaticWorker, PushoverWorker } = useWorkers()
 
-	function requestStructureSolver() {
+	function requestStructureSolver(
+		callback: (structure: FrameSystem) => void,
+	) {
 		StaticWorker.postMessage({ process: SolverProcess.solve, structure })
+		setIsSolving(true)
+
+		StaticWorker.onmessage = (
+			e: MessageEvent<StructureSolverWorkerResponse>,
+		) => {
+			const { structure } = e.data
+			const instance = generateStructureFromFile(structure)
+			callback(instance)
+			setIsSolving(false)
+		}
 	}
 
 	function getNode(node: { x: number; y: number }) {

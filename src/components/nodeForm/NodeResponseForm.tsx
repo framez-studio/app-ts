@@ -1,9 +1,19 @@
+import { useAppContext } from '@context/AppContext'
 import FormInput from '../FormInput'
 import { useNodeSelectionState } from '@hooks/useNodeSelectionState'
 import { responseFormatter, outputUnitsFilter } from '@utils/ui'
+import LoaderSliderBody from '@components/LoaderSliderBody'
 
 const NodeResponseForm = () => {
+	const context = useAppContext()
 	const { displacements, reactions } = useNodeSelectionState()
+
+	if (context.state.isSolving)
+		return (
+			<LoaderSliderBody
+				props={{ text: 'Solving matrices and that stuff...' }}
+			/>
+		)
 	return (
 		<section className="form-container">
 			<section className="form-main node-response col-2">

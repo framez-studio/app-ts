@@ -5,6 +5,7 @@ import { IFormSections } from '@types-ui'
 
 const initialState: IAppState = {
 	structure: getStructureInstance(),
+	isSolving: false,
 	canvas: {
 		selection: {
 			type: null,
@@ -62,6 +63,11 @@ export function useInitialAppContext(): IAppContext {
 		})
 		setStructureInstance(payload)
 	}
+	function setIsSolving(payload: boolean) {
+		updateState((draft) => {
+			draft.isSolving = payload
+		})
+	}
 	return {
 		state,
 		setSelection,
@@ -70,5 +76,6 @@ export function useInitialAppContext(): IAppContext {
 		resetCanvasRedraw,
 		setSliderActiveSection,
 		setStructure,
+		setIsSolving,
 	}
 }
