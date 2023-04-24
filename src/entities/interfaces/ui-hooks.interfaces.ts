@@ -4,7 +4,6 @@ import {
 	IElementDynamicState,
 	IElementPropsState,
 	IElementSteelState,
-	IFrameSystem,
 	ISteelRowState,
 	IStructureGeneratorState,
 	IStructurePushoverState,

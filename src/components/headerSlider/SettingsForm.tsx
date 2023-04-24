@@ -1,7 +1,6 @@
 import { useActiveSectionContext } from '@context/ActiveSectionContext'
 import { useStructureLoader } from '@hooks/useStructureLoader'
 import AppTitle from '@components/AppTitle'
-import ErrorMessage from '@components/ErrorMessage'
 import FormButton from '@components/FormButton'
 import FormSectionLabel from '@components/FormSectionLabel'
 import UploadButton from '@components/UploadButton'

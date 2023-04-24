@@ -41,16 +41,16 @@ export function useElementDynamicState(): IElementDynamicStateHook {
 			}
 		})
 	}
-	function updateErrorState(
-		payload: Partial<IElementDynamicState['errorState']>,
-	) {
-		updateState((draft) => {
-			draft.errorState = {
-				...draft.errorState,
-				...payload,
-			}
-		})
-	}
+	// function updateErrorState(
+	// 	payload: Partial<IElementDynamicState['errorState']>,
+	// ): void {
+	// 	updateState((draft) => {
+	// 		draft.errorState = {
+	// 			...draft.errorState,
+	// 			...payload,
+	// 		}
+	// 	})
+	// }
 	function assignElementState(element: IElement) {
 		const { weight } = element.section.material
 		const hinge = element.getHinge('initial') || element.getHinge('final')

@@ -2,8 +2,10 @@ import { useEffect } from 'react'
 import { useStructureAPI } from '@hooks/useStructureAPI'
 import { useNodeSelection } from '@hooks/useNodeSelection'
 import { INodeState, useNodeState } from '@hooks/useNodeState'
+import { useAppContext } from '@context/AppContext'
 
 export function useNodeSelectionState() {
+	const { setStructure } = useAppContext()
 	const { requestStructureSolver } = useStructureAPI()
 	const node = useNodeSelection()
 	const nodeState = useNodeState()
@@ -16,7 +18,7 @@ export function useNodeSelectionState() {
 			fy: Number(newLoads.fy ?? loads.fy),
 			mz: Number(newLoads.mz ?? loads.mz),
 		})
-		requestStructureSolver()
+		requestStructureSolver((struc) => setStructure(struc))
 	}
 
 	useEffect(() => {

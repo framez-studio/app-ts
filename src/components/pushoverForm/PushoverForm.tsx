@@ -1,6 +1,5 @@
 import { usePushoverContext } from '@context/PushoverContext'
 import PushoverFormSwitcher from './PushoverFormSwitcher'
-import Loader from '@components/Loader'
 import LoaderSliderBody from '@components/LoaderSliderBody'
 
 const PushoverForm = () => {

@@ -1,4 +1,4 @@
-import { coordinates2D, stepPSequence } from '@types'
+import { coordinates2D } from '@types'
 import { IPushoverFormSections } from '@types-ui'
 import { IFrameSystem } from './frame-system.interface'
 
