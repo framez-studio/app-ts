@@ -1,4 +1,5 @@
-import { defineConfig } from 'vitest/config'
+import { defineConfig } from 'vite'
+import { VitePWA } from 'vite-plugin-pwa'
 import path from 'path'
 import react from '@vitejs/plugin-react'
 
@@ -51,10 +52,46 @@ export default defineConfig({
 			},
 		],
 	},
-	plugins: [react()],
-	test: {
-		coverage: {
-			reporter: ['text'],
-		},
-	},
+	plugins: [
+		react(),
+		VitePWA({
+			registerType: 'autoUpdate',
+			manifest: {
+				start_url: '.',
+				name: 'FramezStudio',
+				short_name: 'Framez',
+				description: 'FramezStudio',
+				display: 'standalone',
+				background_color: '#10161dff',
+				theme_color: '#10161dff',
+				icons: [
+					{
+						src: 'manifest-icon-192.maskable.png',
+						sizes: '192x192',
+						type: 'image/png',
+						purpose: 'any',
+					},
+					{
+						src: 'manifest-icon-192.maskable.png',
+						sizes: '192x192',
+						type: 'image/png',
+						purpose: 'maskable',
+					},
+					{
+						src: 'manifest-icon-512.maskable.png',
+						sizes: '512x512',
+						type: 'image/png',
+						purpose: 'any',
+					},
+					{
+						src: 'manifest-icon-512.maskable.png',
+						sizes: '512x512',
+						type: 'image/png',
+						purpose: 'maskable',
+					},
+				],
+			},
+			manifestFilename: 'manifest.webmanifest',
+		}),
+	],
 })
