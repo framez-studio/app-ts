@@ -11,7 +11,8 @@
 		"prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
 		"test": "vitest",
 		"coverage": "vitest run --coverage",
-		"deploy": "npm run build && npx firebase deploy"
+		"deploy": "npm run build && npx firebase deploy",
+		"generate-assets": "npx pwa-asset-generator public/logo.svg pwa-asset -m public/manifest.webmanifest --padding '0' -b '#10161dff' -q '100' -i 'pwa-asset/changes.html' --favicon"
 	},
 	"husky": {
 		"hooks": {
@@ -31,6 +32,7 @@
 		"sass-loader": "^13.2.1",
 		"typescript": "^4.9.3",
 		"vite": "^4.0.0",
+		"vite-plugin-pwa": "^0.14.7",
 		"vitest": "0.24.3"
 	},
 	"dependencies": {
