@@ -2,6 +2,7 @@ import { useAppContext } from '@context/AppContext'
 import { useWorkers } from './useWorkers'
 import {
 	FramezFile,
+	IFrameSystem,
 	PushoverProcess,
 	SolverProcess,
 	StructurePushoverWorkerResponse,
@@ -9,16 +10,21 @@ import {
 } from '@interfaces'
 import { generateStructureFromFile } from '@utils/framez-file-parser'
 import { FrameSystem } from '@classes/complex-elements/frame-system'
+import { getStructureInstance } from '@config/structure'
 
 export function useStructureAPI() {
-	const { state, setIsSolving } = useAppContext()
-	const { structure } = state
+	const { setIsSolving } = useAppContext()
+	const structure = getStructureInstance()
 	const { StaticWorker, PushoverWorker } = useWorkers()
 
 	function requestStructureSolver(
 		callback: (structure: FrameSystem) => void,
+		otherStructure?: IFrameSystem,
 	) {
-		StaticWorker.postMessage({ process: SolverProcess.solve, structure })
+		StaticWorker.postMessage({
+			process: SolverProcess.solve,
+			structure: otherStructure ?? structure,
+		})
 		setIsSolving(true)
 
 		StaticWorker.onmessage = (
@@ -51,11 +57,9 @@ export function useStructureAPI() {
 			e: MessageEvent<StructurePushoverWorkerResponse>,
 		) => {
 			const { pushover } = e.data
-			if (pushover) {
-				callback({ curve: pushover.curve, steps: pushover.steps })
-				return
-			}
-			console.error('Theres no result for pushover run')
+			if (!pushover)
+				return console.error('Theres no result for pushover run')
+			callback({ curve: pushover.curve, steps: pushover.steps })
 		}
 	}
 	function requestPushoverStep(
@@ -70,11 +74,11 @@ export function useStructureAPI() {
 			e: MessageEvent<StructurePushoverWorkerResponse>,
 		) => {
 			const { step } = e.data
-			if (step) {
-				callback({ step })
-				return
-			}
-			console.error(`Theres no step for pushover step: ${config.step}`)
+			if (!step)
+				return console.error(
+					`Theres no step for pushover step: ${config.step}`,
+				)
+			callback({ step })
 		}
 	}
 

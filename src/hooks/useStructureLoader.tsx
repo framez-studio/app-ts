@@ -5,7 +5,7 @@ import { FramezFile } from '@interfaces'
 import { generateStructureFromFile } from '@utils/framez-file-parser'
 
 export function useStructureLoader() {
-	const { state, setStructure, requestCanvasRedraw } = useAppContext()
+	const { state, setStructure } = useAppContext()
 	const { structure } = state
 
 	const [file, setFile] = useState<File>()
@@ -36,7 +36,6 @@ export function useStructureLoader() {
 		const loadedStructure = generateStructureFromFile(loadedStructureFile)
 
 		setStructure(loadedStructure)
-		requestCanvasRedraw()
 	}
 
 	useEffect(() => {

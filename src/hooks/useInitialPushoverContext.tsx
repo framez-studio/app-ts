@@ -5,10 +5,8 @@ import {
 } from '@interfaces'
 import { useStructurePushoverHook } from './usePushoverHook'
 import { useStructurePushoverUIHook } from './usePushoverUIHook'
-import { useAppContext } from '@context/AppContext'
 
 export function useInitialPushoverContext(): IStructurePushoverContext {
-	const { setStructure, requestCanvasRedraw } = useAppContext()
 	const pushover = useStructurePushoverHook()
 	const ui = useStructurePushoverUIHook()
 
@@ -52,8 +50,7 @@ export function useInitialPushoverContext(): IStructurePushoverContext {
 	): void {
 		ui.updateActiveSection(payload)
 		if (payload === 'config') {
-			setStructure(pushover.state.initialStructure!)
-			requestCanvasRedraw()
+			updateSelectedStep(0)
 			pushover.updateInitialStructure(null)
 		}
 	}

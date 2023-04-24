@@ -34,6 +34,14 @@ export class UIStructure implements IUIStructure {
 	get hovered() {
 		return this._hovered
 	}
+	setStructure(structure: IStructure): void {
+		this._structure = structure
+		// this._hasChanged = true
+		// this.generatePaths()
+		// this.releaseCurrentHover()
+		// const { layer, index } = this._selected
+		// if (layer && index) this.select(layer, index)
+	}
 	setContext(ctx: CanvasRenderingContext2D): void {
 		this._context = ctx
 	}

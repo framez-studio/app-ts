@@ -62,6 +62,7 @@ export function useInitialAppContext(): IAppContext {
 			draft.structure = payload
 		})
 		setStructureInstance(payload)
+		requestCanvasRedraw()
 	}
 	function setIsSolving(payload: boolean) {
 		updateState((draft) => {

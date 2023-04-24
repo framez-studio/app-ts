@@ -7,7 +7,7 @@ import { ISelectedElementPropsStateHook } from '@interfaces'
 import { FrameSystem } from '@classes/complex-elements/frame-system'
 
 export function useElementSelectionState(): ISelectedElementPropsStateHook {
-	const { requestCanvasRedraw, setStructure } = useAppContext()
+	const { setStructure } = useAppContext()
 	const { requestStructureSolver } = useStructureAPI()
 	const element = useElementSelection()
 	const elementState = useElementState()
@@ -44,7 +44,6 @@ export function useElementSelectionState(): ISelectedElementPropsStateHook {
 	}
 	function onStructureSolver(solvedStructure: FrameSystem) {
 		setStructure(solvedStructure)
-		requestCanvasRedraw()
 	}
 
 	useEffect(() => elementState.assignElementState(element), [element])

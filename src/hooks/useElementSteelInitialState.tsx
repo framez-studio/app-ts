@@ -3,7 +3,7 @@ import { useImmer } from 'use-immer'
 
 export function useElementSteelInitialState() {
 	const initialState: IElementSteelState = {
-		young: '200000',
+		young: '200000000',
 		yield: '420000',
 		rows: [
 			{ diameter: '0.015875', distance: '0.045', quantity: '4' },

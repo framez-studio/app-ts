@@ -3,6 +3,7 @@ import { useImmer } from 'use-immer'
 
 export function useStructureGeneratorInitialState() {
 	const [state, updateState] = useImmer<IStructureGeneratorState>({
+		isGenerating: false,
 		spans: [{ count: '1', separation: '2' }],
 		levels: [{ count: '1', separation: '2' }],
 		sectionsConfigToggle: 'beam',

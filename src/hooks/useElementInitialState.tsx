@@ -5,10 +5,10 @@ export function useElementInitialState() {
 	const initialState: IElementPropsState = {
 		fc: '21000',
 		young: '17872000',
-		epsilon: '0.004',
+		epsilon: '0.003',
 		sectionDims: {
-			base: '0.2',
-			height: '0.2',
+			base: '0.3',
+			height: '0.4',
 		},
 		load: '0',
 		response: {

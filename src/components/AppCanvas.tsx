@@ -4,9 +4,15 @@ import { useAppCanvas } from '@hooks/useAppCanvas'
 
 const AppCanvas = () => {
 	const { height, width } = useWindowSize()
+	// const { setStructure } = useAppContext()
+	// const { requestStructureSolver } = useStructureAPI()
 	const canvas = useAppCanvas()
 
 	useEffect(() => canvas.updateScreen(), [width, height])
+	// useEffect(
+	// 	() => requestStructureSolver((structure) => setStructure(structure)),
+	// 	[],
+	// )
 	return (
 		<canvas
 			width={width}

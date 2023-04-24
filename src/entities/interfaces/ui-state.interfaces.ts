@@ -58,6 +58,7 @@ export interface IStructureSpace {
 	separation: string
 }
 export interface IStructureGeneratorState {
+	isGenerating: boolean
 	spans: IStructureSpace[]
 	levels: IStructureSpace[]
 	sectionsConfigToggle: 'column' | 'beam'

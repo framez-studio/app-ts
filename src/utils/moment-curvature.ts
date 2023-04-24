@@ -417,6 +417,7 @@ export const MomentCurvatureFinal2Section = (
 	let mc1 = WhitneyMomentCurvature2Section(sectionRC, 0)
 	sectionRC.rotate180()
 	let mc2 = WhitneyMomentCurvature2Section(sectionRC, 0)
+	sectionRC.rotate180()
 	return {
 		maxMoment: mc1.Moment,
 		maxCurv: mc1.Curvature,

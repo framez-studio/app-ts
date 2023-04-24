@@ -30,8 +30,8 @@ const columnsSteel: IGeneratorElementConfig['steel'] = {
 	],
 }
 const config: IGeneratorConfig = {
-	levels: [2],
-	spans: [2],
+	levels: [2, 2],
+	spans: [2, 2],
 	columns: {
 		section: {
 			base: 0.35,
@@ -57,7 +57,7 @@ const config: IGeneratorConfig = {
 			base: 0.3,
 			height: 0.4,
 		},
-		load: 40,
+		load: 0,
 		material,
 		steel: beamsSteel,
 		momentCurvature: {
@@ -80,10 +80,10 @@ const structure = {
 
 export function setStructureInstance(newStructure: IFrameSystem) {
 	structure.instance = newStructure
-	console.log('instance setter', structure.instance)
+	// console.log('instance setter', structure.instance)
 }
 
 export function getStructureInstance() {
-	console.log('instance getter', structure.instance)
+	// console.log('instance getter', structure.instance)
 	return structure.instance
 }

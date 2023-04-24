@@ -12,7 +12,7 @@ import { generateStructureFromFile } from '@utils/framez-file-parser'
 export function useStructurePushoverHook(): IStructurePushoverHook {
 	const { requestPushoverSolver, requestPushoverStep, getNode, structure } =
 		useStructureAPI()
-	const { setStructure, requestCanvasRedraw } = useAppContext()
+	const { setStructure } = useAppContext()
 	const [state, updateState] = usePushoverHookInitialState()
 
 	function updateDirection(
@@ -92,7 +92,6 @@ export function useStructurePushoverHook(): IStructurePushoverHook {
 			requestPushoverStep({ step }, onGetStep)
 		} else if (step === 0) {
 			setStructure(state.initialStructure)
-			requestCanvasRedraw()
 		}
 	}
 	function onPushoverRun(results: { curve: number[][]; steps: number }) {
@@ -104,7 +103,6 @@ export function useStructurePushoverHook(): IStructurePushoverHook {
 	function onGetStep(results: { step: FramezFile }) {
 		const pStep = generateStructureFromFile(results.step)
 		setStructure(pStep)
-		requestCanvasRedraw()
 	}
 
 	return {

@@ -8,6 +8,7 @@ import { ActiveSectionContextProvider } from '@context/ActiveSectionContext'
 const InputSlider = () => {
 	const { state, toggleSlider } = useAppContext()
 	const { isOpen } = state.slider
+
 	return (
 		<ActiveSectionContextProvider props={{ default: 'properties' }}>
 			<section

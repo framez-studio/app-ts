@@ -25,6 +25,7 @@ export interface IUIStructure extends IUIPrintable {
 	readonly selected: IUISelection
 	readonly hovered: IUISelection
 	setContext(ctx: CanvasRenderingContext2D): void
+	setStructure(structure: IStructure): void
 	getGraphicElement(layerName: string, index: number): IUINode | IUIElement
 	pointerUpHandler(e: React.PointerEvent): void
 	pointerMoveHandler(e: React.PointerEvent): void

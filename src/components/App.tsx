@@ -1,11 +1,11 @@
 import '@styles/App.sass'
 import '@styles/_globals.sass'
 import { AppContextProvider } from '@context/AppContext'
+import { PushoverContextProvider } from '@context/PushoverContext'
+import { usePortraitOrientationLock } from '@hooks/usePortraitOrientationLock'
 import HeaderSlider from '@components/headerSlider/HeaderSlider'
 import InputSlider from '@components/inputSlider/InputSlider'
 import AppCanvas from '@components/AppCanvas'
-import { PushoverContextProvider } from '@context/PushoverContext'
-import { usePortraitOrientationLock } from '@hooks/usePortraitOrientationLock'
 
 function App() {
 	usePortraitOrientationLock()
